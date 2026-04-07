@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'llm_provider.dart';
+import 'openai_compatible_provider.dart';
 import 'deepseek_provider.dart';
 import 'openai_provider.dart';
 import 'qwen_provider.dart';
 import 'claude_provider.dart';
 import 'ollama_provider.dart';
+import 'zhipu_provider.dart';
 
 /// LLM 管理器：模型切换、fallback、统一调用入口
 /// 继承 ChangeNotifier，Provider 状态自动通知 UI
@@ -20,6 +22,7 @@ class LlmManager extends ChangeNotifier {
   final QwenProvider qwen = QwenProvider();
   final ClaudeProvider claude = ClaudeProvider();
   final OllamaProvider ollama = OllamaProvider();
+  final ZhipuProvider zhipu = ZhipuProvider();
 
   LlmManager() {
     // 预注册所有 Provider
@@ -28,6 +31,7 @@ class LlmManager extends ChangeNotifier {
     _providers[qwen.name] = qwen;
     _providers[claude.name] = claude;
     _providers[ollama.name] = ollama;
+    _providers[zhipu.name] = zhipu;
   }
 
   void registerProvider(LlmProvider provider) {
@@ -122,15 +126,7 @@ class LlmManager extends ChangeNotifier {
   /// 根据配置设置 API Key（由 LlmConfigService 调用）
   void applyApiKey(String providerName, String apiKey) {
     final provider = _providers[providerName];
-    if (provider == null) return;
-
-    if (provider is DeepSeekProvider) {
-      provider.setApiKey(apiKey);
-    } else if (provider is OpenAiProvider) {
-      provider.setApiKey(apiKey);
-    } else if (provider is QwenProvider) {
-      provider.setApiKey(apiKey);
-    } else if (provider is ClaudeProvider) {
+    if (provider is OpenAiCompatibleProvider) {
       provider.setApiKey(apiKey);
     }
     notifyListeners();
@@ -139,15 +135,7 @@ class LlmManager extends ChangeNotifier {
   /// 根据配置设置模型名
   void applyModelName(String providerName, String modelName) {
     final provider = _providers[providerName];
-    if (provider == null) return;
-
-    if (provider is DeepSeekProvider) {
-      provider.setModelName(modelName);
-    } else if (provider is OpenAiProvider) {
-      provider.setModelName(modelName);
-    } else if (provider is QwenProvider) {
-      provider.setModelName(modelName);
-    } else if (provider is ClaudeProvider) {
+    if (provider is OpenAiCompatibleProvider) {
       provider.setModelName(modelName);
     } else if (provider is OllamaProvider) {
       provider.setModelName(modelName);
@@ -155,9 +143,14 @@ class LlmManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 设置 Ollama baseUrl
-  void applyOllamaBaseUrl(String baseUrl) {
-    ollama.setBaseUrl(baseUrl);
+  /// 设置自定义 baseUrl（支持所有 OpenAI 兼容 Provider 和 Ollama）
+  void applyBaseUrl(String providerName, String baseUrl) {
+    final provider = _providers[providerName];
+    if (provider is OpenAiCompatibleProvider) {
+      provider.setBaseUrl(baseUrl);
+    } else if (provider is OllamaProvider) {
+      provider.setBaseUrl(baseUrl);
+    }
     notifyListeners();
   }
 }

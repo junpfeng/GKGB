@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/match_result.dart';
+import '../theme/app_theme.dart';
+import 'glass_card.dart';
+import 'gradient_button.dart';
 
-/// 匹配理由卡片组件
-/// 展示符合项、风险项、不符项分区
+/// 匹配理由卡片组件（GlassCard + 渐变匹配度环）
 class MatchReasonCard extends StatelessWidget {
   final MatchResult result;
   final VoidCallback? onSetTarget;
@@ -17,14 +19,20 @@ class MatchReasonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GlassCard(
       margin: const EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 头部：岗位名称 + 匹配分
+          // 头部：岗位名称 + 渐变匹配度环
           _buildHeader(context),
-          const Divider(height: 1),
+          Divider(
+            height: 1,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppTheme.dividerDark
+                : AppTheme.dividerLight,
+          ),
           Padding(
             padding: const EdgeInsets.all(12),
             child: Column(
@@ -36,7 +44,7 @@ class MatchReasonCard extends StatelessWidget {
                     context,
                     '符合项',
                     Icons.check_circle_outline,
-                    Colors.green,
+                    AppTheme.successGradient,
                     result.matchedItems,
                   ),
                 // 风险项
@@ -46,7 +54,7 @@ class MatchReasonCard extends StatelessWidget {
                     context,
                     '风险项',
                     Icons.warning_amber_outlined,
-                    Colors.orange,
+                    AppTheme.warningGradient,
                     result.riskItems,
                   ),
                 ],
@@ -57,7 +65,7 @@ class MatchReasonCard extends StatelessWidget {
                     context,
                     '不符项',
                     Icons.cancel_outlined,
-                    Colors.red,
+                    AppTheme.warmGradient,
                     result.unmatchedItems,
                   ),
                 ],
@@ -67,18 +75,25 @@ class MatchReasonCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceContainerLow,
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFFFF8E1), Color(0xFFFFF3E0)],
+                      ),
                       borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: const Color(0xFFF7971E).withValues(alpha: 0.3),
+                      ),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.lightbulb_outline, size: 16, color: Colors.amber[700]),
+                        const Icon(Icons.lightbulb_outline,
+                            size: 16, color: Color(0xFFF7971E)),
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
                             result.advice!,
-                            style: const TextStyle(fontSize: 12, height: 1.4),
+                            style:
+                                const TextStyle(fontSize: 12, height: 1.4),
                           ),
                         ),
                       ],
@@ -90,20 +105,20 @@ class MatchReasonCard extends StatelessWidget {
                 Row(
                   children: [
                     if (onSetTarget != null)
-                      OutlinedButton.icon(
+                      GradientButton(
                         onPressed: onSetTarget,
-                        icon: Icon(
-                          result.isTarget ? Icons.bookmark : Icons.bookmark_outline,
-                          size: 16,
-                        ),
-                        label: Text(result.isTarget ? '已选为目标' : '设为目标岗位'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: result.isTarget ? Colors.green : null,
-                          side: BorderSide(
-                            color: result.isTarget ? Colors.green : Colors.grey,
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        ),
+                        label: result.isTarget ? '已选为目标' : '设为目标岗位',
+                        icon: result.isTarget
+                            ? Icons.bookmark
+                            : Icons.bookmark_outline,
+                        gradient: result.isTarget
+                            ? AppTheme.successGradient
+                            : AppTheme.primaryGradient,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        borderRadius: 8,
+                        textStyle: const TextStyle(
+                            color: Colors.white, fontSize: 12),
                       ),
                     const Spacer(),
                     if (onViewDetail != null)
@@ -122,14 +137,15 @@ class MatchReasonCard extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
-    final scoreColor = result.matchScore >= 80
-        ? Colors.green
+    // 根据匹配度选择渐变
+    final gradient = result.matchScore >= 80
+        ? AppTheme.successGradient
         : result.matchScore >= 60
-            ? Colors.orange
-            : Colors.red;
+            ? AppTheme.warningGradient
+            : AppTheme.warmGradient;
 
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(14),
       child: Row(
         children: [
           Expanded(
@@ -138,12 +154,19 @@ class MatchReasonCard extends StatelessWidget {
               children: [
                 Text(
                   result.positionName ?? '未知岗位',
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 if (result.department != null || result.city != null)
-                  Text(
-                    [result.department, result.city].whereType<String>().join(' · '),
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Text(
+                      [result.department, result.city]
+                          .whereType<String>()
+                          .join(' · '),
+                      style:
+                          TextStyle(fontSize: 12, color: Colors.grey[600]),
+                    ),
                   ),
                 if (result.policyTitle != null)
                   Text(
@@ -156,29 +179,35 @@ class MatchReasonCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          // 匹配度分数
+          // 渐变匹配度圆环
           Container(
-            width: 56,
-            height: 56,
+            width: 58,
+            height: 58,
             decoration: BoxDecoration(
-              color: scoreColor.withValues(alpha: 0.1),
+              gradient: gradient,
               shape: BoxShape.circle,
-              border: Border.all(color: scoreColor, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: gradient.colors.first.withValues(alpha: 0.35),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ],
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   '${result.matchScore}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: scoreColor,
+                    color: Colors.white,
                   ),
                 ),
-                Text(
+                const Text(
                   '分',
-                  style: TextStyle(fontSize: 10, color: scoreColor),
+                  style: TextStyle(fontSize: 10, color: Colors.white),
                 ),
               ],
             ),
@@ -192,7 +221,7 @@ class MatchReasonCard extends StatelessWidget {
     BuildContext context,
     String title,
     IconData icon,
-    Color color,
+    LinearGradient gradient,
     List<String> items,
   ) {
     return Column(
@@ -200,21 +229,33 @@ class MatchReasonCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, size: 14, color: color),
-            const SizedBox(width: 4),
-            Text(
-              '$title（${items.length}）',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: color,
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                gradient: gradient,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(icon, size: 12, color: Colors.white),
+                  const SizedBox(width: 3),
+                  Text(
+                    '$title（${items.length}）',
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
         ),
         const SizedBox(height: 4),
         ...items.map((item) => Padding(
-              padding: const EdgeInsets.only(left: 18, bottom: 2),
+              padding: const EdgeInsets.only(left: 4, bottom: 2),
               child: Text(
                 '• $item',
                 style: const TextStyle(fontSize: 12, height: 1.4),

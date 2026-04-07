@@ -7,6 +7,9 @@ import '../models/exam.dart';
 import '../models/question.dart';
 import '../widgets/question_card.dart';
 import '../widgets/ai_chat_dialog.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/gradient_button.dart';
+import '../theme/app_theme.dart';
 
 /// 模拟考试页：配置 → 答题 → 评分报告
 class ExamScreen extends StatelessWidget {
@@ -36,59 +39,91 @@ class _ExamHomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('模拟考试')),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
         children: [
           // 快速开始卡片
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('快速模考', style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  const Text('按真实考试时间和题量进行模拟', style: TextStyle(color: Colors.grey)),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _ExamTypeCard(
-                          title: '行测模考',
-                          subtitle: '130题 · 120分钟',
-                          color: Colors.blue,
-                          onTap: () => _startExam(context, '行测', 30, 120 * 60),
-                        ),
+          GlassCard(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        gradient: AppTheme.primaryGradient,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _ExamTypeCard(
-                          title: '自定义模考',
-                          subtitle: '选择科目和题量',
-                          color: Colors.purple,
-                          onTap: () => _showCustomExamDialog(context),
-                        ),
+                      child: const Icon(Icons.timer, color: Colors.white, size: 18),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      '快速模考',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  '按真实考试时间和题量进行模拟',
+                  style: TextStyle(fontSize: 13, color: Colors.grey[500]),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ExamTypeCard(
+                        title: '行测模考',
+                        subtitle: '130题 · 120分钟',
+                        gradient: AppTheme.primaryGradient,
+                        icon: Icons.timer,
+                        onTap: () => _startExam(context, '行测', 30, 120 * 60),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _ExamTypeCard(
+                        title: '自定义模考',
+                        subtitle: '选择科目和题量',
+                        gradient: AppTheme.warmGradient,
+                        icon: Icons.tune,
+                        onTap: () => _showCustomExamDialog(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 16),
-          // 历史记录
-          Text('历史成绩', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
+          const SizedBox(height: 20),
+          // 历史记录标题
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text(
+              '历史成绩',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+          ),
           if (examService.history.isEmpty)
-            const Card(
-              child: Padding(
-                padding: EdgeInsets.all(24),
-                child: Center(
-                  child: Text('暂无历史成绩，开始第一次模考吧', style: TextStyle(color: Colors.grey)),
+            GlassCard(
+              padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
+              child: Center(
+                child: Text(
+                  '暂无历史成绩，开始第一次模考吧',
+                  style: TextStyle(color: Colors.grey[500]),
                 ),
               ),
             )
           else
-            ...examService.history.map((exam) => _ExamHistoryCard(exam: exam)),
+            ...examService.history.map((exam) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: _ExamHistoryCard(exam: exam),
+                )),
         ],
       ),
     );
@@ -161,7 +196,8 @@ class _ExamHomeView extends StatelessWidget {
                       max: 50,
                       divisions: 9,
                       label: '$questionCount 题',
-                      onChanged: (v) => setDialogState(() => questionCount = v.round()),
+                      onChanged: (v) =>
+                          setDialogState(() => questionCount = v.round()),
                     ),
                   ),
                   Text('$questionCount'),
@@ -177,7 +213,8 @@ class _ExamHomeView extends StatelessWidget {
                       max: 120,
                       divisions: 11,
                       label: '$timeMinutes 分钟',
-                      onChanged: (v) => setDialogState(() => timeMinutes = v.round()),
+                      onChanged: (v) =>
+                          setDialogState(() => timeMinutes = v.round()),
                     ),
                   ),
                   Text('$timeMinutes 分'),
@@ -193,7 +230,8 @@ class _ExamHomeView extends StatelessWidget {
             FilledButton(
               onPressed: () {
                 Navigator.pop(ctx);
-                _startExam(context, selectedSubject, questionCount, timeMinutes * 60);
+                _startExam(
+                    context, selectedSubject, questionCount, timeMinutes * 60);
               },
               child: const Text('开始'),
             ),
@@ -204,69 +242,134 @@ class _ExamHomeView extends StatelessWidget {
   }
 }
 
+/// 模考类型卡片（渐变背景）
 class _ExamTypeCard extends StatelessWidget {
   final String title;
   final String subtitle;
-  final Color color;
+  final LinearGradient gradient;
+  final IconData icon;
   final VoidCallback onTap;
 
   const _ExamTypeCard({
     required this.title,
     required this.subtitle,
-    required this.color,
+    required this.gradient,
+    required this.icon,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return GradientCard(
+      gradient: gradient,
+      borderRadius: AppTheme.radiusMedium,
+      padding: const EdgeInsets.all(16),
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withValues(alpha: 0.3)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(Icons.timer, color: color),
-            const SizedBox(height: 8),
-            Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: color)),
-            Text(subtitle, style: TextStyle(fontSize: 12, color: color.withValues(alpha: 0.8))),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: Colors.white, size: 22),
+          const SizedBox(height: 10),
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            subtitle,
+            style: const TextStyle(
+              fontSize: 11,
+              color: Colors.white70,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
+/// 历史记录卡片
 class _ExamHistoryCard extends StatelessWidget {
   final Exam exam;
   const _ExamHistoryCard({required this.exam});
 
   @override
   Widget build(BuildContext context) {
-    final scoreColor = exam.score >= 80
-        ? Colors.green
+    // 根据分数选择渐变
+    final gradient = exam.score >= 80
+        ? AppTheme.successGradient
         : exam.score >= 60
-            ? Colors.orange
-            : Colors.red;
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: scoreColor.withValues(alpha: 0.1),
-          child: Text(
-            '${exam.score.round()}',
-            style: TextStyle(color: scoreColor, fontWeight: FontWeight.bold, fontSize: 13),
+            ? AppTheme.warningGradient
+            : AppTheme.warmGradient;
+    final scoreColor = exam.score >= 80
+        ? const Color(0xFF38F9D7)
+        : exam.score >= 60
+            ? const Color(0xFFFFD200)
+            : const Color(0xFFf5576c);
+
+    return GlassCard(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      child: Row(
+        children: [
+          // 渐变分数圆形
+          Container(
+            width: 52,
+            height: 52,
+            decoration: BoxDecoration(
+              gradient: gradient,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: gradient.colors.first.withValues(alpha: 0.35),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                '${exam.score.round()}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
           ),
-        ),
-        title: Text('${exam.subject} · ${exam.totalQuestions}题'),
-        subtitle: Text(exam.startedAt?.substring(0, 16) ?? ''),
-        trailing: Text('${exam.score.toStringAsFixed(1)}分',
-            style: TextStyle(color: scoreColor, fontWeight: FontWeight.bold)),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${exam.subject} · ${exam.totalQuestions}题',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  exam.startedAt?.substring(0, 16) ?? '',
+                  style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            '${exam.score.toStringAsFixed(1)}分',
+            style: TextStyle(
+              color: scoreColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -282,40 +385,49 @@ class _ExamingView extends StatelessWidget {
     final questions = examService.examQuestions;
     if (questions.isEmpty) return const Center(child: CircularProgressIndicator());
 
+    // 倒计时颜色
+    final isUrgent = examService.remainingSeconds < 300;
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
             Text(examService.currentExam?.subject ?? '模考'),
             const Spacer(),
-            // 倒计时
+            // 渐变倒计时标签
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
               decoration: BoxDecoration(
-                color: examService.remainingSeconds < 300
-                    ? Colors.red.withValues(alpha: 0.1)
-                    : Colors.green.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(16),
+                gradient: isUrgent ? AppTheme.warmGradient : AppTheme.successGradient,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: (isUrgent
+                            ? const Color(0xFFf5576c)
+                            : const Color(0xFF43E97B))
+                        .withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    Icons.timer,
-                    size: 16,
-                    color: examService.remainingSeconds < 300 ? Colors.red : Colors.green,
-                  ),
+                  const Icon(Icons.timer, size: 14, color: Colors.white),
                   const SizedBox(width: 4),
                   Text(
                     examService.formatRemainingTime(),
-                    style: TextStyle(
-                      color: examService.remainingSeconds < 300 ? Colors.red : Colors.green,
+                    style: const TextStyle(
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 13,
                     ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(width: 4),
           ],
         ),
         leading: IconButton(
@@ -331,9 +443,11 @@ class _ExamingView extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: FilledButton(
+          child: GradientButton(
             onPressed: () => _submitExam(context),
-            child: const Text('交卷'),
+            label: '交卷',
+            width: double.infinity,
+            gradient: AppTheme.warmGradient,
           ),
         ),
       ),
@@ -348,8 +462,14 @@ class _ExamingView extends StatelessWidget {
         content: Text(
             '已作答 ${examService.userAnswers.length}/${examService.examQuestions.length} 题，确认提交吗？'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('继续答题')),
-          FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('确认交卷')),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('继续答题'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('确认交卷'),
+          ),
         ],
       ),
     );
@@ -382,7 +502,10 @@ class _ExamingView extends StatelessWidget {
         title: const Text('放弃考试'),
         content: const Text('确定放弃本次考试吗？进度将不被保存。'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('继续考试')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('继续考试'),
+          ),
           TextButton(
             onPressed: () {
               context.read<ExamService>().cancelExam();
@@ -420,9 +543,9 @@ class _ExamQuestionPagerState extends State<_ExamQuestionPager> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // 进度指示
+        // 进度条
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Row(
             children: [
               Text(
@@ -431,8 +554,14 @@ class _ExamQuestionPagerState extends State<_ExamQuestionPager> {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: LinearProgressIndicator(
-                  value: (_currentIndex + 1) / widget.questions.length,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: LinearProgressIndicator(
+                    value: (_currentIndex + 1) / widget.questions.length,
+                    backgroundColor: Colors.grey[200],
+                    valueColor: const AlwaysStoppedAnimation(Color(0xFF667eea)),
+                    minHeight: 6,
+                  ),
                 ),
               ),
             ],
@@ -460,7 +589,7 @@ class _ExamQuestionPagerState extends State<_ExamQuestionPager> {
         ),
         // 翻页按钮
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -513,9 +642,8 @@ class _ExamReportScreenState extends State<ExamReportScreen> {
   Future<void> _loadCategoryStats() async {
     setState(() => _loadingStats = true);
     try {
-      final stats = await context
-          .read<ExamService>()
-          .getCategoryStats(widget.exam.id!);
+      final stats =
+          await context.read<ExamService>().getCategoryStats(widget.exam.id!);
       if (mounted) {
         setState(() {
           _categoryStats = stats;
@@ -530,11 +658,16 @@ class _ExamReportScreenState extends State<ExamReportScreen> {
   @override
   Widget build(BuildContext context) {
     final exam = widget.exam;
-    final scoreColor = exam.score >= 80
-        ? Colors.green
+    final gradient = exam.score >= 80
+        ? AppTheme.successGradient
         : exam.score >= 60
-            ? Colors.orange
-            : Colors.red;
+            ? AppTheme.warningGradient
+            : AppTheme.warmGradient;
+    final label = exam.score >= 80
+        ? '优秀！'
+        : exam.score >= 60
+            ? '良好'
+            : '继续加油';
 
     return Scaffold(
       appBar: AppBar(
@@ -547,79 +680,85 @@ class _ExamReportScreenState extends State<ExamReportScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
         child: Column(
           children: [
-            // 分数卡片
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  children: [
-                    Text(
-                      '${exam.score.toStringAsFixed(1)}分',
-                      style: TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: scoreColor,
+            // 渐变分数卡片
+            GradientCard(
+              gradient: gradient,
+              borderRadius: AppTheme.radiusLarge,
+              padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 24),
+              child: Column(
+                children: [
+                  Text(
+                    '${exam.score.toStringAsFixed(1)}分',
+                    style: const TextStyle(
+                      fontSize: 52,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _ReportItem(label: '科目', value: exam.subject),
+                      _ReportItem(label: '题量', value: '${exam.totalQuestions}题'),
+                      _ReportItem(
+                        label: '用时',
+                        value: _formatDuration(exam.startedAt, exam.finishedAt),
                       ),
-                    ),
-                    Text(
-                      exam.score >= 80
-                          ? '优秀！'
-                          : exam.score >= 60
-                              ? '良好'
-                              : '继续加油',
-                      style: TextStyle(color: scoreColor, fontSize: 18),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _ReportItem(label: '科目', value: exam.subject),
-                        _ReportItem(label: '题量', value: '${exam.totalQuestions}题'),
-                        _ReportItem(
-                          label: '用时',
-                          value: _formatDuration(
-                              exam.startedAt, exam.finishedAt),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 16),
-            // 行测细分柱状图（仅行测科目且有分类数据时显示）
+            const SizedBox(height: 20),
+            // 行测细分柱状图
             if (exam.subject == '行测' && !_loadingStats) ...[
               if (_categoryStats.isNotEmpty) ...[
-                Text(
-                  '分类得分细分',
-                  style: Theme.of(context).textTheme.titleMedium,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '分类得分细分',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
                 ),
-                const SizedBox(height: 8),
-                _CategoryBarChart(categoryStats: _categoryStats),
-                const SizedBox(height: 16),
+                const SizedBox(height: 10),
+                GlassCard(
+                  padding: const EdgeInsets.all(16),
+                  child: _CategoryBarChart(categoryStats: _categoryStats),
+                ),
+                const SizedBox(height: 20),
               ],
             ] else if (_loadingStats) ...[
               const Center(child: CircularProgressIndicator()),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
             ],
             // AI 分析按钮
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: () => AiChatDialog.show(
-                  context,
-                  initialPrompt: '我刚完成了一次${exam.subject}模拟考试，'
-                      '共${exam.totalQuestions}题，得分${exam.score.toStringAsFixed(1)}分。'
-                      '${_categoryStats.isNotEmpty ? "各分类得分：${_categoryStats.entries.map((e) => "${e.key}：${e.value['correct']}/${e.value['total']}").join("，")}。" : ""}'
-                      '请分析我的薄弱点并给出针对性复习建议。',
-                  title: 'AI 分析报告',
-                ),
-                icon: const Icon(Icons.smart_toy),
-                label: const Text('AI 分析薄弱点'),
+            GradientButton(
+              onPressed: () => AiChatDialog.show(
+                context,
+                initialPrompt: '我刚完成了一次${exam.subject}模拟考试，'
+                    '共${exam.totalQuestions}题，得分${exam.score.toStringAsFixed(1)}分。'
+                    '${_categoryStats.isNotEmpty ? "各分类得分：${_categoryStats.entries.map((e) => "${e.key}：${e.value['correct']}/${e.value['total']}").join("，")}。" : ""}'
+                    '请分析我的薄弱点并给出针对性复习建议。',
+                title: 'AI 分析报告',
               ),
+              label: 'AI 分析薄弱点',
+              icon: Icons.smart_toy,
+              width: double.infinity,
+              gradient: AppTheme.infoGradient,
             ),
           ],
         ),
@@ -639,7 +778,7 @@ class _ExamReportScreenState extends State<ExamReportScreen> {
   }
 }
 
-/// 行测分类柱状图
+/// 行测分类柱状图（渐变颜色）
 class _CategoryBarChart extends StatelessWidget {
   final Map<String, Map<String, int>> categoryStats;
   const _CategoryBarChart({required this.categoryStats});
@@ -649,6 +788,15 @@ class _CategoryBarChart extends StatelessWidget {
     final categories = categoryStats.keys.toList();
     if (categories.isEmpty) return const SizedBox.shrink();
 
+    // 渐变颜色列表
+    const barColors = [
+      Color(0xFF667eea),
+      Color(0xFF0ED2F7),
+      Color(0xFF43E97B),
+      Color(0xFFF7971E),
+      Color(0xFFf093fb),
+    ];
+
     final barGroups = categories.asMap().entries.map((entry) {
       final i = entry.key;
       final cat = entry.value;
@@ -656,35 +804,31 @@ class _CategoryBarChart extends StatelessWidget {
       final total = (stats['total'] ?? 0).toDouble();
       final correct = (stats['correct'] ?? 0).toDouble();
       final accuracy = total == 0 ? 0.0 : correct / total;
-
-      // 颜色根据正确率判断
-      final color = accuracy >= 0.8
-          ? Colors.green
-          : accuracy >= 0.6
-              ? Colors.orange
-              : Colors.red;
+      final color = barColors[i % barColors.length];
 
       return BarChartGroupData(
         x: i,
         barRods: [
           BarChartRodData(
             toY: accuracy * 100,
-            color: color,
+            gradient: LinearGradient(
+              colors: [color, color.withValues(alpha: 0.6)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
             width: 28,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
             backDrawRodData: BackgroundBarChartRodData(
               show: true,
               toY: 100,
-              color: Colors.grey.withValues(alpha: 0.1),
+              color: Colors.grey.withValues(alpha: 0.08),
             ),
           ),
         ],
       );
     }).toList();
 
-    // 截断分类名（防止太长）
-    String shortCat(String cat) =>
-        cat.length > 4 ? cat.substring(0, 4) : cat;
+    String shortCat(String cat) => cat.length > 4 ? cat.substring(0, 4) : cat;
 
     return SizedBox(
       height: 220,
@@ -729,24 +873,23 @@ class _CategoryBarChart extends StatelessWidget {
                   },
                 ),
               ),
-              topTitles: const AxisTitles(
-                  sideTitles: SideTitles(showTitles: false)),
-              rightTitles: const AxisTitles(
-                  sideTitles: SideTitles(showTitles: false)),
+              topTitles:
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              rightTitles:
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
             ),
             gridData: FlGridData(
               show: true,
               drawVerticalLine: false,
               getDrawingHorizontalLine: (value) => FlLine(
-                color: Colors.grey.withValues(alpha: 0.2),
+                color: Colors.grey.withValues(alpha: 0.15),
                 strokeWidth: 1,
               ),
             ),
             borderData: FlBorderData(show: false),
             barTouchData: BarTouchData(
               touchTooltipData: BarTouchTooltipData(
-                getTooltipColor: (_) =>
-                    Theme.of(context).colorScheme.surface,
+                getTooltipColor: (_) => Theme.of(context).colorScheme.surface,
                 getTooltipItem: (group, groupIndex, rod, rodIndex) {
                   final cat = categories[group.x.toInt()];
                   final stats = categoryStats[cat]!;
@@ -776,9 +919,19 @@ class _ReportItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        Text(
+          value,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: Colors.white,
+          ),
+        ),
         const SizedBox(height: 4),
-        Text(label, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.white70, fontSize: 12),
+        ),
       ],
     );
   }

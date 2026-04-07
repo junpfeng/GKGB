@@ -1,12 +1,13 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/llm/llm_manager.dart';
 import '../services/llm/llm_provider.dart';
+import '../theme/app_theme.dart';
 
-/// AI 对话弹窗
-/// 用于题目讲解、追问、申论批改等场景
+/// AI 对话弹窗（毛玻璃底部弹窗 + 渐变发送按钮）
 class AiChatDialog extends StatefulWidget {
-  final String initialPrompt; // 初始系统提示或问题
+  final String initialPrompt;
   final String title;
 
   const AiChatDialog({
@@ -15,7 +16,6 @@ class AiChatDialog extends StatefulWidget {
     this.title = 'AI 讲解',
   });
 
-  /// 打开 AI 对话弹窗
   static Future<void> show(
     BuildContext context, {
     required String initialPrompt,
@@ -46,7 +46,6 @@ class _AiChatDialogState extends State<AiChatDialog> {
   @override
   void initState() {
     super.initState();
-    // 自动发送初始问题
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _sendMessage(widget.initialPrompt, showInChat: false);
     });
@@ -124,111 +123,180 @@ class _AiChatDialogState extends State<AiChatDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return DraggableScrollableSheet(
       initialChildSize: 0.75,
       minChildSize: 0.4,
       maxChildSize: 0.95,
       builder: (_, scrollController) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-          child: Column(
-            children: [
-              // 拖动指示条
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(2),
+        return ClipRRect(
+          borderRadius:
+              const BorderRadius.vertical(top: Radius.circular(24)),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+            child: Container(
+              decoration: BoxDecoration(
+                color: isDark
+                    ? const Color(0xFF0F1E2E).withValues(alpha: 0.9)
+                    : Colors.white.withValues(alpha: 0.92),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(24)),
+                border: Border(
+                  top: BorderSide(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.08)
+                        : Colors.black.withValues(alpha: 0.05),
+                    width: 0.5,
+                  ),
                 ),
               ),
-              // 标题栏
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                child: Row(
-                  children: [
-                    const Icon(Icons.smart_toy, size: 20),
-                    const SizedBox(width: 8),
-                    Text(
-                      widget.title,
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              child: Column(
+                children: [
+                  // 拖动指示条
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      gradient: AppTheme.primaryGradient,
+                      borderRadius: BorderRadius.circular(2),
                     ),
-                    const Spacer(),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-              ),
-              const Divider(height: 1),
-              // 消息区域
-              Expanded(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(12),
-                  itemCount: _messages.length + (_isLoading || _streamingResponse.isNotEmpty ? 1 : 0),
-                  itemBuilder: (_, index) {
-                    if (index < _messages.length) {
-                      return _MessageBubble(message: _messages[index]);
-                    }
-                    // 流式响应气泡
-                    return _MessageBubble(
-                      message: ChatMessage(
-                        role: 'assistant',
-                        content: _streamingResponse.isEmpty
-                            ? (_isLoading ? '思考中...' : '')
-                            : _streamingResponse,
-                      ),
-                      isStreaming: _isLoading,
-                    );
-                  },
-                ),
-              ),
-              // 输入框
-              const Divider(height: 1),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 12,
-                  right: 12,
-                  top: 8,
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 8,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _inputController,
-                        decoration: InputDecoration(
-                          hintText: '继续追问...',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
+                  ),
+                  // 标题栏
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 8, 8),
+                    child: Row(
+                      children: [
+                        // AI 图标（渐变）
+                        Container(
+                          width: 28,
+                          height: 28,
+                          decoration: const BoxDecoration(
+                            gradient: AppTheme.primaryGradient,
+                            shape: BoxShape.circle,
                           ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                          isDense: true,
+                          child: const Icon(Icons.smart_toy,
+                              size: 16, color: Colors.white),
                         ),
-                        onSubmitted: (text) => _sendMessage(text),
-                        enabled: !_isLoading,
-                      ),
+                        const SizedBox(width: 8),
+                        Text(
+                          widget.title,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    IconButton.filled(
-                      onPressed: _isLoading
-                          ? null
-                          : () => _sendMessage(_inputController.text),
-                      icon: const Icon(Icons.send),
+                  ),
+                  Divider(
+                    height: 1,
+                    color: isDark ? AppTheme.dividerDark : AppTheme.dividerLight,
+                  ),
+                  // 消息区域
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(12),
+                      itemCount: _messages.length +
+                          (_isLoading || _streamingResponse.isNotEmpty ? 1 : 0),
+                      itemBuilder: (_, index) {
+                        if (index < _messages.length) {
+                          return _MessageBubble(message: _messages[index]);
+                        }
+                        return _MessageBubble(
+                          message: ChatMessage(
+                            role: 'assistant',
+                            content: _streamingResponse.isEmpty
+                                ? (_isLoading ? '思考中...' : '')
+                                : _streamingResponse,
+                          ),
+                          isStreaming: _isLoading,
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                  // 输入框区域
+                  Divider(
+                    height: 1,
+                    color: isDark ? AppTheme.dividerDark : AppTheme.dividerLight,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 12,
+                      right: 12,
+                      top: 10,
+                      bottom: MediaQuery.of(context).viewInsets.bottom + 12,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _inputController,
+                            decoration: InputDecoration(
+                              hintText: '继续追问...',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(24),
+                                borderSide: BorderSide(
+                                  color: isDark
+                                      ? AppTheme.dividerDark
+                                      : AppTheme.dividerLight,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 10,
+                              ),
+                              isDense: true,
+                            ),
+                            onSubmitted: (text) => _sendMessage(text),
+                            enabled: !_isLoading,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        // 渐变发送按钮
+                        GestureDetector(
+                          onTap: _isLoading
+                              ? null
+                              : () => _sendMessage(_inputController.text),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            width: 44,
+                            height: 44,
+                            decoration: BoxDecoration(
+                              gradient: _isLoading
+                                  ? const LinearGradient(
+                                      colors: [Colors.grey, Colors.grey])
+                                  : AppTheme.primaryGradient,
+                              shape: BoxShape.circle,
+                              boxShadow: _isLoading
+                                  ? null
+                                  : [
+                                      BoxShadow(
+                                        color: const Color(0xFF667eea)
+                                            .withValues(alpha: 0.4),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
+                            ),
+                            child: const Icon(Icons.send,
+                                color: Colors.white, size: 20),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         );
       },
@@ -245,28 +313,53 @@ class _MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isUser = message.role == 'user';
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment:
+            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!isUser) ...[
-            CircleAvatar(
-              radius: 14,
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-              child: const Icon(Icons.smart_toy, size: 16),
+            Container(
+              width: 28,
+              height: 28,
+              decoration: const BoxDecoration(
+                gradient: AppTheme.primaryGradient,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.smart_toy, size: 14, color: Colors.white),
             ),
             const SizedBox(width: 8),
           ],
           Flexible(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: BoxDecoration(
+                gradient: isUser ? AppTheme.primaryGradient : null,
                 color: isUser
-                    ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
-                    : Theme.of(context).colorScheme.surfaceContainerLow,
-                borderRadius: BorderRadius.circular(12),
+                    ? null
+                    : (isDark
+                        ? Colors.white.withValues(alpha: 0.08)
+                        : const Color(0xFF667eea).withValues(alpha: 0.06)),
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(16),
+                  topRight: const Radius.circular(16),
+                  bottomLeft: Radius.circular(isUser ? 16 : 4),
+                  bottomRight: Radius.circular(isUser ? 4 : 16),
+                ),
+                boxShadow: isUser
+                    ? [
+                        BoxShadow(
+                          color: const Color(0xFF667eea).withValues(alpha: 0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        )
+                      ]
+                    : null,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -275,15 +368,22 @@ class _MessageBubble extends StatelessWidget {
                   Flexible(
                     child: Text(
                       message.content,
-                      style: const TextStyle(fontSize: 14, height: 1.5),
+                      style: TextStyle(
+                        fontSize: 14,
+                        height: 1.5,
+                        color: isUser ? Colors.white : null,
+                      ),
                     ),
                   ),
                   if (isStreaming) ...[
                     const SizedBox(width: 4),
-                    const SizedBox(
+                    SizedBox(
                       width: 12,
                       height: 12,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: isUser ? Colors.white : const Color(0xFF667eea),
+                      ),
                     ),
                   ],
                 ],
@@ -292,9 +392,20 @@ class _MessageBubble extends StatelessWidget {
           ),
           if (isUser) ...[
             const SizedBox(width: 8),
-            const CircleAvatar(
-              radius: 14,
-              child: Icon(Icons.person, size: 16),
+            Container(
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.15)
+                    : const Color(0xFF667eea).withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.person,
+                size: 16,
+                color: isDark ? Colors.white70 : const Color(0xFF667eea),
+              ),
             ),
           ],
         ],

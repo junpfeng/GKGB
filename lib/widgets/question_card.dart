@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/question.dart';
 import '../services/llm/llm_manager.dart';
+import '../theme/app_theme.dart';
+import 'glass_card.dart';
 import 'ai_chat_dialog.dart';
 
 /// 题目卡片组件
 /// 支持单选、多选、判断、主观题
 class QuestionCard extends StatelessWidget {
   final Question question;
-  final int index;             // 题号（1-based）
-  final String? userAnswer;    // 当前选择
-  final bool showAnswer;       // 是否显示答案解析
-  final bool readOnly;         // 只读模式（查看错题/解析时）
+  final int index;
+  final String? userAnswer;
+  final bool showAnswer;
+  final bool readOnly;
   final void Function(String answer)? onAnswerChanged;
 
   const QuestionCard({
@@ -26,66 +28,62 @@ class QuestionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GlassCard(
       margin: const EdgeInsets.only(bottom: 12),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 题号 + 类型标签
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    '第 $index 题',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      fontWeight: FontWeight.bold,
-                    ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 题号 + 类型标签
+          Row(
+            children: [
+              // 渐变题号徽章
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                decoration: BoxDecoration(
+                  gradient: AppTheme.primaryGradient,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  '第 $index 题',
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(width: 8),
-                _TypeBadge(type: question.type),
-                const Spacer(),
-                Text(
-                  '难度：${'★' * question.difficulty}',
-                  style: TextStyle(fontSize: 12, color: Colors.amber[700]),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            // 题目内容
-            Text(
-              question.content,
-              style: const TextStyle(fontSize: 15, height: 1.6),
-            ),
-            const SizedBox(height: 12),
-            // 选项区域
-            _buildOptions(context),
-            // 答案解析（答题后显示）
-            if (showAnswer) ...[
-              const Divider(height: 24),
-              _buildAnswerSection(context),
-            ],
-            // 主观题显示 AI 批改按钮（有答案时）
-            if (question.type == 'subjective' &&
-                userAnswer != null &&
-                userAnswer!.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              _AiGradeButton(
-                question: question,
-                userAnswer: userAnswer!,
+              ),
+              const SizedBox(width: 8),
+              _TypeBadge(type: question.type),
+              const Spacer(),
+              Text(
+                '难度：${'★' * question.difficulty}',
+                style: const TextStyle(fontSize: 12, color: Color(0xFFF7971E)),
               ),
             ],
+          ),
+          const SizedBox(height: 12),
+          // 题目内容
+          Text(
+            question.content,
+            style: const TextStyle(fontSize: 15, height: 1.6),
+          ),
+          const SizedBox(height: 12),
+          // 选项区域
+          _buildOptions(context),
+          // 答案解析（答题后显示）
+          if (showAnswer) ...[
+            const Divider(height: 24),
+            _buildAnswerSection(context),
           ],
-        ),
+          // 主观题显示 AI 批改按钮
+          if (question.type == 'subjective' &&
+              userAnswer != null &&
+              userAnswer!.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            _AiGradeButton(question: question, userAnswer: userAnswer!),
+          ],
+        ],
       ),
     );
   }
@@ -136,40 +134,57 @@ class QuestionCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Icon(
-              isCorrect ? Icons.check_circle : Icons.cancel,
-              color: isCorrect ? Colors.green : Colors.red,
-              size: 20,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              isCorrect ? '回答正确' : '回答错误',
-              style: TextStyle(
-                color: isCorrect ? Colors.green : Colors.red,
-                fontWeight: FontWeight.bold,
+        // 对/错提示条
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            gradient: isCorrect ? AppTheme.successGradient : AppTheme.warmGradient,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                isCorrect ? Icons.check_circle : Icons.cancel,
+                color: Colors.white,
+                size: 18,
               ),
-            ),
-            const Spacer(),
-            Text(
-              '正确答案：${question.answer}',
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-            ),
-          ],
+              const SizedBox(width: 6),
+              Text(
+                isCorrect ? '回答正确' : '回答错误',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '正确答案：${question.answer}',
+                style: const TextStyle(
+                    color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
         ),
-        if (question.explanation != null && question.explanation!.isNotEmpty) ...[
+        if (question.explanation != null &&
+            question.explanation!.isNotEmpty) ...[
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surfaceContainerLow,
               borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: const Color(0xFF667eea).withValues(alpha: 0.15),
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('解析：', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                const Text(
+                  '解析：',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                ),
                 const SizedBox(height: 4),
                 Text(
                   question.explanation!,
@@ -190,21 +205,29 @@ class _TypeBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (label, color) = switch (type) {
-      'single' => ('单选', Colors.blue),
-      'multiple' => ('多选', Colors.purple),
-      'judge' => ('判断', Colors.orange),
-      'subjective' => ('主观', Colors.red),
-      _ => ('未知', Colors.grey),
+    final (label, gradient) = switch (type) {
+      'single' => ('单选', AppTheme.primaryGradient),
+      'multiple' => (
+          '多选',
+          const LinearGradient(colors: [Color(0xFF8E54E9), Color(0xFF4776E6)])
+        ),
+      'judge' => ('判断', AppTheme.warningGradient),
+      'subjective' => ('主观', AppTheme.warmGradient),
+      _ => (
+          '未知',
+          const LinearGradient(colors: [Colors.grey, Colors.grey])
+        ),
     };
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: color.withValues(alpha: 0.5)),
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(5),
       ),
-      child: Text(label, style: TextStyle(fontSize: 11, color: color)),
+      child: Text(
+        label,
+        style: const TextStyle(fontSize: 10, color: Colors.white),
+      ),
     );
   }
 }
@@ -236,54 +259,60 @@ class _SingleChoiceOptions extends StatelessWidget {
         final isCorrect = showAnswer && answer == label;
         final isWrong = showAnswer && isSelected && answer != label;
 
-        Color? tileColor;
-        if (isCorrect) tileColor = Colors.green.withValues(alpha: 0.1);
-        if (isWrong) tileColor = Colors.red.withValues(alpha: 0.1);
+        // 渐变高亮选项
+        Color? bgColor;
+        if (isCorrect) bgColor = const Color(0xFF43E97B).withValues(alpha: 0.12);
+        if (isWrong) bgColor = const Color(0xFFf5576c).withValues(alpha: 0.12);
 
         return Container(
           margin: const EdgeInsets.only(bottom: 6),
           decoration: BoxDecoration(
-            color: tileColor,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: isSelected ? Theme.of(context).colorScheme.primary : Colors.transparent,
-              width: isSelected ? 1.5 : 0,
-            ),
+            color: bgColor,
+            borderRadius: BorderRadius.circular(10),
+            border: isSelected
+                ? Border.all(color: const Color(0xFF667eea), width: 1.5)
+                : Border.all(
+                    color: Colors.grey.withValues(alpha: 0.15), width: 1),
           ),
           child: GestureDetector(
             onTap: readOnly ? null : () => onChanged?.call(label),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               child: Row(
                 children: [
-                  // 自定义单选标记，避免使用已弃用的 Radio.groupValue
+                  // 自定义单选标记
                   Container(
                     width: 20,
                     height: 20,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: isSelected
-                            ? Theme.of(context).colorScheme.primary
-                            : Colors.grey,
-                        width: 2,
-                      ),
+                      gradient: isSelected ? AppTheme.primaryGradient : null,
+                      border: isSelected
+                          ? null
+                          : Border.all(
+                              color: Colors.grey.withValues(alpha: 0.5),
+                              width: 1.5,
+                            ),
                     ),
                     child: isSelected
-                        ? Center(
-                            child: Container(
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                          )
+                        ? const Icon(Icons.check, size: 12, color: Colors.white)
                         : null,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(child: Text('$label. ${options[i]}', style: const TextStyle(fontSize: 14))),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      '$label. ${options[i]}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: isCorrect
+                            ? const Color(0xFF2E7D32)
+                            : isWrong
+                                ? const Color(0xFFB71C1C)
+                                : null,
+                        fontWeight: isSelected ? FontWeight.w500 : null,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -322,17 +351,18 @@ class _MultipleChoiceOptions extends StatelessWidget {
         final label = labels[i];
         final isSelected = selected.contains(label);
         final isCorrect = showAnswer && correctSet.contains(label);
-        final isWrong = showAnswer && isSelected && !correctSet.contains(label);
+        final isWrong =
+            showAnswer && isSelected && !correctSet.contains(label);
 
-        Color? tileColor;
-        if (isCorrect) tileColor = Colors.green.withValues(alpha: 0.1);
-        if (isWrong) tileColor = Colors.red.withValues(alpha: 0.1);
+        Color? bgColor;
+        if (isCorrect) bgColor = const Color(0xFF43E97B).withValues(alpha: 0.12);
+        if (isWrong) bgColor = const Color(0xFFf5576c).withValues(alpha: 0.12);
 
         return Container(
           margin: const EdgeInsets.only(bottom: 6),
           decoration: BoxDecoration(
-            color: tileColor,
-            borderRadius: BorderRadius.circular(8),
+            color: bgColor,
+            borderRadius: BorderRadius.circular(10),
           ),
           child: CheckboxListTile(
             value: isSelected,
@@ -345,13 +375,25 @@ class _MultipleChoiceOptions extends StatelessWidget {
                     } else {
                       newSet.remove(label);
                     }
-                    // 按字母顺序排列
                     final sorted = newSet.toList()..sort();
                     onChanged?.call(sorted.join(''));
                   },
-            title: Text('$label. ${options[i]}', style: const TextStyle(fontSize: 14)),
+            title: Text(
+              '$label. ${options[i]}',
+              style: TextStyle(
+                fontSize: 14,
+                color: isCorrect
+                    ? const Color(0xFF2E7D32)
+                    : isWrong
+                        ? const Color(0xFFB71C1C)
+                        : null,
+              ),
+            ),
             dense: true,
             contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+            activeColor: const Color(0xFF667eea),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)),
           ),
         );
       }),
@@ -423,29 +465,32 @@ class _JudgeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color? bgColor;
-    Color? borderColor;
-    if (isCorrect) {
-      bgColor = Colors.green.withValues(alpha: 0.15);
-      borderColor = Colors.green;
-    } else if (isWrong) {
-      bgColor = Colors.red.withValues(alpha: 0.15);
-      borderColor = Colors.red;
-    } else if (selected) {
-      borderColor = Theme.of(context).colorScheme.primary;
-    }
+    LinearGradient? gradient;
+    if (isCorrect) gradient = AppTheme.successGradient;
+    if (isWrong) gradient = AppTheme.warmGradient;
+    if (selected && !isCorrect && !isWrong) gradient = AppTheme.primaryGradient;
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: borderColor ?? Colors.grey.withValues(alpha: 0.3),
-            width: selected || isCorrect ? 2 : 1,
-          ),
+          gradient: gradient,
+          color: gradient == null ? null : null,
+          borderRadius: BorderRadius.circular(10),
+          border: gradient == null
+              ? Border.all(color: Colors.grey.withValues(alpha: 0.25), width: 1)
+              : null,
+          boxShadow: gradient != null
+              ? [
+                  BoxShadow(
+                    color: gradient.colors.first.withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  )
+                ]
+              : null,
         ),
         child: Center(
           child: Text(
@@ -453,13 +498,7 @@ class _JudgeButton extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-              color: isCorrect
-                  ? Colors.green[700]
-                  : isWrong
-                      ? Colors.red[700]
-                      : selected
-                          ? Theme.of(context).colorScheme.primary
-                          : null,
+              color: gradient != null ? Colors.white : null,
             ),
           ),
         ),
@@ -508,7 +547,7 @@ class _SubjectiveInputState extends State<_SubjectiveInput> {
       decoration: InputDecoration(
         hintText: '请在此输入答案...',
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(10),
         ),
         contentPadding: const EdgeInsets.all(12),
       ),
@@ -517,7 +556,7 @@ class _SubjectiveInputState extends State<_SubjectiveInput> {
   }
 }
 
-/// 主观题 AI 批改按钮（仅在有答案时显示）
+/// 主观题 AI 批改按钮
 class _AiGradeButton extends StatelessWidget {
   final Question question;
   final String userAnswer;
@@ -545,7 +584,6 @@ class _AiGradeButton extends StatelessWidget {
   void _showGrading(BuildContext context) {
     final llmManager = context.read<LlmManager>();
 
-    // 检查是否支持流式批改
     if (!llmManager.hasProvider) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('请先在"我的"页面配置 AI 模型')),
@@ -553,7 +591,6 @@ class _AiGradeButton extends StatelessWidget {
       return;
     }
 
-    // 通过 AiChatDialog 展示流式批改结果（复用对话界面）
     AiChatDialog.show(
       context,
       initialPrompt: '''请批改以下主观题答案：

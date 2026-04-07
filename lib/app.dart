@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
+import 'theme/app_theme.dart';
 
+/// 应用入口 Widget，配置全局主题
 class ExamPrepApp extends StatelessWidget {
   const ExamPrepApp({super.key});
 
@@ -8,16 +10,8 @@ class ExamPrepApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '考公考编智能助手',
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xFF1565C0),
-        useMaterial3: true,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        colorSchemeSeed: const Color(0xFF1565C0),
-        useMaterial3: true,
-        brightness: Brightness.dark,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
     );

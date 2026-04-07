@@ -4,20 +4,65 @@ import '../services/question_service.dart';
 import '../models/question.dart';
 import '../widgets/question_card.dart';
 import '../widgets/ai_chat_dialog.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/gradient_button.dart';
+import '../theme/app_theme.dart';
 
 /// 刷题页：科目选择 → 题目列表 → 答题界面
 class PracticeScreen extends StatelessWidget {
   const PracticeScreen({super.key});
 
-  // 科目配置
+  // 科目配置（增加渐变色映射）
   static const List<Map<String, dynamic>> _subjects = [
-    {'subject': '行测', 'category': '言语理解', 'label': '言语理解', 'icon': Icons.text_fields, 'color': 0xFF1565C0},
-    {'subject': '行测', 'category': '数量关系', 'label': '数量关系', 'icon': Icons.calculate, 'color': 0xFFE65100},
-    {'subject': '行测', 'category': '判断推理', 'label': '判断推理', 'icon': Icons.psychology, 'color': 0xFF6A1B9A},
-    {'subject': '行测', 'category': '资料分析', 'label': '资料分析', 'icon': Icons.analytics, 'color': 0xFF2E7D32},
-    {'subject': '行测', 'category': '常识判断', 'label': '常识判断', 'icon': Icons.lightbulb, 'color': 0xFFF57F17},
-    {'subject': '申论', 'category': '申论', 'label': '申论写作', 'icon': Icons.article, 'color': 0xFFC62828},
-    {'subject': '公基', 'category': '公共基础知识', 'label': '公共基础', 'icon': Icons.menu_book, 'color': 0xFF00695C},
+    {
+      'subject': '行测',
+      'category': '言语理解',
+      'label': '言语理解',
+      'icon': Icons.text_fields,
+      'gradient': [Color(0xFF667eea), Color(0xFF764ba2)],
+    },
+    {
+      'subject': '行测',
+      'category': '数量关系',
+      'label': '数量关系',
+      'icon': Icons.calculate,
+      'gradient': [Color(0xFFf093fb), Color(0xFFf5576c)],
+    },
+    {
+      'subject': '行测',
+      'category': '判断推理',
+      'label': '判断推理',
+      'icon': Icons.psychology,
+      'gradient': [Color(0xFF4776E6), Color(0xFF8E54E9)],
+    },
+    {
+      'subject': '行测',
+      'category': '资料分析',
+      'label': '资料分析',
+      'icon': Icons.analytics,
+      'gradient': [Color(0xFF0ED2F7), Color(0xFF09A6C3)],
+    },
+    {
+      'subject': '行测',
+      'category': '常识判断',
+      'label': '常识判断',
+      'icon': Icons.lightbulb,
+      'gradient': [Color(0xFFF7971E), Color(0xFFFFD200)],
+    },
+    {
+      'subject': '申论',
+      'category': '申论',
+      'label': '申论写作',
+      'icon': Icons.article,
+      'gradient': [Color(0xFF43E97B), Color(0xFF38F9D7)],
+    },
+    {
+      'subject': '公基',
+      'category': '公共基础知识',
+      'label': '公共基础',
+      'icon': Icons.menu_book,
+      'gradient': [Color(0xFF09A6C3), Color(0xFF0ED2F7)],
+    },
   ];
 
   @override
@@ -27,11 +72,15 @@ class PracticeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('刷题练习'),
-          bottom: const TabBar(
-            tabs: [
+          bottom: TabBar(
+            tabs: const [
               Tab(text: '科目练习'),
               Tab(text: '错题本'),
             ],
+            indicatorSize: TabBarIndicatorSize.label,
+            indicatorWeight: 3,
+            indicatorColor: const Color(0xFF667eea),
+            dividerColor: Colors.transparent,
           ),
         ),
         body: TabBarView(
@@ -54,24 +103,24 @@ class _SubjectList extends StatelessWidget {
     return Consumer<QuestionService>(
       builder: (context, service, _) {
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: subjects.length + 1, // +1 for favorites
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+          itemCount: subjects.length + 1,
           itemBuilder: (context, index) {
             if (index == subjects.length) {
               return _buildFavoritesCard(context);
             }
             final subject = subjects[index];
-            final color = Color(subject['color'] as int);
-            return Card(
-              margin: const EdgeInsets.only(bottom: 12),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: color.withValues(alpha: 0.1),
-                  child: Icon(subject['icon'] as IconData, color: color),
-                ),
-                title: Text(subject['label'] as String),
-                subtitle: const Text('点击开始练习'),
-                trailing: const Icon(Icons.chevron_right),
+            final gradientColors = subject['gradient'] as List<Color>;
+            final gradient = LinearGradient(
+              colors: gradientColors,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            );
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: AccentCard(
+                accentGradient: gradient,
+                accentWidth: 5,
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -82,6 +131,52 @@ class _SubjectList extends StatelessWidget {
                     ),
                   ),
                 ),
+                child: Row(
+                  children: [
+                    // 渐变图标容器
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: gradientColors
+                              .map((c) => c.withValues(alpha: 0.15))
+                              .toList(),
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        subject['icon'] as IconData,
+                        color: gradientColors.first,
+                        size: 22,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            subject['label'] as String,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            '点击开始练习',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(Icons.chevron_right, color: Colors.grey[400], size: 20),
+                  ],
+                ),
               ),
             );
           },
@@ -91,19 +186,47 @@ class _SubjectList extends StatelessWidget {
   }
 
   Widget _buildFavoritesCard(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
-        leading: const CircleAvatar(
-          backgroundColor: Color(0x1A9E9E9E),
-          child: Icon(Icons.bookmark, color: Colors.grey),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: AccentCard(
+        accentGradient: const LinearGradient(
+          colors: [Color(0xFF9B59B6), Color(0xFF6C3483)],
         ),
-        title: const Text('我的收藏'),
-        subtitle: const Text('查看收藏的题目'),
-        trailing: const Icon(Icons.chevron_right),
+        accentWidth: 5,
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => const FavoriteListScreen()),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: const Color(0x1A9B59B6),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.bookmark, color: Color(0xFF9B59B6), size: 22),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    '我的收藏',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    '查看收藏的题目',
+                    style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right, color: Colors.grey[400], size: 20),
+          ],
         ),
       ),
     );
@@ -142,7 +265,7 @@ class _WrongQuestionListState extends State<_WrongQuestionList> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.check_circle_outline, size: 64, color: Colors.green),
+            Icon(Icons.check_circle_outline, size: 64, color: Color(0xFF43E97B)),
             SizedBox(height: 16),
             Text('暂无错题，继续加油！'),
           ],
@@ -150,25 +273,45 @@ class _WrongQuestionListState extends State<_WrongQuestionList> {
       );
     }
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       itemCount: _questions.length,
       itemBuilder: (context, index) {
         final q = _questions[index];
-        return Card(
-          margin: const EdgeInsets.only(bottom: 8),
-          child: ListTile(
-            title: Text(
-              q.content,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            subtitle: Text('${q.subject} · ${q.category}'),
-            trailing: const Icon(Icons.chevron_right),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: AccentCard(
+            // 错题使用暖色渐变标记
+            accentGradient: AppTheme.warmGradient,
+            accentWidth: 4,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => QuestionDetailScreen(question: q, showAnswerImmediately: true),
+                builder: (_) =>
+                    QuestionDetailScreen(question: q, showAnswerImmediately: true),
               ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        q.content,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${q.subject} · ${q.category}',
+                        style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(Icons.chevron_right, color: Colors.grey[400], size: 18),
+              ],
             ),
           ),
         );
@@ -225,19 +368,23 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
         title: Text(widget.title),
         actions: [
           if (_questions.isNotEmpty)
-            FilledButton.tonal(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => PracticeSessionScreen(
-                    questions: _questions,
-                    title: widget.title,
+            Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: GradientButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PracticeSessionScreen(
+                      questions: _questions,
+                      title: widget.title,
+                    ),
                   ),
                 ),
+                label: '开始练习',
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                borderRadius: 10,
               ),
-              child: const Text('开始练习'),
             ),
-          const SizedBox(width: 8),
         ],
       ),
       body: _loading
@@ -245,29 +392,54 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
           : _questions.isEmpty
               ? const Center(child: Text('暂无题目，请检查题库'))
               : ListView.builder(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
                   itemCount: _questions.length,
                   itemBuilder: (context, index) {
                     final q = _questions[index];
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 8),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 14,
-                          child: Text('${index + 1}', style: const TextStyle(fontSize: 12)),
-                        ),
-                        title: Text(
-                          q.content,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 13),
-                        ),
-                        trailing: const Icon(Icons.chevron_right, size: 18),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: GlassCard(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 10),
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) => QuestionDetailScreen(question: q),
                           ),
+                        ),
+                        child: Row(
+                          children: [
+                            // 题号圆形
+                            Container(
+                              width: 28,
+                              height: 28,
+                              decoration: const BoxDecoration(
+                                gradient: AppTheme.primaryGradient,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '${index + 1}',
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                q.content,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 13),
+                              ),
+                            ),
+                            Icon(Icons.chevron_right,
+                                color: Colors.grey[400], size: 16),
+                          ],
                         ),
                       ),
                     );
@@ -375,7 +547,8 @@ class _PracticeSessionScreenState extends State<PracticeSessionScreen> {
             tooltip: 'AI 讲解',
             onPressed: () => AiChatDialog.show(
               context,
-              initialPrompt: '请讲解这道题：\n${q.content}\n正确答案：${q.answer}\n${q.explanation ?? ""}',
+              initialPrompt:
+                  '请讲解这道题：\n${q.content}\n正确答案：${q.answer}\n${q.explanation ?? ""}',
               title: 'AI 题目讲解',
             ),
           ),
@@ -411,9 +584,10 @@ class _PracticeSessionScreenState extends State<PracticeSessionScreen> {
                 children: [
                   if (!isSubmitted)
                     Expanded(
-                      child: FilledButton(
+                      child: GradientButton(
                         onPressed: _confirmAnswer,
-                        child: const Text('确认答案'),
+                        label: '确认答案',
+                        width: double.infinity,
                       ),
                     )
                   else ...[
@@ -421,7 +595,8 @@ class _PracticeSessionScreenState extends State<PracticeSessionScreen> {
                       child: OutlinedButton.icon(
                         onPressed: () => AiChatDialog.show(
                           context,
-                          initialPrompt: '请详细讲解这道题：\n${q.content}\n正确答案：${q.answer}\n${q.explanation ?? ""}',
+                          initialPrompt:
+                              '请详细讲解这道题：\n${q.content}\n正确答案：${q.answer}\n${q.explanation ?? ""}',
                           title: 'AI 题目讲解',
                         ),
                         icon: const Icon(Icons.smart_toy, size: 16),
@@ -430,11 +605,12 @@ class _PracticeSessionScreenState extends State<PracticeSessionScreen> {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: FilledButton(
+                      child: GradientButton(
                         onPressed: _nextQuestion,
-                        child: Text(
-                          _currentIndex < widget.questions.length - 1 ? '下一题' : '完成',
-                        ),
+                        label: _currentIndex < widget.questions.length - 1
+                            ? '下一题'
+                            : '完成',
+                        width: double.infinity,
                       ),
                     ),
                   ],
@@ -502,7 +678,8 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
             tooltip: 'AI 讲解',
             onPressed: () => AiChatDialog.show(
               context,
-              initialPrompt: '请讲解这道题：\n${q.content}\n正确答案：${q.answer}\n${q.explanation ?? ""}',
+              initialPrompt:
+                  '请讲解这道题：\n${q.content}\n正确答案：${q.answer}\n${q.explanation ?? ""}',
               title: 'AI 题目讲解',
             ),
           ),
@@ -520,23 +697,21 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
               onAnswerChanged: (ans) => setState(() => _userAnswer = ans),
             ),
             if (!_showAnswer)
-              SizedBox(
+              GradientButton(
+                onPressed: _userAnswer == null || _userAnswer!.isEmpty
+                    ? null
+                    : () async {
+                        final isCorrect = _userAnswer!.trim().toUpperCase() ==
+                            q.answer.trim().toUpperCase();
+                        await context.read<QuestionService>().submitAnswer(
+                          questionId: q.id!,
+                          userAnswer: _userAnswer!,
+                          isCorrect: isCorrect,
+                        );
+                        setState(() => _showAnswer = true);
+                      },
+                label: '确认答案',
                 width: double.infinity,
-                child: FilledButton(
-                  onPressed: _userAnswer == null || _userAnswer!.isEmpty
-                      ? null
-                      : () async {
-                          final isCorrect = _userAnswer!.trim().toUpperCase() ==
-                              q.answer.trim().toUpperCase();
-                          await context.read<QuestionService>().submitAnswer(
-                            questionId: q.id!,
-                            userAnswer: _userAnswer!,
-                            isCorrect: isCorrect,
-                          );
-                          setState(() => _showAnswer = true);
-                        },
-                  child: const Text('确认答案'),
-                ),
               ),
           ],
         ),
@@ -582,21 +757,15 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
           : _favorites.isEmpty
               ? const Center(child: Text('还没有收藏的题目'))
               : ListView.builder(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
                   itemCount: _favorites.length,
                   itemBuilder: (context, index) {
                     final q = _favorites[index];
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 8),
-                      child: ListTile(
-                        title: Text(
-                          q.content,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 13),
-                        ),
-                        subtitle: Text('${q.subject} · ${q.category}'),
-                        trailing: const Icon(Icons.chevron_right, size: 18),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: GlassCard(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 10),
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -606,6 +775,31 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
                             ),
                           ),
                         ).then((_) => _load()),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    q.content,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(fontSize: 13),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '${q.subject} · ${q.category}',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.grey[500]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(Icons.chevron_right,
+                                color: Colors.grey[400], size: 16),
+                          ],
+                        ),
                       ),
                     );
                   },

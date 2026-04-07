@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/profile_service.dart';
 import '../models/user_profile.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/gradient_button.dart';
+import '../theme/app_theme.dart';
 import 'baseline_test_screen.dart';
 import 'llm_settings_screen.dart';
 import 'study_plan_screen.dart';
@@ -31,113 +34,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
         builder: (context, service, _) {
           final profile = service.profile;
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
             children: [
-              // 用户信息卡片
-              Card(
-                child: InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const ProfileEditScreen()),
-                  ).then((_) => service.loadProfile()),
-                  borderRadius: BorderRadius.circular(12),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                          child: Icon(
-                            Icons.person,
-                            size: 30,
-                            color: Theme.of(context).colorScheme.onPrimaryContainer,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                profile?.education != null ? '个人信息已完善' : '点击完善个人信息',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                profile != null && profile.education != null
-                                    ? '${profile.education} · ${profile.major ?? "专业未填写"}'
-                                    : '完善信息以获取精准岗位匹配',
-                                style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Icon(Icons.chevron_right),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // 顶部头像区（渐变圆形头像框）
+              _buildAvatarSection(context, profile, service),
               const SizedBox(height: 16),
               // 个人信息摘要（已填写时显示）
-              if (profile != null && profile.education != null)
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('画像摘要', style: Theme.of(context).textTheme.titleSmall),
-                        const SizedBox(height: 8),
-                        _InfoRow('学历', profile.education ?? '-'),
-                        _InfoRow('专业', profile.major ?? '-'),
-                        _InfoRow('院校', profile.university ?? '-'),
-                        _InfoRow('政治面貌', profile.politicalStatus ?? '-'),
-                        _InfoRow('目标城市', profile.targetCities.join('、').isNotEmpty
+              if (profile != null && profile.education != null) ...[
+                GlassCard(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 4,
+                            height: 16,
+                            decoration: BoxDecoration(
+                              gradient: AppTheme.primaryGradient,
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            '画像摘要',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      _InfoRow('学历', profile.education ?? '-'),
+                      _InfoRow('专业', profile.major ?? '-'),
+                      _InfoRow('院校', profile.university ?? '-'),
+                      _InfoRow('政治面貌', profile.politicalStatus ?? '-'),
+                      _InfoRow(
+                        '目标城市',
+                        profile.targetCities.join('、').isNotEmpty
                             ? profile.targetCities.join('、')
-                            : '-'),
-                      ],
-                    ),
+                            : '-',
+                      ),
+                    ],
                   ),
                 ),
-              const SizedBox(height: 8),
-              // 功能菜单
+                const SizedBox(height: 12),
+              ],
+              // 功能菜单（GlassCard 列表）
               _buildMenuItem(
                 context,
                 Icons.quiz,
                 '摸底测试',
                 '快速评估基础水平，生成个性化计划',
+                AppTheme.primaryGradient,
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const BaselineTestScreen()),
                 ),
               ),
+              const SizedBox(height: 8),
               _buildMenuItem(
                 context,
                 Icons.smart_toy,
                 'AI 模型设置',
                 '配置 DeepSeek、Claude 等模型',
+                AppTheme.infoGradient,
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const LlmSettingsScreen()),
                 ),
               ),
+              const SizedBox(height: 8),
               _buildMenuItem(
                 context,
                 Icons.route,
                 '我的学习计划',
                 '查看和管理学习计划',
+                AppTheme.successGradient,
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const StudyPlanScreen()),
                 ),
               ),
+              const SizedBox(height: 8),
               _buildMenuItem(
                 context,
                 Icons.info_outline,
                 '关于本应用',
                 '考公考编智能助手 v1.0',
+                AppTheme.warmGradient,
                 () => showAboutDialog(
                   context: context,
                   applicationName: '考公考编智能助手',
@@ -154,21 +141,117 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Widget _buildAvatarSection(
+    BuildContext context,
+    UserProfile? profile,
+    ProfileService service,
+  ) {
+    return GlassCard(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const ProfileEditScreen()),
+      ).then((_) => service.loadProfile()),
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          // 渐变圆形头像框
+          Container(
+            padding: const EdgeInsets.all(3),
+            decoration: const BoxDecoration(
+              gradient: AppTheme.primaryGradient,
+              shape: BoxShape.circle,
+            ),
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.person,
+                size: 32,
+                color: const Color(0xFF667eea),
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  profile?.education != null ? '个人信息已完善' : '点击完善个人信息',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  profile != null && profile.education != null
+                      ? '${profile.education} · ${profile.major ?? "专业未填写"}'
+                      : '完善信息以获取精准岗位匹配',
+                  style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+          Icon(Icons.chevron_right, color: Colors.grey[400], size: 20),
+        ],
+      ),
+    );
+  }
+
   Widget _buildMenuItem(
     BuildContext context,
     IconData icon,
     String title,
     String subtitle,
+    LinearGradient gradient,
     VoidCallback onTap,
   ) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(title),
-        subtitle: Text(subtitle, style: const TextStyle(fontSize: 12)),
-        trailing: const Icon(Icons.chevron_right, size: 20),
-        onTap: onTap,
+    return AccentCard(
+      accentGradient: gradient,
+      accentWidth: 4,
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: gradient.colors
+                    .map((c) => c.withValues(alpha: 0.15))
+                    .toList(),
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(icon, color: gradient.colors.first, size: 20),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                ),
+              ],
+            ),
+          ),
+          Icon(Icons.chevron_right, color: Colors.grey[400], size: 18),
+        ],
       ),
     );
   }
@@ -187,7 +270,8 @@ class _InfoRow extends StatelessWidget {
         children: [
           SizedBox(
             width: 72,
-            child: Text(label, style: TextStyle(color: Colors.grey[600], fontSize: 13)),
+            child: Text(label,
+                style: TextStyle(color: Colors.grey[500], fontSize: 13)),
           ),
           Expanded(
             child: Text(value, style: const TextStyle(fontSize: 13)),
@@ -209,7 +293,6 @@ class ProfileEditScreen extends StatefulWidget {
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // 表单控制器
   final _majorController = TextEditingController();
   final _universityController = TextEditingController();
   final _majorCodeController = TextEditingController();
@@ -256,7 +339,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       _universityController.text = profile.university ?? '';
       _is985 = profile.is985;
       _is211 = profile.is211;
-      _workYearsController.text = profile.workYears == 0 ? '' : '${profile.workYears}';
+      _workYearsController.text =
+          profile.workYears == 0 ? '' : '${profile.workYears}';
       _hasGrassrootsExp = profile.hasGrassrootsExp;
       _politicalStatus = profile.politicalStatus;
       _certificatesController.text = profile.certificates.join('，');
@@ -273,22 +357,36 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     final profile = UserProfile(
       education: _education,
       degree: _degree,
-      major: _majorController.text.trim().isEmpty ? null : _majorController.text.trim(),
-      majorCode: _majorCodeController.text.trim().isEmpty ? null : _majorCodeController.text.trim(),
-      university: _universityController.text.trim().isEmpty ? null : _universityController.text.trim(),
+      major: _majorController.text.trim().isEmpty
+          ? null
+          : _majorController.text.trim(),
+      majorCode: _majorCodeController.text.trim().isEmpty
+          ? null
+          : _majorCodeController.text.trim(),
+      university: _universityController.text.trim().isEmpty
+          ? null
+          : _universityController.text.trim(),
       is985: _is985,
       is211: _is211,
       workYears: int.tryParse(_workYearsController.text) ?? 0,
       hasGrassrootsExp: _hasGrassrootsExp,
       politicalStatus: _politicalStatus,
       certificates: _certificatesController.text.isNotEmpty
-          ? _certificatesController.text.split(RegExp(r'[，,]')).map((e) => e.trim()).where((e) => e.isNotEmpty).toList()
+          ? _certificatesController.text
+              .split(RegExp(r'[，,]'))
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty)
+              .toList()
           : [],
       age: int.tryParse(_ageController.text),
       gender: _gender,
       hukouProvince: _hukouProvince,
       targetCities: _targetCitiesController.text.isNotEmpty
-          ? _targetCitiesController.text.split(RegExp(r'[，,]')).map((e) => e.trim()).where((e) => e.isNotEmpty).toList()
+          ? _targetCitiesController.text
+              .split(RegExp(r'[，,]'))
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty)
+              .toList()
           : [],
     );
 
@@ -341,12 +439,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             const SizedBox(height: 12),
             TextFormField(
               controller: _majorController,
-              decoration: const InputDecoration(labelText: '专业名称', hintText: '如：计算机科学与技术'),
+              decoration: const InputDecoration(
+                  labelText: '专业名称', hintText: '如：计算机科学与技术'),
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _majorCodeController,
-              decoration: const InputDecoration(labelText: '专业编码（可选）', hintText: '如：0812'),
+              decoration:
+                  const InputDecoration(labelText: '专业编码（可选）', hintText: '如：0812'),
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -388,7 +488,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               value: _hasGrassrootsExp,
               onChanged: (v) => setState(() => _hasGrassrootsExp = v!),
               title: const Text('有基层工作经历'),
-              subtitle: const Text('村/社区/乡镇工作经历', style: TextStyle(fontSize: 11)),
+              subtitle: const Text('村/社区/乡镇工作经历',
+                  style: TextStyle(fontSize: 11)),
               contentPadding: EdgeInsets.zero,
             ),
             const SizedBox(height: 16),
@@ -457,9 +558,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               ),
             ),
             const SizedBox(height: 32),
-            FilledButton(
+            GradientButton(
               onPressed: _save,
-              child: const Text('保存个人信息'),
+              label: '保存个人信息',
+              width: double.infinity,
             ),
             const SizedBox(height: 16),
           ],
@@ -476,14 +578,27 @@ class _SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.primary,
-        ),
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          Container(
+            width: 3,
+            height: 14,
+            decoration: BoxDecoration(
+              gradient: AppTheme.primaryGradient,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ],
       ),
     );
   }

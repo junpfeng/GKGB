@@ -4,6 +4,9 @@ import '../services/study_plan_service.dart';
 import '../models/study_plan.dart';
 import '../models/daily_task.dart';
 import '../widgets/ai_chat_dialog.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/gradient_button.dart';
+import '../theme/app_theme.dart';
 
 /// 学习计划总览页
 class StudyPlanScreen extends StatefulWidget {
@@ -42,7 +45,8 @@ class _StudyPlanScreenState extends State<StudyPlanScreen> {
           }
 
           if (!service.hasPlan) {
-            return _NoPlanView(onGenerate: () => _showGeneratePlanDialog(context));
+            return _NoPlanView(
+                onGenerate: () => _showGeneratePlanDialog(context));
           }
 
           return _PlanView(plan: service.activePlan!, service: service);
@@ -50,8 +54,6 @@ class _StudyPlanScreenState extends State<StudyPlanScreen> {
       ),
     );
   }
-
-
 
   Future<void> _showGeneratePlanDialog(BuildContext context) async {
     final examDateController = TextEditingController();
@@ -108,7 +110,8 @@ class _StudyPlanScreenState extends State<StudyPlanScreen> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('取消')),
+            TextButton(
+                onPressed: () => Navigator.pop(ctx), child: const Text('取消')),
             FilledButton(
               onPressed: () async {
                 Navigator.pop(ctx);
@@ -209,24 +212,43 @@ class _NoPlanView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.route, size: 80, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text('还没有学习计划', style: Theme.of(context).textTheme.headlineSmall),
-          const SizedBox(height: 8),
-          const Text(
-            '让 AI 根据你的情况生成个性化学习路线',
-            style: TextStyle(color: Colors.grey),
-          ),
-          const SizedBox(height: 24),
-          FilledButton.icon(
-            onPressed: onGenerate,
-            icon: const Icon(Icons.smart_toy),
-            label: const Text('AI 生成学习计划'),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 渐变图标
+            Container(
+              width: 100,
+              height: 100,
+              decoration: const BoxDecoration(
+                gradient: AppTheme.primaryGradient,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.route, size: 50, color: Colors.white),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              '还没有学习计划',
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              '让 AI 根据你的情况生成个性化学习路线',
+              style: TextStyle(color: Colors.grey),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
+            GradientButton(
+              onPressed: onGenerate,
+              label: 'AI 生成学习计划',
+              icon: Icons.smart_toy,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -240,52 +262,62 @@ class _PlanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 里程碑提醒
     final milestones = plan.id != null
         ? service.checkMilestones(plan.id!)
         : <String>[];
 
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       children: [
-        // 里程碑提醒横幅
+        // 里程碑提醒横幅（渐变背景）
         if (milestones.isNotEmpty) ...[
           _MilestoneBanner(milestones: milestones, plan: plan),
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
         ],
         // 计划概览卡片
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.route, color: Colors.blue),
-                    const SizedBox(width: 8),
-                    Text('当前学习计划', style: Theme.of(context).textTheme.titleMedium),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => DailyTaskScreen(plan: plan)),
-                      ),
-                      child: const Text('今日任务'),
+        GlassCard(
+          padding: const EdgeInsets.all(18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      gradient: AppTheme.primaryGradient,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                if (plan.examDate != null)
-                  _InfoRow('考试日期', plan.examDate!),
-                _InfoRow('备考科目', plan.subjects.join('、')),
-                _InfoRow('创建日期', plan.createdAt?.substring(0, 10) ?? '-'),
-              ],
-            ),
+                    child: const Icon(Icons.route, color: Colors.white, size: 18),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    '当前学习计划',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => DailyTaskScreen(plan: plan)),
+                    ),
+                    child: const Text('今日任务'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              if (plan.examDate != null)
+                _InfoRow('考试日期', plan.examDate!),
+              _InfoRow('备考科目', plan.subjects.join('、')),
+              _InfoRow('创建日期', plan.createdAt?.substring(0, 10) ?? '-'),
+            ],
           ),
         ),
         const SizedBox(height: 12),
-        // 操作按钮行：自动调整 + 错题推荐
+        // 操作按钮行
         Row(
           children: [
             Expanded(
@@ -308,31 +340,42 @@ class _PlanView extends StatelessWidget {
         const SizedBox(height: 16),
         // AI 生成的计划内容
         if (plan.planData != null && plan.planData!.isNotEmpty) ...[
-          Text('计划详情', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                plan.planData!,
-                style: const TextStyle(fontSize: 13, height: 1.6),
-              ),
+          Text(
+            '计划详情',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+          const SizedBox(height: 10),
+          GlassCard(
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              plan.planData!,
+              style: const TextStyle(fontSize: 13, height: 1.6),
             ),
           ),
           const SizedBox(height: 16),
         ],
         // 今日任务预览
-        Text('今日任务', style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 8),
+        Text(
+          '今日任务',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+        ),
+        const SizedBox(height: 10),
         if (service.todayTasks.isEmpty)
-          const Card(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Text('今日无任务', style: TextStyle(color: Colors.grey)),
-            ),
+          GlassCard(
+            padding: const EdgeInsets.all(16),
+            child: const Text('今日无任务', style: TextStyle(color: Colors.grey)),
           )
         else
-          ...service.todayTasks.take(3).map((task) => _TaskCard(task: task, service: service)),
+          ...service.todayTasks
+              .take(3)
+              .map((task) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: _TaskCard(task: task, service: service),
+                  )),
         if (service.todayTasks.length > 3)
           TextButton(
             onPressed: () => Navigator.push(
@@ -355,28 +398,20 @@ class _PlanView extends StatelessWidget {
   Future<void> _autoAdjust(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
     if (plan.id == null) {
-      messenger.showSnackBar(
-        const SnackBar(content: Text('计划尚未保存')),
-      );
+      messenger.showSnackBar(const SnackBar(content: Text('计划尚未保存')));
       return;
     }
     try {
       final result = await service.autoAdjust(plan.id!);
       messenger.showSnackBar(
-        SnackBar(
-          content: Text(result),
-          duration: const Duration(seconds: 4),
-        ),
+        SnackBar(content: Text(result), duration: const Duration(seconds: 4)),
       );
     } catch (e) {
-      messenger.showSnackBar(
-        SnackBar(content: Text('自动调整失败：$e')),
-      );
+      messenger.showSnackBar(SnackBar(content: Text('自动调整失败：$e')));
     }
   }
 
   void _goToRelatedPractice(BuildContext context) {
-    // 导航到刷题页，展示错题本
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('请切换到"刷题"页面查看错题本')),
     );
@@ -389,8 +424,12 @@ class _PlanView extends StatelessWidget {
         title: const Text('重新生成'),
         content: const Text('将废弃当前计划，重新生成。确认吗？'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('取消')),
-          FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('确认')),
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('取消')),
+          FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('确认')),
         ],
       ),
     );
@@ -401,15 +440,13 @@ class _PlanView extends StatelessWidget {
           examDate: plan.examDate,
         );
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('计划已更新')),
-          );
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('计划已更新')));
         }
       } catch (e) {
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('生成失败：$e')),
-          );
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('生成失败：$e')));
         }
       }
     }
@@ -424,12 +461,13 @@ class _InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: 3),
       child: Row(
         children: [
           SizedBox(
             width: 72,
-            child: Text(label, style: TextStyle(color: Colors.grey[600], fontSize: 13)),
+            child: Text(label,
+                style: TextStyle(color: Colors.grey[500], fontSize: 13)),
           ),
           Text(value, style: const TextStyle(fontSize: 13)),
         ],
@@ -447,27 +485,46 @@ class _TaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCompleted = task.status == 'completed';
-    return Card(
-      margin: const EdgeInsets.only(bottom: 6),
-      child: ListTile(
-        leading: Checkbox(
-          value: isCompleted,
-          onChanged: (v) => service.updateTaskStatus(
-            task.id!,
-            v! ? 'completed' : 'pending',
+
+    return AccentCard(
+      accentGradient: isCompleted
+          ? AppTheme.successGradient
+          : AppTheme.primaryGradient,
+      accentWidth: 4,
+      child: Row(
+        children: [
+          Checkbox(
+            value: isCompleted,
+            onChanged: (v) => service.updateTaskStatus(
+              task.id!,
+              v! ? 'completed' : 'pending',
+            ),
+            activeColor: const Color(0xFF667eea),
           ),
-        ),
-        title: Text(
-          '${task.subject} · ${task.topic ?? task.taskType ?? "练习"}',
-          style: TextStyle(
-            decoration: isCompleted ? TextDecoration.lineThrough : null,
-            color: isCompleted ? Colors.grey : null,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${task.subject} · ${task.topic ?? task.taskType ?? "练习"}',
+                  style: TextStyle(
+                    decoration:
+                        isCompleted ? TextDecoration.lineThrough : null,
+                    color: isCompleted ? Colors.grey : null,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
+                ),
+                if (task.targetCount > 0)
+                  Text(
+                    '目标：${task.targetCount} 题',
+                    style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+                  ),
+              ],
+            ),
           ),
-        ),
-        subtitle: task.targetCount > 0
-            ? Text('目标：${task.targetCount} 题', style: const TextStyle(fontSize: 11))
-            : null,
-        trailing: _StatusBadge(status: task.status),
+          _StatusBadge(status: task.status),
+        ],
       ),
     );
   }
@@ -479,24 +536,27 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (label, color) = switch (status) {
-      'completed' => ('完成', Colors.green),
-      'ongoing' => ('进行中', Colors.blue),
-      'skipped' => ('跳过', Colors.grey),
-      _ => ('待完成', Colors.orange),
+    final (label, gradient) = switch (status) {
+      'completed' => ('完成', AppTheme.successGradient),
+      'ongoing' => ('进行中', AppTheme.infoGradient),
+      'skipped' => ('跳过', const LinearGradient(colors: [Colors.grey, Colors.grey])),
+      _ => ('待完成', AppTheme.warningGradient),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        gradient: gradient,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Text(label, style: TextStyle(fontSize: 11, color: color)),
+      child: Text(
+        label,
+        style: const TextStyle(fontSize: 10, color: Colors.white),
+      ),
     );
   }
 }
 
-/// 里程碑提醒横幅
+/// 里程碑提醒横幅（渐变背景）
 class _MilestoneBanner extends StatelessWidget {
   final List<String> milestones;
   final StudyPlan plan;
@@ -505,9 +565,10 @@ class _MilestoneBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 根据距考试天数判断紧急度颜色
-    Color bannerColor = Colors.blue.shade50;
-    Color textColor = Colors.blue.shade800;
+    // 根据距考试天数判断紧急度渐变
+    LinearGradient bannerGradient = const LinearGradient(
+      colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+    );
     IconData icon = Icons.event_note;
 
     if (plan.examDate != null) {
@@ -515,32 +576,27 @@ class _MilestoneBanner extends StatelessWidget {
       if (examDate != null) {
         final daysLeft = examDate.difference(DateTime.now()).inDays;
         if (daysLeft <= 7) {
-          bannerColor = Colors.red.shade50;
-          textColor = Colors.red.shade800;
+          bannerGradient = AppTheme.warmGradient;
           icon = Icons.alarm;
         } else if (daysLeft <= 30) {
-          bannerColor = Colors.orange.shade50;
-          textColor = Colors.orange.shade800;
+          bannerGradient = AppTheme.warningGradient;
           icon = Icons.schedule;
         }
       }
     }
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      decoration: BoxDecoration(
-        color: bannerColor,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: textColor.withValues(alpha: 0.3)),
-      ),
+    return GradientCard(
+      gradient: bannerGradient,
+      borderRadius: AppTheme.radiusMedium,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          Icon(icon, color: textColor, size: 18),
+          Icon(icon, color: Colors.white, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               milestones.join(' '),
-              style: TextStyle(color: textColor, fontSize: 13),
+              style: const TextStyle(color: Colors.white, fontSize: 13),
             ),
           ),
         ],
@@ -563,16 +619,17 @@ class DailyTaskScreen extends StatelessWidget {
       body: Consumer<StudyPlanService>(
         builder: (context, service, _) {
           if (service.todayTasks.isEmpty) {
-            return const Center(
-              child: Text('今日无任务'),
-            );
+            return const Center(child: Text('今日无任务'));
           }
           return ListView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
             itemCount: service.todayTasks.length,
             itemBuilder: (context, index) {
               final task = service.todayTasks[index];
-              return _TaskCard(task: task, service: service);
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: _TaskCard(task: task, service: service),
+              );
             },
           );
         },

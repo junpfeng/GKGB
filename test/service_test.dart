@@ -14,7 +14,7 @@ void main() {
 
     test('注册 Provider 并设为默认', () {
       final manager = LlmManager();
-      expect(manager.availableProviders.length, equals(5)); // 预注册了5个
+      expect(manager.availableProviders.length, equals(6)); // 预注册了6个
 
       manager.setDefault('deepseek');
       expect(manager.hasProvider, isTrue);

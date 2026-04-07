@@ -36,9 +36,9 @@ class LlmConfigService extends ChangeNotifier {
         manager.applyModelName(config.providerName, config.modelName!);
       }
 
-      // 应用 Ollama baseUrl
-      if (config.providerName == 'ollama' && config.baseUrl != null && config.baseUrl!.isNotEmpty) {
-        manager.applyOllamaBaseUrl(config.baseUrl!);
+      // 应用自定义 baseUrl
+      if (config.baseUrl != null && config.baseUrl!.isNotEmpty) {
+        manager.applyBaseUrl(config.providerName, config.baseUrl!);
       }
 
       if (config.isDefault) {

@@ -7,6 +7,9 @@ import '../models/talent_policy.dart';
 import '../models/match_result.dart';
 import '../widgets/match_reason_card.dart';
 import '../widgets/ai_chat_dialog.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/gradient_button.dart';
+import '../theme/app_theme.dart';
 
 /// 岗位匹配页：公告管理、匹配结果
 class PolicyMatchScreen extends StatefulWidget {
@@ -42,7 +45,6 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
       appBar: AppBar(
         title: const Text('岗位匹配'),
         actions: [
-          // 智能获取公告菜单
           PopupMenuButton<String>(
             icon: const Icon(Icons.add_link),
             tooltip: '智能获取公告',
@@ -72,7 +74,8 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
                     )
                   : const Icon(Icons.search),
               tooltip: '开始匹配',
-              onPressed: service.isMatching ? null : () => _runMatching(context),
+              onPressed:
+                  service.isMatching ? null : () => _runMatching(context),
             ),
           ),
         ],
@@ -82,6 +85,8 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
             Tab(text: '公告管理'),
             Tab(text: '匹配结果'),
           ],
+          indicatorSize: TabBarIndicatorSize.label,
+          indicatorWeight: 3,
         ),
       ),
       body: TabBarView(
@@ -91,10 +96,12 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
           _MatchResultTab(),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      // 渐变 FAB
+      floatingActionButton: GradientFab(
         onPressed: () => _showAddPolicyDialog(context),
-        icon: const Icon(Icons.add),
-        label: const Text('添加公告'),
+        icon: Icons.add,
+        label: '添加公告',
+        gradient: AppTheme.primaryGradient,
       ),
     );
   }
@@ -187,7 +194,8 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
                 const SizedBox(height: 8),
                 TextField(
                   controller: contentController,
-                  decoration: const InputDecoration(labelText: '公告内容（粘贴原文，AI 可解析）'),
+                  decoration: const InputDecoration(
+                      labelText: '公告内容（粘贴原文，AI 可解析）'),
                   maxLines: 4,
                 ),
               ],
@@ -246,7 +254,6 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
     deadlineController.dispose();
   }
 
-  /// 智能搜索对话框
   Future<void> _showOnlineSearchDialog(BuildContext context) async {
     final profile = context.read<ProfileService>().profile;
     final defaultCities = profile?.targetCities ?? [];
@@ -256,7 +263,6 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
     );
   }
 
-  /// URL 导入对话框
   Future<void> _showUrlImportDialog(BuildContext context) async {
     await showDialog(
       context: context,
@@ -264,7 +270,6 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
     );
   }
 
-  /// 粘贴导入对话框
   Future<void> _showPasteImportDialog(BuildContext context) async {
     String clipText = '';
     try {
@@ -304,11 +309,14 @@ class _PolicyListTab extends StatelessWidget {
           );
         }
         return ListView.builder(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.fromLTRB(12, 12, 12, 80),
           itemCount: service.policies.length,
           itemBuilder: (context, index) {
             final policy = service.policies[index];
-            return _PolicyCard(policy: policy);
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: _PolicyCard(policy: policy),
+            );
           },
         );
       },
@@ -322,13 +330,25 @@ class _PolicyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
+    return GlassCard(
+      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            title: Text(policy.title, style: const TextStyle(fontSize: 14)),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+            leading: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                gradient: AppTheme.primaryGradient,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.article, color: Colors.white, size: 20),
+            ),
+            title: Text(policy.title,
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
             subtitle: Text(
               [
                 if (policy.city != null) policy.city,
@@ -354,16 +374,19 @@ class _PolicyCard extends StatelessWidget {
           ),
           if (policy.content != null && policy.content!.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+              padding: const EdgeInsets.only(left: 14, right: 14, bottom: 12),
               child: Row(
                 children: [
-                  OutlinedButton.icon(
+                  GradientButton(
                     onPressed: () => _aiParsePolicy(context, policy),
-                    icon: const Icon(Icons.smart_toy, size: 14),
-                    label: const Text('AI 解析岗位', style: TextStyle(fontSize: 12)),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    ),
+                    label: 'AI 解析岗位',
+                    icon: Icons.smart_toy,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 7),
+                    borderRadius: 8,
+                    gradient: AppTheme.infoGradient,
+                    textStyle: const TextStyle(
+                        color: Colors.white, fontSize: 12),
                   ),
                 ],
               ),
@@ -391,14 +414,14 @@ class _PolicyCard extends StatelessWidget {
     try {
       final positions = await context.read<MatchService>().aiParsePolicy(policy);
       if (context.mounted) {
-        Navigator.pop(context); // 关闭 loading
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('成功解析 ${positions.length} 个岗位')),
         );
       }
     } catch (e) {
       if (context.mounted) {
-        Navigator.pop(context); // 关闭 loading
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('AI 解析失败：$e')),
         );
@@ -436,14 +459,18 @@ class _MatchResultTab extends StatelessWidget {
                 const SizedBox(height: 16),
                 const Text('暂无匹配结果', style: TextStyle(color: Colors.grey)),
                 const SizedBox(height: 8),
-                const Text('请先添加公告，然后点击右上角搜索开始匹配',
-                    style: TextStyle(color: Colors.grey, fontSize: 12)),
+                const Text(
+                  '请先添加公告，然后点击右上角搜索开始匹配',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
                 const SizedBox(height: 16),
-                FilledButton.tonal(
-                  onPressed: () {
-                    // 跳转到个人信息页
-                  },
-                  child: const Text('完善个人信息'),
+                GradientButton(
+                  onPressed: () {},
+                  label: '完善个人信息',
+                  gradient: AppTheme.primaryGradient,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  borderRadius: 10,
                 ),
               ],
             ),
@@ -451,7 +478,7 @@ class _MatchResultTab extends StatelessWidget {
         }
 
         return ListView.builder(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
           itemCount: service.matchResults.length,
           itemBuilder: (context, index) {
             final result = service.matchResults[index];
@@ -505,17 +532,20 @@ class PositionDetailScreen extends StatelessWidget {
           children: [
             MatchReasonCard(
               result: result,
-              onSetTarget: () => context.read<MatchService>().toggleTarget(result.id!),
+              onSetTarget: () =>
+                  context.read<MatchService>().toggleTarget(result.id!),
             ),
             const SizedBox(height: 16),
-            OutlinedButton.icon(
+            GradientButton(
               onPressed: () => AiChatDialog.show(
                 context,
                 initialPrompt: '请分析"${result.positionName}"岗位的报考建议',
                 title: 'AI 报考分析',
               ),
-              icon: const Icon(Icons.smart_toy),
-              label: const Text('AI 深度分析'),
+              label: 'AI 深度分析',
+              icon: Icons.smart_toy,
+              width: double.infinity,
+              gradient: AppTheme.infoGradient,
             ),
           ],
         ),
@@ -524,9 +554,8 @@ class PositionDetailScreen extends StatelessWidget {
   }
 }
 
-// ===== 智能获取公告对话框（独立 StatefulWidget）=====
+// ===== 对话框组件 =====
 
-/// 智能搜索公告对话框
 class _OnlineSearchDialog extends StatefulWidget {
   final List<String> defaultCities;
   const _OnlineSearchDialog({required this.defaultCities});
@@ -600,8 +629,7 @@ class _OnlineSearchDialogState extends State<_OnlineSearchDialog> {
                           _selected.remove(i);
                         }
                       }),
-                      title: Text(p.title,
-                          style: const TextStyle(fontSize: 13)),
+                      title: Text(p.title, style: const TextStyle(fontSize: 13)),
                       subtitle: Text(
                         [
                           if (p.city != null) p.city!,
@@ -620,8 +648,7 @@ class _OnlineSearchDialogState extends State<_OnlineSearchDialog> {
       ),
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('取消')),
+            onPressed: () => Navigator.pop(context), child: const Text('取消')),
         if (_results.isEmpty && !_searching)
           FilledButton(
             onPressed: _doSearch,
@@ -685,7 +712,6 @@ class _OnlineSearchDialogState extends State<_OnlineSearchDialog> {
   }
 }
 
-/// URL 导入公告对话框
 class _UrlImportDialog extends StatefulWidget {
   const _UrlImportDialog();
 
@@ -736,8 +762,7 @@ class _UrlImportDialogState extends State<_UrlImportDialog> {
       ),
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('取消')),
+            onPressed: () => Navigator.pop(context), child: const Text('取消')),
         if (_preview == null && !_loading)
           FilledButton(
             onPressed: _doParse,
@@ -758,8 +783,7 @@ class _UrlImportDialogState extends State<_UrlImportDialog> {
 
     setState(() => _loading = true);
     try {
-      final result =
-          await context.read<MatchService>().importFromUrl(url);
+      final result = await context.read<MatchService>().importFromUrl(url);
       setState(() {
         _loading = false;
         _preview = result;
@@ -793,7 +817,6 @@ class _UrlImportDialogState extends State<_UrlImportDialog> {
   }
 }
 
-/// 粘贴导入公告对话框
 class _PasteImportDialog extends StatefulWidget {
   final String initialText;
   const _PasteImportDialog({required this.initialText});
@@ -854,8 +877,7 @@ class _PasteImportDialogState extends State<_PasteImportDialog> {
       ),
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('取消')),
+            onPressed: () => Navigator.pop(context), child: const Text('取消')),
         if (_preview == null && !_loading)
           FilledButton(
             onPressed: _doParse,
@@ -921,20 +943,22 @@ class _PreviewCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.green.shade50,
+        gradient: const LinearGradient(
+          colors: [Color(0xFFE8F8F2), Color(0xFFD4F5E9)],
+        ),
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: const Color(0xFF43E97B).withValues(alpha: 0.3),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('标题：${policy.title}',
-              style: const TextStyle(fontSize: 13)),
+          Text('标题：${policy.title}', style: const TextStyle(fontSize: 13)),
           if (policy.city != null)
-            Text('城市：${policy.city}',
-                style: const TextStyle(fontSize: 12)),
+            Text('城市：${policy.city}', style: const TextStyle(fontSize: 12)),
           if (policy.policyType != null)
-            Text('类型：${policy.policyType}',
-                style: const TextStyle(fontSize: 12)),
+            Text('类型：${policy.policyType}', style: const TextStyle(fontSize: 12)),
         ],
       ),
     );

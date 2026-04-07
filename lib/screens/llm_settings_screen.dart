@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import '../services/llm_config_service.dart';
 import '../services/llm/llm_manager.dart';
 import '../models/llm_config.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/gradient_button.dart';
+import '../theme/app_theme.dart';
 
 /// LLM 模型设置页
 class LlmSettingsScreen extends StatefulWidget {
@@ -37,78 +40,114 @@ class _LlmSettingsScreenState extends State<LlmSettingsScreen> {
               listenable: _configService,
               builder: (ctx, _) {
                 return ListView(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
                   children: [
-                    // 使用说明卡片
-                    Card(
-                      color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.4),
-                      child: const Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                    // 使用说明卡片（信息渐变）
+                    GradientCard(
+                      gradient: AppTheme.infoGradient,
+                      borderRadius: AppTheme.radiusMedium,
+                      padding: const EdgeInsets.all(14),
+                      child: const Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.info_outline,
+                              size: 18, color: Colors.white),
+                          SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(Icons.info_outline, size: 16),
-                                SizedBox(width: 6),
-                                Text('使用说明', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(
+                                  '使用说明',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  'API Key 加密存储于本设备，不会上传。\n'
+                                  '建议至少配置一个模型，设为默认后即可使用 AI 功能。',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    height: 1.4,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ],
                             ),
-                            SizedBox(height: 6),
-                            Text(
-                              'API Key 加密存储于本设备，不会上传。\n'
-                              '建议至少配置一个模型，设为默认后即可使用 AI 功能。',
-                              style: TextStyle(fontSize: 12, height: 1.4),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Text('支持的模型', style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 20),
+                    Text(
+                      '支持的模型',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                    const SizedBox(height: 10),
                     _ProviderCard(
                       providerName: 'deepseek',
                       displayName: 'DeepSeek',
                       description: '性价比高，推荐首选',
                       icon: Icons.star,
-                      iconColor: Colors.blue,
+                      brandGradient: AppTheme.infoGradient,
                       configService: _configService,
                       configs: _configService.configs,
                     ),
+                    const SizedBox(height: 8),
                     _ProviderCard(
                       providerName: 'qwen',
                       displayName: '通义千问',
                       description: '阿里云，国内访问稳定',
                       icon: Icons.cloud,
-                      iconColor: Colors.orange,
+                      brandGradient: AppTheme.warningGradient,
                       configService: _configService,
                       configs: _configService.configs,
                     ),
+                    const SizedBox(height: 8),
                     _ProviderCard(
                       providerName: 'claude',
                       displayName: 'Claude (Anthropic)',
                       description: '理解能力强，适合复杂分析',
                       icon: Icons.psychology,
-                      iconColor: Colors.purple,
+                      brandGradient: AppTheme.primaryGradient,
                       configService: _configService,
                       configs: _configService.configs,
                     ),
+                    const SizedBox(height: 8),
+                    _ProviderCard(
+                      providerName: 'zhipu',
+                      displayName: '智谱 GLM',
+                      description: 'GLM-4-Flash 免费，国内访问快',
+                      icon: Icons.auto_awesome,
+                      brandGradient: const LinearGradient(
+                        colors: [Color(0xFF5C6BC0), Color(0xFF7E57C2)],
+                      ),
+                      configService: _configService,
+                      configs: _configService.configs,
+                    ),
+                    const SizedBox(height: 8),
                     _ProviderCard(
                       providerName: 'openai',
                       displayName: 'OpenAI GPT',
                       description: 'GPT 系列，需要国际网络',
                       icon: Icons.smart_toy,
-                      iconColor: Colors.green,
+                      brandGradient: AppTheme.successGradient,
                       configService: _configService,
                       configs: _configService.configs,
                     ),
+                    const SizedBox(height: 8),
                     _ProviderCard(
                       providerName: 'ollama',
                       displayName: 'Ollama（本地）',
                       description: '本地模型，无需 API Key，离线可用',
                       icon: Icons.computer,
-                      iconColor: Colors.teal,
+                      brandGradient: const LinearGradient(
+                        colors: [Color(0xFF00BFA5), Color(0xFF1DE9B6)],
+                      ),
                       configService: _configService,
                       configs: _configService.configs,
                       isLocal: true,
@@ -126,7 +165,7 @@ class _ProviderCard extends StatelessWidget {
   final String displayName;
   final String description;
   final IconData icon;
-  final Color iconColor;
+  final LinearGradient brandGradient;
   final LlmConfigService configService;
   final List<LlmConfig> configs;
   final bool isLocal;
@@ -136,7 +175,7 @@ class _ProviderCard extends StatelessWidget {
     required this.displayName,
     required this.description,
     required this.icon,
-    required this.iconColor,
+    required this.brandGradient,
     required this.configService,
     required this.configs,
     this.isLocal = false,
@@ -152,35 +191,52 @@ class _ProviderCard extends StatelessWidget {
     final isDefault = config?.isDefault == true;
     final isFallback = config?.isFallback == true;
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
+    return GlassCard(
+      padding: EdgeInsets.zero,
       child: ExpansionTile(
-        leading: CircleAvatar(
-          backgroundColor: iconColor.withValues(alpha: 0.1),
-          child: Icon(icon, color: iconColor, size: 20),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+        leading: Container(
+          width: 42,
+          height: 42,
+          decoration: BoxDecoration(
+            gradient: brandGradient,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(icon, color: Colors.white, size: 20),
         ),
         title: Row(
           children: [
-            Text(displayName),
-            const SizedBox(width: 8),
+            Text(
+              displayName,
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+            ),
+            const SizedBox(width: 6),
             if (isDefault)
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.blue.withValues(alpha: 0.1),
+                  gradient: AppTheme.primaryGradient,
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: const Text('默认', style: TextStyle(fontSize: 10, color: Colors.blue)),
+                child: const Text(
+                  '默认',
+                  style: TextStyle(fontSize: 10, color: Colors.white),
+                ),
               ),
             if (isFallback) ...[
               const SizedBox(width: 4),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withValues(alpha: 0.1),
+                  gradient: AppTheme.warningGradient,
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: const Text('备选', style: TextStyle(fontSize: 10, color: Colors.orange)),
+                child: const Text(
+                  '备选',
+                  style: TextStyle(fontSize: 10, color: Colors.white),
+                ),
               ),
             ],
           ],
@@ -189,14 +245,15 @@ class _ProviderCard extends StatelessWidget {
           isConfigured ? '已配置' : description,
           style: TextStyle(
             fontSize: 12,
-            color: isConfigured ? Colors.green : null,
+            color: isConfigured ? const Color(0xFF43E97B) : Colors.grey[500],
           ),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isConfigured)
-              Icon(Icons.check_circle, color: Colors.green, size: 16),
+              const Icon(Icons.check_circle,
+                  color: Color(0xFF43E97B), size: 16),
             const Icon(Icons.expand_more),
           ],
         ),
@@ -265,7 +322,6 @@ class _ProviderConfigFormState extends State<_ProviderConfigForm> {
         _isDefault = config.isDefault;
         _isFallback = config.isFallback;
       });
-      // 从安全存储加载 API Key
       final apiKey = await widget.configService.getApiKey(widget.providerName);
       if (mounted && apiKey != null) {
         _apiKeyController.text = apiKey;
@@ -274,7 +330,6 @@ class _ProviderConfigFormState extends State<_ProviderConfigForm> {
   }
 
   Future<void> _save() async {
-    // 在 await 前读取需要的值和引用
     final apiKey = _apiKeyController.text.trim();
     final baseUrl = _baseUrlController.text.trim();
     final modelName = _modelNameController.text.trim();
@@ -292,15 +347,12 @@ class _ProviderConfigFormState extends State<_ProviderConfigForm> {
         isFallback: isFallback,
       );
 
-      // 应用到 LlmManager
-      if (apiKey.isNotEmpty) {
-        manager.applyApiKey(widget.providerName, apiKey);
-      }
+      if (apiKey.isNotEmpty) manager.applyApiKey(widget.providerName, apiKey);
       if (modelName.isNotEmpty) {
         manager.applyModelName(widget.providerName, modelName);
       }
-      if (widget.providerName == 'ollama' && baseUrl.isNotEmpty) {
-        manager.applyOllamaBaseUrl(baseUrl);
+      if (baseUrl.isNotEmpty) {
+        manager.applyBaseUrl(widget.providerName, baseUrl);
       }
       if (isDefault) manager.setDefault(widget.providerName);
       if (isFallback) manager.setFallback(widget.providerName);
@@ -324,23 +376,24 @@ class _ProviderConfigFormState extends State<_ProviderConfigForm> {
     final messenger = ScaffoldMessenger.of(context);
     try {
       final manager = context.read<LlmManager>();
-      // 临时应用配置
       final apiKey = _apiKeyController.text.trim();
+      final baseUrl = _baseUrlController.text.trim();
       if (apiKey.isNotEmpty) {
         manager.applyApiKey(widget.providerName, apiKey);
+      }
+      if (baseUrl.isNotEmpty) {
+        manager.applyBaseUrl(widget.providerName, baseUrl);
       }
       final provider = manager.availableProviders
           .where((p) => p.name == widget.providerName)
           .firstOrNull;
 
-      if (provider == null) {
-        throw Exception('Provider 未找到');
-      }
+      if (provider == null) throw Exception('Provider 未找到');
       final success = await provider.testConnection();
       messenger.showSnackBar(
         SnackBar(
           content: Text(success ? '连接成功！' : '连接失败，请检查 API Key'),
-          backgroundColor: success ? Colors.green : Colors.red,
+          backgroundColor: success ? const Color(0xFF43E97B) : Colors.red,
         ),
       );
     } catch (e) {
@@ -358,49 +411,54 @@ class _ProviderConfigFormState extends State<_ProviderConfigForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(14, 4, 14, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!widget.isLocal) ...[
-            // API Key 输入
             TextField(
               controller: _apiKeyController,
               obscureText: _obscureApiKey,
               decoration: InputDecoration(
                 labelText: 'API Key',
                 hintText: '输入你的 ${widget.displayName} API Key',
-                border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
-                  icon: Icon(_obscureApiKey ? Icons.visibility_off : Icons.visibility),
-                  onPressed: () => setState(() => _obscureApiKey = !_obscureApiKey),
+                  icon: Icon(_obscureApiKey
+                      ? Icons.visibility_off
+                      : Icons.visibility),
+                  onPressed: () =>
+                      setState(() => _obscureApiKey = !_obscureApiKey),
                 ),
               ),
             ),
             const SizedBox(height: 12),
+            // 自定义 API 地址（可选，用于硅基流动等第三方平台）
+            TextField(
+              controller: _baseUrlController,
+              decoration: InputDecoration(
+                labelText: 'API 地址（可选，留空使用官方）',
+                hintText: _getDefaultBaseUrlHint(),
+              ),
+            ),
+            const SizedBox(height: 12),
           ] else ...[
-            // Ollama baseUrl
             TextField(
               controller: _baseUrlController,
               decoration: const InputDecoration(
                 labelText: 'Ollama 地址',
                 hintText: 'http://localhost:11434',
-                border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
           ],
-          // 模型名称
           TextField(
             controller: _modelNameController,
             decoration: InputDecoration(
               labelText: '模型名称（可选，留空使用默认）',
               hintText: _getDefaultModelHint(),
-              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 12),
-          // 设为默认/备选
           Row(
             children: [
               Expanded(
@@ -430,7 +488,6 @@ class _ProviderConfigFormState extends State<_ProviderConfigForm> {
             ],
           ),
           const SizedBox(height: 12),
-          // 按钮
           Row(
             children: [
               Expanded(
@@ -447,9 +504,11 @@ class _ProviderConfigFormState extends State<_ProviderConfigForm> {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: FilledButton(
+                child: GradientButton(
                   onPressed: _save,
-                  child: const Text('保存配置'),
+                  label: '保存配置',
+                  width: double.infinity,
+                  borderRadius: 10,
                 ),
               ),
             ],
@@ -465,7 +524,19 @@ class _ProviderConfigFormState extends State<_ProviderConfigForm> {
       'openai' => 'gpt-4o-mini',
       'qwen' => 'qwen-plus',
       'claude' => 'claude-3-5-haiku-20241022',
+      'zhipu' => 'glm-4-flash',
       'ollama' => 'llama3',
+      _ => '',
+    };
+  }
+
+  String _getDefaultBaseUrlHint() {
+    return switch (widget.providerName) {
+      'deepseek' => 'https://api.deepseek.com/v1',
+      'openai' => 'https://api.openai.com/v1',
+      'qwen' => 'https://dashscope.aliyuncs.com/compatible-mode/v1',
+      'claude' => 'https://api.anthropic.com/v1',
+      'zhipu' => 'https://open.bigmodel.cn/api/paas/v4',
       _ => '',
     };
   }

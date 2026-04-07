@@ -6,7 +6,7 @@ import 'llm_provider.dart';
 /// OpenAI 兼容格式 Provider 基类
 /// DeepSeek、OpenAI、通义千问（DashScope兼容模式）均继承此类
 abstract class OpenAiCompatibleProvider implements LlmProvider {
-  late final Dio _dio;
+  late Dio _dio;
 
   String get baseUrl;
   String get defaultModel;
@@ -15,9 +15,13 @@ abstract class OpenAiCompatibleProvider implements LlmProvider {
   String? _modelName;
 
   OpenAiCompatibleProvider() {
+    _initDio(baseUrl);
+  }
+
+  void _initDio(String url) {
     _dio = Dio(
       BaseOptions(
-        baseUrl: baseUrl,
+        baseUrl: url,
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 120),
         headers: {'Content-Type': 'application/json'},
@@ -35,6 +39,11 @@ abstract class OpenAiCompatibleProvider implements LlmProvider {
   /// 设置模型名（可覆盖 defaultModel）
   void setModelName(String modelName) {
     _modelName = modelName;
+  }
+
+  /// 设置自定义 baseUrl（用于第三方兼容平台，如硅基流动）
+  void setBaseUrl(String url) {
+    _initDio(url);
   }
 
   String get _effectiveModel => _modelName ?? defaultModel;
