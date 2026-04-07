@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 语音识别权限（speech_to_text 需要） -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <application
         android:label="exam_prep_app"
         android:name="${applicationName}"

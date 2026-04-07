@@ -10,6 +10,8 @@ import 'services/match_service.dart';
 import 'services/study_plan_service.dart';
 import 'services/baseline_service.dart';
 import 'services/llm/llm_manager.dart';
+import 'services/assistant_service.dart';
+import 'services/voice_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +51,20 @@ void main() async {
         ChangeNotifierProxyProvider<QuestionService, BaselineService>(
           create: (ctx) => BaselineService(ctx.read<QuestionService>()),
           update: (ctx, qs, prev) => prev ?? BaselineService(qs),
+        ),
+        // 8. VoiceService（无依赖）
+        ChangeNotifierProvider(create: (_) => VoiceService()),
+        // 9. AssistantService（依赖全部 7 个 service，ctx.read 一次性注入）
+        ChangeNotifierProvider(
+          create: (ctx) => AssistantService(
+            llm: ctx.read<LlmManager>(),
+            questionService: ctx.read<QuestionService>(),
+            examService: ctx.read<ExamService>(),
+            matchService: ctx.read<MatchService>(),
+            studyPlanService: ctx.read<StudyPlanService>(),
+            profileService: ctx.read<ProfileService>(),
+            baselineService: ctx.read<BaselineService>(),
+          ),
         ),
       ],
       child: const ExamPrepApp(),
