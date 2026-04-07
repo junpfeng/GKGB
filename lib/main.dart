@@ -21,6 +21,7 @@ import 'services/wrong_analysis_service.dart';
 import 'services/hot_topic_service.dart';
 import 'services/essay_service.dart';
 import 'services/dashboard_service.dart';
+import 'services/adaptive_quiz_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -114,6 +115,11 @@ void main() async {
           ),
           update: (ctx, qs, es, lm, prev) =>
               prev ?? DashboardService(qs, es, lm),
+        ),
+        // 15. AdaptiveQuizService（依赖 LlmManager）
+        ChangeNotifierProxyProvider<LlmManager, AdaptiveQuizService>(
+          create: (ctx) => AdaptiveQuizService(ctx.read<LlmManager>()),
+          update: (ctx, lm, prev) => prev ?? AdaptiveQuizService(lm),
         ),
         // 10. AssistantService（依赖全部 service，ctx.read 一次性注入）
         ChangeNotifierProvider(
