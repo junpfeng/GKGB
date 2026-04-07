@@ -22,7 +22,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 6,
+      version: 7,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -61,6 +61,7 @@ class DatabaseHelper {
         is_correct INTEGER NOT NULL,
         time_spent INTEGER DEFAULT 0,
         is_baseline INTEGER DEFAULT 0,
+        error_type TEXT DEFAULT '',
         answered_at TEXT DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (question_id) REFERENCES questions (id),
         FOREIGN KEY (exam_id) REFERENCES exams (id)
@@ -599,6 +600,21 @@ class DatabaseHelper {
         );
       });
     }
+
+    if (oldVersion < 7) {
+      // v6→v7：错题深度分析，user_answers 增加 error_type + 新索引
+      await db.transaction((txn) async {
+        await txn.execute(
+          "ALTER TABLE user_answers ADD COLUMN error_type TEXT DEFAULT ''",
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_user_answers_error_type ON user_answers(error_type)',
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_user_answers_correct_question ON user_answers(is_correct, question_id)',
+        );
+      });
+    }
   }
 
   /// 创建所有索引
@@ -618,6 +634,8 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_exam_calendar_type ON exam_calendar(exam_type, province)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_exam_calendar_filter ON exam_calendar(exam_type, province, is_subscribed)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_user_registrations_calendar ON user_registrations(calendar_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_user_answers_error_type ON user_answers(error_type)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_user_answers_correct_question ON user_answers(is_correct, question_id)');
   }
 
   // ===== questions CRUD =====
@@ -1463,6 +1481,105 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+  // ===== 错题分析 CRUD =====
+
+  /// 更新答题记录的错因类型
+  Future<int> updateAnswerErrorType(int answerId, String errorType) async {
+    final db = await database;
+    return await db.update(
+      'user_answers',
+      {'error_type': errorType},
+      where: 'id = ?',
+      whereArgs: [answerId],
+    );
+  }
+
+  /// 错因分布统计（按 error_type 分组计数）
+  Future<Map<String, int>> queryErrorTypeDistribution({String? subject}) async {
+    final db = await database;
+    String sql;
+    List<dynamic>? args;
+    if (subject != null) {
+      sql = '''
+        SELECT ua.error_type, COUNT(*) as cnt
+        FROM user_answers ua
+        JOIN questions q ON ua.question_id = q.id
+        WHERE ua.is_correct = 0 AND ua.error_type != '' AND q.subject = ?
+        GROUP BY ua.error_type
+      ''';
+      args = [subject];
+    } else {
+      sql = '''
+        SELECT error_type, COUNT(*) as cnt
+        FROM user_answers
+        WHERE is_correct = 0 AND error_type != ''
+        GROUP BY error_type
+      ''';
+    }
+    final rows = await db.rawQuery(sql, args);
+    final result = <String, int>{};
+    for (final row in rows) {
+      result[row['error_type'] as String] = row['cnt'] as int;
+    }
+    return result;
+  }
+
+  /// 高频错误分类 TOP N
+  Future<List<Map<String, dynamic>>> queryTopWrongCategories({int limit = 10}) async {
+    final db = await database;
+    final rows = await db.rawQuery('''
+      SELECT q.category, q.subject, COUNT(*) as wrong_count
+      FROM user_answers ua
+      JOIN questions q ON ua.question_id = q.id
+      WHERE ua.is_correct = 0
+      GROUP BY q.category, q.subject
+      ORDER BY wrong_count DESC
+      LIMIT ?
+    ''', [limit]);
+    return rows;
+  }
+
+  /// 各分类正确率（LEFT JOIN 确保无答题记录的分类也显示）
+  Future<List<Map<String, dynamic>>> queryCategoryAccuracy() async {
+    final db = await database;
+    final rows = await db.rawQuery('''
+      SELECT
+        q.subject,
+        q.category,
+        COUNT(ua.id) as total,
+        SUM(CASE WHEN ua.is_correct = 1 THEN 1 ELSE 0 END) as correct
+      FROM questions q
+      LEFT JOIN user_answers ua ON q.id = ua.question_id
+      GROUP BY q.subject, q.category
+      ORDER BY q.subject, q.category
+    ''');
+    return rows;
+  }
+
+  /// 近 N 天错题统计
+  Future<List<Map<String, dynamic>>> queryRecentWrongAnswers({int days = 7}) async {
+    final db = await database;
+    final rows = await db.rawQuery('''
+      SELECT ua.*, q.content, q.subject, q.category, q.answer as correct_answer, q.options
+      FROM user_answers ua
+      JOIN questions q ON ua.question_id = q.id
+      WHERE ua.is_correct = 0
+        AND ua.answered_at >= datetime('now', ?)
+      ORDER BY ua.answered_at DESC
+    ''', ['-$days days']);
+    return rows;
+  }
+
+  /// 查询最近一条答题记录（按 question_id 获取最新答错记录 ID）
+  Future<int?> queryLatestWrongAnswerId(int questionId) async {
+    final db = await database;
+    final rows = await db.rawQuery('''
+      SELECT id FROM user_answers
+      WHERE question_id = ? AND is_correct = 0
+      ORDER BY answered_at DESC LIMIT 1
+    ''', [questionId]);
+    return rows.isEmpty ? null : rows.first['id'] as int?;
   }
 }
 
