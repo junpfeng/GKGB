@@ -49,6 +49,9 @@ dependencies:
   speech_to_text: ^7.0.0
   flutter_tts: ^4.2.0
   flutter_markdown: ^0.7.7+1
+  table_calendar: ^3.2.0
+  flutter_local_notifications: ^21.0.0
+  timezone: ^0.11.0
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +87,7 @@ flutter:
     - assets/questions/public_basics.json
     - assets/questions/real_exam_sample.json
     - assets/questions/interview_sample.json
+    - assets/data/exam_calendar_sample.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
