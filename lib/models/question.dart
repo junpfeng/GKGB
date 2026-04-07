@@ -27,6 +27,16 @@ class Question {
   @JsonKey(name: 'created_at')
   final String? createdAt;
 
+  // 真题相关字段
+  final String region;       // 地区（如"北京"、"全国"）
+  final int year;            // 年份（0 表示非真题）
+  @JsonKey(name: 'exam_type')
+  final String examType;     // 国考/省考/事业编/选调
+  @JsonKey(name: 'exam_session')
+  final String examSession;  // 上半年/下半年
+  @JsonKey(name: 'is_real_exam')
+  final int isRealExam;      // 1=真题, 0=非真题
+
   const Question({
     this.id,
     required this.subject,
@@ -38,6 +48,11 @@ class Question {
     this.explanation,
     this.difficulty = 1,
     this.createdAt,
+    this.region = '',
+    this.year = 0,
+    this.examType = '',
+    this.examSession = '',
+    this.isRealExam = 0,
   });
 
   factory Question.fromJson(Map<String, dynamic> json) => _$QuestionFromJson(json);
@@ -58,6 +73,11 @@ class Question {
       explanation: map['explanation'] as String?,
       difficulty: (map['difficulty'] as int?) ?? 1,
       createdAt: map['created_at'] as String?,
+      region: (map['region'] as String?) ?? '',
+      year: (map['year'] as int?) ?? 0,
+      examType: (map['exam_type'] as String?) ?? '',
+      examSession: (map['exam_session'] as String?) ?? '',
+      isRealExam: (map['is_real_exam'] as int?) ?? 0,
     );
   }
 
@@ -73,6 +93,11 @@ class Question {
       'answer': answer,
       'explanation': explanation,
       'difficulty': difficulty,
+      'region': region,
+      'year': year,
+      'exam_type': examType,
+      'exam_session': examSession,
+      'is_real_exam': isRealExam,
     };
   }
 

@@ -22,7 +22,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -42,6 +42,11 @@ class DatabaseHelper {
         answer TEXT NOT NULL,
         explanation TEXT,
         difficulty INTEGER DEFAULT 1,
+        region TEXT DEFAULT '',
+        year INTEGER DEFAULT 0,
+        exam_type TEXT DEFAULT '',
+        exam_session TEXT DEFAULT '',
+        is_real_exam INTEGER DEFAULT 0,
         created_at TEXT DEFAULT CURRENT_TIMESTAMP
       )
     ''');
@@ -199,6 +204,24 @@ class DatabaseHelper {
       )
     ''');
 
+    // 真题试卷模板表
+    await db.execute('''
+      CREATE TABLE real_exam_papers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        region TEXT NOT NULL,
+        year INTEGER NOT NULL,
+        exam_type TEXT NOT NULL,
+        exam_session TEXT DEFAULT '',
+        subject TEXT NOT NULL,
+        time_limit INTEGER NOT NULL,
+        total_score REAL DEFAULT 100,
+        question_ids TEXT NOT NULL,
+        score_distribution TEXT,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+
     // 模拟考试表
     await db.execute('''
       CREATE TABLE exams (
@@ -207,6 +230,7 @@ class DatabaseHelper {
         total_questions INTEGER NOT NULL,
         score REAL DEFAULT 0,
         time_limit INTEGER NOT NULL,
+        paper_id INTEGER,
         started_at TEXT,
         finished_at TEXT,
         status TEXT DEFAULT 'pending'
@@ -311,6 +335,63 @@ class DatabaseHelper {
         debugPrint('迁移 study_plans.auto_adjusted_at 跳过: $e');
       }
     }
+
+    if (oldVersion < 4) {
+      // v3→v4：真题库功能，使用事务包裹确保原子性
+      await db.transaction((txn) async {
+        // questions 表新增 5 个真题字段
+        await txn.execute(
+          "ALTER TABLE questions ADD COLUMN region TEXT DEFAULT ''",
+        );
+        await txn.execute(
+          'ALTER TABLE questions ADD COLUMN year INTEGER DEFAULT 0',
+        );
+        await txn.execute(
+          "ALTER TABLE questions ADD COLUMN exam_type TEXT DEFAULT ''",
+        );
+        await txn.execute(
+          "ALTER TABLE questions ADD COLUMN exam_session TEXT DEFAULT ''",
+        );
+        await txn.execute(
+          'ALTER TABLE questions ADD COLUMN is_real_exam INTEGER DEFAULT 0',
+        );
+        // 保底更新
+        await txn.execute(
+          'UPDATE questions SET is_real_exam = 0 WHERE is_real_exam IS NULL',
+        );
+
+        // 新增 real_exam_papers 表
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS real_exam_papers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            region TEXT NOT NULL,
+            year INTEGER NOT NULL,
+            exam_type TEXT NOT NULL,
+            exam_session TEXT DEFAULT '',
+            subject TEXT NOT NULL,
+            time_limit INTEGER NOT NULL,
+            total_score REAL DEFAULT 100,
+            question_ids TEXT NOT NULL,
+            score_distribution TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+          )
+        ''');
+
+        // exams 表新增 paper_id
+        await txn.execute(
+          'ALTER TABLE exams ADD COLUMN paper_id INTEGER DEFAULT NULL',
+        );
+
+        // 新增索引
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_questions_real_exam ON questions(is_real_exam, region, year, exam_type)',
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_real_exam_papers_filter ON real_exam_papers(exam_type, region, year)',
+        );
+      });
+    }
   }
 
   /// 创建所有索引
@@ -322,6 +403,8 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_daily_tasks_plan_date ON daily_tasks(plan_id, task_date)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_positions_policy_id ON positions(policy_id)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_match_results_position_id ON match_results(position_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_questions_real_exam ON questions(is_real_exam, region, year, exam_type)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_real_exam_papers_filter ON real_exam_papers(exam_type, region, year)');
   }
 
   // ===== questions CRUD =====
@@ -845,6 +928,191 @@ class DatabaseHelper {
   Future<void> clearFallbackLlmConfig() async {
     final db = await database;
     await db.update('llm_config', {'is_fallback': 0});
+  }
+
+  // ===== 真题查询 =====
+
+  /// 查询真题题目（参数化查询，严禁 SQL 拼接）
+  Future<List<Map<String, dynamic>>> queryRealExamQuestions({
+    String? region,
+    int? year,
+    String? examType,
+    String? examSession,
+    String? subject,
+    String? category,
+    int? limit,
+    int? offset,
+  }) async {
+    final db = await database;
+    final conditions = <String>['is_real_exam = 1'];
+    final args = <dynamic>[];
+    if (region != null && region.isNotEmpty) {
+      conditions.add('region = ?');
+      args.add(region);
+    }
+    if (year != null && year > 0) {
+      conditions.add('year = ?');
+      args.add(year);
+    }
+    if (examType != null && examType.isNotEmpty) {
+      conditions.add('exam_type = ?');
+      args.add(examType);
+    }
+    if (examSession != null && examSession.isNotEmpty) {
+      conditions.add('exam_session = ?');
+      args.add(examSession);
+    }
+    if (subject != null && subject.isNotEmpty) {
+      conditions.add('subject = ?');
+      args.add(subject);
+    }
+    if (category != null && category.isNotEmpty) {
+      conditions.add('category = ?');
+      args.add(category);
+    }
+    return await db.query(
+      'questions',
+      where: conditions.join(' AND '),
+      whereArgs: args,
+      limit: limit,
+      offset: offset,
+      orderBy: 'id ASC',
+    );
+  }
+
+  /// 统计真题题目数量
+  Future<int> countRealExamQuestions({
+    String? region,
+    int? year,
+    String? examType,
+    String? subject,
+  }) async {
+    final db = await database;
+    final conditions = <String>['is_real_exam = 1'];
+    final args = <dynamic>[];
+    if (region != null && region.isNotEmpty) {
+      conditions.add('region = ?');
+      args.add(region);
+    }
+    if (year != null && year > 0) {
+      conditions.add('year = ?');
+      args.add(year);
+    }
+    if (examType != null && examType.isNotEmpty) {
+      conditions.add('exam_type = ?');
+      args.add(examType);
+    }
+    if (subject != null && subject.isNotEmpty) {
+      conditions.add('subject = ?');
+      args.add(subject);
+    }
+    final where = conditions.join(' AND ');
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as cnt FROM questions WHERE $where',
+      args,
+    );
+    return (result.first['cnt'] as int?) ?? 0;
+  }
+
+  /// 动态获取筛选项（如 SELECT DISTINCT region）
+  Future<List<String>> getDistinctValues(
+    String field, {
+    Map<String, dynamic>? where,
+  }) async {
+    final db = await database;
+    // 白名单校验字段名，防止 SQL 注入
+    const allowedFields = {
+      'region', 'year', 'exam_type', 'exam_session', 'subject',
+    };
+    if (!allowedFields.contains(field)) {
+      throw ArgumentError('不允许的字段名: $field');
+    }
+    final conditions = <String>['is_real_exam = 1'];
+    final args = <dynamic>[];
+    if (where != null) {
+      for (final entry in where.entries) {
+        if (!allowedFields.contains(entry.key)) continue;
+        if (entry.value != null && entry.value.toString().isNotEmpty) {
+          conditions.add('${entry.key} = ?');
+          args.add(entry.value);
+        }
+      }
+    }
+    final whereClause = conditions.join(' AND ');
+    final rows = await db.rawQuery(
+      'SELECT DISTINCT $field FROM questions WHERE $whereClause AND $field != \'\' ORDER BY $field',
+      args,
+    );
+    return rows.map((r) => r[field].toString()).toList();
+  }
+
+  // ===== real_exam_papers CRUD =====
+
+  Future<int> insertRealExamPaper(Map<String, dynamic> paper) async {
+    final db = await database;
+    return await db.insert('real_exam_papers', paper);
+  }
+
+  Future<List<Map<String, dynamic>>> queryRealExamPapers({
+    String? examType,
+    String? region,
+    int? year,
+    String? subject,
+  }) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (examType != null && examType.isNotEmpty) {
+      conditions.add('exam_type = ?');
+      args.add(examType);
+    }
+    if (region != null && region.isNotEmpty) {
+      conditions.add('region = ?');
+      args.add(region);
+    }
+    if (year != null && year > 0) {
+      conditions.add('year = ?');
+      args.add(year);
+    }
+    if (subject != null && subject.isNotEmpty) {
+      conditions.add('subject = ?');
+      args.add(subject);
+    }
+    return await db.query(
+      'real_exam_papers',
+      where: conditions.isEmpty ? null : conditions.join(' AND '),
+      whereArgs: args.isEmpty ? null : args,
+      orderBy: 'year DESC, id DESC',
+    );
+  }
+
+  Future<Map<String, dynamic>?> queryRealExamPaperById(int id) async {
+    final db = await database;
+    final rows = await db.query(
+      'real_exam_papers',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  Future<int> updateRealExamPaper(int id, Map<String, dynamic> paper) async {
+    final db = await database;
+    return await db.update(
+      'real_exam_papers',
+      paper,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<int> deleteRealExamPaper(int id) async {
+    final db = await database;
+    return await db.delete(
+      'real_exam_papers',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
 

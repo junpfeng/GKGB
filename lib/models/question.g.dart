@@ -19,6 +19,11 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
   explanation: json['explanation'] as String?,
   difficulty: (json['difficulty'] as num?)?.toInt() ?? 1,
   createdAt: json['created_at'] as String?,
+  region: json['region'] as String? ?? '',
+  year: (json['year'] as num?)?.toInt() ?? 0,
+  examType: json['exam_type'] as String? ?? '',
+  examSession: json['exam_session'] as String? ?? '',
+  isRealExam: (json['is_real_exam'] as num?)?.toInt() ?? 0,
 );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
@@ -32,4 +37,9 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
   'explanation': instance.explanation,
   'difficulty': instance.difficulty,
   'created_at': instance.createdAt,
+  'region': instance.region,
+  'year': instance.year,
+  'exam_type': instance.examType,
+  'exam_session': instance.examSession,
+  'is_real_exam': instance.isRealExam,
 };

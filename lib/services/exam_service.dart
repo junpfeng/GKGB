@@ -79,6 +79,49 @@ class ExamService extends ChangeNotifier {
     }
   }
 
+  /// 从真题试卷启动模考（题目已确定，不需要随机抽题）
+  Future<Exam> startPaperExam({
+    required int paperId,
+    required String subject,
+    required List<Question> questions,
+    required int timeLimitSeconds,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      _examQuestions = questions;
+      final now = DateTime.now().toIso8601String();
+      final examData = {
+        'subject': subject,
+        'total_questions': questions.length,
+        'score': 0.0,
+        'time_limit': timeLimitSeconds,
+        'paper_id': paperId,
+        'started_at': now,
+        'status': 'ongoing',
+      };
+      final id = await _db.insertExam(examData);
+
+      _currentExam = Exam(
+        id: id,
+        subject: subject,
+        totalQuestions: questions.length,
+        timeLimit: timeLimitSeconds,
+        startedAt: now,
+        status: 'ongoing',
+      );
+      _userAnswers.clear();
+      _remainingSeconds = timeLimitSeconds;
+
+      _startTimer();
+      return _currentExam!;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   /// 记录用户答案
   void recordAnswer(int questionId, String answer) {
     _userAnswers[questionId] = answer;
