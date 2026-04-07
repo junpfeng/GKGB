@@ -144,9 +144,9 @@
 - **网络检测**：connectivity_plus
 - **后台任务**：WorkManager（Android）
 
-### 3.2 项目目录结构
+### 3.2 项目目录结构（目标规划，尚未全部实现）
 ```
-independent_app/
+GKGB/
 ├── lib/
 │   ├── main.dart
 │   ├── app.dart
@@ -230,7 +230,7 @@ independent_app/
 
 ### 当前状态
 - ✅ Windows 10 Pro, Git 2.43, VS Community 2026, winget
-- ❌ Flutter SDK、Dart SDK、Java JDK、Android SDK
+- ✅ Flutter SDK、Dart SDK、Java JDK 17、Android SDK（已安装，项目已初始化）
 
 ### 安装步骤
 1. `winget install Google.Flutter`

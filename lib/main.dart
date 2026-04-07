@@ -1,18 +1,49 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app.dart';
 import 'db/database_helper.dart';
 import 'services/question_service.dart';
+import 'services/exam_service.dart';
+import 'services/profile_service.dart';
+import 'services/match_service.dart';
+import 'services/study_plan_service.dart';
+import 'services/llm/llm_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Windows / Linux 平台初始化 sqflite FFI
+  if (Platform.isWindows || Platform.isLinux) {
+    initSqfliteForWindows();
+  }
+
   await DatabaseHelper.instance.database;
 
   runApp(
     MultiProvider(
       providers: [
-        Provider<DatabaseHelper>.value(value: DatabaseHelper.instance),
+        // 1. QuestionService（无依赖）
         ChangeNotifierProvider(create: (_) => QuestionService()),
+        // 2. ProfileService（无依赖）
+        ChangeNotifierProvider(create: (_) => ProfileService()),
+        // 3. LlmManager（无依赖）
+        ChangeNotifierProvider(create: (_) => LlmManager()),
+        // 4. ExamService（依赖 QuestionService）
+        ChangeNotifierProxyProvider<QuestionService, ExamService>(
+          create: (ctx) => ExamService(ctx.read<QuestionService>()),
+          update: (ctx, qs, prev) => prev ?? ExamService(qs),
+        ),
+        // 5. MatchService（依赖 ProfileService, LlmManager）
+        ChangeNotifierProxyProvider2<ProfileService, LlmManager, MatchService>(
+          create: (ctx) => MatchService(ctx.read<ProfileService>(), ctx.read<LlmManager>()),
+          update: (ctx, ps, lm, prev) => prev ?? MatchService(ps, lm),
+        ),
+        // 6. StudyPlanService（依赖 QuestionService, LlmManager）
+        ChangeNotifierProxyProvider2<QuestionService, LlmManager, StudyPlanService>(
+          create: (ctx) => StudyPlanService(ctx.read<QuestionService>(), ctx.read<LlmManager>()),
+          update: (ctx, qs, lm, prev) => prev ?? StudyPlanService(qs, lm),
+        ),
       ],
       child: const ExamPrepApp(),
     ),
