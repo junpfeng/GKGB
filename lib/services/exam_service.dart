@@ -157,6 +157,36 @@ class ExamService extends ChangeNotifier {
     return rows.map((r) => UserAnswer.fromDb(r)).toList();
   }
 
+  /// 获取考试各分类统计（行测5科细分）
+  /// 返回各分类 correct/total 计数
+  Future<Map<String, Map<String, int>>> getCategoryStats(int examId) async {
+    final rows = await _db.queryExamCategoryStats(examId);
+    final result = <String, Map<String, int>>{};
+    for (final row in rows) {
+      final category = row['category'] as String? ?? '未知';
+      result[category] = {
+        'correct': (row['correct'] as int?) ?? 0,
+        'total': (row['total'] as int?) ?? 0,
+      };
+    }
+    return result;
+  }
+
+  /// 获取历史成绩趋势（最近 N 次）
+  /// 返回 [{date, score, subject}] 列表，按时间升序
+  Future<List<Map<String, dynamic>>> getScoreTrend({
+    String? subject,
+    int limit = 10,
+  }) async {
+    final rows = await _db.queryScoreTrend(subject: subject, limit: limit);
+    // 反转为时间升序（数据库返回降序）
+    return rows.reversed.map((r) => {
+      'date': (r['started_at'] as String?)?.substring(0, 10) ?? '',
+      'score': (r['score'] as double?) ?? 0.0,
+      'subject': r['subject'] as String? ?? '',
+    }).toList();
+  }
+
   void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {

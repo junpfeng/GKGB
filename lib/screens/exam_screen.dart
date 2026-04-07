@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/exam_service.dart';
@@ -487,14 +488,48 @@ class _ExamQuestionPagerState extends State<_ExamQuestionPager> {
   }
 }
 
-/// 考试报告页
-class ExamReportScreen extends StatelessWidget {
+/// 考试报告页（含行测细分柱状图）
+class ExamReportScreen extends StatefulWidget {
   final Exam exam;
 
   const ExamReportScreen({super.key, required this.exam});
 
   @override
+  State<ExamReportScreen> createState() => _ExamReportScreenState();
+}
+
+class _ExamReportScreenState extends State<ExamReportScreen> {
+  Map<String, Map<String, int>> _categoryStats = {};
+  bool _loadingStats = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.exam.id != null) {
+      _loadCategoryStats();
+    }
+  }
+
+  Future<void> _loadCategoryStats() async {
+    setState(() => _loadingStats = true);
+    try {
+      final stats = await context
+          .read<ExamService>()
+          .getCategoryStats(widget.exam.id!);
+      if (mounted) {
+        setState(() {
+          _categoryStats = stats;
+          _loadingStats = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) setState(() => _loadingStats = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final exam = widget.exam;
     final scoreColor = exam.score >= 80
         ? Colors.green
         : exam.score >= 60
@@ -545,7 +580,8 @@ class ExamReportScreen extends StatelessWidget {
                         _ReportItem(label: '题量', value: '${exam.totalQuestions}题'),
                         _ReportItem(
                           label: '用时',
-                          value: _formatDuration(exam.startedAt, exam.finishedAt),
+                          value: _formatDuration(
+                              exam.startedAt, exam.finishedAt),
                         ),
                       ],
                     ),
@@ -554,6 +590,21 @@ class ExamReportScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+            // 行测细分柱状图（仅行测科目且有分类数据时显示）
+            if (exam.subject == '行测' && !_loadingStats) ...[
+              if (_categoryStats.isNotEmpty) ...[
+                Text(
+                  '分类得分细分',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8),
+                _CategoryBarChart(categoryStats: _categoryStats),
+                const SizedBox(height: 16),
+              ],
+            ] else if (_loadingStats) ...[
+              const Center(child: CircularProgressIndicator()),
+              const SizedBox(height: 16),
+            ],
             // AI 分析按钮
             SizedBox(
               width: double.infinity,
@@ -562,6 +613,7 @@ class ExamReportScreen extends StatelessWidget {
                   context,
                   initialPrompt: '我刚完成了一次${exam.subject}模拟考试，'
                       '共${exam.totalQuestions}题，得分${exam.score.toStringAsFixed(1)}分。'
+                      '${_categoryStats.isNotEmpty ? "各分类得分：${_categoryStats.entries.map((e) => "${e.key}：${e.value['correct']}/${e.value['total']}").join("，")}。" : ""}'
                       '请分析我的薄弱点并给出针对性复习建议。',
                   title: 'AI 分析报告',
                 ),
@@ -584,6 +636,134 @@ class ExamReportScreen extends StatelessWidget {
     final minutes = diff.inMinutes;
     final seconds = diff.inSeconds % 60;
     return '$minutes分$seconds秒';
+  }
+}
+
+/// 行测分类柱状图
+class _CategoryBarChart extends StatelessWidget {
+  final Map<String, Map<String, int>> categoryStats;
+  const _CategoryBarChart({required this.categoryStats});
+
+  @override
+  Widget build(BuildContext context) {
+    final categories = categoryStats.keys.toList();
+    if (categories.isEmpty) return const SizedBox.shrink();
+
+    final barGroups = categories.asMap().entries.map((entry) {
+      final i = entry.key;
+      final cat = entry.value;
+      final stats = categoryStats[cat]!;
+      final total = (stats['total'] ?? 0).toDouble();
+      final correct = (stats['correct'] ?? 0).toDouble();
+      final accuracy = total == 0 ? 0.0 : correct / total;
+
+      // 颜色根据正确率判断
+      final color = accuracy >= 0.8
+          ? Colors.green
+          : accuracy >= 0.6
+              ? Colors.orange
+              : Colors.red;
+
+      return BarChartGroupData(
+        x: i,
+        barRods: [
+          BarChartRodData(
+            toY: accuracy * 100,
+            color: color,
+            width: 28,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+            backDrawRodData: BackgroundBarChartRodData(
+              show: true,
+              toY: 100,
+              color: Colors.grey.withValues(alpha: 0.1),
+            ),
+          ),
+        ],
+      );
+    }).toList();
+
+    // 截断分类名（防止太长）
+    String shortCat(String cat) =>
+        cat.length > 4 ? cat.substring(0, 4) : cat;
+
+    return SizedBox(
+      height: 220,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: BarChart(
+          BarChartData(
+            minY: 0,
+            maxY: 100,
+            barGroups: barGroups,
+            titlesData: FlTitlesData(
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 36,
+                  getTitlesWidget: (value, meta) {
+                    final i = value.toInt();
+                    if (i < 0 || i >= categories.length) {
+                      return const SizedBox.shrink();
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        shortCat(categories[i]),
+                        style: const TextStyle(fontSize: 10),
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 36,
+                  getTitlesWidget: (value, meta) {
+                    if (value % 25 != 0) return const SizedBox.shrink();
+                    return Text(
+                      '${value.toInt()}%',
+                      style: const TextStyle(fontSize: 10),
+                    );
+                  },
+                ),
+              ),
+              topTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false)),
+              rightTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false)),
+            ),
+            gridData: FlGridData(
+              show: true,
+              drawVerticalLine: false,
+              getDrawingHorizontalLine: (value) => FlLine(
+                color: Colors.grey.withValues(alpha: 0.2),
+                strokeWidth: 1,
+              ),
+            ),
+            borderData: FlBorderData(show: false),
+            barTouchData: BarTouchData(
+              touchTooltipData: BarTouchTooltipData(
+                getTooltipColor: (_) =>
+                    Theme.of(context).colorScheme.surface,
+                getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                  final cat = categories[group.x.toInt()];
+                  final stats = categoryStats[cat]!;
+                  return BarTooltipItem(
+                    '$cat\n${stats['correct']}/${stats['total']}题',
+                    TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 11,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

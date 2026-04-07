@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import '../db/database_helper.dart';
 import '../models/question.dart';
 import '../models/user_answer.dart';
+import 'llm/llm_manager.dart';
+import 'llm/llm_provider.dart';
 
 /// 题目服务：题库查询、答题记录、错题、收藏
 class QuestionService extends ChangeNotifier {
@@ -256,5 +258,57 @@ class QuestionService extends ChangeNotifier {
     _answeredCount = answered;
     _correctCount = correct;
     notifyListeners();
+  }
+
+  // ===== AI 批改 + 关联推荐 =====
+
+  /// 申论/主观题 AI 批改，返回流式 Stream
+  /// 调用方需通过 LlmManager 传入，避免直接耦合
+  Stream<String> gradeEssay(
+    Question question,
+    String userAnswer,
+    LlmManager llm,
+  ) {
+    final prompt = '''
+你是一名专业的申论评卷老师，请对以下主观题答案进行批改和点评。
+
+【题目】
+${question.content}
+
+【参考答案要点】
+${question.answer.isNotEmpty ? question.answer : "（无参考答案）"}
+
+【考生答案】
+${userAnswer.trim().isEmpty ? "（未作答）" : userAnswer}
+
+请从以下维度进行批改：
+1. 要点覆盖（是否涵盖核心要点）
+2. 逻辑结构（条理是否清晰）
+3. 语言表达（是否规范得体）
+4. 综合评分（满分100分，给出估分区间）
+5. 改进建议（具体、可操作的建议）
+
+请用简明扼要的语言，帮助考生提升申论写作能力。
+''';
+    return llm.streamChat([ChatMessage(role: 'user', content: prompt)]);
+  }
+
+  /// 获取同科同类的关联推荐题目
+  Future<List<Question>> getRelatedQuestions(
+    String subject,
+    String category, {
+    int limit = 5,
+    int? excludeId,
+  }) async {
+    final rows = await _db.queryQuestions(
+      subject: subject,
+      category: category,
+      limit: limit + (excludeId != null ? 1 : 0),
+    );
+    var questions = rows.map((r) => Question.fromDb(r)).toList();
+    if (excludeId != null) {
+      questions = questions.where((q) => q.id != excludeId).toList();
+    }
+    return questions.take(limit).toList();
   }
 }

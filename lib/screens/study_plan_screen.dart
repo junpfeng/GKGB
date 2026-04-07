@@ -51,6 +51,8 @@ class _StudyPlanScreenState extends State<StudyPlanScreen> {
     );
   }
 
+
+
   Future<void> _showGeneratePlanDialog(BuildContext context) async {
     final examDateController = TextEditingController();
     final contextController = TextEditingController();
@@ -238,9 +240,19 @@ class _PlanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 里程碑提醒
+    final milestones = plan.id != null
+        ? service.checkMilestones(plan.id!)
+        : <String>[];
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
+        // 里程碑提醒横幅
+        if (milestones.isNotEmpty) ...[
+          _MilestoneBanner(milestones: milestones, plan: plan),
+          const SizedBox(height: 12),
+        ],
         // 计划概览卡片
         Card(
           child: Padding(
@@ -271,6 +283,27 @@ class _PlanView extends StatelessWidget {
               ],
             ),
           ),
+        ),
+        const SizedBox(height: 12),
+        // 操作按钮行：自动调整 + 错题推荐
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () => _autoAdjust(context),
+                icon: const Icon(Icons.tune, size: 16),
+                label: const Text('自动调整'),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () => _goToRelatedPractice(context),
+                icon: const Icon(Icons.error_outline, size: 16),
+                label: const Text('错题推荐'),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 16),
         // AI 生成的计划内容
@@ -316,6 +349,36 @@ class _PlanView extends StatelessWidget {
           label: const Text('重新生成计划'),
         ),
       ],
+    );
+  }
+
+  Future<void> _autoAdjust(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    if (plan.id == null) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('计划尚未保存')),
+      );
+      return;
+    }
+    try {
+      final result = await service.autoAdjust(plan.id!);
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(result),
+          duration: const Duration(seconds: 4),
+        ),
+      );
+    } catch (e) {
+      messenger.showSnackBar(
+        SnackBar(content: Text('自动调整失败：$e')),
+      );
+    }
+  }
+
+  void _goToRelatedPractice(BuildContext context) {
+    // 导航到刷题页，展示错题本
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('请切换到"刷题"页面查看错题本')),
     );
   }
 
@@ -429,6 +492,59 @@ class _StatusBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(label, style: TextStyle(fontSize: 11, color: color)),
+    );
+  }
+}
+
+/// 里程碑提醒横幅
+class _MilestoneBanner extends StatelessWidget {
+  final List<String> milestones;
+  final StudyPlan plan;
+
+  const _MilestoneBanner({required this.milestones, required this.plan});
+
+  @override
+  Widget build(BuildContext context) {
+    // 根据距考试天数判断紧急度颜色
+    Color bannerColor = Colors.blue.shade50;
+    Color textColor = Colors.blue.shade800;
+    IconData icon = Icons.event_note;
+
+    if (plan.examDate != null) {
+      final examDate = DateTime.tryParse(plan.examDate!);
+      if (examDate != null) {
+        final daysLeft = examDate.difference(DateTime.now()).inDays;
+        if (daysLeft <= 7) {
+          bannerColor = Colors.red.shade50;
+          textColor = Colors.red.shade800;
+          icon = Icons.alarm;
+        } else if (daysLeft <= 30) {
+          bannerColor = Colors.orange.shade50;
+          textColor = Colors.orange.shade800;
+          icon = Icons.schedule;
+        }
+      }
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      decoration: BoxDecoration(
+        color: bannerColor,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: textColor.withValues(alpha: 0.3)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: textColor, size: 18),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              milestones.join(' '),
+              style: TextStyle(color: textColor, fontSize: 13),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

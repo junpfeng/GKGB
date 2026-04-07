@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/question.dart';
+import '../services/llm/llm_manager.dart';
+import 'ai_chat_dialog.dart';
 
 /// 题目卡片组件
 /// 支持单选、多选、判断、主观题
@@ -70,6 +73,16 @@ class QuestionCard extends StatelessWidget {
             if (showAnswer) ...[
               const Divider(height: 24),
               _buildAnswerSection(context),
+            ],
+            // 主观题显示 AI 批改按钮（有答案时）
+            if (question.type == 'subjective' &&
+                userAnswer != null &&
+                userAnswer!.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              _AiGradeButton(
+                question: question,
+                userAnswer: userAnswer!,
+              ),
             ],
           ],
         ),
@@ -500,6 +513,67 @@ class _SubjectiveInputState extends State<_SubjectiveInput> {
         contentPadding: const EdgeInsets.all(12),
       ),
       style: const TextStyle(fontSize: 14, height: 1.6),
+    );
+  }
+}
+
+/// 主观题 AI 批改按钮（仅在有答案时显示）
+class _AiGradeButton extends StatelessWidget {
+  final Question question;
+  final String userAnswer;
+
+  const _AiGradeButton({
+    required this.question,
+    required this.userAnswer,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: OutlinedButton.icon(
+        onPressed: () => _showGrading(context),
+        icon: const Icon(Icons.smart_toy, size: 16),
+        label: const Text('AI 批改'),
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+        ),
+      ),
+    );
+  }
+
+  void _showGrading(BuildContext context) {
+    final llmManager = context.read<LlmManager>();
+
+    // 检查是否支持流式批改
+    if (!llmManager.hasProvider) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('请先在"我的"页面配置 AI 模型')),
+      );
+      return;
+    }
+
+    // 通过 AiChatDialog 展示流式批改结果（复用对话界面）
+    AiChatDialog.show(
+      context,
+      initialPrompt: '''请批改以下主观题答案：
+
+【题目】
+${question.content}
+
+【参考答案要点】
+${question.answer.isNotEmpty ? question.answer : "（无参考答案）"}
+
+【考生答案】
+${userAnswer.trim().isEmpty ? "（未作答）" : userAnswer}
+
+请从以下维度批改：
+1. 要点覆盖（是否涵盖核心要点）
+2. 逻辑结构（条理是否清晰）
+3. 语言表达（是否规范得体）
+4. 综合评分（满分100分，给出估分区间）
+5. 改进建议（具体、可操作）''',
+      title: 'AI 批改',
     );
   }
 }

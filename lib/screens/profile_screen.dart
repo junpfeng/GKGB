@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/profile_service.dart';
 import '../models/user_profile.dart';
+import 'baseline_test_screen.dart';
 import 'llm_settings_screen.dart';
 import 'study_plan_screen.dart';
 
@@ -102,6 +103,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               const SizedBox(height: 8),
               // 功能菜单
+              _buildMenuItem(
+                context,
+                Icons.quiz,
+                '摸底测试',
+                '快速评估基础水平，生成个性化计划',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const BaselineTestScreen()),
+                ),
+              ),
               _buildMenuItem(
                 context,
                 Icons.smart_toy,
