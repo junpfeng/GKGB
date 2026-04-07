@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../services/match_service.dart';
 import '../services/profile_service.dart';
@@ -41,6 +42,26 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
       appBar: AppBar(
         title: const Text('岗位匹配'),
         actions: [
+          // 智能获取公告菜单
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.add_link),
+            tooltip: '智能获取公告',
+            itemBuilder: (_) => const [
+              PopupMenuItem(value: 'search', child: Text('智能搜索')),
+              PopupMenuItem(value: 'url', child: Text('URL 导入')),
+              PopupMenuItem(value: 'paste', child: Text('粘贴导入')),
+            ],
+            onSelected: (value) {
+              switch (value) {
+                case 'search':
+                  _showOnlineSearchDialog(context);
+                case 'url':
+                  _showUrlImportDialog(context);
+                case 'paste':
+                  _showPasteImportDialog(context);
+              }
+            },
+          ),
           Consumer<MatchService>(
             builder: (ctx, service, _) => IconButton(
               icon: service.isMatching
@@ -223,6 +244,39 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
     cityController.dispose();
     contentController.dispose();
     deadlineController.dispose();
+  }
+
+  /// 智能搜索对话框
+  Future<void> _showOnlineSearchDialog(BuildContext context) async {
+    final profile = context.read<ProfileService>().profile;
+    final defaultCities = profile?.targetCities ?? [];
+    await showDialog(
+      context: context,
+      builder: (_) => _OnlineSearchDialog(defaultCities: defaultCities),
+    );
+  }
+
+  /// URL 导入对话框
+  Future<void> _showUrlImportDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (_) => const _UrlImportDialog(),
+    );
+  }
+
+  /// 粘贴导入对话框
+  Future<void> _showPasteImportDialog(BuildContext context) async {
+    String clipText = '';
+    try {
+      final clipData = await Clipboard.getData(Clipboard.kTextPlain);
+      clipText = clipData?.text ?? '';
+    } catch (_) {}
+
+    if (!context.mounted) return;
+    await showDialog(
+      context: context,
+      builder: (_) => _PasteImportDialog(initialText: clipText),
+    );
   }
 }
 
@@ -465,6 +519,423 @@ class PositionDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// ===== 智能获取公告对话框（独立 StatefulWidget）=====
+
+/// 智能搜索公告对话框
+class _OnlineSearchDialog extends StatefulWidget {
+  final List<String> defaultCities;
+  const _OnlineSearchDialog({required this.defaultCities});
+
+  @override
+  State<_OnlineSearchDialog> createState() => _OnlineSearchDialogState();
+}
+
+class _OnlineSearchDialogState extends State<_OnlineSearchDialog> {
+  late final TextEditingController _citiesController;
+  bool _searching = false;
+  List<TalentPolicy> _results = [];
+  final Set<int> _selected = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _citiesController =
+        TextEditingController(text: widget.defaultCities.join('，'));
+  }
+
+  @override
+  void dispose() {
+    _citiesController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('智能搜索公告'),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _citiesController,
+              decoration: const InputDecoration(
+                labelText: '目标城市（逗号分隔）',
+                hintText: '如：北京，上海，广州',
+              ),
+            ),
+            const SizedBox(height: 12),
+            if (_searching) ...[
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(width: 12),
+                  Text('AI 正在搜索...'),
+                ],
+              ),
+            ] else if (_results.isNotEmpty) ...[
+              Text('找到 ${_results.length} 条公告，勾选入库：',
+                  style: const TextStyle(fontSize: 13)),
+              const SizedBox(height: 8),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 200),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: _results.length,
+                  itemBuilder: (_, i) {
+                    final p = _results[i];
+                    return CheckboxListTile(
+                      value: _selected.contains(i),
+                      onChanged: (v) => setState(() {
+                        if (v == true) {
+                          _selected.add(i);
+                        } else {
+                          _selected.remove(i);
+                        }
+                      }),
+                      title: Text(p.title,
+                          style: const TextStyle(fontSize: 13)),
+                      subtitle: Text(
+                        [
+                          if (p.city != null) p.city!,
+                          if (p.policyType != null) p.policyType!,
+                        ].join(' · '),
+                        style: const TextStyle(fontSize: 11),
+                      ),
+                      dense: true,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('取消')),
+        if (_results.isEmpty && !_searching)
+          FilledButton(
+            onPressed: _doSearch,
+            child: const Text('搜索'),
+          )
+        else if (_results.isNotEmpty)
+          FilledButton(
+            onPressed: _doImport,
+            child: Text('入库（${_selected.length}条）'),
+          ),
+      ],
+    );
+  }
+
+  Future<void> _doSearch() async {
+    final cities = _citiesController.text
+        .split(RegExp(r'[，,]'))
+        .map((c) => c.trim())
+        .where((c) => c.isNotEmpty)
+        .toList();
+    if (cities.isEmpty) return;
+
+    setState(() => _searching = true);
+    try {
+      final found =
+          await context.read<MatchService>().searchPoliciesOnline(cities);
+      setState(() {
+        _searching = false;
+        _results = found;
+      });
+    } catch (e) {
+      setState(() => _searching = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('搜索失败：$e')),
+        );
+      }
+    }
+  }
+
+  Future<void> _doImport() async {
+    Navigator.pop(context);
+    int count = 0;
+    for (final i in _selected) {
+      if (i < _results.length) {
+        await context.read<MatchService>().addPolicy(
+              title: _results[i].title,
+              province: _results[i].province,
+              city: _results[i].city,
+              policyType: _results[i].policyType,
+              deadline: _results[i].deadline,
+            );
+        count++;
+      }
+    }
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('已入库 $count 条公告')),
+      );
+    }
+  }
+}
+
+/// URL 导入公告对话框
+class _UrlImportDialog extends StatefulWidget {
+  const _UrlImportDialog();
+
+  @override
+  State<_UrlImportDialog> createState() => _UrlImportDialogState();
+}
+
+class _UrlImportDialogState extends State<_UrlImportDialog> {
+  final TextEditingController _urlController = TextEditingController();
+  bool _loading = false;
+  TalentPolicy? _preview;
+
+  @override
+  void dispose() {
+    _urlController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('URL 导入公告'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            controller: _urlController,
+            decoration: const InputDecoration(
+              labelText: '公告链接',
+              hintText: 'https://...',
+            ),
+          ),
+          if (_loading) ...[
+            const SizedBox(height: 12),
+            const Row(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 12),
+                Text('正在抓取解析...'),
+              ],
+            ),
+          ] else if (_preview != null) ...[
+            const SizedBox(height: 12),
+            _PreviewCard(policy: _preview!),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('取消')),
+        if (_preview == null && !_loading)
+          FilledButton(
+            onPressed: _doParse,
+            child: const Text('解析'),
+          )
+        else if (_preview != null)
+          FilledButton(
+            onPressed: _doImport,
+            child: const Text('确认入库'),
+          ),
+      ],
+    );
+  }
+
+  Future<void> _doParse() async {
+    final url = _urlController.text.trim();
+    if (url.isEmpty || !url.startsWith('http')) return;
+
+    setState(() => _loading = true);
+    try {
+      final result =
+          await context.read<MatchService>().importFromUrl(url);
+      setState(() {
+        _loading = false;
+        _preview = result;
+      });
+    } catch (e) {
+      setState(() => _loading = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('导入失败：$e')),
+        );
+      }
+    }
+  }
+
+  Future<void> _doImport() async {
+    final p = _preview!;
+    Navigator.pop(context);
+    await context.read<MatchService>().addPolicy(
+          title: p.title,
+          province: p.province,
+          city: p.city,
+          policyType: p.policyType,
+          content: p.content,
+          deadline: p.deadline,
+        );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('公告已入库')),
+      );
+    }
+  }
+}
+
+/// 粘贴导入公告对话框
+class _PasteImportDialog extends StatefulWidget {
+  final String initialText;
+  const _PasteImportDialog({required this.initialText});
+
+  @override
+  State<_PasteImportDialog> createState() => _PasteImportDialogState();
+}
+
+class _PasteImportDialogState extends State<_PasteImportDialog> {
+  late final TextEditingController _textController;
+  bool _loading = false;
+  TalentPolicy? _preview;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController(text: widget.initialText);
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('粘贴导入公告'),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _textController,
+              decoration: const InputDecoration(
+                labelText: '公告文本',
+                hintText: '粘贴公告内容...',
+              ),
+              maxLines: 6,
+            ),
+            if (_loading) ...[
+              const SizedBox(height: 12),
+              const Row(
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(width: 12),
+                  Text('AI 正在解析...'),
+                ],
+              ),
+            ] else if (_preview != null) ...[
+              const SizedBox(height: 12),
+              _PreviewCard(policy: _preview!),
+            ],
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('取消')),
+        if (_preview == null && !_loading)
+          FilledButton(
+            onPressed: _doParse,
+            child: const Text('AI 解析'),
+          )
+        else if (_preview != null)
+          FilledButton(
+            onPressed: _doImport,
+            child: const Text('确认入库'),
+          ),
+      ],
+    );
+  }
+
+  Future<void> _doParse() async {
+    final text = _textController.text.trim();
+    if (text.isEmpty) return;
+
+    setState(() => _loading = true);
+    try {
+      final result =
+          await context.read<MatchService>().importFromClipboard(text);
+      setState(() {
+        _loading = false;
+        _preview = result;
+      });
+    } catch (e) {
+      setState(() => _loading = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('解析失败：$e')),
+        );
+      }
+    }
+  }
+
+  Future<void> _doImport() async {
+    final p = _preview!;
+    Navigator.pop(context);
+    await context.read<MatchService>().addPolicy(
+          title: p.title,
+          province: p.province,
+          city: p.city,
+          policyType: p.policyType,
+          content: p.content,
+          deadline: p.deadline,
+        );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('公告已入库')),
+      );
+    }
+  }
+}
+
+/// 公告预览卡片（复用）
+class _PreviewCard extends StatelessWidget {
+  final TalentPolicy policy;
+  const _PreviewCard({required this.policy});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.green.shade50,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('标题：${policy.title}',
+              style: const TextStyle(fontSize: 13)),
+          if (policy.city != null)
+            Text('城市：${policy.city}',
+                style: const TextStyle(fontSize: 12)),
+          if (policy.policyType != null)
+            Text('类型：${policy.policyType}',
+                style: const TextStyle(fontSize: 12)),
+        ],
       ),
     );
   }

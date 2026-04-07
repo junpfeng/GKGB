@@ -22,7 +22,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -46,7 +46,7 @@ class DatabaseHelper {
       )
     ''');
 
-    // 答题记录表（含 exam_id 区分刷题 vs 模考）
+    // 答题记录表（含 exam_id 区分刷题 vs 模考，is_baseline 区分摸底测试）
     await db.execute('''
       CREATE TABLE user_answers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,6 +55,7 @@ class DatabaseHelper {
         user_answer TEXT NOT NULL,
         is_correct INTEGER NOT NULL,
         time_spent INTEGER DEFAULT 0,
+        is_baseline INTEGER DEFAULT 0,
         answered_at TEXT DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (question_id) REFERENCES questions (id),
         FOREIGN KEY (exam_id) REFERENCES exams (id)
@@ -153,7 +154,7 @@ class DatabaseHelper {
       )
     ''');
 
-    // 学习计划表
+    // 学习计划表（auto_adjusted_at 记录上次自动调整时间）
     await db.execute('''
       CREATE TABLE study_plans (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -163,6 +164,7 @@ class DatabaseHelper {
         baseline_scores TEXT,
         plan_data TEXT,
         status TEXT DEFAULT 'active',
+        auto_adjusted_at TEXT,
         created_at TEXT DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (target_position_id) REFERENCES positions (id)
       )
@@ -289,6 +291,25 @@ class DatabaseHelper {
 
       // 建立索引
       await _createIndexes(db);
+    }
+
+    if (oldVersion < 3) {
+      // v2→v3：user_answers 增加 is_baseline，study_plans 增加 auto_adjusted_at
+      try {
+        await db.execute(
+          'ALTER TABLE user_answers ADD COLUMN is_baseline INTEGER DEFAULT 0',
+        );
+      } catch (e) {
+        debugPrint('迁移 user_answers.is_baseline 跳过: $e');
+      }
+
+      try {
+        await db.execute(
+          'ALTER TABLE study_plans ADD COLUMN auto_adjusted_at TEXT',
+        );
+      } catch (e) {
+        debugPrint('迁移 study_plans.auto_adjusted_at 跳过: $e');
+      }
     }
   }
 
@@ -462,6 +483,94 @@ class DatabaseHelper {
       'total': (total.first['cnt'] as int?) ?? 0,
       'correct': (correct.first['cnt'] as int?) ?? 0,
     };
+  }
+
+  /// 查询摸底测试各科正确率（is_baseline=1 的记录）
+  Future<List<Map<String, dynamic>>> queryBaselineAccuracyBySubject() async {
+    final db = await database;
+    return await db.rawQuery('''
+      SELECT q.subject,
+             COUNT(*) as total,
+             SUM(ua.is_correct) as correct
+      FROM user_answers ua
+      JOIN questions q ON ua.question_id = q.id
+      WHERE ua.is_baseline = 1
+      GROUP BY q.subject
+    ''');
+  }
+
+  /// 查询最近一次摸底测试的答题记录
+  Future<List<Map<String, dynamic>>> queryLatestBaselineAnswers() async {
+    final db = await database;
+    // 找最近一次摸底的最大 id
+    final maxRow = await db.rawQuery(
+      'SELECT MAX(id) as max_id FROM user_answers WHERE is_baseline = 1',
+    );
+    final maxId = maxRow.first['max_id'] as int?;
+    if (maxId == null) return [];
+    // 取该批次（最近的一批，按答题时间分组）
+    final latestTime = await db.rawQuery(
+      'SELECT answered_at FROM user_answers WHERE is_baseline = 1 ORDER BY id DESC LIMIT 1',
+    );
+    if (latestTime.isEmpty) return [];
+    final latestDate = (latestTime.first['answered_at'] as String).substring(0, 10);
+    return await db.rawQuery('''
+      SELECT ua.*, q.subject, q.category
+      FROM user_answers ua
+      JOIN questions q ON ua.question_id = q.id
+      WHERE ua.is_baseline = 1 AND ua.answered_at LIKE ?
+    ''', ['$latestDate%']);
+  }
+
+  /// 查询指定科目近 N 天的答题正确率（用于自动调整）
+  Future<List<Map<String, dynamic>>> queryRecentAccuracyBySubject({
+    required String subject,
+    int days = 7,
+  }) async {
+    final db = await database;
+    final since = DateTime.now()
+        .subtract(Duration(days: days))
+        .toIso8601String()
+        .substring(0, 10);
+    return await db.rawQuery('''
+      SELECT COUNT(*) as total, SUM(ua.is_correct) as correct
+      FROM user_answers ua
+      JOIN questions q ON ua.question_id = q.id
+      WHERE q.subject = ? AND ua.answered_at >= ? AND ua.is_baseline = 0
+    ''', [subject, since]);
+  }
+
+  /// 查询考试各分类统计（用于行测5科细分）
+  Future<List<Map<String, dynamic>>> queryExamCategoryStats(int examId) async {
+    final db = await database;
+    return await db.rawQuery('''
+      SELECT q.category,
+             COUNT(*) as total,
+             SUM(ua.is_correct) as correct
+      FROM user_answers ua
+      JOIN questions q ON ua.question_id = q.id
+      WHERE ua.exam_id = ?
+      GROUP BY q.category
+    ''', [examId]);
+  }
+
+  /// 查询历史成绩趋势（最近 N 次考试）
+  Future<List<Map<String, dynamic>>> queryScoreTrend({
+    String? subject,
+    int limit = 10,
+  }) async {
+    final db = await database;
+    return await db.rawQuery(
+      '''
+      SELECT id, subject, score, started_at
+      FROM exams
+      WHERE status = 'finished'
+      ${subject != null ? "AND subject = ?" : ""}
+      ORDER BY started_at DESC
+      LIMIT ?
+      ''',
+      subject != null ? [subject, limit] : [limit],
+    );
   }
 
   /// 按科目查询正确率

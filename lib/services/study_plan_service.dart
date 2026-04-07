@@ -183,6 +183,102 @@ class StudyPlanService extends ChangeNotifier {
     ]);
   }
 
+  /// 自动调整计划：薄弱科 +30%，强项 -20%，更新 DB 中 daily_tasks
+  Future<String> autoAdjust(int planId) async {
+    // 查询各科近7天正确率
+    final accuracyBySubject = await _questionService.getAccuracyBySubject();
+    final adjustLog = StringBuffer();
+    int adjustCount = 0;
+
+    // 获取该计划待完成的任务
+    final taskRows = await _db.queryDailyTasksByPlan(planId);
+
+    for (final taskRow in taskRows) {
+      if (taskRow['status'] == 'completed') continue;
+      final subject = taskRow['subject'] as String;
+      final currentTarget = (taskRow['target_count'] as int?) ?? 0;
+      if (currentTarget <= 0) continue;
+
+      // 查找该科目的正确率
+      final subjectStat = accuracyBySubject.firstWhere(
+        (r) => r['subject'] == subject,
+        orElse: () => <String, dynamic>{},
+      );
+
+      if (subjectStat.isEmpty) continue;
+
+      final total = (subjectStat['total'] as int?) ?? 0;
+      final correct = (subjectStat['correct'] as int?) ?? 0;
+      if (total == 0) continue;
+
+      final accuracy = correct / total;
+      int newTarget = currentTarget;
+
+      if (accuracy < 0.6) {
+        // 薄弱科 +30%
+        newTarget = (currentTarget * 1.3).round();
+      } else if (accuracy > 0.8) {
+        // 强项 -20%，最少保留 10 题
+        newTarget = (currentTarget * 0.8).round().clamp(10, 9999);
+      }
+
+      if (newTarget != currentTarget) {
+        await _db.updateDailyTask(taskRow['id'] as int, {
+          'target_count': newTarget,
+        });
+        final direction = newTarget > currentTarget ? '↑' : '↓';
+        adjustLog.writeln('$subject：$currentTarget → $newTarget 题 $direction');
+        adjustCount++;
+      }
+    }
+
+    // 更新计划的 auto_adjusted_at 时间
+    final now = DateTime.now().toIso8601String();
+    await _db.updateStudyPlan(planId, {'auto_adjusted_at': now});
+
+    // 刷新今日任务
+    await _loadTodayTasks();
+    notifyListeners();
+
+    if (adjustCount == 0) {
+      return '当前学习状态良好，无需调整';
+    }
+    return '已自动调整 $adjustCount 个科目的题量：\n${adjustLog.toString().trim()}';
+  }
+
+  /// 里程碑检测：计算距考试天数，返回提醒文本列表
+  List<String> checkMilestones(int planId) {
+    final plan = _allPlans.firstWhere(
+      (p) => p.id == planId,
+      orElse: () => _activePlan!,
+    );
+    if (plan.examDate == null) return [];
+
+    final examDate = DateTime.tryParse(plan.examDate!);
+    if (examDate == null) return [];
+
+    final daysLeft = examDate.difference(DateTime.now()).inDays;
+    final milestones = <String>[];
+
+    if (daysLeft < 0) {
+      milestones.add('考试已结束，继续保持学习习惯！');
+    } else if (daysLeft == 0) {
+      milestones.add('今天就是考试日！祝你发挥出色！');
+    } else if (daysLeft <= 3) {
+      milestones.add('距考试仅剩 $daysLeft 天！冲刺阶段，保持状态。');
+    } else if (daysLeft <= 7) {
+      milestones.add('距考试 $daysLeft 天，进入最后冲刺阶段。');
+    } else if (daysLeft <= 30) {
+      milestones.add('距考试 $daysLeft 天，强化刷题和模拟练习。');
+    } else if (daysLeft <= 60) {
+      milestones.add('距考试 $daysLeft 天，专项突破薄弱环节。');
+    } else {
+      milestones.add('距考试 $daysLeft 天，扎实基础阶段。');
+    }
+
+    return milestones;
+  }
+
   /// 生成面试题（基础版）
   Future<String> generateInterviewQuestions(String positionName) async {
     final prompt = '''

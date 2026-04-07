@@ -8,6 +8,7 @@ import 'services/exam_service.dart';
 import 'services/profile_service.dart';
 import 'services/match_service.dart';
 import 'services/study_plan_service.dart';
+import 'services/baseline_service.dart';
 import 'services/llm/llm_manager.dart';
 
 void main() async {
@@ -43,6 +44,11 @@ void main() async {
         ChangeNotifierProxyProvider2<QuestionService, LlmManager, StudyPlanService>(
           create: (ctx) => StudyPlanService(ctx.read<QuestionService>(), ctx.read<LlmManager>()),
           update: (ctx, qs, lm, prev) => prev ?? StudyPlanService(qs, lm),
+        ),
+        // 7. BaselineService（依赖 QuestionService）
+        ChangeNotifierProxyProvider<QuestionService, BaselineService>(
+          create: (ctx) => BaselineService(ctx.read<QuestionService>()),
+          update: (ctx, qs, prev) => prev ?? BaselineService(qs),
         ),
       ],
       child: const ExamPrepApp(),

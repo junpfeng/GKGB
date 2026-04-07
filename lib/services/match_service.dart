@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:html/parser.dart' as html_parser;
 import '../db/database_helper.dart';
 import '../models/talent_policy.dart';
 import '../models/position.dart';
@@ -26,6 +28,16 @@ class MatchService extends ChangeNotifier {
       _matchResults.where((r) => r.isTarget).toList();
   bool get isLoading => _isLoading;
   bool get isMatching => _isMatching;
+
+  // Dio 实例（公告抓取用）
+  final Dio _dio = Dio(BaseOptions(
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 20),
+    headers: {
+      'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ExamPrepApp/1.0',
+    },
+  ));
 
   MatchService(this._profileService, this._llmManager);
 
@@ -83,6 +95,247 @@ class MatchService extends ChangeNotifier {
       return false; // 简化处理
     });
     notifyListeners();
+  }
+
+  // ===== 智能获取公告 =====
+
+  /// AI 联网搜索公告（生成搜索词 → 搜索 → AI解析结果）
+  Future<List<TalentPolicy>> searchPoliciesOnline(
+    List<String> targetCities,
+  ) async {
+    // 第一步：让 LLM 生成搜索关键词
+    final keywordPrompt = '''
+我在寻找以下城市的人才引进/招聘公告：${targetCities.join('、')}
+请生成3-5个适合搜索的关键词组合（每个关键词组合1行），用于在搜索引擎上查找最新公告。
+只返回关键词，不要其他文字。格式如：
+${targetCities.isNotEmpty ? targetCities.first : "北京"}人才引进公告2024
+${targetCities.isNotEmpty ? targetCities.first : "北京"}事业单位招聘2024
+''';
+
+    final keywords = await _llmManager.chat([
+      ChatMessage(role: 'user', content: keywordPrompt),
+    ]);
+
+    // 提取关键词列表
+    final keywordList = keywords
+        .split('\n')
+        .map((l) => l.trim())
+        .where((l) => l.isNotEmpty)
+        .take(3)
+        .toList();
+
+    if (keywordList.isEmpty) {
+      throw Exception('AI 未能生成有效的搜索关键词');
+    }
+
+    // 第二步：使用第一个关键词搜索（遵守 robots.txt，设置间隔）
+    final searchQuery = Uri.encodeComponent(keywordList.first);
+    final searchUrl =
+        'https://cn.bing.com/search?q=$searchQuery&setlang=zh-CN';
+
+    String searchHtml = '';
+    try {
+      final response = await _dio.get(searchUrl);
+      searchHtml = response.data.toString();
+    } catch (e) {
+      debugPrint('搜索请求失败: $e');
+      throw Exception('网络搜索失败，请检查网络连接: $e');
+    }
+
+    // 提取搜索结果纯文本（用 html 包）
+    final document = html_parser.parse(searchHtml);
+    final snippets = document.querySelectorAll('.b_algo').take(5).map((el) {
+      return el.text.trim().replaceAll(RegExp(r'\s+'), ' ');
+    }).join('\n\n');
+
+    if (snippets.isEmpty) {
+      throw Exception('未找到相关搜索结果');
+    }
+
+    // 第三步：让 AI 解析搜索结果，提取公告摘要
+    final parsePrompt = '''
+以下是搜索"${keywordList.first}"的网页摘要结果，请提取其中的人才引进/招聘公告信息，
+以 JSON 数组格式返回，每条包含字段：
+- title: 公告标题
+- city: 城市
+- province: 省份
+- policy_type: 类型（人才引进/事业编/高校招聘等）
+- deadline: 截止日期（如有）
+- source_url: 原文链接（如有）
+
+仅返回 JSON 数组，不要其他文字。若无相关公告，返回 []。
+
+搜索结果：
+$snippets
+''';
+
+    final parseResult = await _llmManager.chat([
+      ChatMessage(role: 'user', content: parsePrompt),
+    ]);
+
+    // 解析 AI 返回的 JSON
+    try {
+      final jsonStart = parseResult.indexOf('[');
+      final jsonEnd = parseResult.lastIndexOf(']') + 1;
+      if (jsonStart < 0 || jsonEnd <= jsonStart) return [];
+
+      final jsonStr = parseResult.substring(jsonStart, jsonEnd);
+      final List<dynamic> items = jsonDecode(jsonStr);
+
+      return items.map((item) {
+        final map = item as Map<String, dynamic>;
+        return TalentPolicy(
+          title: map['title'] as String? ?? '未知公告',
+          city: map['city'] as String?,
+          province: map['province'] as String?,
+          policyType: map['policy_type'] as String?,
+          deadline: map['deadline'] as String?,
+          sourceUrl: map['source_url'] as String?,
+        );
+      }).toList();
+    } catch (e) {
+      debugPrint('解析搜索结果失败: $e');
+      return [];
+    }
+  }
+
+  /// 从 URL 导入公告（抓取网页 → html 解析正文 → AI 解析）
+  Future<TalentPolicy> importFromUrl(String url) async {
+    // 请求间隔遵守 robots.txt 规范（≥2s）
+    await Future.delayed(const Duration(seconds: 2));
+
+    String htmlContent = '';
+    try {
+      final response = await _dio.get(url);
+      htmlContent = response.data.toString();
+    } catch (e) {
+      throw Exception('网页抓取失败，请检查链接是否有效: $e');
+    }
+
+    // 使用 html 包提取正文文本
+    final document = html_parser.parse(htmlContent);
+    // 移除 script/style 节点
+    document.querySelectorAll('script, style, nav, header, footer').forEach(
+          (el) => el.remove(),
+        );
+    final bodyText = document.body?.text
+            .replaceAll(RegExp(r'\s+'), ' ')
+            .trim() ??
+        '';
+
+    if (bodyText.isEmpty) {
+      throw Exception('网页内容为空或无法解析');
+    }
+
+    // 截断防止 token 超限（取前 3000 字）
+    final truncated =
+        bodyText.length > 3000 ? bodyText.substring(0, 3000) : bodyText;
+
+    // 先创建基础公告
+    final policy = TalentPolicy(
+      title: '从链接导入的公告',
+      sourceUrl: url,
+      content: truncated,
+    );
+
+    // 用 AI 补充解析标题和基本信息
+    final infoPrompt = '''
+从以下网页内容中提取公告的基本信息，以 JSON 格式返回：
+{
+  "title": "公告标题",
+  "province": "省份",
+  "city": "城市",
+  "policy_type": "公告类型",
+  "deadline": "报名截止日期"
+}
+只返回 JSON，不要其他文字。
+
+网页内容：
+$truncated
+''';
+
+    try {
+      final infoResult = await _llmManager.chat([
+        ChatMessage(role: 'user', content: infoPrompt),
+      ]);
+      final jsonStart = infoResult.indexOf('{');
+      final jsonEnd = infoResult.lastIndexOf('}') + 1;
+      if (jsonStart >= 0 && jsonEnd > jsonStart) {
+        final map =
+            jsonDecode(infoResult.substring(jsonStart, jsonEnd)) as Map;
+        return TalentPolicy(
+          title: map['title'] as String? ?? policy.title,
+          sourceUrl: url,
+          province: map['province'] as String?,
+          city: map['city'] as String?,
+          policyType: map['policy_type'] as String?,
+          deadline: map['deadline'] as String?,
+          content: truncated,
+        );
+      }
+    } catch (e) {
+      debugPrint('AI 解析公告基本信息失败: $e');
+    }
+
+    return policy;
+  }
+
+  /// 从剪贴板文本导入公告
+  Future<TalentPolicy> importFromClipboard(String text) async {
+    if (text.trim().isEmpty) {
+      throw Exception('剪贴板文本为空');
+    }
+
+    // 截断防止超限
+    final truncated =
+        text.length > 4000 ? text.substring(0, 4000) : text;
+
+    // 用 AI 解析基本信息
+    final infoPrompt = '''
+从以下公告文本中提取基本信息，以 JSON 格式返回：
+{
+  "title": "公告标题",
+  "province": "省份",
+  "city": "城市",
+  "policy_type": "公告类型",
+  "deadline": "报名截止日期"
+}
+只返回 JSON，不要其他文字。
+
+公告内容：
+$truncated
+''';
+
+    String title = '从文本导入的公告';
+    String? province, city, policyType, deadline;
+
+    try {
+      final result = await _llmManager.chat([
+        ChatMessage(role: 'user', content: infoPrompt),
+      ]);
+      final jsonStart = result.indexOf('{');
+      final jsonEnd = result.lastIndexOf('}') + 1;
+      if (jsonStart >= 0 && jsonEnd > jsonStart) {
+        final map =
+            jsonDecode(result.substring(jsonStart, jsonEnd)) as Map;
+        title = map['title'] as String? ?? title;
+        province = map['province'] as String?;
+        city = map['city'] as String?;
+        policyType = map['policy_type'] as String?;
+        deadline = map['deadline'] as String?;
+      }
+    } catch (e) {
+      debugPrint('AI 解析剪贴板公告失败: $e');
+    }
+
+    return TalentPolicy(
+      title: title,
+      province: province,
+      city: city,
+      policyType: policyType,
+      deadline: deadline,
+      content: truncated,
+    );
   }
 
   // ===== AI 解析公告 =====
