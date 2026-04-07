@@ -1850,6 +1850,123 @@ class DatabaseHelper {
     final result = await db.rawQuery('SELECT COUNT(*) as cnt FROM essay_submissions');
     return (result.first['cnt'] as int?) ?? 0;
   }
+
+  // ===== 看板聚合查询 =====
+
+  /// 近 N 天每日答题量（热力图数据）
+  Future<List<Map<String, dynamic>>> queryDailyActivityHeatmap(int days) async {
+    final db = await database;
+    final since = DateTime.now()
+        .subtract(Duration(days: days))
+        .toIso8601String()
+        .substring(0, 10);
+    return await db.rawQuery('''
+      SELECT SUBSTR(answered_at, 1, 10) as date, COUNT(*) as count
+      FROM user_answers
+      WHERE answered_at >= ?
+      GROUP BY SUBSTR(answered_at, 1, 10)
+      ORDER BY date ASC
+    ''', [since]);
+  }
+
+  /// 各科目正确率（雷达图数据：行测5科 + 申论 + 公基）
+  Future<List<Map<String, dynamic>>> querySubjectRadarData() async {
+    final db = await database;
+    return await db.rawQuery('''
+      SELECT q.subject,
+             COUNT(*) as total,
+             SUM(ua.is_correct) as correct
+      FROM user_answers ua
+      JOIN questions q ON ua.question_id = q.id
+      WHERE ua.is_baseline = 0
+      GROUP BY q.subject
+    ''');
+  }
+
+  /// 本周 vs 上周各维度对比
+  Future<Map<String, Map<String, dynamic>>> queryWeeklyComparison() async {
+    final db = await database;
+    final now = DateTime.now();
+    final thisWeekStart = now.subtract(Duration(days: now.weekday - 1));
+    final lastWeekStart = thisWeekStart.subtract(const Duration(days: 7));
+    final thisStart = thisWeekStart.toIso8601String().substring(0, 10);
+    final lastStart = lastWeekStart.toIso8601String().substring(0, 10);
+
+    final thisWeek = await db.rawQuery('''
+      SELECT COUNT(*) as total, SUM(is_correct) as correct
+      FROM user_answers
+      WHERE answered_at >= ?
+    ''', [thisStart]);
+
+    final lastWeek = await db.rawQuery('''
+      SELECT COUNT(*) as total, SUM(is_correct) as correct
+      FROM user_answers
+      WHERE answered_at >= ? AND answered_at < ?
+    ''', [lastStart, thisStart]);
+
+    return {
+      'thisWeek': {
+        'total': (thisWeek.first['total'] as int?) ?? 0,
+        'correct': (thisWeek.first['correct'] as int?) ?? 0,
+      },
+      'lastWeek': {
+        'total': (lastWeek.first['total'] as int?) ?? 0,
+        'correct': (lastWeek.first['correct'] as int?) ?? 0,
+      },
+    };
+  }
+
+  /// 连续打卡天数（从今天往回数连续有答题记录的天数）
+  Future<int> queryStudyStreak() async {
+    final db = await database;
+    final rows = await db.rawQuery('''
+      SELECT DISTINCT SUBSTR(answered_at, 1, 10) as date
+      FROM user_answers
+      ORDER BY date DESC
+    ''');
+    if (rows.isEmpty) return 0;
+
+    int streak = 0;
+    var checkDate = DateTime.now();
+    for (final row in rows) {
+      final dateStr = row['date'] as String;
+      final expected = checkDate.toIso8601String().substring(0, 10);
+      if (dateStr == expected) {
+        streak++;
+        checkDate = checkDate.subtract(const Duration(days: 1));
+      } else {
+        // 允许今天还没做题，从昨天开始算
+        if (streak == 0) {
+          final yesterday = checkDate.subtract(const Duration(days: 1));
+          final yesterdayStr = yesterday.toIso8601String().substring(0, 10);
+          if (dateStr == yesterdayStr) {
+            streak++;
+            checkDate = yesterday.subtract(const Duration(days: 1));
+          } else {
+            break;
+          }
+        } else {
+          break;
+        }
+      }
+    }
+    return streak;
+  }
+
+  /// 总体完成度（活跃计划的每日任务完成率）
+  Future<double> queryOverallProgress() async {
+    final db = await database;
+    final result = await db.rawQuery('''
+      SELECT COUNT(*) as total,
+             SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as done
+      FROM daily_tasks dt
+      JOIN study_plans sp ON dt.plan_id = sp.id
+      WHERE sp.status = 'active'
+    ''');
+    final total = (result.first['total'] as int?) ?? 0;
+    final done = (result.first['done'] as int?) ?? 0;
+    return total == 0 ? 0.0 : done / total;
+  }
 }
 
 /// Windows 平台 FFI 初始化（在 main.dart 调用）
