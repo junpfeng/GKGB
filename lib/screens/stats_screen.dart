@@ -5,7 +5,9 @@ import '../services/question_service.dart';
 import '../services/exam_service.dart';
 import '../widgets/progress_ring.dart';
 import '../widgets/glass_card.dart';
+import '../services/calendar_service.dart';
 import '../theme/app_theme.dart';
+import 'exam_calendar_screen.dart';
 
 /// 学习统计页（含趋势 Tab）
 class StatsScreen extends StatefulWidget {
@@ -117,6 +119,9 @@ class _OverviewTab extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       children: [
+        // 考试日历入口卡片
+        const _CalendarEntryCard(),
+        const SizedBox(height: 12),
         // 今日数据三栏渐变卡片
         Row(
           children: [
@@ -623,6 +628,74 @@ class _StatItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(label, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
       ],
+    );
+  }
+}
+
+/// 考试日历入口卡片
+class _CalendarEntryCard extends StatelessWidget {
+  const _CalendarEntryCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return GradientCard(
+      gradient: const LinearGradient(
+        colors: [Color(0xFF667eea), Color(0xFF0ED2F7)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderRadius: AppTheme.radiusMedium,
+      padding: EdgeInsets.zero,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppTheme.radiusMedium),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const ExamCalendarScreen()),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+          child: Row(
+            children: [
+              const Icon(Icons.calendar_month, color: Colors.white, size: 32),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '考试日历',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Consumer<CalendarService>(
+                      builder: (context, service, _) {
+                        final upcoming = service.events
+                            .where((e) => e.nextMilestone != null)
+                            .length;
+                        return Text(
+                          upcoming > 0
+                              ? '$upcoming 场考试即将到来'
+                              : '查看考试日程安排',
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.white70),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

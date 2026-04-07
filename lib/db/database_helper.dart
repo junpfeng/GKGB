@@ -22,7 +22,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 5,
+      version: 6,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -290,6 +290,43 @@ class DatabaseHelper {
       )
     ''');
 
+    // 考试日历表
+    await db.execute('''
+      CREATE TABLE exam_calendar (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        exam_type TEXT NOT NULL,
+        province TEXT DEFAULT '',
+        announcement_date TEXT,
+        reg_start_date TEXT,
+        reg_end_date TEXT,
+        payment_deadline TEXT,
+        ticket_print_date TEXT,
+        exam_date TEXT,
+        score_release_date TEXT,
+        interview_date TEXT,
+        source_url TEXT DEFAULT '',
+        is_subscribed INTEGER DEFAULT 0,
+        notes TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+
+    // 用户报名信息表
+    await db.execute('''
+      CREATE TABLE user_registrations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        calendar_id INTEGER NOT NULL UNIQUE,
+        ticket_number TEXT DEFAULT '',
+        exam_location TEXT DEFAULT '',
+        seat_number TEXT DEFAULT '',
+        notes TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (calendar_id) REFERENCES exam_calendar (id)
+      )
+    ''');
+
     // 建立索引
     await _createIndexes(db);
   }
@@ -508,6 +545,60 @@ class DatabaseHelper {
         );
       });
     }
+
+    if (oldVersion < 6) {
+      // v5→v6：考试日历 + 报名信息表
+      await db.transaction((txn) async {
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS exam_calendar (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            exam_type TEXT NOT NULL,
+            province TEXT DEFAULT '',
+            announcement_date TEXT,
+            reg_start_date TEXT,
+            reg_end_date TEXT,
+            payment_deadline TEXT,
+            ticket_print_date TEXT,
+            exam_date TEXT,
+            score_release_date TEXT,
+            interview_date TEXT,
+            source_url TEXT DEFAULT '',
+            is_subscribed INTEGER DEFAULT 0,
+            notes TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS user_registrations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            calendar_id INTEGER NOT NULL UNIQUE,
+            ticket_number TEXT DEFAULT '',
+            exam_location TEXT DEFAULT '',
+            seat_number TEXT DEFAULT '',
+            notes TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (calendar_id) REFERENCES exam_calendar (id)
+          )
+        ''');
+
+        // 考试日历索引
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_exam_calendar_date ON exam_calendar(exam_date)',
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_exam_calendar_type ON exam_calendar(exam_type, province)',
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_exam_calendar_filter ON exam_calendar(exam_type, province, is_subscribed)',
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_user_registrations_calendar ON user_registrations(calendar_id)',
+        );
+      });
+    }
   }
 
   /// 创建所有索引
@@ -523,6 +614,10 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_real_exam_papers_filter ON real_exam_papers(exam_type, region, year)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_interview_questions_category ON interview_questions(category)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_interview_scores_session_question ON interview_scores(session_id, question_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_exam_calendar_date ON exam_calendar(exam_date)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_exam_calendar_type ON exam_calendar(exam_type, province)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_exam_calendar_filter ON exam_calendar(exam_type, province, is_subscribed)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_user_registrations_calendar ON user_registrations(calendar_id)');
   }
 
   // ===== questions CRUD =====

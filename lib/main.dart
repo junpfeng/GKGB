@@ -15,6 +15,8 @@ import 'services/assistant_service.dart';
 import 'services/voice_service.dart';
 import 'services/real_exam_service.dart';
 import 'services/interview_service.dart';
+import 'services/calendar_service.dart';
+import 'services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +28,14 @@ void main() async {
 
   await DatabaseHelper.instance.database;
 
+  // 初始化通知服务
+  await NotificationService.instance.init();
+
+  // 导入预置考试数据
+  final calendarService = CalendarService();
+  await calendarService.importPresetData();
+  await calendarService.loadAll();
+
   // 启动时加载 LLM 配置并注入到 LlmManager
   final llmManager = LlmManager();
   final configService = LlmConfigService();
@@ -34,6 +44,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        // 0. CalendarService（启动时已加载数据）
+        ChangeNotifierProvider.value(value: calendarService),
         // 1. QuestionService（无依赖）
         ChangeNotifierProvider(create: (_) => QuestionService()),
         // 2. ProfileService（无依赖）
