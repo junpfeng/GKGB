@@ -22,7 +22,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 9,
+      version: 10,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -263,6 +263,7 @@ class DatabaseHelper {
         total_questions INTEGER NOT NULL,
         total_score REAL DEFAULT 0,
         status TEXT DEFAULT 'ongoing',
+        mode TEXT DEFAULT 'text',
         started_at TEXT,
         finished_at TEXT,
         summary TEXT
@@ -583,6 +584,7 @@ class DatabaseHelper {
             total_questions INTEGER NOT NULL,
             total_score REAL DEFAULT 0,
             status TEXT DEFAULT 'ongoing',
+            mode TEXT DEFAULT 'text',
             started_at TEXT,
             finished_at TEXT,
             summary TEXT
@@ -783,6 +785,13 @@ class DatabaseHelper {
           'CREATE INDEX IF NOT EXISTS idx_knowledge_points_subject ON knowledge_points(subject, category)',
         );
       });
+    }
+
+    if (oldVersion < 10) {
+      // v9→v10：面试语音模式，interview_sessions 增加 mode 字段
+      await db.execute(
+        "ALTER TABLE interview_sessions ADD COLUMN mode TEXT DEFAULT 'text'",
+      );
     }
   }
 

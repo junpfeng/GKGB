@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/interview_service.dart';
+import '../services/voice_service.dart';
 import '../models/interview_session.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
@@ -17,6 +18,7 @@ class InterviewHomeScreen extends StatefulWidget {
 
 class _InterviewHomeScreenState extends State<InterviewHomeScreen> {
   String _selectedCategory = '综合随机';
+  String _selectedMode = 'text'; // text / voice
   bool _initialized = false;
   Map<String, int> _categoryCounts = {};
   final ScrollController _scrollController = ScrollController();
@@ -97,8 +99,28 @@ class _InterviewHomeScreenState extends State<InterviewHomeScreen> {
 
   Future<void> _startInterview() async {
     final service = context.read<InterviewService>();
+
+    // 语音模式检查：STT 不可用时降级到文字模式
+    var mode = _selectedMode;
+    if (mode == 'voice') {
+      final voiceService = context.read<VoiceService>();
+      await voiceService.initialize();
+      if (!voiceService.isAvailable) {
+        mode = 'text';
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('语音识别不可用，已自动切换为文字模式'),
+            ),
+          );
+        }
+      }
+    }
     try {
-      await service.startInterview(category: _selectedCategory);
+      await service.startInterview(
+        category: _selectedCategory,
+        mode: mode,
+      );
       if (mounted) {
         Navigator.push(
           context,
@@ -133,13 +155,23 @@ class _InterviewHomeScreenState extends State<InterviewHomeScreen> {
               ),
               const SizedBox(height: 12),
               _buildCategoryGrid(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
+
+              // 模式选择（文字/语音）
+              _buildModeSelector(),
+              const SizedBox(height: 16),
 
               // 开始按钮
               GradientButton(
                 onPressed: service.isLoading ? null : _startInterview,
-                label: service.isLoading ? '准备中...' : '开始模拟面试（4题）',
-                icon: Icons.play_arrow,
+                label: service.isLoading
+                    ? '准备中...'
+                    : _selectedMode == 'voice'
+                        ? '开始语音面试（4题）'
+                        : '开始模拟面试（4题）',
+                icon: _selectedMode == 'voice'
+                    ? Icons.mic
+                    : Icons.play_arrow,
                 isLoading: service.isLoading,
                 width: double.infinity,
               ),
@@ -173,6 +205,69 @@ class _InterviewHomeScreenState extends State<InterviewHomeScreen> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildModeSelector() {
+    return Row(
+      children: [
+        const Text(
+          '面试模式',
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        const Spacer(),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildModeChip('text', '文字', Icons.keyboard),
+              _buildModeChip('voice', '语音', Icons.mic),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildModeChip(String mode, String label, IconData icon) {
+    final isSelected = _selectedMode == mode;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedMode = mode),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+        decoration: BoxDecoration(
+          gradient: isSelected
+              ? const LinearGradient(
+                  colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+                )
+              : null,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              size: 16,
+              color: isSelected ? Colors.white : Colors.grey[600],
+            ),
+            const SizedBox(width: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                color: isSelected ? Colors.white : Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -305,12 +400,20 @@ class _InterviewHomeScreenState extends State<InterviewHomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${session.category} · ${session.totalQuestions}题',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        '${session.category} · ${session.totalQuestions}题',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      if (session.mode == 'voice') ...[
+                        const SizedBox(width: 6),
+                        Icon(Icons.mic, size: 14, color: Colors.grey[500]),
+                      ],
+                    ],
                   ),
                   const SizedBox(height: 2),
                   Text(
