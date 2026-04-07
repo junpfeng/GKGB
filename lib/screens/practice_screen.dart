@@ -7,6 +7,7 @@ import '../widgets/ai_chat_dialog.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
 import '../theme/app_theme.dart';
+import 'real_exam_screen.dart';
 
 /// 刷题页：科目选择 → 题目列表 → 答题界面
 class PracticeScreen extends StatelessWidget {
@@ -68,7 +69,7 @@ class PracticeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('刷题练习'),
@@ -76,6 +77,7 @@ class PracticeScreen extends StatelessWidget {
             tabs: const [
               Tab(text: '科目练习'),
               Tab(text: '错题本'),
+              Tab(text: '真题'),
             ],
             indicatorSize: TabBarIndicatorSize.label,
             indicatorWeight: 3,
@@ -87,6 +89,7 @@ class PracticeScreen extends StatelessWidget {
           children: [
             _SubjectList(subjects: _subjects),
             const _WrongQuestionList(),
+            const RealExamScreen(),
           ],
         ),
       ),

@@ -266,6 +266,70 @@ class QuestionService extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ===== 真题查询 =====
+
+  /// 加载真题题目（支持分页）
+  Future<List<Question>> loadRealExamQuestions({
+    String? region,
+    int? year,
+    String? examType,
+    String? subject,
+    int? limit,
+    int? offset,
+  }) async {
+    final rows = await _db.queryRealExamQuestions(
+      region: region,
+      year: year,
+      examType: examType,
+      subject: subject,
+      limit: limit ?? 20,
+      offset: offset ?? 0,
+    );
+    return rows.map((r) => Question.fromDb(r)).toList();
+  }
+
+  /// 统计真题数量
+  Future<int> countRealExamQuestions({
+    String? region,
+    int? year,
+    String? examType,
+    String? subject,
+  }) async {
+    return await _db.countRealExamQuestions(
+      region: region,
+      year: year,
+      examType: examType,
+      subject: subject,
+    );
+  }
+
+  /// 获取可用地区列表
+  Future<List<String>> getAvailableRegions({String? examType}) async {
+    return await _db.getDistinctValues(
+      'region',
+      where: examType != null ? {'exam_type': examType} : null,
+    );
+  }
+
+  /// 获取可用年份列表
+  Future<List<String>> getAvailableYears({
+    String? examType,
+    String? region,
+  }) async {
+    final where = <String, dynamic>{};
+    if (examType != null) where['exam_type'] = examType;
+    if (region != null) where['region'] = region;
+    return await _db.getDistinctValues(
+      'year',
+      where: where.isEmpty ? null : where,
+    );
+  }
+
+  /// 获取可用考试类型列表
+  Future<List<String>> getAvailableExamTypes() async {
+    return await _db.getDistinctValues('exam_type');
+  }
+
   // ===== AI 批改 + 关联推荐 =====
 
   /// 申论/主观题 AI 批改，返回流式 Stream
