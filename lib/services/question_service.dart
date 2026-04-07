@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,11 @@ class QuestionService extends ChangeNotifier {
   // ===== 题库 =====
 
   /// 按科目/分类加载题目
+  /// 安全的通知方法，避免在 build 阶段调用 notifyListeners
+  void _safeNotify() {
+    scheduleMicrotask(notifyListeners);
+  }
+
   Future<List<Question>> loadQuestions({
     String? subject,
     String? category,
@@ -36,7 +42,7 @@ class QuestionService extends ChangeNotifier {
     int? offset,
   }) async {
     _isLoading = true;
-    notifyListeners();
+    _safeNotify();
 
     try {
       // 确保示例数据已导入
@@ -53,7 +59,7 @@ class QuestionService extends ChangeNotifier {
       return _currentQuestions;
     } finally {
       _isLoading = false;
-      notifyListeners();
+      _safeNotify();
     }
   }
 
