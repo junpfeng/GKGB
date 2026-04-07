@@ -22,7 +22,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 8,
+      version: 9,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -372,6 +372,35 @@ class DatabaseHelper {
       )
     ''');
 
+    // 知识点表
+    await db.execute('''
+      CREATE TABLE knowledge_points (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        subject TEXT NOT NULL,
+        category TEXT NOT NULL,
+        parent_id INTEGER DEFAULT 0,
+        sort_order INTEGER DEFAULT 0,
+        UNIQUE(subject, category, name)
+      )
+    ''');
+
+    // 知识点掌握度表
+    await db.execute('''
+      CREATE TABLE mastery_scores (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        knowledge_point_id INTEGER NOT NULL,
+        score REAL DEFAULT 50,
+        total_attempts INTEGER DEFAULT 0,
+        correct_attempts INTEGER DEFAULT 0,
+        last_practiced_at TEXT,
+        next_review_at TEXT,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (knowledge_point_id) REFERENCES knowledge_points (id),
+        UNIQUE(knowledge_point_id)
+      )
+    ''');
+
     // 建立索引
     await _createIndexes(db);
   }
@@ -716,6 +745,45 @@ class DatabaseHelper {
         );
       });
     }
+
+    if (oldVersion < 9) {
+      // v8→v9：AI 自适应智能出题，知识点 + 掌握度表
+      await db.transaction((txn) async {
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS knowledge_points (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            category TEXT NOT NULL,
+            parent_id INTEGER DEFAULT 0,
+            sort_order INTEGER DEFAULT 0,
+            UNIQUE(subject, category, name)
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS mastery_scores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            knowledge_point_id INTEGER NOT NULL,
+            score REAL DEFAULT 50,
+            total_attempts INTEGER DEFAULT 0,
+            correct_attempts INTEGER DEFAULT 0,
+            last_practiced_at TEXT,
+            next_review_at TEXT,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (knowledge_point_id) REFERENCES knowledge_points (id),
+            UNIQUE(knowledge_point_id)
+          )
+        ''');
+
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_mastery_scores_review ON mastery_scores(next_review_at)',
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_knowledge_points_subject ON knowledge_points(subject, category)',
+        );
+      });
+    }
   }
 
   /// 创建所有索引
@@ -740,6 +808,8 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_hot_topics_date ON hot_topics(publish_date)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_essay_materials_theme ON essay_materials(theme, material_type)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_essay_submissions_date ON essay_submissions(created_at)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_mastery_scores_review ON mastery_scores(next_review_at)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_knowledge_points_subject ON knowledge_points(subject, category)');
   }
 
   // ===== questions CRUD =====
