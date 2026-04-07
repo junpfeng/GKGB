@@ -16,6 +16,8 @@ class UserAnswer {
   final bool isCorrect;
   @JsonKey(name: 'time_spent')
   final int timeSpent; // 秒
+  @JsonKey(name: 'error_type')
+  final String errorType; // blind_spot / confusion / careless / timeout / trap / ''
   @JsonKey(name: 'answered_at')
   final String? answeredAt;
 
@@ -26,6 +28,7 @@ class UserAnswer {
     required this.userAnswer,
     required this.isCorrect,
     this.timeSpent = 0,
+    this.errorType = '',
     this.answeredAt,
   });
 
@@ -40,6 +43,7 @@ class UserAnswer {
       userAnswer: map['user_answer'] as String,
       isCorrect: (map['is_correct'] as int) == 1,
       timeSpent: (map['time_spent'] as int?) ?? 0,
+      errorType: (map['error_type'] as String?) ?? '',
       answeredAt: map['answered_at'] as String?,
     );
   }
@@ -52,6 +56,7 @@ class UserAnswer {
       'user_answer': userAnswer,
       'is_correct': isCorrect ? 1 : 0,
       'time_spent': timeSpent,
+      'error_type': errorType,
     };
   }
 }

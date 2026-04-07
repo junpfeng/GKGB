@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/question_service.dart';
+import '../services/wrong_analysis_service.dart';
 import '../models/question.dart';
 import '../widgets/question_card.dart';
 import '../widgets/ai_chat_dialog.dart';
@@ -9,6 +10,7 @@ import '../widgets/gradient_button.dart';
 import '../theme/app_theme.dart';
 import 'real_exam_screen.dart';
 import 'interview_home_screen.dart';
+import 'wrong_analysis_screen.dart';
 
 /// 刷题页：科目选择 → 题目列表 → 答题界面
 class PracticeScreen extends StatelessWidget {
@@ -347,9 +349,13 @@ class _WrongQuestionListState extends State<_WrongQuestionList> {
     }
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-      itemCount: _questions.length,
+      itemCount: _questions.length + 1,
       itemBuilder: (context, index) {
-        final q = _questions[index];
+        // 顶部：错题深度分析入口
+        if (index == 0) {
+          return _buildAnalysisEntryCard(context);
+        }
+        final q = _questions[index - 1];
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: AccentCard(
@@ -389,6 +395,71 @@ class _WrongQuestionListState extends State<_WrongQuestionList> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildAnalysisEntryCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const WrongAnalysisScreen()),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFf093fb), Color(0xFFf5576c)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFf5576c).withValues(alpha: 0.35),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.analytics, color: Colors.white, size: 22),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '错题深度分析',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      '错因分布 · 知识图谱 · AI 诊断报告',
+                      style: TextStyle(fontSize: 12, color: Colors.white70),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.white70, size: 20),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -571,6 +642,11 @@ class _PracticeSessionScreenState extends State<PracticeSessionScreen> {
       isCorrect: isCorrect,
     );
     setState(() => _submitted[q.id!] = true);
+
+    // 答错后异步调用 AI 错因分析（不阻塞 UI）
+    if (!isCorrect && mounted) {
+      context.read<WrongAnalysisService>().analyzeAndSave(q, userAns, q.answer);
+    }
   }
 
   void _nextQuestion() {
@@ -776,12 +852,17 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                     : () async {
                         final isCorrect = _userAnswer!.trim().toUpperCase() ==
                             q.answer.trim().toUpperCase();
-                        await context.read<QuestionService>().submitAnswer(
+                        final qs = context.read<QuestionService>();
+                        final wa = context.read<WrongAnalysisService>();
+                        await qs.submitAnswer(
                           questionId: q.id!,
                           userAnswer: _userAnswer!,
                           isCorrect: isCorrect,
                         );
-                        setState(() => _showAnswer = true);
+                        if (!isCorrect) {
+                          wa.analyzeAndSave(q, _userAnswer!, q.answer);
+                        }
+                        if (mounted) setState(() => _showAnswer = true);
                       },
                 label: '确认答案',
                 width: double.infinity,
