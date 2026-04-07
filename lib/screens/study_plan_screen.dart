@@ -1,0 +1,466 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../services/study_plan_service.dart';
+import '../models/study_plan.dart';
+import '../models/daily_task.dart';
+import '../widgets/ai_chat_dialog.dart';
+
+/// 学习计划总览页
+class StudyPlanScreen extends StatefulWidget {
+  const StudyPlanScreen({super.key});
+
+  @override
+  State<StudyPlanScreen> createState() => _StudyPlanScreenState();
+}
+
+class _StudyPlanScreenState extends State<StudyPlanScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<StudyPlanService>().loadActivePlan();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('学习计划'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.smart_toy),
+            tooltip: '调整计划',
+            onPressed: () => _showAdjustPlan(context),
+          ),
+        ],
+      ),
+      body: Consumer<StudyPlanService>(
+        builder: (context, service, _) {
+          if (service.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (!service.hasPlan) {
+            return _NoPlanView(onGenerate: () => _showGeneratePlanDialog(context));
+          }
+
+          return _PlanView(plan: service.activePlan!, service: service);
+        },
+      ),
+    );
+  }
+
+  Future<void> _showGeneratePlanDialog(BuildContext context) async {
+    final examDateController = TextEditingController();
+    final contextController = TextEditingController();
+    final selectedSubjects = <String>{'行测', '申论'};
+
+    await showDialog(
+      context: context,
+      builder: (_) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: const Text('生成学习计划'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('选择科目：', style: TextStyle(fontSize: 13)),
+                const SizedBox(height: 4),
+                Wrap(
+                  spacing: 8,
+                  children: ['行测', '申论', '公基'].map((subject) {
+                    final selected = selectedSubjects.contains(subject);
+                    return FilterChip(
+                      label: Text(subject),
+                      selected: selected,
+                      onSelected: (v) => setDialogState(() {
+                        if (v) {
+                          selectedSubjects.add(subject);
+                        } else {
+                          selectedSubjects.remove(subject);
+                        }
+                      }),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: examDateController,
+                  decoration: const InputDecoration(
+                    labelText: '考试日期（可选）',
+                    hintText: '如：2025-12-31',
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: contextController,
+                  decoration: const InputDecoration(
+                    labelText: '补充信息（可选）',
+                    hintText: '如：每天能学习 2 小时',
+                  ),
+                  maxLines: 2,
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('取消')),
+            FilledButton(
+              onPressed: () async {
+                Navigator.pop(ctx);
+                await _generatePlan(
+                  context,
+                  subjects: selectedSubjects.toList(),
+                  examDate: examDateController.text.trim().isEmpty
+                      ? null
+                      : examDateController.text.trim(),
+                  userContext: contextController.text.trim().isEmpty
+                      ? null
+                      : contextController.text.trim(),
+                );
+              },
+              child: const Text('AI 生成'),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    examDateController.dispose();
+    contextController.dispose();
+  }
+
+  Future<void> _generatePlan(
+    BuildContext context, {
+    required List<String> subjects,
+    String? examDate,
+    String? userContext,
+  }) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final service = context.read<StudyPlanService>();
+    try {
+      await service.generatePlan(
+        subjects: subjects,
+        examDate: examDate,
+        userContext: userContext,
+      );
+      messenger.showSnackBar(
+        const SnackBar(content: Text('学习计划生成成功')),
+      );
+    } catch (e) {
+      messenger.showSnackBar(
+        SnackBar(content: Text('生成失败：$e')),
+      );
+    }
+  }
+
+  Future<void> _showAdjustPlan(BuildContext context) async {
+    final service = context.read<StudyPlanService>();
+    if (!service.hasPlan) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('请先生成学习计划')),
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const AlertDialog(
+        content: Row(
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(width: 16),
+            Text('AI 正在分析...'),
+          ],
+        ),
+      ),
+    );
+
+    try {
+      final advice = await service.adjustPlan();
+      if (context.mounted) {
+        Navigator.pop(context);
+        AiChatDialog.show(
+          context,
+          initialPrompt: advice,
+          title: '计划调整建议',
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('获取建议失败：$e')),
+        );
+      }
+    }
+  }
+}
+
+class _NoPlanView extends StatelessWidget {
+  final VoidCallback onGenerate;
+  const _NoPlanView({required this.onGenerate});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.route, size: 80, color: Colors.grey),
+          const SizedBox(height: 16),
+          Text('还没有学习计划', style: Theme.of(context).textTheme.headlineSmall),
+          const SizedBox(height: 8),
+          const Text(
+            '让 AI 根据你的情况生成个性化学习路线',
+            style: TextStyle(color: Colors.grey),
+          ),
+          const SizedBox(height: 24),
+          FilledButton.icon(
+            onPressed: onGenerate,
+            icon: const Icon(Icons.smart_toy),
+            label: const Text('AI 生成学习计划'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PlanView extends StatelessWidget {
+  final StudyPlan plan;
+  final StudyPlanService service;
+
+  const _PlanView({required this.plan, required this.service});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        // 计划概览卡片
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.route, color: Colors.blue),
+                    const SizedBox(width: 8),
+                    Text('当前学习计划', style: Theme.of(context).textTheme.titleMedium),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => DailyTaskScreen(plan: plan)),
+                      ),
+                      child: const Text('今日任务'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                if (plan.examDate != null)
+                  _InfoRow('考试日期', plan.examDate!),
+                _InfoRow('备考科目', plan.subjects.join('、')),
+                _InfoRow('创建日期', plan.createdAt?.substring(0, 10) ?? '-'),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        // AI 生成的计划内容
+        if (plan.planData != null && plan.planData!.isNotEmpty) ...[
+          Text('计划详情', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                plan.planData!,
+                style: const TextStyle(fontSize: 13, height: 1.6),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+        // 今日任务预览
+        Text('今日任务', style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 8),
+        if (service.todayTasks.isEmpty)
+          const Card(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Text('今日无任务', style: TextStyle(color: Colors.grey)),
+            ),
+          )
+        else
+          ...service.todayTasks.take(3).map((task) => _TaskCard(task: task, service: service)),
+        if (service.todayTasks.length > 3)
+          TextButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => DailyTaskScreen(plan: plan)),
+            ),
+            child: Text('查看全部 ${service.todayTasks.length} 个任务'),
+          ),
+        const SizedBox(height: 16),
+        // 重新生成按钮
+        OutlinedButton.icon(
+          onPressed: () => _showRegeneratePlan(context),
+          icon: const Icon(Icons.refresh),
+          label: const Text('重新生成计划'),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _showRegeneratePlan(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('重新生成'),
+        content: const Text('将废弃当前计划，重新生成。确认吗？'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('取消')),
+          FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('确认')),
+        ],
+      ),
+    );
+    if (confirmed == true && context.mounted) {
+      try {
+        await context.read<StudyPlanService>().generatePlan(
+          subjects: plan.subjects,
+          examDate: plan.examDate,
+        );
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('计划已更新')),
+          );
+        }
+      } catch (e) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('生成失败：$e')),
+          );
+        }
+      }
+    }
+  }
+}
+
+class _InfoRow extends StatelessWidget {
+  final String label;
+  final String value;
+  const _InfoRow(this.label, this.value);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 72,
+            child: Text(label, style: TextStyle(color: Colors.grey[600], fontSize: 13)),
+          ),
+          Text(value, style: const TextStyle(fontSize: 13)),
+        ],
+      ),
+    );
+  }
+}
+
+class _TaskCard extends StatelessWidget {
+  final DailyTask task;
+  final StudyPlanService service;
+
+  const _TaskCard({required this.task, required this.service});
+
+  @override
+  Widget build(BuildContext context) {
+    final isCompleted = task.status == 'completed';
+    return Card(
+      margin: const EdgeInsets.only(bottom: 6),
+      child: ListTile(
+        leading: Checkbox(
+          value: isCompleted,
+          onChanged: (v) => service.updateTaskStatus(
+            task.id!,
+            v! ? 'completed' : 'pending',
+          ),
+        ),
+        title: Text(
+          '${task.subject} · ${task.topic ?? task.taskType ?? "练习"}',
+          style: TextStyle(
+            decoration: isCompleted ? TextDecoration.lineThrough : null,
+            color: isCompleted ? Colors.grey : null,
+          ),
+        ),
+        subtitle: task.targetCount > 0
+            ? Text('目标：${task.targetCount} 题', style: const TextStyle(fontSize: 11))
+            : null,
+        trailing: _StatusBadge(status: task.status),
+      ),
+    );
+  }
+}
+
+class _StatusBadge extends StatelessWidget {
+  final String status;
+  const _StatusBadge({required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    final (label, color) = switch (status) {
+      'completed' => ('完成', Colors.green),
+      'ongoing' => ('进行中', Colors.blue),
+      'skipped' => ('跳过', Colors.grey),
+      _ => ('待完成', Colors.orange),
+    };
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(label, style: TextStyle(fontSize: 11, color: color)),
+    );
+  }
+}
+
+/// 每日任务详情页
+class DailyTaskScreen extends StatelessWidget {
+  final StudyPlan plan;
+  const DailyTaskScreen({super.key, required this.plan});
+
+  @override
+  Widget build(BuildContext context) {
+    final today = DateTime.now().toIso8601String().substring(0, 10);
+
+    return Scaffold(
+      appBar: AppBar(title: Text('今日任务 · $today')),
+      body: Consumer<StudyPlanService>(
+        builder: (context, service, _) {
+          if (service.todayTasks.isEmpty) {
+            return const Center(
+              child: Text('今日无任务'),
+            );
+          }
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: service.todayTasks.length,
+            itemBuilder: (context, index) {
+              final task = service.todayTasks[index];
+              return _TaskCard(task: task, service: service);
+            },
+          );
+        },
+      ),
+    );
+  }
+}

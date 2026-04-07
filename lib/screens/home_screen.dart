@@ -5,6 +5,7 @@ import 'stats_screen.dart';
 import 'profile_screen.dart';
 import 'policy_match_screen.dart';
 
+/// 首页（底部导航 5 个 Tab）
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -26,7 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
@@ -34,28 +38,28 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.edit_note),
-            selectedIcon: Icon(Icons.edit_note, color: Colors.blue),
+            icon: Icon(Icons.edit_note_outlined),
+            selectedIcon: Icon(Icons.edit_note),
             label: '刷题',
           ),
           NavigationDestination(
             icon: Icon(Icons.timer_outlined),
-            selectedIcon: Icon(Icons.timer, color: Colors.blue),
+            selectedIcon: Icon(Icons.timer),
             label: '模考',
           ),
           NavigationDestination(
             icon: Icon(Icons.work_outline),
-            selectedIcon: Icon(Icons.work, color: Colors.blue),
+            selectedIcon: Icon(Icons.work),
             label: '岗位',
           ),
           NavigationDestination(
             icon: Icon(Icons.bar_chart_outlined),
-            selectedIcon: Icon(Icons.bar_chart, color: Colors.blue),
+            selectedIcon: Icon(Icons.bar_chart),
             label: '统计',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person, color: Colors.blue),
+            selectedIcon: Icon(Icons.person),
             label: '我的',
           ),
         ],

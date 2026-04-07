@@ -1,0 +1,1 @@
+- [GKGB Architecture Patterns](project_arch_patterns.md) — Common Flutter cross-platform pitfalls for Windows+Android exam prep app
