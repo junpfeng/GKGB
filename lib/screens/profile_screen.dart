@@ -8,6 +8,9 @@ import '../theme/app_theme.dart';
 import 'baseline_test_screen.dart';
 import 'llm_settings_screen.dart';
 import 'study_plan_screen.dart';
+import 'hot_topics_screen.dart';
+import 'essay_training_screen.dart';
+import 'essay_material_screen.dart';
 
 /// 个人信息页（我的）
 class ProfileScreen extends StatefulWidget {
@@ -116,6 +119,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const StudyPlanScreen()),
+                ),
+              ),
+              const SizedBox(height: 8),
+              _buildMenuItem(
+                context,
+                Icons.trending_up,
+                '时政热点',
+                '浏览热点资讯，AI 考点分析',
+                AppTheme.warningGradient,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const HotTopicsScreen()),
+                ),
+              ),
+              const SizedBox(height: 8),
+              _buildMenuItem(
+                context,
+                Icons.edit_note,
+                '申论训练',
+                '申论写作练习与 AI 批改',
+                AppTheme.warmGradient,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const EssayTrainingScreen()),
+                ),
+              ),
+              const SizedBox(height: 8),
+              _buildMenuItem(
+                context,
+                Icons.library_books,
+                '申论素材库',
+                '名言金句、典型案例、政策表述',
+                AppTheme.infoGradient,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const EssayMaterialScreen()),
                 ),
               ),
               const SizedBox(height: 8),

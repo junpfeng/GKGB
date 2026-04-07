@@ -22,7 +22,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 7,
+      version: 8,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -328,6 +328,50 @@ class DatabaseHelper {
       )
     ''');
 
+    // 时政热点表
+    await db.execute('''
+      CREATE TABLE hot_topics (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        summary TEXT DEFAULT '',
+        source TEXT DEFAULT '',
+        source_url TEXT DEFAULT '',
+        publish_date TEXT,
+        relevance_score INTEGER DEFAULT 5,
+        exam_points TEXT DEFAULT '',
+        essay_angles TEXT DEFAULT '',
+        category TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+
+    // 申论素材表
+    await db.execute('''
+      CREATE TABLE essay_materials (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        theme TEXT NOT NULL,
+        material_type TEXT NOT NULL,
+        content TEXT NOT NULL,
+        source TEXT DEFAULT '',
+        is_favorited INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+
+    // 申论写作提交表
+    await db.execute('''
+      CREATE TABLE essay_submissions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        topic TEXT NOT NULL,
+        content TEXT NOT NULL,
+        word_count INTEGER DEFAULT 0,
+        time_spent INTEGER DEFAULT 0,
+        ai_score REAL DEFAULT 0,
+        ai_comment TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+
     // 建立索引
     await _createIndexes(db);
   }
@@ -615,6 +659,63 @@ class DatabaseHelper {
         );
       });
     }
+
+    if (oldVersion < 8) {
+      // v7→v8：时政热点 + 申论素材 + 申论写作
+      await db.transaction((txn) async {
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS hot_topics (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            summary TEXT DEFAULT '',
+            source TEXT DEFAULT '',
+            source_url TEXT DEFAULT '',
+            publish_date TEXT,
+            relevance_score INTEGER DEFAULT 5,
+            exam_points TEXT DEFAULT '',
+            essay_angles TEXT DEFAULT '',
+            category TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS essay_materials (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            theme TEXT NOT NULL,
+            material_type TEXT NOT NULL,
+            content TEXT NOT NULL,
+            source TEXT DEFAULT '',
+            is_favorited INTEGER DEFAULT 0,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS essay_submissions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            topic TEXT NOT NULL,
+            content TEXT NOT NULL,
+            word_count INTEGER DEFAULT 0,
+            time_spent INTEGER DEFAULT 0,
+            ai_score REAL DEFAULT 0,
+            ai_comment TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+          )
+        ''');
+
+        // 索引
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_hot_topics_date ON hot_topics(publish_date)',
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_essay_materials_theme ON essay_materials(theme, material_type)',
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_essay_submissions_date ON essay_submissions(created_at)',
+        );
+      });
+    }
   }
 
   /// 创建所有索引
@@ -636,6 +737,9 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_user_registrations_calendar ON user_registrations(calendar_id)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_user_answers_error_type ON user_answers(error_type)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_user_answers_correct_question ON user_answers(is_correct, question_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_hot_topics_date ON hot_topics(publish_date)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_essay_materials_theme ON essay_materials(theme, material_type)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_essay_submissions_date ON essay_submissions(created_at)');
   }
 
   // ===== questions CRUD =====
@@ -1580,6 +1684,171 @@ class DatabaseHelper {
       ORDER BY answered_at DESC LIMIT 1
     ''', [questionId]);
     return rows.isEmpty ? null : rows.first['id'] as int?;
+  }
+
+  // ===== hot_topics CRUD =====
+
+  Future<int> insertHotTopic(Map<String, dynamic> topic) async {
+    final db = await database;
+    return await db.insert('hot_topics', topic);
+  }
+
+  Future<List<Map<String, dynamic>>> queryHotTopics({
+    String? category,
+    int? limit,
+    int? offset,
+  }) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (category != null && category.isNotEmpty) {
+      conditions.add('category = ?');
+      args.add(category);
+    }
+    return await db.query(
+      'hot_topics',
+      where: conditions.isEmpty ? null : conditions.join(' AND '),
+      whereArgs: args.isEmpty ? null : args,
+      limit: limit,
+      offset: offset,
+      orderBy: 'publish_date DESC, id DESC',
+    );
+  }
+
+  Future<Map<String, dynamic>?> queryHotTopicById(int id) async {
+    final db = await database;
+    final rows = await db.query('hot_topics', where: 'id = ?', whereArgs: [id]);
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  Future<int> updateHotTopic(int id, Map<String, dynamic> topic) async {
+    final db = await database;
+    return await db.update('hot_topics', topic, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> deleteHotTopic(int id) async {
+    final db = await database;
+    return await db.delete('hot_topics', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> countHotTopics({String? category}) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (category != null && category.isNotEmpty) {
+      conditions.add('category = ?');
+      args.add(category);
+    }
+    final where = conditions.isEmpty ? '' : ' WHERE ${conditions.join(' AND ')}';
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as cnt FROM hot_topics$where',
+      args.isEmpty ? null : args,
+    );
+    return (result.first['cnt'] as int?) ?? 0;
+  }
+
+  // ===== essay_materials CRUD =====
+
+  Future<int> insertEssayMaterial(Map<String, dynamic> material) async {
+    final db = await database;
+    return await db.insert('essay_materials', material);
+  }
+
+  Future<List<Map<String, dynamic>>> queryEssayMaterials({
+    String? theme,
+    String? materialType,
+    int? limit,
+    int? offset,
+  }) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (theme != null && theme.isNotEmpty) {
+      conditions.add('theme = ?');
+      args.add(theme);
+    }
+    if (materialType != null && materialType.isNotEmpty) {
+      conditions.add('material_type = ?');
+      args.add(materialType);
+    }
+    return await db.query(
+      'essay_materials',
+      where: conditions.isEmpty ? null : conditions.join(' AND '),
+      whereArgs: args.isEmpty ? null : args,
+      limit: limit,
+      offset: offset,
+      orderBy: 'id ASC',
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> queryFavoriteMaterials() async {
+    final db = await database;
+    return await db.query(
+      'essay_materials',
+      where: 'is_favorited = 1',
+      orderBy: 'created_at DESC',
+    );
+  }
+
+  Future<int> updateEssayMaterial(int id, Map<String, dynamic> material) async {
+    final db = await database;
+    return await db.update('essay_materials', material, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> countEssayMaterials({String? theme}) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (theme != null && theme.isNotEmpty) {
+      conditions.add('theme = ?');
+      args.add(theme);
+    }
+    final where = conditions.isEmpty ? '' : ' WHERE ${conditions.join(' AND ')}';
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as cnt FROM essay_materials$where',
+      args.isEmpty ? null : args,
+    );
+    return (result.first['cnt'] as int?) ?? 0;
+  }
+
+  // ===== essay_submissions CRUD =====
+
+  Future<int> insertEssaySubmission(Map<String, dynamic> submission) async {
+    final db = await database;
+    return await db.insert('essay_submissions', submission);
+  }
+
+  /// 列表页只查轻量字段
+  Future<List<Map<String, dynamic>>> queryEssaySubmissions({
+    int? limit,
+    int? offset,
+  }) async {
+    final db = await database;
+    return await db.query(
+      'essay_submissions',
+      columns: ['id', 'topic', 'word_count', 'time_spent', 'ai_score', 'created_at'],
+      limit: limit,
+      offset: offset,
+      orderBy: 'created_at DESC',
+    );
+  }
+
+  /// 详情页查全文
+  Future<Map<String, dynamic>?> queryEssaySubmissionById(int id) async {
+    final db = await database;
+    final rows = await db.query('essay_submissions', where: 'id = ?', whereArgs: [id]);
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  Future<int> updateEssaySubmission(int id, Map<String, dynamic> submission) async {
+    final db = await database;
+    return await db.update('essay_submissions', submission, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> countEssaySubmissions() async {
+    final db = await database;
+    final result = await db.rawQuery('SELECT COUNT(*) as cnt FROM essay_submissions');
+    return (result.first['cnt'] as int?) ?? 0;
   }
 }
 

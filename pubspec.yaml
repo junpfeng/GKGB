@@ -88,6 +88,8 @@ flutter:
     - assets/questions/real_exam_sample.json
     - assets/questions/interview_sample.json
     - assets/data/exam_calendar_sample.json
+    - assets/data/hot_topics_sample.json
+    - assets/data/essay_materials_sample.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

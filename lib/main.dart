@@ -18,6 +18,8 @@ import 'services/interview_service.dart';
 import 'services/calendar_service.dart';
 import 'services/notification_service.dart';
 import 'services/wrong_analysis_service.dart';
+import 'services/hot_topic_service.dart';
+import 'services/essay_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +43,11 @@ void main() async {
   final llmManager = LlmManager();
   final configService = LlmConfigService();
   await configService.loadAndApply(llmManager);
+
+  // 导入预置时政热点和申论素材
+  final hotTopicService = HotTopicService(llmManager);
+  await hotTopicService.importPresetTopics();
+  await hotTopicService.importPresetMaterials();
 
   runApp(
     MultiProvider(
@@ -88,7 +95,14 @@ void main() async {
           create: (ctx) => WrongAnalysisService(ctx.read<LlmManager>()),
           update: (ctx, lm, prev) => prev ?? WrongAnalysisService(lm),
         ),
-        // 11. VoiceService（无依赖）
+        // 11. HotTopicService（启动时已导入预置数据）
+        ChangeNotifierProvider.value(value: hotTopicService),
+        // 12. EssayService（依赖 LlmManager）
+        ChangeNotifierProxyProvider<LlmManager, EssayService>(
+          create: (ctx) => EssayService(ctx.read<LlmManager>()),
+          update: (ctx, lm, prev) => prev ?? EssayService(lm),
+        ),
+        // 13. VoiceService（无依赖）
         ChangeNotifierProvider(create: (_) => VoiceService()),
         // 10. AssistantService（依赖全部 service，ctx.read 一次性注入）
         ChangeNotifierProvider(
