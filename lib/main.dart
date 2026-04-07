@@ -20,6 +20,7 @@ import 'services/notification_service.dart';
 import 'services/wrong_analysis_service.dart';
 import 'services/hot_topic_service.dart';
 import 'services/essay_service.dart';
+import 'services/dashboard_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -104,6 +105,16 @@ void main() async {
         ),
         // 13. VoiceService（无依赖）
         ChangeNotifierProvider(create: (_) => VoiceService()),
+        // 14. DashboardService（依赖 QuestionService, ExamService, LlmManager）
+        ChangeNotifierProxyProvider3<QuestionService, ExamService, LlmManager, DashboardService>(
+          create: (ctx) => DashboardService(
+            ctx.read<QuestionService>(),
+            ctx.read<ExamService>(),
+            ctx.read<LlmManager>(),
+          ),
+          update: (ctx, qs, es, lm, prev) =>
+              prev ?? DashboardService(qs, es, lm),
+        ),
         // 10. AssistantService（依赖全部 service，ctx.read 一次性注入）
         ChangeNotifierProvider(
           create: (ctx) => AssistantService(

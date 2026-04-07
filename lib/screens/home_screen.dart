@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'practice_screen.dart';
 import 'exam_screen.dart';
-import 'stats_screen.dart';
+import 'dashboard_screen.dart';
 import 'profile_screen.dart';
 import 'policy_match_screen.dart';
 import '../services/assistant_service.dart';
@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 /// 页面名称列表（与 screenTabIndex 映射对应）
-const _screenNames = ['practice', 'exam', 'match', 'stats', 'profile'];
+const _screenNames = ['practice', 'exam', 'match', 'dashboard', 'profile'];
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen>
     PracticeScreen(),
     ExamScreen(),
     PolicyMatchScreen(),
-    StatsScreen(),
+    DashboardScreen(),
     ProfileScreen(),
   ];
 
@@ -49,9 +49,9 @@ class _HomeScreenState extends State<HomeScreen>
       label: '岗位',
     ),
     _NavItem(
-      icon: Icons.bar_chart_outlined,
-      selectedIcon: Icons.bar_chart,
-      label: '统计',
+      icon: Icons.dashboard_outlined,
+      selectedIcon: Icons.dashboard,
+      label: '看板',
     ),
     _NavItem(
       icon: Icons.person_outline,

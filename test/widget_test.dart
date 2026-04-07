@@ -11,6 +11,8 @@ import 'package:exam_prep_app/services/baseline_service.dart';
 import 'package:exam_prep_app/services/llm/llm_manager.dart';
 import 'package:exam_prep_app/services/assistant_service.dart';
 import 'package:exam_prep_app/services/voice_service.dart';
+import 'package:exam_prep_app/services/dashboard_service.dart';
+import 'package:exam_prep_app/services/calendar_service.dart';
 
 void main() {
   setUpAll(() {
@@ -28,6 +30,8 @@ void main() {
     final studyPlanService = StudyPlanService(questionService, llmManager);
     final baselineService = BaselineService(questionService);
     final voiceService = VoiceService();
+    final dashboardService = DashboardService(questionService, examService, llmManager);
+    final calendarService = CalendarService();
     final assistantService = AssistantService(
       llm: llmManager,
       questionService: questionService,
@@ -49,6 +53,8 @@ void main() {
           ChangeNotifierProvider.value(value: studyPlanService),
           ChangeNotifierProvider.value(value: baselineService),
           ChangeNotifierProvider.value(value: voiceService),
+          ChangeNotifierProvider.value(value: dashboardService),
+          ChangeNotifierProvider.value(value: calendarService),
           ChangeNotifierProvider.value(value: assistantService),
         ],
         child: const ExamPrepApp(),
@@ -59,7 +65,7 @@ void main() {
     expect(find.text('刷题'), findsOneWidget);
     expect(find.text('模考'), findsOneWidget);
     expect(find.text('岗位'), findsOneWidget);
-    expect(find.text('统计'), findsOneWidget);
+    expect(find.text('看板'), findsOneWidget);
     expect(find.text('我的'), findsOneWidget);
   });
 }
