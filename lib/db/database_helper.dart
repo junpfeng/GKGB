@@ -22,7 +22,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 4,
+      version: 5,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -237,6 +237,59 @@ class DatabaseHelper {
       )
     ''');
 
+    // 面试题库表
+    await db.execute('''
+      CREATE TABLE interview_questions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        category TEXT NOT NULL,
+        content TEXT NOT NULL,
+        reference_answer TEXT,
+        key_points TEXT,
+        difficulty INTEGER DEFAULT 3,
+        region TEXT DEFAULT '',
+        year INTEGER DEFAULT 0,
+        source TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(category, content)
+      )
+    ''');
+
+    // 面试会话表
+    await db.execute('''
+      CREATE TABLE interview_sessions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        category TEXT NOT NULL,
+        total_questions INTEGER NOT NULL,
+        total_score REAL DEFAULT 0,
+        status TEXT DEFAULT 'ongoing',
+        started_at TEXT,
+        finished_at TEXT,
+        summary TEXT
+      )
+    ''');
+
+    // 面试评分表
+    await db.execute('''
+      CREATE TABLE interview_scores (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_id INTEGER NOT NULL,
+        question_id INTEGER NOT NULL,
+        user_answer TEXT NOT NULL,
+        content_score REAL DEFAULT 0,
+        expression_score REAL DEFAULT 0,
+        time_score REAL DEFAULT 0,
+        total_score REAL DEFAULT 0,
+        ai_comment TEXT,
+        follow_up_question TEXT,
+        follow_up_answer TEXT,
+        follow_up_comment TEXT,
+        time_spent INTEGER DEFAULT 0,
+        answered_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (session_id) REFERENCES interview_sessions (id),
+        FOREIGN KEY (question_id) REFERENCES interview_questions (id)
+      )
+    ''');
+
     // 建立索引
     await _createIndexes(db);
   }
@@ -392,6 +445,69 @@ class DatabaseHelper {
         );
       });
     }
+
+    if (oldVersion < 5) {
+      // v4→v5：面试辅导功能，3 张新表
+      await db.transaction((txn) async {
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS interview_questions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category TEXT NOT NULL,
+            content TEXT NOT NULL,
+            reference_answer TEXT,
+            key_points TEXT,
+            difficulty INTEGER DEFAULT 3,
+            region TEXT DEFAULT '',
+            year INTEGER DEFAULT 0,
+            source TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(category, content)
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS interview_sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category TEXT NOT NULL,
+            total_questions INTEGER NOT NULL,
+            total_score REAL DEFAULT 0,
+            status TEXT DEFAULT 'ongoing',
+            started_at TEXT,
+            finished_at TEXT,
+            summary TEXT
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS interview_scores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id INTEGER NOT NULL,
+            question_id INTEGER NOT NULL,
+            user_answer TEXT NOT NULL,
+            content_score REAL DEFAULT 0,
+            expression_score REAL DEFAULT 0,
+            time_score REAL DEFAULT 0,
+            total_score REAL DEFAULT 0,
+            ai_comment TEXT,
+            follow_up_question TEXT,
+            follow_up_answer TEXT,
+            follow_up_comment TEXT,
+            time_spent INTEGER DEFAULT 0,
+            answered_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (session_id) REFERENCES interview_sessions (id),
+            FOREIGN KEY (question_id) REFERENCES interview_questions (id)
+          )
+        ''');
+
+        // 面试相关索引
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_interview_questions_category ON interview_questions(category)',
+        );
+        await txn.execute(
+          'CREATE INDEX IF NOT EXISTS idx_interview_scores_session_question ON interview_scores(session_id, question_id)',
+        );
+      });
+    }
   }
 
   /// 创建所有索引
@@ -405,6 +521,8 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_match_results_position_id ON match_results(position_id)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_questions_real_exam ON questions(is_real_exam, region, year, exam_type)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_real_exam_papers_filter ON real_exam_papers(exam_type, region, year)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_interview_questions_category ON interview_questions(category)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_interview_scores_session_question ON interview_scores(session_id, question_id)');
   }
 
   // ===== questions CRUD =====
@@ -1110,6 +1228,143 @@ class DatabaseHelper {
     final db = await database;
     return await db.delete(
       'real_exam_papers',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+  // ===== interview_questions CRUD =====
+
+  Future<int> insertInterviewQuestion(Map<String, dynamic> question) async {
+    final db = await database;
+    return await db.insert(
+      'interview_questions',
+      question,
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> queryInterviewQuestions({
+    String? category,
+    int? limit,
+    int? offset,
+  }) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (category != null && category.isNotEmpty) {
+      conditions.add('category = ?');
+      args.add(category);
+    }
+    return await db.query(
+      'interview_questions',
+      where: conditions.isEmpty ? null : conditions.join(' AND '),
+      whereArgs: args.isEmpty ? null : args,
+      limit: limit,
+      offset: offset,
+      orderBy: 'id ASC',
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> randomInterviewQuestions({
+    String? category,
+    required int count,
+  }) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (category != null && category.isNotEmpty) {
+      conditions.add('category = ?');
+      args.add(category);
+    }
+    return await db.query(
+      'interview_questions',
+      where: conditions.isEmpty ? null : conditions.join(' AND '),
+      whereArgs: args.isEmpty ? null : args,
+      orderBy: 'RANDOM()',
+      limit: count,
+    );
+  }
+
+  Future<int> countInterviewQuestions({String? category}) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (category != null && category.isNotEmpty) {
+      conditions.add('category = ?');
+      args.add(category);
+    }
+    final where = conditions.isEmpty ? '' : ' WHERE ${conditions.join(' AND ')}';
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as cnt FROM interview_questions$where',
+      args.isEmpty ? null : args,
+    );
+    return (result.first['cnt'] as int?) ?? 0;
+  }
+
+  // ===== interview_sessions CRUD =====
+
+  Future<int> insertInterviewSession(Map<String, dynamic> session) async {
+    final db = await database;
+    return await db.insert('interview_sessions', session);
+  }
+
+  Future<Map<String, dynamic>?> queryInterviewSessionById(int id) async {
+    final db = await database;
+    final rows = await db.query(
+      'interview_sessions',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  Future<List<Map<String, dynamic>>> queryInterviewSessions({
+    int? limit,
+    int? offset,
+  }) async {
+    final db = await database;
+    return await db.query(
+      'interview_sessions',
+      orderBy: 'started_at DESC',
+      limit: limit,
+      offset: offset,
+    );
+  }
+
+  Future<int> updateInterviewSession(int id, Map<String, dynamic> session) async {
+    final db = await database;
+    return await db.update(
+      'interview_sessions',
+      session,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // ===== interview_scores CRUD =====
+
+  Future<int> insertInterviewScore(Map<String, dynamic> score) async {
+    final db = await database;
+    return await db.insert('interview_scores', score);
+  }
+
+  Future<List<Map<String, dynamic>>> queryInterviewScoresBySession(int sessionId) async {
+    final db = await database;
+    return await db.rawQuery('''
+      SELECT s.*, q.category, q.content as question_content,
+             q.reference_answer, q.key_points
+      FROM interview_scores s
+      JOIN interview_questions q ON s.question_id = q.id
+      WHERE s.session_id = ?
+      ORDER BY s.id ASC
+    ''', [sessionId]);
+  }
+
+  Future<int> updateInterviewScore(int id, Map<String, dynamic> score) async {
+    final db = await database;
+    return await db.update(
+      'interview_scores',
+      score,
       where: 'id = ?',
       whereArgs: [id],
     );

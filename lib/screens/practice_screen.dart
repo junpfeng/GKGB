@@ -8,6 +8,7 @@ import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
 import '../theme/app_theme.dart';
 import 'real_exam_screen.dart';
+import 'interview_home_screen.dart';
 
 /// 刷题页：科目选择 → 题目列表 → 答题界面
 class PracticeScreen extends StatelessWidget {
@@ -107,12 +108,16 @@ class _SubjectList extends StatelessWidget {
       builder: (context, service, _) {
         return ListView.builder(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-          itemCount: subjects.length + 1,
+          itemCount: subjects.length + 2,
           itemBuilder: (context, index) {
-            if (index == subjects.length) {
+            // 面试入口横幅卡片
+            if (index == 0) {
+              return _buildInterviewEntryCard(context);
+            }
+            if (index == subjects.length + 1) {
               return _buildFavoritesCard(context);
             }
-            final subject = subjects[index];
+            final subject = subjects[index - 1];
             final gradientColors = subject['gradient'] as List<Color>;
             final gradient = LinearGradient(
               colors: gradientColors,
@@ -185,6 +190,71 @@ class _SubjectList extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Widget _buildInterviewEntryCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const InterviewHomeScreen()),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF667eea).withValues(alpha: 0.35),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.record_voice_over, color: Colors.white, size: 22),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '面试模拟练习',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      'AI 考官 · 结构化面试 · 即时评分',
+                      style: TextStyle(fontSize: 12, color: Colors.white70),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.white70, size: 20),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

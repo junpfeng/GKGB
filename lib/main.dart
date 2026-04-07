@@ -14,6 +14,7 @@ import 'services/llm_config_service.dart';
 import 'services/assistant_service.dart';
 import 'services/voice_service.dart';
 import 'services/real_exam_service.dart';
+import 'services/interview_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +65,12 @@ void main() async {
           create: (ctx) => RealExamService(ctx.read<QuestionService>(), ctx.read<LlmManager>()),
           update: (ctx, qs, lm, prev) => prev ?? RealExamService(qs, lm),
         ),
-        // 9. VoiceService（无依赖）
+        // 9. InterviewService（依赖 LlmManager）
+        ChangeNotifierProxyProvider<LlmManager, InterviewService>(
+          create: (ctx) => InterviewService(ctx.read<LlmManager>()),
+          update: (ctx, lm, prev) => prev ?? InterviewService(lm),
+        ),
+        // 10. VoiceService（无依赖）
         ChangeNotifierProvider(create: (_) => VoiceService()),
         // 10. AssistantService（依赖全部 service，ctx.read 一次性注入）
         ChangeNotifierProvider(
