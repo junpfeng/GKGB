@@ -1,10 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'practice_screen.dart';
 import 'exam_screen.dart';
 import 'stats_screen.dart';
 import 'profile_screen.dart';
 import 'policy_match_screen.dart';
+import '../services/assistant_service.dart';
 
 /// 首页（底部导航 5 个 Tab）
 class HomeScreen extends StatefulWidget {
@@ -13,6 +15,9 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
+/// 页面名称列表（与 screenTabIndex 映射对应）
+const _screenNames = ['practice', 'exam', 'match', 'stats', 'profile'];
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
@@ -56,6 +61,29 @@ class _HomeScreenState extends State<HomeScreen>
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // 注册导航回调到 AssistantService [C-1]
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final assistantService = context.read<AssistantService>();
+      assistantService.registerNavigationCallback((tabIndex) {
+        if (tabIndex >= 0 && tabIndex < _screenNames.length) {
+          setState(() => _currentIndex = tabIndex);
+          assistantService.updateContext(_screenNames[tabIndex]);
+        }
+      });
+      // 初始化上下文
+      assistantService.updateContext(_screenNames[_currentIndex]);
+    });
+  }
+
+  /// 切换 tab 时同步更新 AssistantService 上下文
+  void _onTabTap(int index) {
+    setState(() => _currentIndex = index);
+    context.read<AssistantService>().updateContext(_screenNames[index]);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -69,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen>
         currentIndex: _currentIndex,
         isDark: isDark,
         items: _navItems,
-        onTap: (index) => setState(() => _currentIndex = index),
+        onTap: _onTabTap,
       ),
     );
   }
