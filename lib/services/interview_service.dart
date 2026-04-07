@@ -113,10 +113,15 @@ class InterviewService extends ChangeNotifier {
 
   // ===== 模拟面试流程 =====
 
+  /// 当前面试模式（text/voice）
+  String _interviewMode = 'text';
+  String get interviewMode => _interviewMode;
+
   /// 开始模拟面试
   Future<void> startInterview({
     required String category,
     int questionCount = 4,
+    String mode = 'text',
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -136,12 +141,14 @@ class InterviewService extends ChangeNotifier {
       }
 
       // 创建会话
+      _interviewMode = mode;
       final now = DateTime.now().toIso8601String();
       final sessionId = await _db.insertInterviewSession({
         'category': category,
         'total_questions': _sessionQuestions.length,
         'total_score': 0,
         'status': 'ongoing',
+        'mode': mode,
         'started_at': now,
       });
 
@@ -149,6 +156,7 @@ class InterviewService extends ChangeNotifier {
         id: sessionId,
         category: category,
         totalQuestions: _sessionQuestions.length,
+        mode: mode,
         startedAt: now,
       );
       _currentQuestionIndex = 0;

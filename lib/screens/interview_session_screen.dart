@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import '../services/interview_service.dart';
+import '../services/voice_service.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
+import '../widgets/voice_input_widget.dart';
 import '../theme/app_theme.dart';
 import 'interview_report_screen.dart';
 
@@ -27,6 +29,31 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
   String _followUpComment = '';
   int _answerStartTime = 0;
   StreamSubscription<String>? _commentSubscription;
+  bool _ttsReadingQuestion = false; // TTS 正在朗读题目
+  bool _ttsReadingComment = false;  // TTS 正在朗读点评
+
+  bool _voiceInitDone = false;
+
+  bool get _isVoiceMode {
+    final service = context.read<InterviewService>();
+    return service.interviewMode == 'voice';
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 语音模式下首次进入时朗读题目
+    if (!_voiceInitDone) {
+      _voiceInitDone = true;
+      final service = context.read<InterviewService>();
+      if (service.interviewMode == 'voice' && service.currentQuestion != null) {
+        // 延迟一帧确保页面已构建
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _speakQuestion(service.currentQuestion!.content);
+        });
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -34,7 +61,59 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
     _followUpController.dispose();
     _scrollController.dispose();
     _commentSubscription?.cancel();
+    // 停止 TTS
+    try {
+      final voiceService = context.read<VoiceService>();
+      voiceService.stopSpeaking();
+      voiceService.stopListening();
+    } catch (_) {}
     super.dispose();
+  }
+
+  /// 语音模式下 TTS 朗读题目
+  Future<void> _speakQuestion(String text) async {
+    if (!_isVoiceMode) return;
+    final voiceService = context.read<VoiceService>();
+    if (!voiceService.ttsAvailable) return;
+    setState(() => _ttsReadingQuestion = true);
+    await voiceService.speak(text);
+    // 等待朗读完成
+    await Future.doWhile(() async {
+      await Future.delayed(const Duration(milliseconds: 200));
+      return voiceService.isSpeaking;
+    });
+    if (mounted) setState(() => _ttsReadingQuestion = false);
+  }
+
+  /// 跳过 TTS 朗读
+  void _skipTts() {
+    final voiceService = context.read<VoiceService>();
+    voiceService.stopSpeaking();
+    setState(() {
+      _ttsReadingQuestion = false;
+      _ttsReadingComment = false;
+    });
+  }
+
+  /// 语音模式下 TTS 朗读点评摘要
+  Future<void> _speakComment(String comment) async {
+    if (!_isVoiceMode) return;
+    final voiceService = context.read<VoiceService>();
+    if (!voiceService.ttsAvailable) return;
+    // 提取纯文本摘要（去 markdown 标记，截取前 200 字）
+    final plainText = comment
+        .replaceAll(RegExp(r'[#*_`\[\]\(\)>]'), '')
+        .replaceAll(RegExp(r'\n+'), '。');
+    final summary = plainText.length > 200
+        ? '${plainText.substring(0, 200)}...'
+        : plainText;
+    setState(() => _ttsReadingComment = true);
+    await voiceService.speak(summary);
+    await Future.doWhile(() async {
+      await Future.delayed(const Duration(milliseconds: 200));
+      return voiceService.isSpeaking;
+    });
+    if (mounted) setState(() => _ttsReadingComment = false);
   }
 
   void _submitAnswer() {
@@ -54,6 +133,12 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
       _aiComment = '';
     });
 
+    // 语音模式下停止 STT
+    if (_isVoiceMode) {
+      final voiceService = context.read<VoiceService>();
+      voiceService.stopListening();
+    }
+
     _commentSubscription?.cancel();
     final stream = service.submitAnswer(answer, timeSpent);
     _commentSubscription = stream.listen(
@@ -61,6 +146,12 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
         if (mounted) {
           setState(() => _aiComment += chunk);
           _scrollToBottom();
+        }
+      },
+      onDone: () {
+        // 语音模式下朗读点评摘要
+        if (_isVoiceMode && _aiComment.isNotEmpty) {
+          _speakComment(_aiComment);
         }
       },
       onError: (e) {
@@ -88,6 +179,9 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
 
   void _nextQuestion() {
     _commentSubscription?.cancel();
+    // 停止 TTS
+    _skipTts();
+
     final service = context.read<InterviewService>();
     service.nextQuestion();
     setState(() {
@@ -99,10 +193,16 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
       _followUpComment = '';
       _answerStartTime = 0;
     });
+
+    // 语音模式下朗读新题目
+    if (_isVoiceMode && service.currentQuestion != null) {
+      _speakQuestion(service.currentQuestion!.content);
+    }
   }
 
   void _goToReport() {
     _commentSubscription?.cancel();
+    _skipTts();
     final service = context.read<InterviewService>();
     final sessionId = service.currentSession!.id!;
     Navigator.pushReplacement(
@@ -138,10 +238,22 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Consumer<InterviewService>(
-            builder: (_, service, _) {
+            builder: (context, service, child) {
               final total = service.sessionQuestions.length;
               final current = service.currentQuestionIndex + 1;
-              return Text('模拟面试 $current/$total');
+              final isVoice = service.interviewMode == 'voice';
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (isVoice) ...[
+                    const Icon(Icons.mic, size: 18),
+                    const SizedBox(width: 4),
+                  ],
+                  Text(
+                    '${isVoice ? "语音" : "模拟"}面试 $current/$total',
+                  ),
+                ],
+              );
             },
           ),
           leading: IconButton(
@@ -266,6 +378,8 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
 
   Widget _buildQuestionCard(InterviewService service) {
     final question = service.currentQuestion!;
+    final isVoice = service.interviewMode == 'voice';
+
     return GlassCard(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -289,6 +403,70 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
                 '第 ${service.currentQuestionIndex + 1} 题',
                 style: TextStyle(fontSize: 12, color: Colors.grey[500]),
               ),
+              if (isVoice) ...[
+                const Spacer(),
+                // TTS 朗读/跳过按钮
+                if (_ttsReadingQuestion)
+                  GestureDetector(
+                    onTap: _skipTts,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.skip_next, size: 14, color: Colors.orange),
+                          SizedBox(width: 2),
+                          Text(
+                            '跳过朗读',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Colors.orange,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  GestureDetector(
+                    onTap: () => _speakQuestion(question.content),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF667eea).withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.volume_up,
+                            size: 14,
+                            color: Color(0xFF667eea),
+                          ),
+                          SizedBox(width: 2),
+                          Text(
+                            '朗读题目',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Color(0xFF667eea),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
             ],
           ),
           const SizedBox(height: 12),
@@ -302,6 +480,8 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
   }
 
   Widget _buildAnswerArea(InterviewService service) {
+    final isVoice = service.interviewMode == 'voice';
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -310,14 +490,51 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 8),
+
+        // 语音模式：大号麦克风输入
+        if (isVoice && !service.isThinkingPhase) ...[
+          Center(
+            child: VoiceInputWidget(
+              enabled: !service.isThinkingPhase,
+              onResult: (text) {
+                setState(() {
+                  // 追加到已有文本
+                  final current = _answerController.text;
+                  _answerController.text =
+                      current.isEmpty ? text : '$current$text';
+                  _answerController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: _answerController.text.length),
+                  );
+                  if (_answerStartTime == 0) {
+                    _answerStartTime = DateTime.now().millisecondsSinceEpoch;
+                  }
+                });
+              },
+              onPartialResult: (text) {
+                // 实时显示：不覆盖已确认文本
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
+          // 识别结果可编辑
+          Text(
+            '识别结果（可编辑）',
+            style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+          ),
+          const SizedBox(height: 4),
+        ],
+
+        // 文本输入框（两种模式都有，语音模式下显示识别结果可编辑）
         TextField(
           controller: _answerController,
-          maxLines: 8,
-          minLines: 4,
+          maxLines: isVoice ? 4 : 8,
+          minLines: isVoice ? 2 : 4,
           decoration: InputDecoration(
             hintText: service.isThinkingPhase
                 ? '思考中...准备好后点击「开始作答」'
-                : '请输入你的回答...',
+                : isVoice
+                    ? '语音识别结果将显示在这里，你也可以手动修改...'
+                    : '请输入你的回答...',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -402,6 +619,30 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
                   height: 12,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 ),
+              ],
+              // 语音模式：TTS 朗读/跳过点评
+              if (service.interviewMode == 'voice' &&
+                  _aiComment.isNotEmpty &&
+                  !service.isScoring) ...[
+                const Spacer(),
+                if (_ttsReadingComment)
+                  GestureDetector(
+                    onTap: _skipTts,
+                    child: const Icon(
+                      Icons.stop_circle_outlined,
+                      size: 18,
+                      color: Colors.orange,
+                    ),
+                  )
+                else
+                  GestureDetector(
+                    onTap: () => _speakComment(_aiComment),
+                    child: const Icon(
+                      Icons.volume_up,
+                      size: 18,
+                      color: Color(0xFF764ba2),
+                    ),
+                  ),
               ],
             ],
           ),

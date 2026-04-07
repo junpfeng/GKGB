@@ -15,6 +15,8 @@ class InterviewSession {
   final double totalScore;
   /// ongoing/finished/cancelled
   final String status;
+  /// text/voice
+  final String mode;
   @JsonKey(name: 'started_at')
   final String? startedAt;
   @JsonKey(name: 'finished_at')
@@ -28,6 +30,7 @@ class InterviewSession {
     required this.totalQuestions,
     this.totalScore = 0,
     this.status = 'ongoing',
+    this.mode = 'text',
     this.startedAt,
     this.finishedAt,
     this.summary,
@@ -44,6 +47,7 @@ class InterviewSession {
       totalQuestions: map['total_questions'] as int,
       totalScore: ((map['total_score'] as num?) ?? 0).toDouble(),
       status: (map['status'] as String?) ?? 'ongoing',
+      mode: (map['mode'] as String?) ?? 'text',
       startedAt: map['started_at'] as String?,
       finishedAt: map['finished_at'] as String?,
       summary: map['summary'] as String?,
@@ -57,6 +61,7 @@ class InterviewSession {
       'total_questions': totalQuestions,
       'total_score': totalScore,
       'status': status,
+      'mode': mode,
       'started_at': startedAt,
       'finished_at': finishedAt,
       'summary': summary,
@@ -69,6 +74,7 @@ class InterviewSession {
     int? totalQuestions,
     double? totalScore,
     String? status,
+    String? mode,
     String? startedAt,
     String? finishedAt,
     String? summary,
@@ -79,6 +85,7 @@ class InterviewSession {
       totalQuestions: totalQuestions ?? this.totalQuestions,
       totalScore: totalScore ?? this.totalScore,
       status: status ?? this.status,
+      mode: mode ?? this.mode,
       startedAt: startedAt ?? this.startedAt,
       finishedAt: finishedAt ?? this.finishedAt,
       summary: summary ?? this.summary,
