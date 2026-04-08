@@ -1,17 +1,18 @@
 {
   "files": [
+    "assets/data/exam_entry_scores/guokao_2023.json",
     "assets/data/exam_entry_scores/guokao_2024.json",
     "assets/data/exam_entry_scores/guokao_2025.json",
     "assets/data/exam_entry_scores/jiangsu_shengkao_2024.json",
     "assets/data/exam_entry_scores/jiangsu_shengkao_2025.json",
-    "assets/data/exam_entry_scores/zhejiang_shengkao_2024.json",
-    "assets/data/exam_entry_scores/zhejiang_shengkao_2025.json",
-    "assets/data/exam_entry_scores/shanghai_shengkao_2024.json",
+    "assets/data/exam_entry_scores/jiangsu_shiyebian_2024.json",
     "assets/data/exam_entry_scores/shandong_shengkao_2024.json",
     "assets/data/exam_entry_scores/shandong_shengkao_2025.json",
-    "assets/data/exam_entry_scores/jiangsu_shiyebian_2024.json",
-    "assets/data/exam_entry_scores/zhejiang_shiyebian_2024.json",
-    "assets/data/exam_entry_scores/shandong_shiyebian_2024.json"
+    "assets/data/exam_entry_scores/shandong_shiyebian_2024.json",
+    "assets/data/exam_entry_scores/shanghai_shengkao_2024.json",
+    "assets/data/exam_entry_scores/zhejiang_shengkao_2024.json",
+    "assets/data/exam_entry_scores/zhejiang_shengkao_2025.json",
+    "assets/data/exam_entry_scores/zhejiang_shiyebian_2024.json"
   ],
   "version": "1.0.0",
   "updated_at": "2026-04-08"

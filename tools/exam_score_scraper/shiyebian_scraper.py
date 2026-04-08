@@ -1,9 +1,18 @@
 """
 事业编进面分数线爬取
-数据源：
-  - 各省人社厅事业单位公开招聘公告
-  - 华图教育事业编分数线汇总
-  - 各地市人事考试网
+
+数据源状态（2025-04 验证）：
+  - 江苏 js.huatu.com：URL 返回 200 但内容为分类导航页，无直接分数线表格
+  - 浙江 zj.huatu.com：同上
+  - 山东 sd.huatu.com：同上
+  - 上海 sh.huatu.com：同上
+  - 各省人社厅官方站：无统一结构化分数线汇总页
+
+当前状态：暂无已验证的可用结构化事业编数据源。
+现有 assets/data/exam_entry_scores/*_shiyebian_*.json 为示例数据，保持不变。
+
+待补充：
+  - 若找到可用来源后在此处添加 URL 并实现解析逻辑
 """
 
 import re
@@ -19,166 +28,70 @@ from scraper_base import ScraperBase
 logger = logging.getLogger(__name__)
 
 
-# 省份 → 事业编数据源配置
-SHIYEBIAN_CONFIG = {
-    '江苏': {
-        # 江苏事业单位统考分数线
-        'article_urls': {
-            2024: 'https://js.huatu.com/sydw/zhaokao/2024/',
-        },
-        # 官方源：江苏省属事业单位公开招聘
-        'official_urls': {
-            2024: 'https://jshrss.jiangsu.gov.cn/col/col57298/index.html',
-        },
-    },
-    '浙江': {
-        'article_urls': {
-            2024: 'https://zj.huatu.com/sydw/zhaokao/2024/',
-        },
-        'official_urls': {
-            2024: 'http://www.zjks.gov.cn/sydw/',
-        },
-    },
-    '山东': {
-        'article_urls': {
-            2024: 'https://sd.huatu.com/sydw/zhaokao/2024/',
-        },
-        'official_urls': {
-            2024: 'https://hrss.shandong.gov.cn/rsks/channels/ch03574/',
-        },
-    },
-    '上海': {
-        'article_urls': {
-            2024: 'https://sh.huatu.com/sydw/zhaokao/2024/',
-        },
-    },
+# 省份配置：当前无可用来源，配置为空（保留结构供后续扩展）
+SHIYEBIAN_CONFIG: dict = {
+    # '江苏': {
+    #     'article_urls': {
+    #         2024: 'TODO: 待添加已验证可用的 URL',
+    #     },
+    # },
 }
 
 
 class ShiyebianScraper(ScraperBase):
-    """事业编进面分数线爬取"""
+    """事业编进面分数线爬取（当前暂无可用来源）"""
 
     def scrape(self, province: Optional[str] = None, year: Optional[int] = None) -> list[dict]:
         """
         爬取事业编分数线
 
+        当前所有已知来源（huatu.com 各省站、各省人社厅）均无可直接解析的
+        结构化分数线表格，返回空列表，现有示例数据不会被覆盖。
+
         Args:
-            province: 指定省份，None 表示爬取所有已配置省份
+            province: 指定省份
             year: 指定年份
         Returns:
-            标准化数据行列表
+            空列表（待后续添加可用数据源后实现）
         """
-        results = []
+        if SHIYEBIAN_CONFIG:
+            return self._scrape_configured(province, year)
 
+        logger.warning('事业编爬虫：当前无已验证的可用数据源，跳过采集')
+        return []
+
+    def _scrape_configured(self, province: Optional[str], year: Optional[int]) -> list[dict]:
+        """当 SHIYEBIAN_CONFIG 有配置时执行采集"""
+        results = []
         provinces = [province] if province else list(SHIYEBIAN_CONFIG.keys())
 
         for prov in provinces:
             config = SHIYEBIAN_CONFIG.get(prov)
             if not config:
-                logger.warning(f'未配置省份: {prov}')
                 continue
 
             years = [year] if year else list(config['article_urls'].keys())
             for y in years:
-                # 优先尝试华图汇总文章
                 url = config['article_urls'].get(y)
-                if url:
-                    data = self._scrape_article(url, prov, y)
-                    results.extend(data)
-                    logger.info(f'{prov} {y}年事业编数据（华图）: {len(data)} 条')
+                if not url:
+                    continue
 
-                # 补充尝试官方源
-                official_url = config.get('official_urls', {}).get(y)
-                if official_url and not data:
-                    data = self._scrape_official(official_url, prov, y)
-                    results.extend(data)
-                    logger.info(f'{prov} {y}年事业编数据（官方）: {len(data)} 条')
-
-        return results
-
-    def _scrape_article(self, url: str, province: str, year: int) -> list[dict]:
-        """从华图文章页面解析分数线数据"""
-        resp = self.fetch(url)
-        if resp is None:
-            return []
-
-        soup = BeautifulSoup(resp.text, 'lxml')
-        results = []
-
-        # 查找文章列表页中的分数线相关链接
-        score_links = []
-        for link in soup.find_all('a', href=True):
-            text = link.get_text(strip=True)
-            if any(k in text for k in ['分数线', '进面', '入面', '面试名单']):
-                href = link['href']
-                if not href.startswith('http'):
-                    from urllib.parse import urljoin
-                    href = urljoin(url, href)
-                score_links.append(href)
-
-        # 逐个解析分数线文章
-        for link_url in score_links[:10]:  # 限制最多 10 个链接
-            data = self._parse_score_article(link_url, province, year)
-            results.extend(data)
-
-        # 如果没有找到链接，直接解析当前页面的表格
-        if not score_links:
-            results = self._parse_tables(soup, province, year, url)
-
-        return results
-
-    def _scrape_official(self, url: str, province: str, year: int) -> list[dict]:
-        """从官方网站解析"""
-        resp = self.fetch(url)
-        if resp is None:
-            return []
-
-        soup = BeautifulSoup(resp.text, 'lxml')
-
-        # 查找公示/公告链接
-        results = []
-        for link in soup.find_all('a', href=True):
-            text = link.get_text(strip=True)
-            if any(k in text for k in ['面试', '入围', '进入面试']):
-                href = link['href']
-                if not href.startswith('http'):
-                    from urllib.parse import urljoin
-                    href = urljoin(url, href)
-                data = self._parse_score_article(href, province, year)
+                data = self._scrape_html_table(url, prov, y)
                 results.extend(data)
-
-                if len(results) > 100:
-                    break
+                logger.info(f'{prov} {y}年事业编数据: {len(data)} 条')
 
         return results
 
-    def _parse_score_article(self, url: str, province: str, year: int) -> list[dict]:
-        """解析单篇分数线文章"""
+    def _scrape_html_table(self, url: str, province: str, year: int) -> list[dict]:
+        """从 HTML 页面解析分数线表格"""
         resp = self.fetch(url)
         if resp is None:
             return []
 
         soup = BeautifulSoup(resp.text, 'lxml')
-        results = self._parse_tables(soup, province, year, url)
-
-        # 尝试查找 Excel 附件下载
-        if not results:
-            excel_links = soup.find_all('a', href=re.compile(r'\.(xlsx?|xls)'))
-            for link in excel_links:
-                href = link.get('href', '')
-                if not href.startswith('http'):
-                    from urllib.parse import urljoin
-                    href = urljoin(url, href)
-                data = self._parse_excel(href, province, year)
-                results.extend(data)
-
-        return results
-
-    def _parse_tables(self, soup: BeautifulSoup, province: str, year: int, source_url: str) -> list[dict]:
-        """解析页面中的所有表格"""
         results = []
+
         tables = soup.find_all('table')
-
         for table in tables:
             rows = table.find_all('tr')
             if len(rows) < 2:
@@ -194,80 +107,9 @@ class ShiyebianScraper(ScraperBase):
                 if len(cells) < 3:
                     continue
 
-                record = self._parse_row(cells, col_map, province, year, source_url)
+                record = self._parse_row(cells, col_map, province, year, url)
                 if record:
                     results.append(record)
-
-        return results
-
-    def _parse_excel(self, url: str, province: str, year: int) -> list[dict]:
-        """下载并解析 Excel 附件"""
-        content = self.fetch_binary(url)
-        if content is None:
-            return []
-
-        results = []
-        try:
-            df = pd.read_excel(io.BytesIO(content), engine='openpyxl')
-
-            col_rename = {}
-            for col in df.columns:
-                col_str = str(col).strip()
-                if any(k in col_str for k in ['地市', '城市', '考区']):
-                    col_rename[col] = 'city'
-                elif any(k in col_str for k in ['招聘单位', '部门', '单位名称']):
-                    col_rename[col] = 'department'
-                elif any(k in col_str for k in ['岗位名称', '职位名称']):
-                    col_rename[col] = 'position_name'
-                elif any(k in col_str for k in ['岗位代码', '职位代码']):
-                    col_rename[col] = 'position_code'
-                elif any(k in col_str for k in ['招聘人数', '招录人数']):
-                    col_rename[col] = 'recruit_count'
-                elif any(k in col_str for k in ['最低分', '入面最低']):
-                    col_rename[col] = 'min_entry_score'
-                elif any(k in col_str for k in ['最高分', '入面最高']):
-                    col_rename[col] = 'max_entry_score'
-                elif any(k in col_str for k in ['进面人数', '面试人数']):
-                    col_rename[col] = 'entry_count'
-                elif any(k in col_str for k in ['学历']):
-                    col_rename[col] = 'education_req'
-                elif any(k in col_str for k in ['专业']):
-                    col_rename[col] = 'major_req'
-                elif any(k in col_str for k in ['岗位类别', '类别']):
-                    col_rename[col] = 'category'
-
-            df = df.rename(columns=col_rename)
-
-            for _, row in df.iterrows():
-                # 事业编类别信息记录在 other_req
-                category = str(row.get('category', '')).strip() if pd.notna(row.get('category')) else ''
-                other_req = f'类别: {category}' if category else None
-
-                record = {
-                    'province': province,
-                    'city': str(row.get('city', province)).strip() if pd.notna(row.get('city')) else province,
-                    'year': year,
-                    'exam_type': '事业编',
-                    'department': str(row.get('department', '')).strip() if pd.notna(row.get('department')) else '',
-                    'position_name': str(row.get('position_name', '')).strip() if pd.notna(row.get('position_name')) else '',
-                    'position_code': str(row.get('position_code', '')).strip() if pd.notna(row.get('position_code')) else None,
-                    'recruit_count': int(row['recruit_count']) if 'recruit_count' in row.index and pd.notna(row.get('recruit_count')) else None,
-                    'education_req': str(row.get('education_req', '')).strip() if pd.notna(row.get('education_req')) else None,
-                    'major_req': str(row.get('major_req', '')).strip() if pd.notna(row.get('major_req')) else None,
-                    'other_req': other_req,
-                    'min_entry_score': float(row['min_entry_score']) if 'min_entry_score' in row.index and pd.notna(row.get('min_entry_score')) else None,
-                    'max_entry_score': float(row['max_entry_score']) if 'max_entry_score' in row.index and pd.notna(row.get('max_entry_score')) else None,
-                    'entry_count': int(row['entry_count']) if 'entry_count' in row.index and pd.notna(row.get('entry_count')) else None,
-                    'source_url': url,
-                }
-
-                if not record['position_name'] or (record['min_entry_score'] is None and record['max_entry_score'] is None):
-                    continue
-
-                results.append(record)
-
-        except Exception as e:
-            logger.error(f'解析 Excel 失败 ({url}): {e}')
 
         return results
 
@@ -319,7 +161,6 @@ class ShiyebianScraper(ScraperBase):
             if min_score is None and max_score is None:
                 return None
 
-            # 事业编类别记录在 other_req
             category = cells[col_map['category']].strip() if 'category' in col_map else ''
             other_req = f'类别: {category}' if category else None
 
@@ -360,9 +201,9 @@ class ShiyebianScraper(ScraperBase):
 
 
 if __name__ == '__main__':
+    import logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
+
     scraper = ShiyebianScraper()
     data = scraper.scrape(province='江苏', year=2024)
-    print(f'共获取 {len(data)} 条事业编数据')
-    for row in data[:5]:
-        print(f"  {row['city']} {row['department']} {row['position_name']} "
-              f"分数: {row['min_entry_score']}-{row['max_entry_score']}")
+    print(f'共获取 {len(data)} 条事业编数据（当前无可用数据源）')

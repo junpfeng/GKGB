@@ -85,6 +85,29 @@ def export_to_assets(records: list[dict], output_dir: str = OUTPUT_DIR) -> dict:
         files.append(asset_path)
         logger.info(f'已导出: {filename} ({len(items)} 条)')
 
+    # 合并已有的 index.json 中的文件引用（保留未被本次覆盖的旧文件）
+    index_path = os.path.join(output_dir, 'index.json')
+    existing_files = set()
+    if os.path.exists(index_path):
+        try:
+            with open(index_path, 'r', encoding='utf-8') as f:
+                old_index = json.load(f)
+            existing_files = set(old_index.get('files', []))
+        except Exception:
+            pass
+
+    # 新生成的文件优先；已有的文件如果磁盘上存在则保留引用
+    new_file_names = {os.path.basename(p) for p in files}
+    for old_path in sorted(existing_files):
+        old_name = os.path.basename(old_path)
+        if old_name not in new_file_names:
+            # 检查实际文件是否存在
+            actual_path = os.path.join(output_dir, old_name)
+            if os.path.exists(actual_path):
+                files.append(old_path)
+
+    files = sorted(set(files))  # 去重排序
+
     # 生成 index.json
     index = {
         'files': files,
@@ -92,10 +115,8 @@ def export_to_assets(records: list[dict], output_dir: str = OUTPUT_DIR) -> dict:
         'updated_at': datetime.now().strftime('%Y-%m-%d'),
     }
 
-    index_path = os.path.join(output_dir, 'index.json')
     with open(index_path, 'w', encoding='utf-8') as f:
         json.dump(index, f, ensure_ascii=False, indent=2)
-    f.close()
 
     logger.info(f'index.json 已更新: {len(files)} 个数据文件')
     return index
