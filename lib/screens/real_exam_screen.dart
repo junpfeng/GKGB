@@ -500,19 +500,34 @@ class _FilterChips extends StatelessWidget {
                       selected: selected == null,
                       onSelected: (_) => onSelected(null),
                       visualDensity: VisualDensity.compact,
-                      labelStyle: const TextStyle(fontSize: 12),
+                      selectedColor: Theme.of(context).colorScheme.primary,
+                      backgroundColor: Colors.grey[200],
+                      labelStyle: TextStyle(
+                        fontSize: 12,
+                        color: selected == null ? Colors.white : Colors.grey[800],
+                        fontWeight: selected == null ? FontWeight.bold : FontWeight.normal,
+                      ),
                     ),
                   ),
-                  ...options.map((opt) => Padding(
-                        padding: const EdgeInsets.only(right: 6),
-                        child: ChoiceChip(
-                          label: Text(opt),
-                          selected: selected == opt,
-                          onSelected: (sel) => onSelected(sel ? opt : null),
-                          visualDensity: VisualDensity.compact,
-                          labelStyle: const TextStyle(fontSize: 12),
+                  ...options.map((opt) {
+                    final isSelected = selected == opt;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 6),
+                      child: ChoiceChip(
+                        label: Text(opt),
+                        selected: isSelected,
+                        onSelected: (sel) => onSelected(sel ? opt : null),
+                        visualDensity: VisualDensity.compact,
+                        selectedColor: Theme.of(context).colorScheme.primary,
+                        backgroundColor: Colors.grey[200],
+                        labelStyle: TextStyle(
+                          fontSize: 12,
+                          color: isSelected ? Colors.white : Colors.grey[800],
+                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                         ),
-                      )),
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
