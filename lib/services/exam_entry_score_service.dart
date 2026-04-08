@@ -155,12 +155,29 @@ class ExamEntryScoreService extends ChangeNotifier {
         examType: _selectedExamType,
         department: _selectedDepartment,
       );
+      // 同步刷新热度排行
+      await _refreshHeatRanking();
     } catch (e) {
       _error = '加载分数线数据失败: $e';
       debugPrint(_error);
     } finally {
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  /// 刷新热度排行（内部调用，不单独触发 loading 状态）
+  Future<void> _refreshHeatRanking({int topN = 50}) async {
+    try {
+      final rows = await _db.queryEntryScoreHeatRanking(
+        province: _selectedProvince,
+        year: _selectedYear,
+        examType: _selectedExamType,
+        topN: topN,
+      );
+      _heatRanking = rows.map((r) => ExamEntryScore.fromDb(r)).toList();
+    } catch (e) {
+      debugPrint('刷新热度排行失败: $e');
     }
   }
 
