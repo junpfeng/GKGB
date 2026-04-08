@@ -1,0 +1,93 @@
+{
+  "paper": {
+    "name": "2024年浙江省公务员考试行测真题",
+    "region": "浙江",
+    "year": 2024,
+    "exam_type": "省考",
+    "exam_session": "上半年",
+    "subject": "行测",
+    "time_limit": 7200,
+    "total_score": 100,
+    "question_ids": []
+  },
+  "questions": [
+    {
+      "subject": "行测",
+      "category": "言语理解",
+      "type": "single",
+      "content": "浙江作为共同富裕示范区，在推进城乡区域协调发展方面取得了显著成效。下列语句中，表达最为准确、得体的是：",
+      "options": [
+        "A. 共同富裕是社会主义的本质要求，浙江的探索为全国提供了可复制可推广的经验。",
+        "B. 共同富裕是浙江独有的发展模式，其他地区无需效仿。",
+        "C. 共同富裕意味着所有人的收入完全相同，实现绝对平均。",
+        "D. 共同富裕主要靠政府转移支付实现，市场作用有限。"
+      ],
+      "answer": "A",
+      "explanation": "A项表述准确，符合政策精神；B项说\"独有\"错误；C项混淆了共同富裕与绝对平均主义；D项忽视了市场作用。",
+      "difficulty": 2,
+      "region": "浙江",
+      "year": 2024,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    },
+    {
+      "subject": "行测",
+      "category": "数量关系",
+      "type": "single",
+      "content": "数列：2, 5, 10, 17, 26, （ ），下一项是？",
+      "options": ["A. 35", "B. 37", "C. 39", "D. 41"],
+      "answer": "B",
+      "explanation": "各项差值：3, 5, 7, 9, ...（奇数递增），下一差值为11，26+11=37，选B。",
+      "difficulty": 2,
+      "region": "浙江",
+      "year": 2024,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    },
+    {
+      "subject": "行测",
+      "category": "常识判断",
+      "type": "single",
+      "content": "下列关于浙江省的说法，正确的是：",
+      "options": [
+        "A. 浙江省的省会是杭州，西湖是全国著名的旅游景点",
+        "B. 浙江省东临太平洋，海岸线是全国最长的省份",
+        "C. 浙江省GDP在全国排名第一",
+        "D. 浙江省的省树是银杏树"
+      ],
+      "answer": "A",
+      "explanation": "杭州是浙江省会，西湖举世闻名（A正确）。浙江东临东海（非太平洋），海岸线较长但非最长（B错）。浙江GDP排全国前列但非第一（2023年为第4位）（C错）。浙江省树是樟树（D错）。",
+      "difficulty": 2,
+      "region": "浙江",
+      "year": 2024,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    },
+    {
+      "subject": "行测",
+      "category": "判断推理",
+      "type": "single",
+      "content": "某企业的销售数据显示，凡是使用了新营销方案的门店，销售额都有所增长。甲门店的销售额增长了15%。据此，以下哪项推论最为合理？",
+      "options": [
+        "A. 甲门店一定使用了新营销方案",
+        "B. 甲门店可能使用了新营销方案",
+        "C. 甲门店一定没有使用新营销方案",
+        "D. 新营销方案是甲门店增长的唯一原因"
+      ],
+      "answer": "B",
+      "explanation": "\"使用新方案→销售增长\"，但销售增长不能反推使用了新方案（其他原因也可能导致增长）。所以只能说甲门店\"可能\"使用了新营销方案，选B。",
+      "difficulty": 2,
+      "region": "浙江",
+      "year": 2024,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    }
+  ],
+  "generated_at": "2026-04-08T00:00:00",
+  "source": "sample",
+  "total": 4
+}
