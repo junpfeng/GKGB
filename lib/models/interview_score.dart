@@ -98,6 +98,7 @@ class InterviewScore {
       'follow_up_answer': followUpAnswer,
       'follow_up_comment': followUpComment,
       'time_spent': timeSpent,
+      'answered_at': answeredAt ?? DateTime.now().toIso8601String(),
     };
   }
 

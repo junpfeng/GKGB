@@ -7,6 +7,8 @@ import 'dashboard_screen.dart';
 import 'profile_screen.dart';
 import 'policy_match_screen.dart';
 import '../services/assistant_service.dart';
+import '../services/exam_category_service.dart';
+import '../widgets/exam_type_badge.dart';
 
 /// 首页（底部导航 5 个 Tab）
 class HomeScreen extends StatefulWidget {
@@ -88,9 +90,20 @@ class _HomeScreenState extends State<HomeScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
+      body: Consumer<ExamCategoryService>(
+        builder: (context, ecService, child) {
+          return Column(
+            children: [
+              const ExamTypeBadge(),
+              Expanded(
+                child: IndexedStack(
+                  index: _currentIndex,
+                  children: _pages,
+                ),
+              ),
+            ],
+          );
+        },
       ),
       // 毛玻璃底部导航栏
       bottomNavigationBar: _GlassNavigationBar(

@@ -64,6 +64,12 @@ class _InterviewReportScreenState extends State<InterviewReportScreen> {
         (chunk) {
           if (mounted) setState(() => _summary += chunk);
         },
+        onError: (e) {
+          debugPrint('面试报告生成失败: $e');
+          if (mounted) {
+            setState(() => _summary = _summary.isEmpty ? '报告生成失败，请重试' : _summary);
+          }
+        },
         onDone: () async {
           // 重新加载以获取更新后的 session
           final updated = await service.getSession(widget.sessionId);

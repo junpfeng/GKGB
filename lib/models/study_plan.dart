@@ -40,10 +40,10 @@ class StudyPlan {
       id: map['id'] as int?,
       targetPositionId: map['target_position_id'] as int?,
       examDate: map['exam_date'] as String?,
-      subjects: map['subjects'] != null
+      subjects: map['subjects'] != null && (map['subjects'] as String).isNotEmpty
           ? List<String>.from(jsonDecode(map['subjects'] as String))
           : [],
-      baselineScores: map['baseline_scores'] != null
+      baselineScores: map['baseline_scores'] != null && (map['baseline_scores'] as String).isNotEmpty
           ? Map<String, double>.from(
               (jsonDecode(map['baseline_scores'] as String) as Map).map(
                 (k, v) => MapEntry(k as String, (v as num).toDouble()),

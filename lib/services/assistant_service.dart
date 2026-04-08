@@ -8,6 +8,7 @@ import '../services/match_service.dart';
 import '../services/study_plan_service.dart';
 import '../services/profile_service.dart';
 import '../services/baseline_service.dart';
+import '../services/exam_category_service.dart';
 import '../widgets/ai_assistant/assistant_tools.dart';
 
 export '../widgets/ai_assistant/assistant_tools.dart';
@@ -28,6 +29,7 @@ class AssistantService extends ChangeNotifier {
   final StudyPlanService _studyPlanService;
   final ProfileService _profileService;
   final BaselineService _baselineService;
+  final ExamCategoryService _examCategoryService;
 
   // ===== 状态 =====
   AssistantState _state = AssistantState.minimized;
@@ -62,13 +64,15 @@ class AssistantService extends ChangeNotifier {
     required StudyPlanService studyPlanService,
     required ProfileService profileService,
     required BaselineService baselineService,
+    required ExamCategoryService examCategoryService,
   })  : _llm = llm,
         _questionService = questionService,
         _examService = examService,
         _matchService = matchService,
         _studyPlanService = studyPlanService,
         _profileService = profileService,
-        _baselineService = baselineService;
+        _baselineService = baselineService,
+        _examCategoryService = examCategoryService;
 
   // ===== 状态控制 =====
 
@@ -343,6 +347,12 @@ class AssistantService extends ChangeNotifier {
       if (parts.isNotEmpty) {
         buffer.writeln('用户画像：${parts.join('，')}');
       }
+    }
+
+    // 备考目标
+    final targetText = _examCategoryService.targetDisplayText;
+    if (targetText.isNotEmpty) {
+      buffer.writeln('备考目标：$targetText');
     }
 
     // 今日学习统计

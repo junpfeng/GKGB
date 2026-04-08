@@ -24,6 +24,7 @@ import 'services/dashboard_service.dart';
 import 'services/adaptive_quiz_service.dart';
 import 'services/exam_category_service.dart';
 import 'services/idiom_service.dart';
+import 'services/exam_entry_score_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -149,6 +150,8 @@ void main() async {
         ),
         // 18. IdiomService（启动时已导入预置数据）
         ChangeNotifierProvider.value(value: idiomService),
+        // 19. ExamEntryScoreService（无依赖）
+        ChangeNotifierProvider(create: (_) => ExamEntryScoreService()),
       ],
       child: const ExamPrepApp(),
     ),

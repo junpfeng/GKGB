@@ -5,29 +5,34 @@ import '../models/daily_task.dart';
 import 'question_service.dart';
 import 'llm/llm_manager.dart';
 import 'llm/llm_provider.dart';
+import 'exam_category_service.dart';
 
 /// 学习计划服务：AI 生成计划、每日任务、动态调整
 class StudyPlanService extends ChangeNotifier {
   final DatabaseHelper _db = DatabaseHelper.instance;
   final QuestionService _questionService;
   final LlmManager _llmManager;
+  final ExamCategoryService _examCategoryService;
 
   StudyPlan? _activePlan;
+  StudyPlan? _pausedPlan;
   List<DailyTask> _todayTasks = [];
   List<StudyPlan> _allPlans = [];
   bool _isLoading = false;
   bool _isGenerating = false;
 
   StudyPlan? get activePlan => _activePlan;
+  StudyPlan? get pausedPlan => _pausedPlan;
   List<DailyTask> get todayTasks => List.unmodifiable(_todayTasks);
   List<StudyPlan> get allPlans => List.unmodifiable(_allPlans);
   bool get isLoading => _isLoading;
   bool get isGenerating => _isGenerating;
   bool get hasPlan => _activePlan != null;
+  bool get hasPausedPlan => _pausedPlan != null;
 
-  StudyPlanService(this._questionService, this._llmManager);
+  StudyPlanService(this._questionService, this._llmManager, this._examCategoryService);
 
-  /// 加载活跃计划和今日任务
+  /// 加载活跃计划和今日任务（同时检查暂停计划）
   Future<void> loadActivePlan() async {
     _isLoading = true;
     notifyListeners();
@@ -36,12 +41,32 @@ class StudyPlanService extends ChangeNotifier {
       final planRow = await _db.queryActivePlan();
       if (planRow != null) {
         _activePlan = StudyPlan.fromDb(planRow);
+        _pausedPlan = null;
         await _loadTodayTasks();
+      } else {
+        // 查询是否有暂停的计划
+        final db = await _db.database;
+        final pausedRows = await db.query(
+          'study_plans',
+          where: "status = 'paused'",
+          limit: 1,
+          orderBy: 'created_at DESC',
+        );
+        _pausedPlan = pausedRows.isNotEmpty ? StudyPlan.fromDb(pausedRows.first) : null;
       }
     } finally {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  /// 恢复暂停的学习计划
+  Future<void> resumePlan(int planId) async {
+    await _db.updateStudyPlan(planId, {'status': 'active'});
+    _activePlan = _pausedPlan?.copyWith(status: 'active');
+    _pausedPlan = null;
+    await _loadTodayTasks();
+    notifyListeners();
   }
 
   Future<void> _loadTodayTasks() async {
@@ -68,12 +93,19 @@ class StudyPlanService extends ChangeNotifier {
   Future<StudyPlan> generatePlan({
     int? targetPositionId,
     String? examDate,
-    List<String> subjects = const ['行测', '申论'],
+    List<String>? subjects,
     Map<String, double> baselineScores = const {},
     String? userContext,
   }) async {
     _isGenerating = true;
     notifyListeners();
+
+    // 使用传入的 subjects，否则从 ExamCategoryService 获取，最终回退默认值
+    final resolvedSubjects = subjects?.isNotEmpty == true
+        ? subjects!
+        : _examCategoryService.getSubjectsForPlan().isNotEmpty
+            ? _examCategoryService.getSubjectsForPlan()
+            : ['行测', '申论'];
 
     try {
       // 计算可用天数
@@ -87,11 +119,11 @@ class StudyPlanService extends ChangeNotifier {
 
       // 分析薄弱点
       final accuracyBySubject = await _questionService.getAccuracyBySubject();
-      final weakSubjects = _identifyWeakSubjects(accuracyBySubject, subjects);
+      final weakSubjects = _identifyWeakSubjects(accuracyBySubject, resolvedSubjects);
 
       // 构建 AI 提示词
       final prompt = _buildPlanPrompt(
-        subjects: subjects,
+        subjects: resolvedSubjects,
         availableDays: availableDays,
         baselineScores: baselineScores,
         weakSubjects: weakSubjects,
@@ -105,7 +137,7 @@ class StudyPlanService extends ChangeNotifier {
 
       // 生成基础每日任务
       final tasks = _generateDailyTasks(
-        subjects: subjects,
+        subjects: resolvedSubjects,
         availableDays: availableDays,
         weakSubjects: weakSubjects,
       );
@@ -114,7 +146,7 @@ class StudyPlanService extends ChangeNotifier {
       final plan = StudyPlan(
         targetPositionId: targetPositionId,
         examDate: examDate,
-        subjects: subjects,
+        subjects: resolvedSubjects,
         baselineScores: baselineScores,
         planData: planContent,
         status: 'active',
@@ -317,11 +349,12 @@ class StudyPlanService extends ChangeNotifier {
     String? userContext,
     String? examDate,
   }) {
+    final targetText = _examCategoryService.targetDisplayText;
     return '''
 请为我生成一份考公学习计划。
 
 基本信息：
-- 考试科目：${subjects.join('、')}
+${targetText.isNotEmpty ? '- 备考目标：$targetText\n' : ''}- 考试科目：${subjects.join('、')}
 - 距考试天数：$availableDays 天${examDate != null ? '（考试日期：$examDate）' : ''}
 - 各科基线分数：${baselineScores.isEmpty ? '未做摸底测试' : baselineScores.entries.map((e) => '${e.key}：${e.value.toStringAsFixed(0)}分').join('，')}
 - 薄弱科目：${weakSubjects.isEmpty ? '暂无数据' : weakSubjects.join('、')}

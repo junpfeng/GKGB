@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
+import 'screens/exam_target_screen.dart';
+import 'services/exam_category_service.dart';
 import 'theme/app_theme.dart';
 import 'widgets/ai_assistant/ai_assistant_overlay.dart';
 
@@ -13,7 +16,14 @@ class ExamPrepApp extends StatelessWidget {
       title: '考公考编智能助手',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: const HomeScreen(),
+      home: Consumer<ExamCategoryService>(
+        builder: (ctx, service, _) {
+          if (!service.hasTarget && !service.isExploreMode) {
+            return const ExamTargetScreen();
+          }
+          return const HomeScreen();
+        },
+      ),
       debugShowCheckedModeBanner: false,
       // 注入全局 AI 助手 Overlay [H-5]
       builder: (context, child) => Stack(

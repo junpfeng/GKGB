@@ -70,13 +70,13 @@ class UserProfile {
       workYears: (map['work_years'] as int?) ?? 0,
       hasGrassrootsExp: (map['has_grassroots_exp'] as int?) == 1,
       politicalStatus: map['political_status'] as String?,
-      certificates: map['certificates'] != null
+      certificates: map['certificates'] != null && (map['certificates'] as String).isNotEmpty
           ? List<String>.from(jsonDecode(map['certificates'] as String))
           : [],
       age: map['age'] as int?,
       gender: map['gender'] as String?,
       hukouProvince: map['hukou_province'] as String?,
-      targetCities: map['target_cities'] != null
+      targetCities: map['target_cities'] != null && (map['target_cities'] as String).isNotEmpty
           ? List<String>.from(jsonDecode(map['target_cities'] as String))
           : [],
       updatedAt: map['updated_at'] as String?,
@@ -101,6 +101,7 @@ class UserProfile {
       'gender': gender,
       'hukou_province': hukouProvince,
       'target_cities': jsonEncode(targetCities),
+      'updated_at': updatedAt ?? DateTime.now().toIso8601String(),
     };
   }
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../services/exam_category_service.dart';
 import '../services/profile_service.dart';
 import '../models/user_profile.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
 import '../theme/app_theme.dart';
 import 'baseline_test_screen.dart';
+import 'exam_target_screen.dart';
 import 'llm_settings_screen.dart';
 import 'study_plan_screen.dart';
 import 'hot_topics_screen.dart';
@@ -85,6 +87,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 12),
               ],
+              // 备考目标卡片
+              _buildExamTargetCard(context),
+              const SizedBox(height: 12),
               // 功能菜单（GlassCard 列表）
               _buildMenuItem(
                 context,
@@ -133,30 +138,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   MaterialPageRoute(builder: (_) => const HotTopicsScreen()),
                 ),
               ),
-              const SizedBox(height: 8),
-              _buildMenuItem(
-                context,
-                Icons.edit_note,
-                '申论训练',
-                '申论写作练习与 AI 批改',
-                AppTheme.warmGradient,
-                () => Navigator.push(
+              // 申论训练（仅有申论/综合科目时显示）
+              if (context.watch<ExamCategoryService>().hasEssay) ...[
+                const SizedBox(height: 8),
+                _buildMenuItem(
                   context,
-                  MaterialPageRoute(builder: (_) => const EssayTrainingScreen()),
+                  Icons.edit_note,
+                  '申论训练',
+                  '申论写作练习与 AI 批改',
+                  AppTheme.warmGradient,
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const EssayTrainingScreen()),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              _buildMenuItem(
-                context,
-                Icons.library_books,
-                '申论素材库',
-                '名言金句、典型案例、政策表述',
-                AppTheme.infoGradient,
-                () => Navigator.push(
+                const SizedBox(height: 8),
+                _buildMenuItem(
                   context,
-                  MaterialPageRoute(builder: (_) => const EssayMaterialScreen()),
+                  Icons.library_books,
+                  '申论素材库',
+                  '名言金句、典型案例、政策表述',
+                  AppTheme.infoGradient,
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const EssayMaterialScreen()),
+                  ),
                 ),
-              ),
+              ],
               const SizedBox(height: 8),
               _buildMenuItem(
                 context,
@@ -177,6 +185,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildExamTargetCard(BuildContext context) {
+    return Consumer<ExamCategoryService>(
+      builder: (context, service, _) {
+        final isExplore = service.isExploreMode;
+        final displayText = service.targetDisplayText;
+
+        return GlassCard(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ExamTargetScreen()),
+          ),
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: isExplore ? AppTheme.warmGradient : AppTheme.primaryGradient,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  isExplore ? Icons.explore : Icons.flag,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '备考目标',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: isExplore ? Colors.orange[700] : null,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      isExplore
+                          ? '设置你的备考目标，获得个性化体验 →'
+                          : displayText,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: isExplore ? Colors.orange[400] : Colors.grey[500],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right, color: Colors.grey[400], size: 18),
+            ],
+          ),
+        );
+      },
     );
   }
 

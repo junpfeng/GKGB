@@ -23,7 +23,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 12,
+      version: 13,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -450,6 +450,34 @@ class DatabaseHelper {
         FOREIGN KEY (idiom_id) REFERENCES idioms (id),
         FOREIGN KEY (question_id) REFERENCES questions (id),
         UNIQUE(idiom_id, question_id)
+      )
+    ''');
+
+    // 进面分数线表
+    await db.execute('''
+      CREATE TABLE exam_entry_scores (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        province TEXT NOT NULL,
+        city TEXT NOT NULL,
+        year INTEGER NOT NULL,
+        exam_type TEXT NOT NULL,
+        department TEXT NOT NULL,
+        position_name TEXT NOT NULL,
+        position_code TEXT,
+        recruit_count INTEGER,
+        major_req TEXT,
+        education_req TEXT,
+        degree_req TEXT,
+        political_req TEXT,
+        work_exp_req TEXT,
+        other_req TEXT,
+        min_entry_score REAL,
+        max_entry_score REAL,
+        entry_count INTEGER,
+        source_url TEXT,
+        fetched_at TEXT,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(province, city, year, exam_type, position_code, department)
       )
     ''');
 
@@ -903,6 +931,41 @@ class DatabaseHelper {
         debugPrint('迁移成语整理表跳过: $e');
       }
     }
+
+    if (oldVersion < 13) {
+      // v12→13：新增进面分数线表
+      try {
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS exam_entry_scores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            province TEXT NOT NULL,
+            city TEXT NOT NULL,
+            year INTEGER NOT NULL,
+            exam_type TEXT NOT NULL,
+            department TEXT NOT NULL,
+            position_name TEXT NOT NULL,
+            position_code TEXT,
+            recruit_count INTEGER,
+            major_req TEXT,
+            education_req TEXT,
+            degree_req TEXT,
+            political_req TEXT,
+            work_exp_req TEXT,
+            other_req TEXT,
+            min_entry_score REAL,
+            max_entry_score REAL,
+            entry_count INTEGER,
+            source_url TEXT,
+            fetched_at TEXT,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(province, city, year, exam_type, position_code, department)
+          )
+        ''');
+        await _createIndexes(db);
+      } catch (e) {
+        debugPrint('迁移进面分数线表跳过: $e');
+      }
+    }
   }
 
   /// 创建所有索引
@@ -934,6 +997,10 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_idiom_examples_year ON idiom_examples(year DESC)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_iql_idiom ON idiom_question_links(idiom_id)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_iql_question ON idiom_question_links(question_id)');
+    // 进面分数线索引
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_entry_scores_filter ON exam_entry_scores(exam_type, province, year)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_entry_scores_city ON exam_entry_scores(province, city, year)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_entry_scores_trend ON exam_entry_scores(province, position_name, year)');
   }
 
   // ===== questions CRUD =====
@@ -2388,6 +2455,144 @@ class DatabaseHelper {
       'idiom_id': idiomId,
       'question_id': questionId,
     }, conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  // ===== exam_entry_scores CRUD =====
+
+  /// 插入或更新进面分数线（INSERT OR REPLACE）
+  Future<int> upsertEntryScore(Map<String, dynamic> data) async {
+    final db = await database;
+    return await db.insert(
+      'exam_entry_scores',
+      data,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  /// 批量插入进面分数线
+  Future<void> batchUpsertEntryScores(List<Map<String, dynamic>> rows) async {
+    final db = await database;
+    final batch = db.batch();
+    for (final row in rows) {
+      batch.insert('exam_entry_scores', row, conflictAlgorithm: ConflictAlgorithm.replace);
+    }
+    await batch.commit(noResult: true);
+  }
+
+  /// 分页查询进面分数线
+  Future<List<Map<String, dynamic>>> queryEntryScores({
+    String? province,
+    String? city,
+    int? year,
+    String? examType,
+    int offset = 0,
+    int limit = 50,
+  }) async {
+    final db = await database;
+    final where = <String>[];
+    final args = <dynamic>[];
+    if (province != null) { where.add('province = ?'); args.add(province); }
+    if (city != null) { where.add('city = ?'); args.add(city); }
+    if (year != null) { where.add('year = ?'); args.add(year); }
+    if (examType != null) { where.add('exam_type = ?'); args.add(examType); }
+    return await db.query(
+      'exam_entry_scores',
+      where: where.isEmpty ? null : where.join(' AND '),
+      whereArgs: args.isEmpty ? null : args,
+      orderBy: 'min_entry_score DESC',
+      limit: limit,
+      offset: offset,
+    );
+  }
+
+  /// 热度排行：按平均进面分数降序 TOP N
+  Future<List<Map<String, dynamic>>> queryEntryScoreHeatRanking({
+    String? province,
+    int? year,
+    String? examType,
+    int topN = 50,
+  }) async {
+    final db = await database;
+    final where = <String>[];
+    final args = <dynamic>[];
+    if (province != null) { where.add('province = ?'); args.add(province); }
+    if (year != null) { where.add('year = ?'); args.add(year); }
+    if (examType != null) { where.add('exam_type = ?'); args.add(examType); }
+    where.add('min_entry_score IS NOT NULL');
+    final whereClause = where.join(' AND ');
+    return await db.rawQuery('''
+      SELECT *, (COALESCE(min_entry_score, 0) + COALESCE(max_entry_score, 0)) / 2.0 AS avg_score
+      FROM exam_entry_scores
+      WHERE $whereClause
+      ORDER BY avg_score DESC
+      LIMIT ?
+    ''', [...args, topN]);
+  }
+
+  /// 年度趋势：同一岗位名称/部门在多年的分数线变化
+  Future<List<Map<String, dynamic>>> queryEntryScoreTrend({
+    required String positionName,
+    String? province,
+    String? department,
+  }) async {
+    final db = await database;
+    final where = <String>['position_name = ?'];
+    final args = <dynamic>[positionName];
+    if (province != null) { where.add('province = ?'); args.add(province); }
+    if (department != null) { where.add('department = ?'); args.add(department); }
+    return await db.query(
+      'exam_entry_scores',
+      where: where.join(' AND '),
+      whereArgs: args,
+      orderBy: 'year ASC',
+    );
+  }
+
+  /// 查询指定省份下的所有城市（去重）
+  Future<List<String>> queryEntryScoreCities(String province) async {
+    final db = await database;
+    final rows = await db.rawQuery(
+      'SELECT DISTINCT city FROM exam_entry_scores WHERE province = ? ORDER BY city',
+      [province],
+    );
+    return rows.map((r) => r['city'] as String).toList();
+  }
+
+  /// 查询可用年份列表（去重降序）
+  Future<List<int>> queryEntryScoreYears({String? province, String? examType}) async {
+    final db = await database;
+    final where = <String>[];
+    final args = <dynamic>[];
+    if (province != null) { where.add('province = ?'); args.add(province); }
+    if (examType != null) { where.add('exam_type = ?'); args.add(examType); }
+    final whereClause = where.isEmpty ? '' : 'WHERE ${where.join(' AND ')}';
+    final rows = await db.rawQuery(
+      'SELECT DISTINCT year FROM exam_entry_scores $whereClause ORDER BY year DESC',
+      args,
+    );
+    return rows.map((r) => r['year'] as int).toList();
+  }
+
+  /// 查询进面分数线总条数
+  Future<int> queryEntryScoreCount({
+    String? province,
+    String? city,
+    int? year,
+    String? examType,
+  }) async {
+    final db = await database;
+    final where = <String>[];
+    final args = <dynamic>[];
+    if (province != null) { where.add('province = ?'); args.add(province); }
+    if (city != null) { where.add('city = ?'); args.add(city); }
+    if (year != null) { where.add('year = ?'); args.add(year); }
+    if (examType != null) { where.add('exam_type = ?'); args.add(examType); }
+    final whereClause = where.isEmpty ? '' : 'WHERE ${where.join(' AND ')}';
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as count FROM exam_entry_scores $whereClause',
+      args,
+    );
+    return (result.first['count'] as int?) ?? 0;
   }
 }
 

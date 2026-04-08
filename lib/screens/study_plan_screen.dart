@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../services/exam_category_service.dart';
 import '../services/study_plan_service.dart';
 import '../models/study_plan.dart';
 import '../models/daily_task.dart';
@@ -45,6 +46,15 @@ class _StudyPlanScreenState extends State<StudyPlanScreen> {
           }
 
           if (!service.hasPlan) {
+            if (service.hasPausedPlan) {
+              return _PausedPlanView(
+                plan: service.pausedPlan!,
+                onResume: () async {
+                  await service.resumePlan(service.pausedPlan!.id!);
+                },
+                onGenerate: () => _showGeneratePlanDialog(context),
+              );
+            }
             return _NoPlanView(
                 onGenerate: () => _showGeneratePlanDialog(context));
           }
@@ -58,7 +68,8 @@ class _StudyPlanScreenState extends State<StudyPlanScreen> {
   Future<void> _showGeneratePlanDialog(BuildContext context) async {
     final examDateController = TextEditingController();
     final contextController = TextEditingController();
-    final selectedSubjects = <String>{'行测', '申论'};
+    final allSubjects = context.read<ExamCategoryService>().getSubjectsForPlan();
+    final selectedSubjects = allSubjects.toSet();
 
     await showDialog(
       context: context,
@@ -74,7 +85,7 @@ class _StudyPlanScreenState extends State<StudyPlanScreen> {
                 const SizedBox(height: 4),
                 Wrap(
                   spacing: 8,
-                  children: ['行测', '申论', '公基'].map((subject) {
+                  children: allSubjects.map((subject) {
                     final selected = selectedSubjects.contains(subject);
                     return FilterChip(
                       label: Text(subject),
@@ -246,6 +257,69 @@ class _NoPlanView extends StatelessWidget {
               onPressed: onGenerate,
               label: 'AI 生成学习计划',
               icon: Icons.smart_toy,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// 暂停计划视图（计划因切换备考目标被暂停时展示）
+class _PausedPlanView extends StatelessWidget {
+  final StudyPlan plan;
+  final VoidCallback onResume;
+  final VoidCallback onGenerate;
+  const _PausedPlanView({
+    required this.plan,
+    required this.onResume,
+    required this.onGenerate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                gradient: AppTheme.warningGradient,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.pause_circle_outline,
+                  size: 50, color: Colors.white),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              '学习计划已暂停',
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              '备考目标切换后，原计划（${plan.subjects.join('、')}）已暂停',
+              style: const TextStyle(color: Colors.grey),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
+            GradientButton(
+              onPressed: onResume,
+              label: '恢复学习计划',
+              icon: Icons.play_arrow,
+              gradient: AppTheme.warningGradient,
+            ),
+            const SizedBox(height: 12),
+            OutlinedButton.icon(
+              onPressed: onGenerate,
+              icon: const Icon(Icons.smart_toy),
+              label: const Text('重新生成计划'),
             ),
           ],
         ),

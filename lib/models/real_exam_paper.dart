@@ -57,10 +57,10 @@ class RealExamPaper {
       subject: map['subject'] as String,
       timeLimit: map['time_limit'] as int,
       totalScore: ((map['total_score'] as num?) ?? 100).toDouble(),
-      questionIds: map['question_ids'] != null
+      questionIds: map['question_ids'] != null && (map['question_ids'] as String).isNotEmpty
           ? List<int>.from(jsonDecode(map['question_ids'] as String))
           : [],
-      scoreDistribution: map['score_distribution'] != null
+      scoreDistribution: map['score_distribution'] != null && (map['score_distribution'] as String).isNotEmpty
           ? Map<String, double>.from(
               (jsonDecode(map['score_distribution'] as String) as Map)
                   .map((k, v) => MapEntry(k as String, (v as num).toDouble())))
