@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import '../db/database_helper.dart';
 import '../models/exam_entry_score.dart';
 
@@ -10,11 +11,11 @@ class ExamEntryScoreService extends ChangeNotifier {
   // 可用省份列表
   static const provinces = ['江苏', '浙江', '上海', '山东'];
   // 考试类型
-  static const examTypes = ['国考', '省考'];
+  static const examTypes = ['国考', '省考', '事业编'];
 
   // 状态字段
   bool _isLoading = false;
-  bool _isFetching = false;
+  bool _isImporting = false;
   String? _error;
   List<ExamEntryScore> _scores = [];
   List<ExamEntryScore> _heatRanking = [];
@@ -29,7 +30,7 @@ class ExamEntryScoreService extends ChangeNotifier {
   List<int> _availableYears = [];
 
   bool get isLoading => _isLoading;
-  bool get isFetching => _isFetching;
+  bool get isImporting => _isImporting;
   String? get error => _error;
   List<ExamEntryScore> get scores => _scores;
   List<ExamEntryScore> get heatRanking => _heatRanking;
@@ -162,134 +163,57 @@ class ExamEntryScoreService extends ChangeNotifier {
     }
   }
 
-  /// 从网络爬取进面分数线数据
-  /// _isFetching 防重入锁，爬取进行中拒绝新请求
-  Future<String?> fetchScores({
-    required String province,
-    required String examType,
-    int? year,
-  }) async {
-    if (_isFetching) return '正在爬取中，请稍候...';
+  // ===== 预置数据导入 =====
 
-    _isFetching = true;
-    _error = null;
+  /// 检查 SQLite 是否已有数据（避免重复导入）
+  Future<bool> _isDataLoaded() async {
+    final count = await _db.queryEntryScoreCount();
+    return count > 0;
+  }
+
+  /// 从 assets 导入预置分数线数据（幂等：已有数据则跳过）
+  Future<void> loadFromAssets() async {
+    if (await _isDataLoaded()) return;
+
+    _isImporting = true;
     notifyListeners();
 
     try {
-      // 构建爬取目标 URL（根据省份和考试类型确定数据源）
-      final urls = _getDataSourceUrls(province, examType, year);
-      if (urls.isEmpty) {
-        return '暂不支持该省份/考试类型的数据爬取';
-      }
+      // 读取 index.json 获取文件列表
+      final indexStr = await rootBundle.loadString(
+        'assets/data/exam_entry_scores/index.json',
+      );
+      final indexData = json.decode(indexStr) as Map<String, dynamic>;
+      final files = (indexData['files'] as List).cast<String>();
 
-      final dio = Dio(BaseOptions(
-        connectTimeout: const Duration(seconds: 15),
-        receiveTimeout: const Duration(seconds: 30),
-        headers: {
-          'User-Agent': 'ExamPrepApp/1.0 (exam-entry-scores-crawler)',
-        },
-      ));
+      int totalImported = 0;
 
-      int totalInserted = 0;
-
-      for (final url in urls) {
-        // 强制节流 ≥2s/request（宪法要求）
-        await Future.delayed(const Duration(seconds: 2));
-
+      for (final filePath in files) {
         try {
-          final response = await dio.get(url);
-          if (response.statusCode == 200) {
-            final parsed = _parseScoreData(response.data, province, examType, year, url);
-            if (parsed.isNotEmpty) {
-              await _db.batchUpsertEntryScores(parsed);
-              totalInserted += parsed.length;
-            }
-          }
-        } on DioException catch (e) {
-          debugPrint('爬取 $url 失败: ${e.message}');
+          final jsonStr = await rootBundle.loadString(filePath);
+          final items = (json.decode(jsonStr) as List).cast<Map<String, dynamic>>();
+
+          // 补充 fetched_at 时间戳
+          final now = DateTime.now().toIso8601String();
+          final rows = items.map((item) {
+            item['fetched_at'] = now;
+            item['updated_at'] = now;
+            return item;
+          }).toList();
+
+          await _db.batchUpsertEntryScores(rows);
+          totalImported += rows.length;
+        } catch (e) {
+          debugPrint('导入 $filePath 失败: $e');
         }
       }
 
-      // 爬取完成后刷新本地数据
-      await loadScores();
-      await getHeatRanking();
-
-      if (totalInserted > 0) {
-        return null; // 成功无错误
-      }
-      return '未能从数据源获取到有效数据，请稍后重试';
+      debugPrint('进面分数线数据导入完成，共 $totalImported 条');
     } catch (e) {
-      _error = '爬取失败: $e';
-      return _error;
+      debugPrint('导入预置分数线数据失败: $e');
     } finally {
-      _isFetching = false;
+      _isImporting = false;
       notifyListeners();
     }
-  }
-
-  /// 获取数据源 URL 列表（根据省份和考试类型）
-  /// 具体 URL 和解析规则需根据实际网站结构确定
-  List<String> _getDataSourceUrls(String province, String examType, int? year) {
-    // 数据源 URL 配置
-    // 各省人事考试网 / 国家公务员局公开数据
-    // 实际爬取时需根据目标站点结构动态构建
-    final targetYear = year ?? DateTime.now().year;
-    final urls = <String>[];
-
-    if (examType == '国考') {
-      // 国家公务员局公示数据
-      urls.add('https://www.scs.gov.cn/ywzl/jlgwy/$targetYear/');
-    } else {
-      // 各省人事考试网
-      switch (province) {
-        case '江苏':
-          urls.add('https://www.jshrss.gov.cn/gwy/$targetYear/');
-          break;
-        case '浙江':
-          urls.add('https://www.zjks.gov.cn/gwy/$targetYear/');
-          break;
-        case '上海':
-          urls.add('https://www.shacs.gov.cn/gwy/$targetYear/');
-          break;
-        case '山东':
-          urls.add('https://hrss.shandong.gov.cn/gwy/$targetYear/');
-          break;
-      }
-    }
-    return urls;
-  }
-
-  /// 解析爬取到的 HTML/JSON 数据
-  /// 需根据实际数据源的页面结构编写具体解析逻辑
-  List<Map<String, dynamic>> _parseScoreData(
-    dynamic responseData,
-    String province,
-    String examType,
-    int? year,
-    String sourceUrl,
-  ) {
-    final results = <Map<String, dynamic>>[];
-    // 实际解析逻辑需根据目标网站结构实现
-    // 此处为框架代码，具体解析规则待目标站点分析后补充
-    try {
-      if (responseData is String) {
-        // HTML 解析逻辑（需结合 html 包的 Document.parse）
-        debugPrint('待实现：HTML 解析 ${sourceUrl.substring(0, 50.clamp(0, sourceUrl.length))}...');
-      } else if (responseData is Map) {
-        // JSON 数据直接解析
-        debugPrint('待实现：JSON 解析');
-      }
-    } catch (e) {
-      debugPrint('解析数据失败: $e');
-    }
-    return results;
-  }
-
-  /// 手动导入分数线数据（支持用户粘贴或导入 JSON）
-  Future<int> importScores(List<ExamEntryScore> data) async {
-    final rows = data.map((s) => s.toDb()).toList();
-    await _db.batchUpsertEntryScores(rows);
-    await loadScores();
-    return rows.length;
   }
 }

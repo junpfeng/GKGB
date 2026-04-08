@@ -25,10 +25,11 @@ class _ExamEntryScoresScreenState extends State<ExamEntryScoresScreen>
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_onTabChanged);
 
-    // 首次加载数据
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    // 首次导入预置数据并加载
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final service = context.read<ExamEntryScoreService>();
-      service.loadScores();
+      await service.loadFromAssets();
+      await service.loadScores();
       service.getHeatRanking();
     });
 
@@ -72,23 +73,6 @@ class _ExamEntryScoresScreenState extends State<ExamEntryScoresScreen>
             Tab(text: '热度排行'),
           ],
         ),
-        actions: [
-          Consumer<ExamEntryScoreService>(
-            builder: (context, service, _) {
-              return IconButton(
-                icon: service.isFetching
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Icon(Icons.cloud_download_outlined),
-                tooltip: '爬取数据',
-                onPressed: service.isFetching ? null : () => _showFetchDialog(context),
-              );
-            },
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -174,7 +158,7 @@ class _ExamEntryScoresScreenState extends State<ExamEntryScoresScreen>
           return const Center(child: CircularProgressIndicator());
         }
         if (service.scores.isEmpty) {
-          return _buildEmptyState('暂无分数线数据', '请先选择筛选条件或爬取数据');
+          return _buildEmptyState('暂无分数线数据', '请选择筛选条件查看数据');
         }
         return Column(
           children: [
@@ -534,86 +518,6 @@ class _ExamEntryScoresScreenState extends State<ExamEntryScoresScreen>
       ),
       builder: (_) => _ScoreDetailSheet(score: score),
     );
-  }
-
-  // ===== 爬取对话框 =====
-
-  void _showFetchDialog(BuildContext context) {
-    String selectedProvince = ExamEntryScoreService.provinces.first;
-    String selectedExamType = ExamEntryScoreService.examTypes.first;
-
-    showDialog(
-      context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('爬取分数线数据'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButtonFormField<String>(
-                initialValue: selectedProvince,
-                decoration: const InputDecoration(labelText: '省份'),
-                items: ExamEntryScoreService.provinces
-                    .map((p) => DropdownMenuItem(value: p, child: Text(p)))
-                    .toList(),
-                onChanged: (v) => setDialogState(() => selectedProvince = v!),
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<String>(
-                initialValue: selectedExamType,
-                decoration: const InputDecoration(labelText: '考试类型'),
-                items: ExamEntryScoreService.examTypes
-                    .map((t) => DropdownMenuItem(value: t, child: Text(t)))
-                    .toList(),
-                onChanged: (v) => setDialogState(() => selectedExamType = v!),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '将从公开数据源爬取进面分数线，遵守 robots.txt 协议，间隔 ≥2s',
-                style: TextStyle(fontSize: 11, color: Colors.grey[500]),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-                _doFetch(selectedProvince, selectedExamType);
-              },
-              child: const Text('开始爬取'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<void> _doFetch(String province, String examType) async {
-    final service = context.read<ExamEntryScoreService>();
-    final error = await service.fetchScores(
-      province: province,
-      examType: examType,
-    );
-    if (!mounted) return;
-    if (error != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error),
-          action: SnackBarAction(
-            label: '重试',
-            onPressed: () => _doFetch(province, examType),
-          ),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('数据爬取完成')),
-      );
-    }
   }
 
   // ===== 空状态 =====
