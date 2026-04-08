@@ -92,6 +92,7 @@ flutter:
     - assets/data/essay_materials_sample.json
     - assets/data/idioms_preset.json
     - assets/data/political_theory_preset.json
+    - assets/data/visual_explanations.json
     - assets/questions/real_exam/index.json
     - assets/questions/real_exam/guokao/
     - assets/questions/real_exam/shengkao/

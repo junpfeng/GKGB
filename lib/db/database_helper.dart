@@ -1287,6 +1287,8 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_mnemonics_document ON mnemonics(document_id)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_mnemonics_favorited ON mnemonics(is_favorited)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_concept_comparisons_document ON concept_comparisons(source_document_id)');
+    // 可视化解题索引
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_visual_explanations_question ON visual_explanations(question_id)');
   }
 
   // ===== questions CRUD =====
