@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/question.dart';
 import '../services/llm/llm_manager.dart';
+import '../services/idiom_service.dart';
+import '../models/idiom.dart';
 import '../theme/app_theme.dart';
 import 'glass_card.dart';
 import 'ai_chat_dialog.dart';
@@ -76,6 +78,9 @@ class QuestionCard extends StatelessWidget {
             const Divider(height: 24),
             _buildAnswerSection(context),
           ],
+          // 成语释义（选词填空题答后显示）
+          if (showAnswer && _isXuanCiTianKong(question) && question.id != null)
+            _IdiomDefinitionSection(questionId: question.id!),
           // 主观题显示 AI 批改按钮
           if (question.type == 'subjective' &&
               userAnswer != null &&
@@ -552,6 +557,121 @@ class _SubjectiveInputState extends State<_SubjectiveInput> {
         contentPadding: const EdgeInsets.all(12),
       ),
       style: const TextStyle(fontSize: 14, height: 1.6),
+    );
+  }
+}
+
+/// 判断是否为选词填空题
+bool _isXuanCiTianKong(Question q) {
+  return ['言语理解', '言语运用'].contains(q.category) &&
+      q.content.contains('___');
+}
+
+/// 成语释义折叠区（选词填空题答后显示）
+class _IdiomDefinitionSection extends StatefulWidget {
+  final int questionId;
+  const _IdiomDefinitionSection({required this.questionId});
+
+  @override
+  State<_IdiomDefinitionSection> createState() => _IdiomDefinitionSectionState();
+}
+
+class _IdiomDefinitionSectionState extends State<_IdiomDefinitionSection> {
+  List<Idiom> _idioms = [];
+  bool _expanded = false;
+  bool _loaded = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_loaded) {
+      _loaded = true;
+      _loadIdioms();
+    }
+  }
+
+  Future<void> _loadIdioms() async {
+    final idiomService = context.read<IdiomService>();
+    final idioms = await idiomService.getIdiomsForQuestion(widget.questionId);
+    if (mounted) setState(() => _idioms = idioms);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_idioms.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: () => setState(() => _expanded = !_expanded),
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: const Color(0xFF667eea).withAlpha(15),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: const Color(0xFF667eea).withAlpha(40)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 标题行
+              Row(
+                children: [
+                  const Icon(Icons.menu_book, size: 14, color: Color(0xFF667eea)),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '成语释义',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF667eea),
+                    ),
+                  ),
+                  const Spacer(),
+                  Icon(
+                    _expanded ? Icons.expand_less : Icons.expand_more,
+                    size: 18,
+                    color: const Color(0xFF667eea),
+                  ),
+                ],
+              ),
+              // 展开区域：成语列表
+              if (_expanded) ...[
+                const SizedBox(height: 8),
+                ..._idioms.map((idiom) => Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '【${idiom.text}】',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF333333),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          idiom.definition.isEmpty ? '暂无释义' : idiom.definition,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: idiom.definition.isEmpty
+                                ? Colors.grey[400]
+                                : Colors.grey[700],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+              ],
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

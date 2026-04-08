@@ -15,6 +15,7 @@ import 'real_exam_screen.dart';
 import 'interview_home_screen.dart';
 import 'wrong_analysis_screen.dart';
 import 'adaptive_quiz_screen.dart';
+import 'idiom_list_screen.dart';
 
 /// 刷题页：科目选择 → 题目列表 → 答题界面
 class PracticeScreen extends StatelessWidget {
@@ -668,6 +669,53 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
               ],
             ),
           ),
+          // 成语整理入口（仅言语理解/言语运用类别显示）
+          if (['言语理解', '言语运用'].contains(widget.category))
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+              child: GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const IdiomListScreen()),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                  decoration: BoxDecoration(
+                    gradient: AppTheme.primaryGradient,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.menu_book, color: Colors.white, size: 20),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              '成语整理',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              '查看选词填空中的成语释义和人民日报用法',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white.withAlpha(200),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.chevron_right, color: Colors.white70),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           // 题目列表
           Expanded(
             child: _loading
