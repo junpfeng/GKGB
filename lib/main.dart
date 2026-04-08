@@ -25,6 +25,7 @@ import 'services/adaptive_quiz_service.dart';
 import 'services/exam_category_service.dart';
 import 'services/idiom_service.dart';
 import 'services/exam_entry_score_service.dart';
+import 'services/political_theory_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +62,10 @@ void main() async {
   // 导入预置成语数据
   final idiomService = IdiomService();
   await idiomService.importPresetIdioms();
+
+  // 导入预置政治理论数据
+  final politicalTheoryService = PoliticalTheoryService(llmManager);
+  await politicalTheoryService.importPresetData();
 
   runApp(
     MultiProvider(
@@ -152,6 +157,8 @@ void main() async {
         ChangeNotifierProvider.value(value: idiomService),
         // 19. ExamEntryScoreService（无依赖）
         ChangeNotifierProvider(create: (_) => ExamEntryScoreService()),
+        // 20. PoliticalTheoryService（启动时已导入预置数据）
+        ChangeNotifierProvider.value(value: politicalTheoryService),
       ],
       child: const ExamPrepApp(),
     ),

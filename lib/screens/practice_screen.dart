@@ -16,6 +16,7 @@ import 'interview_home_screen.dart';
 import 'wrong_analysis_screen.dart';
 import 'adaptive_quiz_screen.dart';
 import 'idiom_list_screen.dart';
+import 'political_theory_screen.dart';
 
 /// 刷题页：科目选择 → 题目列表 → 答题界面
 class PracticeScreen extends StatelessWidget {
@@ -106,8 +107,8 @@ class _SubjectListState extends State<_SubjectList> {
 
   @override
   Widget build(BuildContext context) {
-    // 特殊卡片数量（面试+自适应+收藏）
-    final extraCards = widget.showInterview ? 3 : 2;
+    // 特殊卡片数量（面试+自适应+政治理论+收藏）
+    final extraCards = widget.showInterview ? 4 : 3;
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       itemCount: widget.subjects.length + extraCards,
@@ -121,10 +122,15 @@ class _SubjectListState extends State<_SubjectList> {
         if (index == quizIndex) {
           return _buildAdaptiveQuizCard(context);
         }
+        // 政治理论专项入口卡片
+        final ptIndex = widget.showInterview ? 2 : 1;
+        if (index == ptIndex) {
+          return _buildPoliticalTheoryCard(context);
+        }
         if (index == widget.subjects.length + extraCards - 1) {
           return _buildFavoritesCard(context);
         }
-        final subjectIndex = widget.showInterview ? index - 2 : index - 1;
+        final subjectIndex = widget.showInterview ? index - 3 : index - 2;
         final subject = widget.subjects[subjectIndex];
         final gradientColors = subject['gradient'] as List<Color>;
         final gradient = LinearGradient(
@@ -342,6 +348,71 @@ class _SubjectListState extends State<_SubjectList> {
                     SizedBox(height: 2),
                     Text(
                       '薄弱优先 · 遗忘曲线 · AI 自适应出题',
+                      style: TextStyle(fontSize: 12, color: Colors.white70),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.white70, size: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPoliticalTheoryCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const PoliticalTheoryScreen()),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFE53935), Color(0xFFEF5350)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFE53935).withValues(alpha: 0.35),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.menu_book, color: Colors.white, size: 22),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '政治理论专项',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      '文件解读 · 口诀记忆 · 概念对比',
                       style: TextStyle(fontSize: 12, color: Colors.white70),
                     ),
                   ],

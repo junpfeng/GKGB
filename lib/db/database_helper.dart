@@ -23,7 +23,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 14,
+      version: 16,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -510,6 +510,89 @@ class DatabaseHelper {
 
     // 预置母题类型数据
     await _insertPresetMasterTypes(db);
+
+    // 政治理论模块表
+    await db.execute('''
+      CREATE TABLE political_documents (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        doc_type TEXT NOT NULL,
+        publish_date TEXT,
+        summary TEXT DEFAULT '',
+        full_text TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(title, doc_type)
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE exam_points (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        document_id INTEGER NOT NULL,
+        section TEXT DEFAULT '',
+        point_text TEXT NOT NULL,
+        importance INTEGER DEFAULT 3,
+        frequency INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (document_id) REFERENCES political_documents (id)
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE mnemonics (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        exam_point_id INTEGER,
+        document_id INTEGER,
+        topic TEXT NOT NULL,
+        mnemonic_text TEXT NOT NULL,
+        explanation TEXT DEFAULT '',
+        style TEXT DEFAULT 'rhyme',
+        is_ai_generated INTEGER DEFAULT 1,
+        is_favorited INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (exam_point_id) REFERENCES exam_points (id),
+        FOREIGN KEY (document_id) REFERENCES political_documents (id),
+        CHECK (exam_point_id IS NOT NULL OR document_id IS NOT NULL)
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE concept_comparisons (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        concept_a TEXT NOT NULL,
+        concept_b TEXT NOT NULL,
+        comparison_json TEXT NOT NULL,
+        source_document_id INTEGER,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (source_document_id) REFERENCES political_documents (id),
+        UNIQUE(concept_a, concept_b)
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE exam_point_question_links (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        exam_point_id INTEGER NOT NULL,
+        question_id INTEGER NOT NULL,
+        FOREIGN KEY (exam_point_id) REFERENCES exam_points (id),
+        FOREIGN KEY (question_id) REFERENCES questions (id),
+        UNIQUE(exam_point_id, question_id)
+      )
+    ''');
+
+    // 可视化解题表
+    await db.execute('''
+      CREATE TABLE visual_explanations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        question_id INTEGER NOT NULL,
+        explanation_type TEXT NOT NULL,
+        steps_json TEXT NOT NULL,
+        template_id TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (question_id) REFERENCES questions (id),
+        UNIQUE(question_id)
+      )
+    ''');
 
     // 建立索引
     await _createIndexes(db);
@@ -1030,6 +1113,101 @@ class DatabaseHelper {
       await _insertPresetMasterTypes(db);
       await _createIndexes(db);
     }
+
+    if (oldVersion < 15) {
+      // v14→v15：政治理论文件解读与口诀记忆
+      await db.transaction((txn) async {
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS political_documents (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            doc_type TEXT NOT NULL,
+            publish_date TEXT,
+            summary TEXT DEFAULT '',
+            full_text TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(title, doc_type)
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS exam_points (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            document_id INTEGER NOT NULL,
+            section TEXT DEFAULT '',
+            point_text TEXT NOT NULL,
+            importance INTEGER DEFAULT 3,
+            frequency INTEGER DEFAULT 0,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (document_id) REFERENCES political_documents (id)
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS mnemonics (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            exam_point_id INTEGER,
+            document_id INTEGER,
+            topic TEXT NOT NULL,
+            mnemonic_text TEXT NOT NULL,
+            explanation TEXT DEFAULT '',
+            style TEXT DEFAULT 'rhyme',
+            is_ai_generated INTEGER DEFAULT 1,
+            is_favorited INTEGER DEFAULT 0,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (exam_point_id) REFERENCES exam_points (id),
+            FOREIGN KEY (document_id) REFERENCES political_documents (id),
+            CHECK (exam_point_id IS NOT NULL OR document_id IS NOT NULL)
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS concept_comparisons (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            concept_a TEXT NOT NULL,
+            concept_b TEXT NOT NULL,
+            comparison_json TEXT NOT NULL,
+            source_document_id INTEGER,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (source_document_id) REFERENCES political_documents (id),
+            UNIQUE(concept_a, concept_b)
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS exam_point_question_links (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            exam_point_id INTEGER NOT NULL,
+            question_id INTEGER NOT NULL,
+            FOREIGN KEY (exam_point_id) REFERENCES exam_points (id),
+            FOREIGN KEY (question_id) REFERENCES questions (id),
+            UNIQUE(exam_point_id, question_id)
+          )
+        ''');
+      });
+
+      await _createIndexes(db);
+    }
+
+    if (oldVersion < 16) {
+      // v15→v16：可视化解题功能
+      await db.transaction((txn) async {
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS visual_explanations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            question_id INTEGER NOT NULL,
+            explanation_type TEXT NOT NULL,
+            steps_json TEXT NOT NULL,
+            template_id TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (question_id) REFERENCES questions (id),
+            UNIQUE(question_id)
+          )
+        ''');
+
+        await txn.execute('CREATE INDEX IF NOT EXISTS idx_visual_explanations_question ON visual_explanations(question_id)');
+      });
+    }
   }
 
   /// 预置母题类型数据
@@ -1103,6 +1281,12 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_master_types_category ON master_question_types(category)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_question_master_tags_question ON question_master_tags(question_id)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_question_master_tags_type ON question_master_tags(master_type_id)');
+    // 政治理论模块索引
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_exam_points_document ON exam_points(document_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_mnemonics_exam_point ON mnemonics(exam_point_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_mnemonics_document ON mnemonics(document_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_mnemonics_favorited ON mnemonics(is_favorited)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_concept_comparisons_document ON concept_comparisons(source_document_id)');
   }
 
   // ===== questions CRUD =====
@@ -2752,6 +2936,178 @@ class DatabaseHelper {
       {'key': key, 'value': value},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  // ===== political_documents CRUD =====
+
+  Future<int> countPoliticalDocuments() async {
+    final db = await database;
+    final result = await db.rawQuery('SELECT COUNT(*) as cnt FROM political_documents');
+    return (result.first['cnt'] as int?) ?? 0;
+  }
+
+  Future<int> insertPoliticalDocument(Map<String, dynamic> doc) async {
+    final db = await database;
+    return await db.insert('political_documents', doc, conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  Future<List<Map<String, dynamic>>> queryPoliticalDocuments({String? docType}) async {
+    final db = await database;
+    const cols = 'id, title, doc_type, publish_date, summary, created_at';
+    if (docType != null) {
+      return await db.rawQuery('SELECT $cols FROM political_documents WHERE doc_type = ? ORDER BY publish_date DESC', [docType]);
+    }
+    return await db.rawQuery('SELECT $cols FROM political_documents ORDER BY publish_date DESC');
+  }
+
+  Future<Map<String, dynamic>?> queryPoliticalDocumentById(int id) async {
+    final db = await database;
+    final rows = await db.query('political_documents', where: 'id = ?', whereArgs: [id], limit: 1);
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  Future<int> updatePoliticalDocument(int id, Map<String, dynamic> doc) async {
+    final db = await database;
+    return await db.update('political_documents', doc, where: 'id = ?', whereArgs: [id]);
+  }
+
+  // ===== exam_points CRUD =====
+
+  Future<int> insertExamPoint(Map<String, dynamic> point) async {
+    final db = await database;
+    return await db.insert('exam_points', point);
+  }
+
+  Future<List<Map<String, dynamic>>> queryExamPoints({int? documentId}) async {
+    final db = await database;
+    if (documentId != null) {
+      return await db.query('exam_points', where: 'document_id = ?', whereArgs: [documentId], orderBy: 'importance DESC');
+    }
+    return await db.query('exam_points', orderBy: 'importance DESC');
+  }
+
+  Future<Map<String, dynamic>?> queryExamPointById(int id) async {
+    final db = await database;
+    final rows = await db.query('exam_points', where: 'id = ?', whereArgs: [id], limit: 1);
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  Future<List<Map<String, dynamic>>> searchExamPoints(String keyword) async {
+    final db = await database;
+    return await db.query('exam_points', where: 'point_text LIKE ?', whereArgs: ['%$keyword%'], orderBy: 'importance DESC');
+  }
+
+  Future<int> updateExamPoint(int id, Map<String, dynamic> point) async {
+    final db = await database;
+    return await db.update('exam_points', point, where: 'id = ?', whereArgs: [id]);
+  }
+
+  // ===== mnemonics CRUD =====
+
+  Future<int> insertMnemonic(Map<String, dynamic> mnemonic) async {
+    final db = await database;
+    return await db.insert('mnemonics', mnemonic);
+  }
+
+  Future<List<Map<String, dynamic>>> queryMnemonics({
+    int? documentId,
+    bool? favoritedOnly,
+    String? style,
+    int? limit,
+    int? offset,
+  }) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (documentId != null) {
+      conditions.add('document_id = ?');
+      args.add(documentId);
+    }
+    if (favoritedOnly == true) {
+      conditions.add('is_favorited = 1');
+    }
+    if (style != null) {
+      conditions.add('style = ?');
+      args.add(style);
+    }
+    final where = conditions.isEmpty ? null : conditions.join(' AND ');
+    return await db.query(
+      'mnemonics',
+      where: where,
+      whereArgs: args.isEmpty ? null : args,
+      orderBy: 'created_at DESC',
+      limit: limit,
+      offset: offset,
+    );
+  }
+
+  Future<Map<String, dynamic>?> queryLatestMnemonic({required int examPointId}) async {
+    final db = await database;
+    final rows = await db.query(
+      'mnemonics',
+      where: 'exam_point_id = ?',
+      whereArgs: [examPointId],
+      orderBy: 'created_at DESC',
+      limit: 1,
+    );
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  Future<int> updateMnemonic(int id, Map<String, dynamic> mnemonic) async {
+    final db = await database;
+    return await db.update('mnemonics', mnemonic, where: 'id = ?', whereArgs: [id]);
+  }
+
+  // ===== concept_comparisons CRUD =====
+
+  Future<int> insertConceptComparison(Map<String, dynamic> comparison) async {
+    final db = await database;
+    return await db.insert('concept_comparisons', comparison, conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  Future<List<Map<String, dynamic>>> queryConceptComparisons({int? sourceDocumentId}) async {
+    final db = await database;
+    if (sourceDocumentId != null) {
+      return await db.query('concept_comparisons', where: 'source_document_id = ?', whereArgs: [sourceDocumentId], orderBy: 'created_at DESC');
+    }
+    return await db.query('concept_comparisons', orderBy: 'created_at DESC');
+  }
+
+  Future<Map<String, dynamic>?> queryConceptComparisonByPair(String conceptA, String conceptB) async {
+    final db = await database;
+    final rows = await db.query(
+      'concept_comparisons',
+      where: '(concept_a = ? AND concept_b = ?) OR (concept_a = ? AND concept_b = ?)',
+      whereArgs: [conceptA, conceptB, conceptB, conceptA],
+      limit: 1,
+    );
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  Future<int> updateConceptComparison(int id, Map<String, dynamic> comparison) async {
+    final db = await database;
+    return await db.update('concept_comparisons', comparison, where: 'id = ?', whereArgs: [id]);
+  }
+
+  // ===== exam_point_question_links CRUD =====
+
+  Future<int> insertExamPointQuestionLink(int examPointId, int questionId) async {
+    final db = await database;
+    return await db.insert('exam_point_question_links', {
+      'exam_point_id': examPointId,
+      'question_id': questionId,
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  Future<List<int>> queryQuestionIdsByExamPoint(int examPointId) async {
+    final db = await database;
+    final rows = await db.query(
+      'exam_point_question_links',
+      columns: ['question_id'],
+      where: 'exam_point_id = ?',
+      whereArgs: [examPointId],
+    );
+    return rows.map((r) => r['question_id'] as int).toList();
   }
 }
 

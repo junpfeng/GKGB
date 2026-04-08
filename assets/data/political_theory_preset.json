@@ -1,0 +1,119 @@
+{
+  "documents": [
+    {
+      "title": "党的二十大报告",
+      "doc_type": "party_congress",
+      "publish_date": "2022-10-16",
+      "summary": "高举中国特色社会主义伟大旗帜，全面建设社会主义现代化国家",
+      "full_text": "",
+      "exam_points": [
+        {
+          "section": "新时代十年伟大变革",
+          "point_text": "新发展理念：创新、协调、绿色、开放、共享",
+          "importance": 5,
+          "frequency": 8,
+          "mnemonics": [
+            {
+              "topic": "新发展理念五要素",
+              "mnemonic_text": "创协绿开共，发展记心中",
+              "explanation": "创=创新，协=协调，绿=绿色，开=开放，共=共享。合起来就是新发展理念的五大要素。",
+              "style": "acronym"
+            }
+          ]
+        },
+        {
+          "section": "中国式现代化",
+          "point_text": "中国式现代化五大特征：人口规模巨大、全体人民共同富裕、物质文明和精神文明相协调、人与自然和谐共生、走和平发展道路",
+          "importance": 5,
+          "frequency": 6,
+          "mnemonics": [
+            {
+              "topic": "中国式现代化五大特征",
+              "mnemonic_text": "人人物人和，现代化特色多",
+              "explanation": "人(人口规模巨大)人(全体人民共同富裕)物(物质精神协调)人(人与自然和谐)和(和平发展)。五个字概括五大特征。",
+              "style": "acronym"
+            }
+          ]
+        },
+        {
+          "section": "全面依法治国",
+          "point_text": "全面依法治国总目标：建设中国特色社会主义法治体系、建设社会主义法治国家",
+          "importance": 4,
+          "frequency": 4,
+          "mnemonics": []
+        },
+        {
+          "section": "党的建设",
+          "point_text": "全面从严治党：政治建设、思想建设、组织建设、作风建设、纪律建设，把制度建设贯穿其中",
+          "importance": 4,
+          "frequency": 5,
+          "mnemonics": [
+            {
+              "topic": "党的六大建设",
+              "mnemonic_text": "政思组作纪制，从严治党六把尺",
+              "explanation": "政=政治建设，思=思想建设，组=组织建设，作=作风建设，纪=纪律建设，制=制度建设贯穿其中。",
+              "style": "rhyme"
+            }
+          ]
+        },
+        {
+          "section": "经济建设",
+          "point_text": "构建新发展格局：以国内大循环为主体、国内国际双循环相互促进",
+          "importance": 4,
+          "frequency": 5,
+          "mnemonics": []
+        }
+      ]
+    },
+    {
+      "title": "2024年政府工作报告",
+      "doc_type": "gov_report",
+      "publish_date": "2024-03-05",
+      "summary": "国内生产总值增长5%左右，推动高质量发展取得新进展",
+      "full_text": "",
+      "exam_points": []
+    }
+  ],
+  "comparisons": [
+    {
+      "concept_a": "新发展理念",
+      "concept_b": "新发展阶段",
+      "source_document_id": null,
+      "comparison": {
+        "dimensions": [
+          {"name": "含义", "a_desc": "创新、协调、绿色、开放、共享五大发展理念", "b_desc": "我国进入全面建设社会主义现代化国家的新阶段"},
+          {"name": "提出时间", "a_desc": "十八届五中全会（2015年）", "b_desc": "十九届五中全会（2020年）"},
+          {"name": "侧重点", "a_desc": "发展的方法论，回答'怎样发展'", "b_desc": "发展的历史定位，回答'在哪里发展'"},
+          {"name": "核心内容", "a_desc": "以人民为中心，解决发展不平衡不充分问题", "b_desc": "从全面建成小康转向全面建设现代化"}
+        ]
+      }
+    },
+    {
+      "concept_a": "依法治国",
+      "concept_b": "以德治国",
+      "source_document_id": null,
+      "comparison": {
+        "dimensions": [
+          {"name": "含义", "a_desc": "运用法律治理国家，是治国基本方略", "b_desc": "以道德教化治理社会，是重要补充"},
+          {"name": "手段", "a_desc": "强制力保障，具有权威性和规范性", "b_desc": "道德感化，依靠自觉和舆论"},
+          {"name": "关系", "a_desc": "法安天下", "b_desc": "德润人心"},
+          {"name": "地位", "a_desc": "治国理政的基本方式", "b_desc": "法治的重要补充和支撑"}
+        ]
+      }
+    },
+    {
+      "concept_a": "中国式现代化",
+      "concept_b": "西方现代化",
+      "source_document_id": null,
+      "comparison": {
+        "dimensions": [
+          {"name": "人口规模", "a_desc": "14亿人口整体迈进现代化", "b_desc": "几亿人口或更少"},
+          {"name": "发展目标", "a_desc": "全体人民共同富裕", "b_desc": "资本驱动，贫富分化"},
+          {"name": "文明理念", "a_desc": "物质文明和精神文明相协调", "b_desc": "物质主义为主"},
+          {"name": "生态观", "a_desc": "人与自然和谐共生", "b_desc": "先污染后治理"},
+          {"name": "国际关系", "a_desc": "走和平发展道路", "b_desc": "殖民扩张、霸权主义"}
+        ]
+      }
+    }
+  ]
+}
