@@ -23,7 +23,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 13,
+      version: 14,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -480,6 +480,36 @@ class DatabaseHelper {
         UNIQUE(province, city, year, exam_type, position_code, department)
       )
     ''');
+
+    // 母题类型表
+    await db.execute('''
+      CREATE TABLE master_question_types (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        category TEXT NOT NULL,
+        name TEXT NOT NULL,
+        description TEXT DEFAULT '',
+        sort_order INTEGER DEFAULT 0,
+        is_preset INTEGER DEFAULT 1,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+
+    // 题目-母题标签关联表
+    await db.execute('''
+      CREATE TABLE question_master_tags (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        question_id INTEGER NOT NULL,
+        master_type_id INTEGER NOT NULL,
+        is_root INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (question_id) REFERENCES questions (id),
+        FOREIGN KEY (master_type_id) REFERENCES master_question_types (id),
+        UNIQUE(question_id, master_type_id)
+      )
+    ''');
+
+    // 预置母题类型数据
+    await _insertPresetMasterTypes(db);
 
     // 建立索引
     await _createIndexes(db);
@@ -966,6 +996,74 @@ class DatabaseHelper {
         debugPrint('迁移进面分数线表跳过: $e');
       }
     }
+
+    if (oldVersion < 14) {
+      // v13→v14：母题标签功能
+      await db.transaction((txn) async {
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS master_question_types (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category TEXT NOT NULL,
+            name TEXT NOT NULL,
+            description TEXT DEFAULT '',
+            sort_order INTEGER DEFAULT 0,
+            is_preset INTEGER DEFAULT 1,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS question_master_tags (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            question_id INTEGER NOT NULL,
+            master_type_id INTEGER NOT NULL,
+            is_root INTEGER DEFAULT 0,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (question_id) REFERENCES questions (id),
+            FOREIGN KEY (master_type_id) REFERENCES master_question_types (id),
+            UNIQUE(question_id, master_type_id)
+          )
+        ''');
+      });
+
+      // 预置母题类型数据
+      await _insertPresetMasterTypes(db);
+      await _createIndexes(db);
+    }
+  }
+
+  /// 预置母题类型数据
+  Future<void> _insertPresetMasterTypes(Database db) async {
+    const presets = <Map<String, dynamic>>[
+      // 数量关系（12 个）
+      {'category': '数量关系', 'name': '工程问题', 'description': '涉及工作效率、合作完工等问题，核心公式：工作量=效率×时间', 'sort_order': 1, 'is_preset': 1},
+      {'category': '数量关系', 'name': '行程问题', 'description': '涉及速度、时间、路程三者关系，含相遇、追及、流水行船等变体', 'sort_order': 2, 'is_preset': 1},
+      {'category': '数量关系', 'name': '排列组合', 'description': '计算排列数与组合数，分步用乘法、分类用加法', 'sort_order': 3, 'is_preset': 1},
+      {'category': '数量关系', 'name': '概率问题', 'description': '求事件发生可能性，常与排列组合结合考查', 'sort_order': 4, 'is_preset': 1},
+      {'category': '数量关系', 'name': '利润问题', 'description': '涉及成本、售价、利润率等商业计算', 'sort_order': 5, 'is_preset': 1},
+      {'category': '数量关系', 'name': '几何问题', 'description': '平面与立体几何的面积、体积、周长计算', 'sort_order': 6, 'is_preset': 1},
+      {'category': '数量关系', 'name': '容斥原理', 'description': '集合的交并补运算，多集合重叠计数', 'sort_order': 7, 'is_preset': 1},
+      {'category': '数量关系', 'name': '数列问题', 'description': '等差、等比及其他递推数列的求和与通项', 'sort_order': 8, 'is_preset': 1},
+      {'category': '数量关系', 'name': '方程问题', 'description': '通过列方程或不等式求解未知量', 'sort_order': 9, 'is_preset': 1},
+      {'category': '数量关系', 'name': '最值问题', 'description': '求最大值、最小值，含构造极端情形', 'sort_order': 10, 'is_preset': 1},
+      {'category': '数量关系', 'name': '浓度问题', 'description': '溶液混合、稀释、蒸发中的浓度计算', 'sort_order': 11, 'is_preset': 1},
+      {'category': '数量关系', 'name': '牛吃草问题', 'description': '草场边生长边消耗的追及模型，核心在于求草的生长速度', 'sort_order': 12, 'is_preset': 1},
+      // 资料分析（8 个）
+      {'category': '资料分析', 'name': '增长率', 'description': '计算同比/环比增长率，掌握增长率的比较与估算技巧', 'sort_order': 1, 'is_preset': 1},
+      {'category': '资料分析', 'name': '增长量', 'description': '计算增长的绝对量，注意区分增长量与增长率', 'sort_order': 2, 'is_preset': 1},
+      {'category': '资料分析', 'name': '比重', 'description': '部分占整体的比例，含基期比重与比重变化判断', 'sort_order': 3, 'is_preset': 1},
+      {'category': '资料分析', 'name': '倍数', 'description': '两个量之间的倍数关系，含基期倍数', 'sort_order': 4, 'is_preset': 1},
+      {'category': '资料分析', 'name': '平均数', 'description': '总量除以份数，含基期平均数与平均数增长率', 'sort_order': 5, 'is_preset': 1},
+      {'category': '资料分析', 'name': '隔年增长', 'description': '间隔一年的增长率计算，公式：r₁+r₂+r₁×r₂', 'sort_order': 6, 'is_preset': 1},
+      {'category': '资料分析', 'name': '年均增长', 'description': '多年平均增长率的计算与估算', 'sort_order': 7, 'is_preset': 1},
+      {'category': '资料分析', 'name': '混合增长', 'description': '整体增长率介于各部分增长率之间，十字交叉法求解', 'sort_order': 8, 'is_preset': 1},
+    ];
+
+    final batch = db.batch();
+    for (final p in presets) {
+      batch.insert('master_question_types', p);
+    }
+    await batch.commit(noResult: true);
   }
 
   /// 创建所有索引
@@ -1001,6 +1099,10 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_entry_scores_filter ON exam_entry_scores(exam_type, province, year)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_entry_scores_city ON exam_entry_scores(province, city, year)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_entry_scores_trend ON exam_entry_scores(province, position_name, year)');
+    // 母题标签索引
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_master_types_category ON master_question_types(category)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_question_master_tags_question ON question_master_tags(question_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_question_master_tags_type ON question_master_tags(master_type_id)');
   }
 
   // ===== questions CRUD =====
@@ -2285,24 +2387,26 @@ class DatabaseHelper {
     final thisStart = thisWeekStart.toIso8601String().substring(0, 10);
     final lastStart = lastWeekStart.toIso8601String().substring(0, 10);
 
+    String examJoin = '';
     String examFilter = '';
     final examArgs = <dynamic>[];
     if (examTypes != null && examTypes.isNotEmpty) {
       final placeholders = examTypes.map((_) => '?').join(', ');
-      examFilter = ' AND exam_type IN ($placeholders)';
+      examJoin = ' JOIN questions q ON ua.question_id = q.id';
+      examFilter = ' AND q.exam_type IN ($placeholders)';
       examArgs.addAll(examTypes);
     }
 
     final thisWeek = await db.rawQuery('''
-      SELECT COUNT(*) as total, SUM(is_correct) as correct
-      FROM user_answers
-      WHERE answered_at >= ?$examFilter
+      SELECT COUNT(*) as total, SUM(ua.is_correct) as correct
+      FROM user_answers ua$examJoin
+      WHERE ua.answered_at >= ?$examFilter
     ''', [thisStart, ...examArgs]);
 
     final lastWeek = await db.rawQuery('''
-      SELECT COUNT(*) as total, SUM(is_correct) as correct
-      FROM user_answers
-      WHERE answered_at >= ? AND answered_at < ?$examFilter
+      SELECT COUNT(*) as total, SUM(ua.is_correct) as correct
+      FROM user_answers ua$examJoin
+      WHERE ua.answered_at >= ? AND ua.answered_at < ?$examFilter
     ''', [lastStart, thisStart, ...examArgs]);
 
     return {
@@ -2593,6 +2697,35 @@ class DatabaseHelper {
       args,
     );
     return (result.first['count'] as int?) ?? 0;
+  }
+
+  // ===== 轻量级 metadata 存取（无需 schema version bump） =====
+
+  /// 获取 metadata 值
+  Future<String?> getMetadata(String key) async {
+    final db = await database;
+    await db.execute(
+      'CREATE TABLE IF NOT EXISTS _app_metadata (key TEXT PRIMARY KEY, value TEXT)',
+    );
+    final rows = await db.query(
+      '_app_metadata',
+      where: 'key = ?',
+      whereArgs: [key],
+    );
+    return rows.isEmpty ? null : rows.first['value'] as String?;
+  }
+
+  /// 设置 metadata 值
+  Future<void> setMetadata(String key, String value) async {
+    final db = await database;
+    await db.execute(
+      'CREATE TABLE IF NOT EXISTS _app_metadata (key TEXT PRIMARY KEY, value TEXT)',
+    );
+    await db.insert(
+      '_app_metadata',
+      {'key': key, 'value': value},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 }
 

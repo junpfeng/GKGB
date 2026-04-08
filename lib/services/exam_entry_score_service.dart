@@ -165,26 +165,29 @@ class ExamEntryScoreService extends ChangeNotifier {
 
   // ===== 预置数据导入 =====
 
-  /// 检查 SQLite 是否已有数据（避免重复导入）
-  Future<bool> _isDataLoaded() async {
-    final count = await _db.queryEntryScoreCount();
-    return count > 0;
-  }
+  static const _versionKey = 'entry_scores_data_version';
 
-  /// 从 assets 导入预置分数线数据（幂等：已有数据则跳过）
+  /// 从 assets 导入预置分数线数据（基于版本号判断是否需要导入）
   Future<void> loadFromAssets() async {
-    if (await _isDataLoaded()) return;
-
     _isImporting = true;
     notifyListeners();
 
     try {
-      // 读取 index.json 获取文件列表
+      // 读取 index.json 获取文件列表和版本号
       final indexStr = await rootBundle.loadString(
         'assets/data/exam_entry_scores/index.json',
       );
       final indexData = json.decode(indexStr) as Map<String, dynamic>;
+      final assetVersion = indexData['version'] as String? ?? '0';
       final files = (indexData['files'] as List).cast<String>();
+
+      // 版本比对：已导入相同版本则跳过
+      final importedVersion = await _db.getMetadata(_versionKey);
+      if (importedVersion == assetVersion) {
+        _isImporting = false;
+        notifyListeners();
+        return;
+      }
 
       int totalImported = 0;
 
@@ -208,6 +211,8 @@ class ExamEntryScoreService extends ChangeNotifier {
         }
       }
 
+      // 导入成功后记录版本号
+      await _db.setMetadata(_versionKey, assetVersion);
       debugPrint('进面分数线数据导入完成，共 $totalImported 条');
     } catch (e) {
       debugPrint('导入预置分数线数据失败: $e');
