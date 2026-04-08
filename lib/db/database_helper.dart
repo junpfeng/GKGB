@@ -961,6 +961,10 @@ class DatabaseHelper {
     String? category,
     String? type,
     bool? realExamOnly,
+    int? isRealExam,
+    String? examType,
+    String? region,
+    int? year,
     int? limit,
     int? offset,
   }) async {
@@ -991,9 +995,25 @@ class DatabaseHelper {
       conditions.add('type = ?');
       args.add(type);
     }
-    // 仅真题筛选
+    // 真题/模拟题筛选：1=真题, 0=模拟题, null=全部
     if (realExamOnly == true) {
       conditions.add('is_real_exam = 1');
+    }
+    if (isRealExam != null) {
+      conditions.add('is_real_exam = ?');
+      args.add(isRealExam);
+    }
+    if (examType != null && examType.isNotEmpty) {
+      conditions.add('exam_type = ?');
+      args.add(examType);
+    }
+    if (region != null && region.isNotEmpty) {
+      conditions.add('region = ?');
+      args.add(region);
+    }
+    if (year != null && year > 0) {
+      conditions.add('year = ?');
+      args.add(year);
     }
     final where = conditions.isEmpty ? null : conditions.join(' AND ');
     return await db.query(
@@ -1617,7 +1637,7 @@ class DatabaseHelper {
     final db = await database;
     // 白名单校验字段名，防止 SQL 注入
     const allowedFields = {
-      'region', 'year', 'exam_type', 'exam_session', 'subject',
+      'region', 'year', 'exam_type', 'exam_session', 'subject', 'category',
     };
     if (!allowedFields.contains(field)) {
       throw ArgumentError('不允许的字段名: $field');

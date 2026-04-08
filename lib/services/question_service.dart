@@ -39,6 +39,10 @@ class QuestionService extends ChangeNotifier {
     String? category,
     String? type,
     bool? realExamOnly,
+    int? isRealExam,
+    String? examType,
+    String? region,
+    int? year,
     int? limit,
     int? offset,
   }) async {
@@ -54,6 +58,10 @@ class QuestionService extends ChangeNotifier {
         category: category,
         type: type,
         realExamOnly: realExamOnly,
+        isRealExam: isRealExam,
+        examType: examType,
+        region: region,
+        year: year,
         limit: limit ?? 20,
         offset: offset ?? 0,
       );
@@ -317,10 +325,18 @@ class QuestionService extends ChangeNotifier {
   }
 
   /// 获取可用地区列表
-  Future<List<String>> getAvailableRegions({String? examType}) async {
+  Future<List<String>> getAvailableRegions({
+    String? examType,
+    String? subject,
+    String? category,
+  }) async {
+    final where = <String, dynamic>{};
+    if (examType != null) where['exam_type'] = examType;
+    if (subject != null) where['subject'] = subject;
+    if (category != null) where['category'] = category;
     return await _db.getDistinctValues(
       'region',
-      where: examType != null ? {'exam_type': examType} : null,
+      where: where.isEmpty ? null : where,
     );
   }
 
@@ -328,10 +344,14 @@ class QuestionService extends ChangeNotifier {
   Future<List<String>> getAvailableYears({
     String? examType,
     String? region,
+    String? subject,
+    String? category,
   }) async {
     final where = <String, dynamic>{};
     if (examType != null) where['exam_type'] = examType;
     if (region != null) where['region'] = region;
+    if (subject != null) where['subject'] = subject;
+    if (category != null) where['category'] = category;
     return await _db.getDistinctValues(
       'year',
       where: where.isEmpty ? null : where,
@@ -339,8 +359,17 @@ class QuestionService extends ChangeNotifier {
   }
 
   /// 获取可用考试类型列表
-  Future<List<String>> getAvailableExamTypes() async {
-    return await _db.getDistinctValues('exam_type');
+  Future<List<String>> getAvailableExamTypes({
+    String? subject,
+    String? category,
+  }) async {
+    final where = <String, dynamic>{};
+    if (subject != null) where['subject'] = subject;
+    if (category != null) where['category'] = category;
+    return await _db.getDistinctValues(
+      'exam_type',
+      where: where.isEmpty ? null : where,
+    );
   }
 
   // ===== AI 批改 + 关联推荐 =====

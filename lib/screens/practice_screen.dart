@@ -576,11 +576,24 @@ class QuestionListScreen extends StatefulWidget {
   State<QuestionListScreen> createState() => _QuestionListScreenState();
 }
 
+/// 题目来源筛选枚举
+enum _SourceFilter { all, realExam, simulated }
+
 class _QuestionListScreenState extends State<QuestionListScreen> {
   List<Question> _questions = [];
   bool _loading = true;
-  /// 是否仅显示真题
-  bool _realExamOnly = false;
+
+  /// 来源筛选：全部/真题/模拟题
+  _SourceFilter _sourceFilter = _SourceFilter.all;
+  /// 真题子筛选
+  String? _examTypeFilter;
+  String? _regionFilter;
+  int? _yearFilter;
+
+  /// 动态可选项
+  List<String> _availableExamTypes = [];
+  List<String> _availableRegions = [];
+  List<String> _availableYears = [];
 
   @override
   void initState() {
@@ -590,10 +603,23 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
 
   Future<void> _loadQuestions() async {
     setState(() => _loading = true);
-    final questions = await context.read<QuestionService>().loadQuestions(
+    final qs = context.read<QuestionService>();
+
+    // 构建 isRealExam 参数
+    int? isRealExam;
+    if (_sourceFilter == _SourceFilter.realExam) {
+      isRealExam = 1;
+    } else if (_sourceFilter == _SourceFilter.simulated) {
+      isRealExam = 0;
+    }
+
+    final questions = await qs.loadQuestions(
       subject: widget.subject,
       category: widget.category,
-      realExamOnly: _realExamOnly ? true : null,
+      isRealExam: isRealExam,
+      examType: _sourceFilter == _SourceFilter.realExam ? _examTypeFilter : null,
+      region: _sourceFilter == _SourceFilter.realExam ? _regionFilter : null,
+      year: _sourceFilter == _SourceFilter.realExam ? _yearFilter : null,
       limit: 50,
     );
     if (mounted) {
@@ -604,9 +630,47 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
     }
   }
 
-  /// 切换"仅看真题"筛选
-  void _toggleRealExamFilter(bool? selected) {
-    setState(() => _realExamOnly = selected ?? false);
+  /// 加载真题筛选可选项
+  Future<void> _loadFilterOptions() async {
+    final qs = context.read<QuestionService>();
+    final types = await qs.getAvailableExamTypes(
+      subject: widget.subject,
+      category: widget.category,
+    );
+    final regions = await qs.getAvailableRegions(
+      subject: widget.subject,
+      category: widget.category,
+      examType: _examTypeFilter,
+    );
+    final years = await qs.getAvailableYears(
+      subject: widget.subject,
+      category: widget.category,
+      examType: _examTypeFilter,
+      region: _regionFilter,
+    );
+    if (mounted) {
+      setState(() {
+        _availableExamTypes = types;
+        _availableRegions = regions;
+        _availableYears = years;
+      });
+    }
+  }
+
+  /// 切换来源筛选
+  void _onSourceChanged(Set<_SourceFilter> selected) {
+    final newFilter = selected.first;
+    if (newFilter == _sourceFilter) return;
+    setState(() {
+      _sourceFilter = newFilter;
+      // 切换来源时重置真题子筛选
+      _examTypeFilter = null;
+      _regionFilter = null;
+      _yearFilter = null;
+    });
+    if (newFilter == _SourceFilter.realExam) {
+      _loadFilterOptions();
+    }
     _loadQuestions();
   }
 
@@ -638,37 +702,95 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
       ),
       body: Column(
         children: [
-          // 顶部筛选 Chip
+          // 来源切换：全部/真题/模拟题
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
-            child: Row(
-              children: [
-                FilterChip(
-                  label: const Text('仅看真题'),
-                  selected: _realExamOnly,
-                  onSelected: _toggleRealExamFilter,
-                  selectedColor: const Color(0xFF667eea).withValues(alpha: 0.15),
-                  checkmarkColor: const Color(0xFF667eea),
-                  labelStyle: TextStyle(
-                    fontSize: 12,
-                    color: _realExamOnly
-                        ? const Color(0xFF667eea)
-                        : Colors.grey[600],
-                    fontWeight: _realExamOnly
-                        ? FontWeight.w600
-                        : FontWeight.normal,
+            child: SizedBox(
+              width: double.infinity,
+              child: SegmentedButton<_SourceFilter>(
+                segments: const [
+                  ButtonSegment(
+                    value: _SourceFilter.all,
+                    label: Text('全部'),
+                    icon: Icon(Icons.list, size: 16),
                   ),
-                  side: BorderSide(
-                    color: _realExamOnly
-                        ? const Color(0xFF667eea)
-                        : Colors.grey[300]!,
+                  ButtonSegment(
+                    value: _SourceFilter.realExam,
+                    label: Text('真题'),
+                    icon: Icon(Icons.verified, size: 16),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 0),
+                  ButtonSegment(
+                    value: _SourceFilter.simulated,
+                    label: Text('模拟题'),
+                    icon: Icon(Icons.edit_note, size: 16),
+                  ),
+                ],
+                selected: {_sourceFilter},
+                onSelectionChanged: _onSourceChanged,
+                style: ButtonStyle(
+                  textStyle: WidgetStatePropertyAll(
+                    const TextStyle(fontSize: 13),
+                  ),
+                  visualDensity: VisualDensity.compact,
                 ),
-              ],
+              ),
             ),
           ),
+          // 真题子筛选行（仅选"真题"时展开）
+          if (_sourceFilter == _SourceFilter.realExam)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    // 考试类型
+                    _buildDropdownFilter(
+                      label: '考试类型',
+                      value: _examTypeFilter,
+                      items: _availableExamTypes,
+                      onChanged: (v) {
+                        setState(() {
+                          _examTypeFilter = v;
+                          _regionFilter = null;
+                          _yearFilter = null;
+                        });
+                        _loadFilterOptions();
+                        _loadQuestions();
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    // 地区
+                    _buildDropdownFilter(
+                      label: '地区',
+                      value: _regionFilter,
+                      items: _availableRegions,
+                      onChanged: (v) {
+                        setState(() {
+                          _regionFilter = v;
+                          _yearFilter = null;
+                        });
+                        _loadFilterOptions();
+                        _loadQuestions();
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    // 年份
+                    _buildDropdownFilter(
+                      label: '年份',
+                      value: _yearFilter?.toString(),
+                      items: _availableYears,
+                      onChanged: (v) {
+                        setState(() {
+                          _yearFilter = v != null ? int.tryParse(v) : null;
+                        });
+                        _loadQuestions();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
           // 成语整理入口（仅言语理解/言语运用类别显示）
           if (['言语理解', '言语运用'].contains(widget.category))
             Padding(
@@ -722,8 +844,26 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
                 ? const Center(child: CircularProgressIndicator())
                 : _questions.isEmpty
                     ? Center(
-                        child: Text(
-                          _realExamOnly ? '该分类暂无真题' : '暂无题目，请检查题库',
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              _sourceFilter == _SourceFilter.realExam
+                                  ? Icons.verified_outlined
+                                  : Icons.quiz_outlined,
+                              size: 48,
+                              color: Colors.grey[400],
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              _sourceFilter == _SourceFilter.realExam
+                                  ? '该分类暂无符合条件的真题'
+                                  : _sourceFilter == _SourceFilter.simulated
+                                      ? '该分类暂无模拟题'
+                                      : '暂无题目，请检查题库',
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ],
                         ),
                       )
                     : ListView.builder(
@@ -811,6 +951,57 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
                       ),
           ),
         ],
+      ),
+    );
+  }
+
+  /// 构建筛选下拉按钮
+  Widget _buildDropdownFilter({
+    required String label,
+    required String? value,
+    required List<String> items,
+    required ValueChanged<String?> onChanged,
+  }) {
+    return Container(
+      height: 34,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        color: value != null
+            ? const Color(0xFF667eea).withValues(alpha: 0.1)
+            : Colors.grey[100],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: value != null
+              ? const Color(0xFF667eea).withValues(alpha: 0.4)
+              : Colors.grey[300]!,
+        ),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: value,
+          hint: Text(
+            label,
+            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+          ),
+          isDense: true,
+          icon: Icon(
+            Icons.arrow_drop_down,
+            size: 18,
+            color: value != null ? const Color(0xFF667eea) : Colors.grey[500],
+          ),
+          style: const TextStyle(fontSize: 12, color: Color(0xFF667eea)),
+          items: [
+            DropdownMenuItem<String>(
+              value: null,
+              child: Text('全部$label', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+            ),
+            ...items.map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(item, style: const TextStyle(fontSize: 12)),
+                )),
+          ],
+          onChanged: onChanged,
+        ),
       ),
     );
   }
