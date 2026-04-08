@@ -564,30 +564,48 @@ class _FilterChipDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isActive = selected != null;
+    final primaryColor = const Color(0xFF667eea);
+
     return PopupMenuButton<String?>(
       initialValue: selected,
       onSelected: onSelected,
+      constraints: const BoxConstraints(maxHeight: 400),
       itemBuilder: (ctx) => [
         const PopupMenuItem(value: null, child: Text('全部')),
         ...items.map((item) => PopupMenuItem(value: item, child: Text(item))),
       ],
-      child: Chip(
-        label: Text(
-          selected ?? label,
-          style: TextStyle(
-            fontSize: 13,
-            color: selected != null ? const Color(0xFF667eea) : null,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: isActive ? primaryColor.withValues(alpha: 0.1) : Colors.grey[100],
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isActive ? primaryColor : Colors.grey[300]!,
+            width: isActive ? 1.5 : 1,
           ),
         ),
-        avatar: selected != null
-            ? const Icon(Icons.check_circle, size: 16, color: Color(0xFF667eea))
-            : null,
-        deleteIcon: selected != null
-            ? const Icon(Icons.close, size: 14)
-            : null,
-        onDeleted: selected != null ? () => onSelected(null) : null,
-        visualDensity: VisualDensity.compact,
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              selected ?? label,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
+                color: isActive ? primaryColor : Colors.grey[700],
+              ),
+            ),
+            const SizedBox(width: 4),
+            if (isActive)
+              GestureDetector(
+                onTap: () => onSelected(null),
+                child: Icon(Icons.close, size: 14, color: primaryColor),
+              )
+            else
+              Icon(Icons.arrow_drop_down, size: 18, color: Colors.grey[600]),
+          ],
+        ),
       ),
     );
   }
