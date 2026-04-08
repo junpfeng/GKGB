@@ -5,6 +5,7 @@ import 'question_service.dart';
 import 'exam_service.dart';
 import 'llm/llm_manager.dart';
 import 'llm/llm_provider.dart';
+import 'exam_category_service.dart';
 
 /// 看板数据模型
 class DashboardData {
@@ -32,6 +33,7 @@ class DashboardService extends ChangeNotifier {
   final QuestionService _questionService;
   final ExamService _examService;
   final LlmManager _llmManager;
+  final ExamCategoryService _examCategoryService;
   final DatabaseHelper _db = DatabaseHelper.instance;
 
   DashboardData? _cachedData;
@@ -43,7 +45,7 @@ class DashboardService extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get hasData => _cachedData != null;
 
-  DashboardService(this._questionService, this._examService, this._llmManager);
+  DashboardService(this._questionService, this._examService, this._llmManager, this._examCategoryService);
 
   /// 一次性加载所有仪表板数据（带 5 分钟缓存）
   Future<void> refreshDashboard({bool force = false}) async {
@@ -58,11 +60,12 @@ class DashboardService extends ChangeNotifier {
     notifyListeners();
 
     try {
+      final examTypes = _examCategoryService.activeExamTypeValues;
       final results = await Future.wait([
         _loadTodayOverview(),
         _loadRadarData(),
         _loadHeatmapData(),
-        _db.queryWeeklyComparison(),
+        _db.queryWeeklyComparison(examTypes: examTypes.isEmpty ? null : examTypes),
         _examService.getScoreTrend(limit: 10),
         _db.queryStudyStreak(),
         _db.queryOverallProgress(),
@@ -99,13 +102,16 @@ class DashboardService extends ChangeNotifier {
 
   /// 各科正确率（雷达图）
   Future<Map<String, double>> _loadRadarData() async {
-    final rows = await _db.querySubjectRadarData();
+    final examTypes = _examCategoryService.activeExamTypeValues;
+    final rows = await _db.querySubjectRadarData(
+      examTypes: examTypes.isEmpty ? null : examTypes,
+    );
     final result = <String, double>{};
     for (final row in rows) {
-      final subject = row['subject'] as String? ?? '未知';
+      final category = row['category'] as String? ?? '未知';
       final total = (row['total'] as int?) ?? 0;
       final correct = (row['correct'] as int?) ?? 0;
-      result[subject] = total == 0 ? 0.0 : correct / total;
+      result[category] = total == 0 ? 0.0 : correct / total;
     }
     return result;
   }

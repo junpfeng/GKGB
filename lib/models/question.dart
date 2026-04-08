@@ -66,7 +66,7 @@ class Question {
       category: map['category'] as String,
       type: map['type'] as String,
       content: map['content'] as String,
-      options: map['options'] != null
+      options: map['options'] != null && (map['options'] as String).isNotEmpty
           ? List<String>.from(jsonDecode(map['options'] as String))
           : [],
       answer: map['answer'] as String,

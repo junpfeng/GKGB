@@ -1,0 +1,8 @@
+{"feature":"ai_assistant","timestamp":"2026-04-07T00:00:00+08:00","ac_total":10,"ac_pass":8,"ac_manual":2,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":14}
+{"feature":"real_exam_collection","timestamp":"2026-04-07T00:00:00+08:00","ac_total":13,"ac_pass":12,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":15}
+{"feature":"ai_interview","timestamp":"2026-04-07T00:00:00+08:00","ac_total":14,"ac_pass":13,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":16}
+{"feature":"exam_calendar","timestamp":"2026-04-07T00:00:00+08:00","ac_total":12,"ac_pass":11,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":14}
+{"feature":"wrong_analysis","timestamp":"2026-04-07T00:00:00+08:00","ac_total":10,"ac_pass":9,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":10}
+{"feature":"exam_category","timestamp":"2026-04-07T12:00:00+08:00","ac_total":14,"ac_pass":11,"ac_manual":3,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":12}
+{"feature":"practice_question_source","timestamp":"2026-04-08T12:00:00+08:00","ac_total":5,"ac_pass":4,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":0}
+{"feature":"exam_entry_scores","timestamp":"2026-04-08T18:00:00+08:00","ac_total":7,"ac_pass":6,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":12}

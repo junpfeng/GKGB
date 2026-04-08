@@ -4,6 +4,7 @@ import 'package:exam_prep_app/services/baseline_service.dart';
 import 'package:exam_prep_app/services/exam_service.dart';
 import 'package:exam_prep_app/services/study_plan_service.dart';
 import 'package:exam_prep_app/services/llm/llm_manager.dart';
+import 'package:exam_prep_app/services/exam_category_service.dart';
 
 void main() {
   group('BaselineService 基础测试', () {
@@ -63,7 +64,8 @@ void main() {
     test('checkMilestones 无计划时返回空', () {
       final qs = QuestionService();
       final llm = LlmManager();
-      final service = StudyPlanService(qs, llm);
+      final examCategoryService = ExamCategoryService();
+      final service = StudyPlanService(qs, llm, examCategoryService);
       // 没有活跃计划，不能调用 checkMilestones（需要 planId）
       expect(service.hasPlan, isFalse);
     });
@@ -71,7 +73,8 @@ void main() {
     test('StudyPlanService 初始化正确', () {
       final qs = QuestionService();
       final llm = LlmManager();
-      final service = StudyPlanService(qs, llm);
+      final examCategoryService = ExamCategoryService();
+      final service = StudyPlanService(qs, llm, examCategoryService);
       expect(service.todayTasks.isEmpty, isTrue);
       expect(service.allPlans.isEmpty, isTrue);
       expect(service.isGenerating, isFalse);

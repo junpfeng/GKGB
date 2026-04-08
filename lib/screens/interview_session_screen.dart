@@ -77,10 +77,12 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
     if (!voiceService.ttsAvailable) return;
     setState(() => _ttsReadingQuestion = true);
     await voiceService.speak(text);
-    // 等待朗读完成
+    // 等待朗读完成（最多 30s 防止死循环）
+    int waitCount = 0;
     await Future.doWhile(() async {
       await Future.delayed(const Duration(milliseconds: 200));
-      return voiceService.isSpeaking;
+      waitCount++;
+      return voiceService.isSpeaking && waitCount < 150;
     });
     if (mounted) setState(() => _ttsReadingQuestion = false);
   }
@@ -109,9 +111,11 @@ class _InterviewSessionScreenState extends State<InterviewSessionScreen> {
         : plainText;
     setState(() => _ttsReadingComment = true);
     await voiceService.speak(summary);
+    int commentWaitCount = 0;
     await Future.doWhile(() async {
       await Future.delayed(const Duration(milliseconds: 200));
-      return voiceService.isSpeaking;
+      commentWaitCount++;
+      return voiceService.isSpeaking && commentWaitCount < 150;
     });
     if (mounted) setState(() => _ttsReadingComment = false);
   }

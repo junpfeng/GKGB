@@ -9,11 +9,13 @@ import '../models/interview_session.dart';
 import '../models/interview_score.dart';
 import 'llm/llm_manager.dart';
 import 'llm/llm_provider.dart';
+import 'exam_category_service.dart';
 
 /// 面试辅导服务：题库管理、模拟面试流程、AI 评分/追问/报告
 class InterviewService extends ChangeNotifier {
   final DatabaseHelper _db = DatabaseHelper.instance;
   final LlmManager _llm;
+  final ExamCategoryService _examCategoryService;
 
   // 面试状态
   InterviewSession? _currentSession;
@@ -48,9 +50,9 @@ class InterviewService extends ChangeNotifier {
           ? _sessionQuestions[_currentQuestionIndex]
           : null;
 
-  InterviewService(this._llm);
+  InterviewService(this._llm, this._examCategoryService);
 
-  /// 5 种面试题型
+  /// 5 种面试题型（默认静态列表）
   static const List<String> categories = [
     '综合分析',
     '计划组织',
@@ -58,6 +60,10 @@ class InterviewService extends ChangeNotifier {
     '应急应变',
     '自我认知',
   ];
+
+  /// 当前活跃的面试题型（优先从 ExamCategoryService 获取，回退到默认列表）
+  List<String> get activeCategories =>
+      _examCategoryService.activeCategory?.interviewCategories ?? categories;
 
   // ===== 题库管理 =====
 
@@ -229,7 +235,9 @@ class InterviewService extends ChangeNotifier {
             // 更新点评到数据库
             final comment = commentBuffer.toString();
             await _db.updateInterviewScore(scoreId, {'ai_comment': comment});
-            _scores[_scores.length - 1] = score.copyWith(aiComment: comment);
+            if (_scores.isNotEmpty) {
+              _scores[_scores.length - 1] = score.copyWith(aiComment: comment);
+            }
 
             // 判断是否追问
             final followUp = await _maybeGenerateFollowUp(
@@ -241,9 +249,11 @@ class InterviewService extends ChangeNotifier {
               await _db.updateInterviewScore(scoreId, {
                 'follow_up_question': followUp,
               });
-              _scores[_scores.length - 1] = _scores.last.copyWith(
-                followUpQuestion: followUp,
-              );
+              if (_scores.isNotEmpty) {
+                _scores[_scores.length - 1] = _scores.last.copyWith(
+                  followUpQuestion: followUp,
+                );
+              }
             }
 
             _isScoring = false;

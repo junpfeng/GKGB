@@ -51,7 +51,7 @@ class TalentPolicy {
       publishDate: map['publish_date'] as String?,
       deadline: map['deadline'] as String?,
       content: map['content'] as String?,
-      attachmentUrls: map['attachment_urls'] != null
+      attachmentUrls: map['attachment_urls'] != null && (map['attachment_urls'] as String).isNotEmpty
           ? List<String>.from(jsonDecode(map['attachment_urls'] as String))
           : [],
       fetchedAt: map['fetched_at'] as String?,

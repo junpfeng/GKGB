@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../models/exam_calendar_event.dart';
+import '../models/exam_category_registry.dart';
 import '../services/calendar_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
@@ -26,7 +27,8 @@ class _ExamCalendarScreenState extends State<ExamCalendarScreen> {
   String? _filterProvince;
   bool _subscribedOnly = false;
 
-  static const _examTypes = ['国考', '省考', '事业编', '选调'];
+  static final _examTypes =
+      ExamCategoryRegistry.allCategories.map((c) => c.label).toList();
   static const _provinces = [
     '北京', '天津', '上海', '重庆',
     '广东', '江苏', '浙江', '山东', '河南', '四川',

@@ -63,13 +63,13 @@ class MatchResult {
       id: map['id'] as int?,
       positionId: map['position_id'] as int,
       matchScore: (map['match_score'] as int?) ?? 0,
-      matchedItems: map['matched_items'] != null
+      matchedItems: map['matched_items'] != null && (map['matched_items'] as String).isNotEmpty
           ? List<String>.from(jsonDecode(map['matched_items'] as String))
           : [],
-      riskItems: map['risk_items'] != null
+      riskItems: map['risk_items'] != null && (map['risk_items'] as String).isNotEmpty
           ? List<String>.from(jsonDecode(map['risk_items'] as String))
           : [],
-      unmatchedItems: map['unmatched_items'] != null
+      unmatchedItems: map['unmatched_items'] != null && (map['unmatched_items'] as String).isNotEmpty
           ? List<String>.from(jsonDecode(map['unmatched_items'] as String))
           : [],
       advice: map['advice'] as String?,

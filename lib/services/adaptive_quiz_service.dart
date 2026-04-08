@@ -196,7 +196,9 @@ class AdaptiveQuizService extends ChangeNotifier {
     ''';
     final args = <dynamic>[subject, category];
     if (usedIds.isNotEmpty) {
-      sql += ' AND id NOT IN (${usedIds.join(',')})';
+      final placeholders = List.filled(usedIds.length, '?').join(',');
+      sql += ' AND id NOT IN ($placeholders)';
+      args.addAll(usedIds);
     }
     sql += ' ORDER BY difficulty ASC LIMIT ?';
     args.add(count);
@@ -219,7 +221,9 @@ class AdaptiveQuizService extends ChangeNotifier {
       args.add(subject);
     }
     if (usedIds.isNotEmpty) {
-      sql += ' AND id NOT IN (${usedIds.join(',')})';
+      final placeholders = List.filled(usedIds.length, '?').join(',');
+      sql += ' AND id NOT IN ($placeholders)';
+      args.addAll(usedIds);
     }
     sql += ' ORDER BY RANDOM() LIMIT ?';
     args.add(count);

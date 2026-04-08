@@ -318,7 +318,7 @@ class CalendarService extends ChangeNotifier {
       await db.transaction((txn) async {
         for (final item in items) {
           final map = item as Map<String, dynamic>;
-          txn.insert('exam_calendar', {
+          await txn.insert('exam_calendar', {
             'name': map['name'],
             'exam_type': map['exam_type'],
             'province': map['province'] ?? '',

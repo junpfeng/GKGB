@@ -91,29 +91,30 @@ class LlmManager extends ChangeNotifier {
         return;
       }
 
-      bool primaryFailed = false;
+      bool primarySentData = false;
       try {
         await for (final chunk in primary.streamChat(messages)) {
+          primarySentData = true;
           controller.add(chunk);
         }
       } catch (e) {
-        primaryFailed = true;
-        // 主模型 Stream 出错，尝试 fallback
-        if (_fallbackProviderName != null) {
+        // 主模型已发送部分数据后失败，不能混入 fallback 输出（会导致文本拼接混乱）
+        if (primarySentData || _fallbackProviderName == null) {
+          controller.addError(e);
+        } else {
+          // 主模型尚未发送任何数据，安全降级到 fallback
           final fallback = _providers[_fallbackProviderName];
           if (fallback != null) {
             try {
               await for (final chunk in fallback.streamChat(messages)) {
                 controller.add(chunk);
               }
-              primaryFailed = false;
             } catch (fallbackErr) {
               controller.addError(fallbackErr);
             }
+          } else {
+            controller.addError(e);
           }
-        }
-        if (primaryFailed) {
-          controller.addError(e);
         }
       }
 

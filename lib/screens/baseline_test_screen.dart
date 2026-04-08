@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/baseline_service.dart';
+import '../services/exam_category_service.dart';
 import '../services/study_plan_service.dart';
 import '../models/question.dart';
 import '../widgets/question_card.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
+import '../widgets/subject_category_ui.dart';
 import '../theme/app_theme.dart';
 
 /// 摸底测试主页：选科 → 快速10题测试 → 基线报告 → 自动生成学习计划
@@ -45,29 +47,30 @@ class _SubjectSelectView extends StatefulWidget {
 }
 
 class _SubjectSelectViewState extends State<_SubjectSelectView> {
-  final Set<String> _selectedSubjects = {'行测', '申论'};
+  Set<String> _selectedSubjects = {};
 
-  // 科目渐变配置
-  static const _subjectConfig = [
-    {
-      'name': '行测',
-      'icon': Icons.assignment,
-      'gradient': [Color(0xFF667eea), Color(0xFF764ba2)],
-    },
-    {
-      'name': '申论',
-      'icon': Icons.article,
-      'gradient': [Color(0xFF43E97B), Color(0xFF38F9D7)],
-    },
-    {
-      'name': '公基',
-      'icon': Icons.menu_book,
-      'gradient': [Color(0xFF0ED2F7), Color(0xFF09A6C3)],
-    },
-  ];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 首次初始化时默认选中所有活跃科目
+    if (_selectedSubjects.isEmpty) {
+      final subjects = context.read<ExamCategoryService>().activeSubjects;
+      _selectedSubjects = subjects.map((s) => s.subject).toSet();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    // 动态构建科目配置
+    final activeSubjects = context.read<ExamCategoryService>().activeSubjects;
+    final subjectConfig = activeSubjects.map((s) {
+      final firstCat = s.categories.first;
+      return {
+        'name': s.subject,
+        'icon': firstCat.icon,
+        'gradient': firstCat.gradient,
+      };
+    }).toList();
     return Scaffold(
       appBar: AppBar(title: const Text('摸底测试')),
       body: Padding(
@@ -109,7 +112,7 @@ class _SubjectSelectViewState extends State<_SubjectSelectView> {
             const SizedBox(height: 14),
             // 渐变勾选卡片
             Row(
-              children: _subjectConfig.map((config) {
+              children: subjectConfig.map((config) {
                 final name = config['name'] as String;
                 final icon = config['icon'] as IconData;
                 final gradColors = config['gradient'] as List<Color>;
@@ -416,7 +419,8 @@ class _BaselineReportView extends StatelessWidget {
     final report = service.baselineReport;
     final total = service.baselineQuestions.length;
     final correct = service.userAnswers.keys.where((id) {
-      final q = service.baselineQuestions.firstWhere((q) => q.id == id);
+      final q = service.baselineQuestions.where((q) => q.id == id).firstOrNull;
+      if (q == null) return false;
       final userAns = service.userAnswers[id] ?? '';
       return userAns.trim().toUpperCase() == q.answer.trim().toUpperCase();
     }).length;

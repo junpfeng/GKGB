@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/dashboard_service.dart';
 import '../services/calendar_service.dart';
+import '../services/exam_category_service.dart';
 import '../widgets/radar_chart_widget.dart';
 import '../widgets/heatmap_widget.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/progress_ring.dart';
 import '../theme/app_theme.dart';
 import 'exam_calendar_screen.dart';
+import 'exam_entry_scores_screen.dart';
 
 /// 个性化数据看板（替换原 StatsScreen）
 class DashboardScreen extends StatefulWidget {
@@ -83,8 +85,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
         children: [
+          // 备考倒计时（设置了目标考试日期时展示）
+          _buildExamCountdown(context),
           // 考试日历入口
           _buildCalendarEntry(context),
+          const SizedBox(height: 8),
+          // 进面分数线入口
+          _buildEntryScoresEntry(context),
           const SizedBox(height: 16),
           // 今日概览
           _buildTodayOverview(context, data),
@@ -107,6 +114,85 @@ class _DashboardScreenState extends State<DashboardScreen> {
           // AI 周报
           _buildWeeklyReport(context),
         ],
+      ),
+    );
+  }
+
+  // ===== 备考倒计时 =====
+
+  Widget _buildExamCountdown(BuildContext context) {
+    final examService = context.watch<ExamCategoryService>();
+    final targetDateStr = examService.primaryTarget?.targetExamDate;
+    if (targetDateStr == null || targetDateStr.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    final targetDate = DateTime.tryParse(targetDateStr);
+    if (targetDate == null) return const SizedBox.shrink();
+
+    final now = DateTime.now();
+    final daysLeft = targetDate.difference(DateTime(now.year, now.month, now.day)).inDays;
+
+    // 选择倒计时渐变色：紧急程度递增
+    final gradient = daysLeft <= 7
+        ? AppTheme.warmGradient
+        : daysLeft <= 30
+            ? AppTheme.warningGradient
+            : AppTheme.primaryGradient;
+
+    final countdownText = daysLeft < 0
+        ? '考试已结束'
+        : daysLeft == 0
+            ? '今天就是考试日！'
+            : '距 ${examService.activeCategory?.label ?? '目标考试'} 还有 $daysLeft 天';
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: GradientCard(
+        gradient: gradient,
+        borderRadius: AppTheme.radiusMedium,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+        child: Row(
+          children: [
+            const Icon(Icons.timer_outlined, color: Colors.white, size: 28),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    countdownText,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    targetDateStr,
+                    style: const TextStyle(color: Colors.white70, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+            if (daysLeft >= 0)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.25),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  '$daysLeft',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -163,6 +249,58 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                         );
                       },
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.white70),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ===== 进面分数线入口 =====
+
+  Widget _buildEntryScoresEntry(BuildContext context) {
+    return GradientCard(
+      gradient: const LinearGradient(
+        colors: [Color(0xFFf093fb), Color(0xFF764ba2)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderRadius: AppTheme.radiusMedium,
+      padding: EdgeInsets.zero,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppTheme.radiusMedium),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const ExamEntryScoresScreen()),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+          child: Row(
+            children: [
+              const Icon(Icons.analytics_outlined, color: Colors.white, size: 32),
+              const SizedBox(width: 14),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '进面分数线',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      '查看各岗位进面分数线与热度排行',
+                      style: TextStyle(color: Colors.white70, fontSize: 12),
                     ),
                   ],
                 ),
