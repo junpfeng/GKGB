@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import '../db/database_helper.dart';
 import '../models/idiom.dart';
 import '../models/idiom_example.dart';
@@ -21,37 +22,60 @@ class IdiomService extends ChangeNotifier {
 
   /// 导入预置成语数据 + 动态建立题目关联
   Future<void> importPresetIdioms() async {
+    final db = await _db.database;
+
+    // 检查数据完整性：成语和例句都有才跳过
     final idiomCount = await _db.countIdioms();
+    final exResult = await db.rawQuery(
+        'SELECT COUNT(*) as cnt FROM idiom_examples');
+    final exCount = (exResult.first['cnt'] as int?) ?? 0;
+
+    if (idiomCount > 0 && exCount > 0) {
+      debugPrint('成语预置数据已完整 (成语=$idiomCount, 例句=$exCount)，跳过导入');
+      return;
+    }
+
+    // 清除不完整的旧数据，重新导入
     if (idiomCount > 0) {
-      // 成语已存在，检查例句是否也已导入
-      final db = await _db.database;
-      final exResult = await db.rawQuery(
-          'SELECT COUNT(*) as cnt FROM idiom_examples');
-      final exCount = (exResult.first['cnt'] as int?) ?? 0;
-      if (exCount > 0) return; // 数据完整，跳过
-      // 成语存在但例句为空（旧版残留），清除后重新导入
+      debugPrint('成语数据不完整 (成语=$idiomCount, 例句=$exCount)，清除重新导入');
       await db.delete('idiom_question_links');
       await db.delete('idiom_examples');
       await db.delete('idioms');
+      // 重置 autoincrement 计数器
+      await db.delete('sqlite_sequence',
+          where: "name IN ('idioms', 'idiom_examples', 'idiom_question_links')");
     }
 
     try {
       // 1. 从 assets 加载预置 JSON
       final jsonStr = await rootBundle.loadString('assets/data/idioms_preset.json');
       final List<dynamic> items = jsonDecode(jsonStr);
+      debugPrint('加载预置成语 JSON: ${items.length} 条');
+
+      if (items.isEmpty) {
+        debugPrint('预置成语 JSON 为空，跳过导入');
+        return;
+      }
 
       for (final item in items) {
-        // 插入成语
-        final idiomId = await _db.insertIdiom({
-          'text': item['text'],
+        final text = item['text'] as String? ?? '';
+        if (text.isEmpty) continue;
+
+        // 插入成语（用 replace 确保更新）
+        final idiomId = await db.insert('idioms', {
+          'text': text,
           'definition': item['definition'] ?? '',
-        });
-        if (idiomId <= 0) continue;
+        }, conflictAlgorithm: ConflictAlgorithm.replace);
+
+        if (idiomId <= 0) {
+          debugPrint('插入成语失败: $text, id=$idiomId');
+          continue;
+        }
 
         // 插入例句
         final examples = item['examples'] as List<dynamic>? ?? [];
         for (final ex in examples) {
-          await _db.insertIdiomExample({
+          await db.insert('idiom_examples', {
             'idiom_id': idiomId,
             'sentence': ex['sentence'] ?? '',
             'year': ex['year'] ?? 0,
@@ -62,8 +86,13 @@ class IdiomService extends ChangeNotifier {
 
       // 2. 动态建立成语与题目的关联
       await _buildQuestionLinks();
-    } catch (e) {
-      debugPrint('导入预置成语数据失败: $e');
+
+      final finalCount = await _db.countIdioms();
+      final finalEx = await db.rawQuery(
+          'SELECT COUNT(*) as cnt FROM idiom_examples');
+      debugPrint('成语导入完成: 成语=$finalCount, 例句=${finalEx.first['cnt']}');
+    } catch (e, st) {
+      debugPrint('导入预置成语数据失败: $e\n$st');
     }
   }
 
