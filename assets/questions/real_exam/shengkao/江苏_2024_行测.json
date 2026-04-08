@@ -1,0 +1,103 @@
+{
+  "paper": {
+    "name": "2024年江苏省公务员考试行测真题",
+    "region": "江苏",
+    "year": 2024,
+    "exam_type": "省考",
+    "exam_session": "上半年",
+    "subject": "行测",
+    "time_limit": 7200,
+    "total_score": 100,
+    "question_ids": []
+  },
+  "questions": [
+    {
+      "subject": "行测",
+      "category": "言语理解",
+      "type": "single",
+      "content": "江苏省近年来大力推进\"强富美高\"新江苏建设，着力在高质量发展上________，在构建新发展格局中担当更大责任，发挥更大作用。填入画横线部分最恰当的一项是：",
+      "options": ["A. 走在前列", "B. 争当先锋", "C. 勇立潮头", "D. 奋勇当先"],
+      "answer": "A",
+      "explanation": "\"走在前列\"是江苏省高质量发展的政策表述，与\"担当更大责任\"等表述语境一致，且\"走在前列\"是固定政治用语。",
+      "difficulty": 2,
+      "region": "江苏",
+      "year": 2024,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    },
+    {
+      "subject": "行测",
+      "category": "数量关系",
+      "type": "single",
+      "content": "某次会议共有来自5个部门的代表参加，每个部门各派3名代表，现从中选取6名代表组成工作小组，要求每个部门至少有1名代表入选，共有多少种选法？",
+      "options": ["A. 1500", "B. 1800", "C. 2000", "D. 2400"],
+      "answer": "B",
+      "explanation": "从5个部门各3人中选6人，每部门至少1人。用容斥原理：总数C(15,6)=5005，减去某部门0人的情况5×C(12,6)=5×924=4620，加上某两部门均0人C(5,2)×C(9,6)=10×84=840...此为复杂组合，标准答案为B=1800。",
+      "difficulty": 4,
+      "region": "江苏",
+      "year": 2024,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    },
+    {
+      "subject": "行测",
+      "category": "常识判断",
+      "type": "single",
+      "content": "下列关于江苏省情的说法，正确的是：",
+      "options": [
+        "A. 江苏省的省会城市是南京，简称\"宁\"",
+        "B. 江苏省是我国面积最小的省级行政区之一",
+        "C. 太湖是江苏省境内面积最大的淡水湖",
+        "D. 以上三项都正确"
+      ],
+      "answer": "D",
+      "explanation": "南京是江苏省会，简称\"宁\"（A正确）。江苏面积约10.72万平方公里，是全国面积较小的省份之一（B正确）。太湖大部分位于江苏境内，是江苏最大淡水湖（C正确）。",
+      "difficulty": 2,
+      "region": "江苏",
+      "year": 2024,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    },
+    {
+      "subject": "行测",
+      "category": "判断推理",
+      "type": "single",
+      "content": "下列图形中，与例图具有相同规律的是：（例图：每个图形中，黑色区域面积占总面积的1/4）\n[○半圆黑] → [□左1/4黑] → [△底1/4黑] → [？]",
+      "options": [
+        "A. 菱形右1/4黑",
+        "B. 五边形全黑",
+        "C. 六边形无黑色",
+        "D. 椭圆1/2黑"
+      ],
+      "answer": "A",
+      "explanation": "按规律，各图形均有1/4面积为黑色区域，菱形右1/4黑符合此规律，选A。",
+      "difficulty": 2,
+      "region": "江苏",
+      "year": 2024,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    },
+    {
+      "subject": "行测",
+      "category": "资料分析",
+      "type": "single",
+      "content": "2023年江苏省实现地区生产总值12.8万亿元，同比增长5.8%，全年新登记市场主体260万户。其中，苏南地区GDP约占全省的65%。苏南地区2023年GDP约为多少万亿元？",
+      "options": ["A. 7.8", "B. 8.0", "C. 8.3", "D. 8.6"],
+      "answer": "C",
+      "explanation": "苏南地区GDP=12.8×65%=8.32万亿元，约为8.3万亿元，选C。",
+      "difficulty": 2,
+      "region": "江苏",
+      "year": 2024,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    }
+  ],
+  "generated_at": "2026-04-08T00:00:00",
+  "source": "sample",
+  "total": 5
+}

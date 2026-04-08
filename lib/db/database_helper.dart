@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -22,7 +23,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 10,
+      version: 11,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -399,6 +400,21 @@ class DatabaseHelper {
         updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (knowledge_point_id) REFERENCES knowledge_points (id),
         UNIQUE(knowledge_point_id)
+      )
+    ''');
+
+    // 用户备考目标表
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS user_exam_targets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        exam_category_id TEXT NOT NULL,
+        sub_type_id TEXT DEFAULT '',
+        province TEXT DEFAULT '',
+        is_primary INTEGER DEFAULT 0,
+        target_exam_date TEXT,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(exam_category_id, sub_type_id, province)
       )
     ''');
 
@@ -792,6 +808,27 @@ class DatabaseHelper {
       await db.execute(
         "ALTER TABLE interview_sessions ADD COLUMN mode TEXT DEFAULT 'text'",
       );
+    }
+
+    if (oldVersion < 11) {
+      // v10→v11：新增 user_exam_targets 表
+      try {
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS user_exam_targets (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            exam_category_id TEXT NOT NULL,
+            sub_type_id TEXT DEFAULT '',
+            province TEXT DEFAULT '',
+            is_primary INTEGER DEFAULT 0,
+            target_exam_date TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(exam_category_id, sub_type_id, province)
+          )
+        ''');
+      } catch (e) {
+        debugPrint('迁移 user_exam_targets 表跳过: $e');
+      }
     }
   }
 
@@ -1460,6 +1497,40 @@ class DatabaseHelper {
     return rows.map((r) => r[field].toString()).toList();
   }
 
+  /// 获取所有真题的内容哈希集合，用于增量导入去重
+  /// 由于数据库不存储 hash，此处用 content+options 的 hashCode 重建哈希集合
+  /// 与 RealExamService._computeContentHash 保持一致的计算逻辑
+  Future<Set<String>> getRealExamContentHashes() async {
+    final db = await database;
+    final rows = await db.query(
+      'questions',
+      columns: ['content', 'options'],
+      where: 'is_real_exam = 1',
+    );
+    final hashes = <String>{};
+    for (final row in rows) {
+      final content = _normalizeForHash(row['content'] as String? ?? '');
+      final optionsStr = row['options'] as String? ?? '[]';
+      final optionsList = jsonDecode(optionsStr) as List<dynamic>;
+      final optionTexts = optionsList.map((opt) {
+        final cleaned = opt
+            .toString()
+            .replaceFirst(RegExp(r'^[A-E][.、]\s*'), '');
+        return _normalizeForHash(cleaned);
+      }).toList();
+      final combined = [content, ...optionTexts].join('|');
+      hashes.add(combined.hashCode.toRadixString(16));
+    }
+    return hashes;
+  }
+
+  static String _normalizeForHash(String text) {
+    return text
+        .replaceAll(RegExp(r'\s+'), '')
+        .replaceAll(RegExp('[，。？！、；：""【】《》()（）\\[\\]…—]'), '')
+        .toLowerCase();
+  }
+
   // ===== real_exam_papers CRUD =====
 
   Future<int> insertRealExamPaper(Map<String, dynamic> paper) async {
@@ -1948,22 +2019,34 @@ class DatabaseHelper {
     ''', [since]);
   }
 
-  /// 各科目正确率（雷达图数据：行测5科 + 申论 + 公基）
-  Future<List<Map<String, dynamic>>> querySubjectRadarData() async {
+  /// 构建 exam_type IN 过滤子句（不含 WHERE/AND 关键字）
+  String _buildExamTypeFilter(List<String> examTypes) {
+    final placeholders = examTypes.map((_) => '?').join(', ');
+    return 'q.exam_type IN ($placeholders)';
+  }
+
+  /// 各科目正确率（雷达图数据，可选 examTypes 过滤）
+  Future<List<Map<String, dynamic>>> querySubjectRadarData({List<String>? examTypes}) async {
     final db = await database;
+    String examFilter = '';
+    final args = <dynamic>[];
+    if (examTypes != null && examTypes.isNotEmpty) {
+      examFilter = ' AND ${_buildExamTypeFilter(examTypes)}';
+      args.addAll(examTypes);
+    }
     return await db.rawQuery('''
-      SELECT q.subject,
+      SELECT q.category,
              COUNT(*) as total,
              SUM(ua.is_correct) as correct
       FROM user_answers ua
       JOIN questions q ON ua.question_id = q.id
-      WHERE ua.is_baseline = 0
-      GROUP BY q.subject
-    ''');
+      WHERE ua.is_baseline = 0$examFilter
+      GROUP BY q.category
+    ''', args.isEmpty ? null : args);
   }
 
-  /// 本周 vs 上周各维度对比
-  Future<Map<String, Map<String, dynamic>>> queryWeeklyComparison() async {
+  /// 本周 vs 上周各维度对比（可选 examTypes 过滤）
+  Future<Map<String, Map<String, dynamic>>> queryWeeklyComparison({List<String>? examTypes}) async {
     final db = await database;
     final now = DateTime.now();
     final thisWeekStart = now.subtract(Duration(days: now.weekday - 1));
@@ -1971,17 +2054,25 @@ class DatabaseHelper {
     final thisStart = thisWeekStart.toIso8601String().substring(0, 10);
     final lastStart = lastWeekStart.toIso8601String().substring(0, 10);
 
+    String examFilter = '';
+    final examArgs = <dynamic>[];
+    if (examTypes != null && examTypes.isNotEmpty) {
+      final placeholders = examTypes.map((_) => '?').join(', ');
+      examFilter = ' AND exam_type IN ($placeholders)';
+      examArgs.addAll(examTypes);
+    }
+
     final thisWeek = await db.rawQuery('''
       SELECT COUNT(*) as total, SUM(is_correct) as correct
       FROM user_answers
-      WHERE answered_at >= ?
-    ''', [thisStart]);
+      WHERE answered_at >= ?$examFilter
+    ''', [thisStart, ...examArgs]);
 
     final lastWeek = await db.rawQuery('''
       SELECT COUNT(*) as total, SUM(is_correct) as correct
       FROM user_answers
-      WHERE answered_at >= ? AND answered_at < ?
-    ''', [lastStart, thisStart]);
+      WHERE answered_at >= ? AND answered_at < ?$examFilter
+    ''', [lastStart, thisStart, ...examArgs]);
 
     return {
       'thisWeek': {
@@ -2045,6 +2136,18 @@ class DatabaseHelper {
     final total = (result.first['total'] as int?) ?? 0;
     final done = (result.first['done'] as int?) ?? 0;
     return total == 0 ? 0.0 : done / total;
+  }
+
+  // ===== user_exam_targets CRUD =====
+
+  Future<List<Map<String, dynamic>>> queryExamTargets() async {
+    final db = await database;
+    return await db.query('user_exam_targets', orderBy: 'is_primary DESC, created_at DESC');
+  }
+
+  Future<void> deleteAllExamTargets() async {
+    final db = await database;
+    await db.delete('user_exam_targets');
   }
 }
 

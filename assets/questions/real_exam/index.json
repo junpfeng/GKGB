@@ -1,0 +1,18 @@
+{
+  "files": [
+    "assets/questions/real_exam/guokao/全国_2020_行测.json",
+    "assets/questions/real_exam/guokao/全国_2021_行测.json",
+    "assets/questions/real_exam/guokao/全国_2022_行测.json",
+    "assets/questions/real_exam/guokao/全国_2023_行测.json",
+    "assets/questions/real_exam/guokao/全国_2024_行测.json",
+    "assets/questions/real_exam/guokao/全国_2025_申论.json",
+    "assets/questions/real_exam/shengkao/江苏_2024_行测.json",
+    "assets/questions/real_exam/shengkao/浙江_2024_行测.json",
+    "assets/questions/real_exam/shengkao/上海_2023_行测.json",
+    "assets/questions/real_exam/shengkao/山东_2022_行测.json",
+    "assets/questions/real_exam/shiyebian/全国_2022_公基.json",
+    "assets/questions/real_exam/shiyebian/全国_2024_公基.json"
+  ],
+  "version": "1.0.0",
+  "updated_at": "2026-04-08"
+}

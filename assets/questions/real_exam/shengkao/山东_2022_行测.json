@@ -1,0 +1,73 @@
+{
+  "paper": {
+    "name": "2022年山东省公务员考试行测真题",
+    "region": "山东",
+    "year": 2022,
+    "exam_type": "省考",
+    "exam_session": "上半年",
+    "subject": "行测",
+    "time_limit": 7200,
+    "total_score": 100,
+    "question_ids": []
+  },
+  "questions": [
+    {
+      "subject": "行测",
+      "category": "言语理解",
+      "type": "single",
+      "content": "山东是儒家文化的发源地，孔孟之道历经千年传承，至今仍对中国乃至世界的文化发展产生深远影响。下列对儒家思想核心理念表述正确的是：",
+      "options": [
+        "A. 仁、义、礼、智、信是儒家思想的五常",
+        "B. \"克己复礼\"是道家思想的核心",
+        "C. 儒家思想主张无为而治",
+        "D. \"格物致知\"是法家思想的主张"
+      ],
+      "answer": "A",
+      "explanation": "仁义礼智信（五常）是儒家伦理的核心（A正确）。\"克己复礼\"是孔子的主张，属于儒家（B错）。无为而治是道家（C错）。格物致知出自《大学》，是儒家思想（D错）。",
+      "difficulty": 2,
+      "region": "山东",
+      "year": 2022,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    },
+    {
+      "subject": "行测",
+      "category": "数量关系",
+      "type": "single",
+      "content": "某商品先降价20%，后涨价25%，则该商品价格比原来：",
+      "options": ["A. 涨了5%", "B. 降了5%", "C. 不变", "D. 涨了1%"],
+      "answer": "C",
+      "explanation": "设原价为P，降价20%后为0.8P，再涨价25%为0.8P×1.25=P，与原价相同，即不变，选C。",
+      "difficulty": 2,
+      "region": "山东",
+      "year": 2022,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    },
+    {
+      "subject": "行测",
+      "category": "常识判断",
+      "type": "single",
+      "content": "下列关于山东省情的说法，不正确的是：",
+      "options": [
+        "A. 山东省简称\"鲁\"，省会为济南",
+        "B. 黄河流经山东省后注入渤海",
+        "C. 泰山是我国五岳之首，位于山东省中部",
+        "D. 山东省是全国最大的粮食生产省份"
+      ],
+      "answer": "D",
+      "explanation": "山东简称\"鲁\"，省会济南（A正确）。黄河在山东垦利区入海，注入渤海（B正确）。泰山为五岳之首，在山东泰安（C正确）。全国最大粮食产省是黑龙江，山东是重要产粮省但非最大（D错误）。",
+      "difficulty": 2,
+      "region": "山东",
+      "year": 2022,
+      "exam_type": "省考",
+      "exam_session": "上半年",
+      "is_real_exam": 1
+    }
+  ],
+  "generated_at": "2026-04-08T00:00:00",
+  "source": "sample",
+  "total": 3
+}
