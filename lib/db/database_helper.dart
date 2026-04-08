@@ -869,6 +869,7 @@ class DatabaseHelper {
     String? subject,
     String? category,
     String? type,
+    bool? realExamOnly,
     int? limit,
     int? offset,
   }) async {
@@ -887,6 +888,10 @@ class DatabaseHelper {
       conditions.add('type = ?');
       args.add(type);
     }
+    // 仅真题筛选
+    if (realExamOnly == true) {
+      conditions.add('is_real_exam = 1');
+    }
     final where = conditions.isEmpty ? null : conditions.join(' AND ');
     return await db.query(
       'questions',
@@ -896,6 +901,30 @@ class DatabaseHelper {
       offset: offset,
       orderBy: 'id ASC',
     );
+  }
+
+  /// 按科目/分类统计真题数量
+  Future<int> countRealExamByCategory({
+    String? subject,
+    String? category,
+  }) async {
+    final db = await database;
+    final conditions = <String>['is_real_exam = 1'];
+    final args = <dynamic>[];
+    if (subject != null && subject.isNotEmpty) {
+      conditions.add('subject = ?');
+      args.add(subject);
+    }
+    if (category != null && category.isNotEmpty) {
+      conditions.add('category = ?');
+      args.add(category);
+    }
+    final where = conditions.join(' AND ');
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as cnt FROM questions WHERE $where',
+      args,
+    );
+    return (result.first['cnt'] as int?) ?? 0;
   }
 
   Future<Map<String, dynamic>?> queryQuestionById(int id) async {

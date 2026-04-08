@@ -1,10 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../services/exam_category_service.dart';
 import '../services/exam_service.dart';
 import '../services/question_service.dart';
+import '../services/real_exam_service.dart';
 import '../models/exam.dart';
 import '../models/question.dart';
+import '../models/real_exam_paper.dart';
 import '../widgets/question_card.dart';
 import '../widgets/ai_chat_dialog.dart';
 import '../widgets/glass_card.dart';
@@ -72,32 +75,48 @@ class _ExamHomeView extends StatelessWidget {
                   style: TextStyle(fontSize: 13, color: Colors.grey[500]),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _ExamTypeCard(
-                        title: '行测模考',
-                        subtitle: '130题 · 120分钟',
-                        gradient: AppTheme.primaryGradient,
-                        icon: Icons.timer,
-                        onTap: () => _startExam(context, '行测', 30, 120 * 60),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _ExamTypeCard(
-                        title: '自定义模考',
-                        subtitle: '选择科目和题量',
-                        gradient: AppTheme.warmGradient,
-                        icon: Icons.tune,
-                        onTap: () => _showCustomExamDialog(context),
-                      ),
-                    ),
-                  ],
+                Builder(
+                  builder: (context) {
+                    final ecService = context.watch<ExamCategoryService>();
+                    final subjects = ecService.activeSubjects;
+                    return Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: [
+                        for (final subject in subjects)
+                          SizedBox(
+                            width: (MediaQuery.of(context).size.width - 72) / 2,
+                            child: Builder(builder: (ctx) {
+                              final config = ecService.getExamConfig(subject.subject);
+                              return _ExamTypeCard(
+                                title: '${subject.label}模考',
+                                subtitle: '${config['questionCount']}题 · ${(config['timeLimit'] as int) ~/ 60}分钟',
+                                gradient: AppTheme.primaryGradient,
+                                icon: Icons.timer,
+                                onTap: () => _startExam(context, subject.subject, config['questionCount'] as int, config['timeLimit'] as int),
+                              );
+                            }),
+                          ),
+                        SizedBox(
+                          width: (MediaQuery.of(context).size.width - 72) / 2,
+                          child: _ExamTypeCard(
+                            title: '自定义模考',
+                            subtitle: '选择科目和题量',
+                            gradient: AppTheme.warmGradient,
+                            icon: Icons.tune,
+                            onTap: () => _showCustomExamDialog(context),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
           ),
+          const SizedBox(height: 20),
+          // 真题模考区域
+          const _RealExamSection(),
           const SizedBox(height: 20),
           // 历史记录标题
           Padding(
@@ -370,6 +389,296 @@ class _ExamHistoryCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// 真题模考区域：按考试类型分组展示真题试卷
+class _RealExamSection extends StatefulWidget {
+  const _RealExamSection();
+
+  @override
+  State<_RealExamSection> createState() => _RealExamSectionState();
+}
+
+class _RealExamSectionState extends State<_RealExamSection> {
+  Map<String, List<RealExamPaper>> _groupedPapers = {};
+  bool _loading = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_loading) {
+      _loadPapers();
+    }
+  }
+
+  Future<void> _loadPapers() async {
+    final rs = context.read<RealExamService>();
+    final grouped = await rs.loadPapersGroupedByExamType();
+    if (mounted) {
+      setState(() {
+        _groupedPapers = grouped;
+        _loading = false;
+      });
+    }
+  }
+
+  /// 点击试卷卡片，加载题目后开始模考
+  Future<void> _startPaperExam(
+    BuildContext context,
+    RealExamPaper paper,
+  ) async {
+    final rs = context.read<RealExamService>();
+    final es = context.read<ExamService>();
+
+    // 加载试卷题目
+    final questions = await rs.loadPaperQuestions(paper.id!);
+    if (!context.mounted) return;
+
+    if (questions.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('该试卷暂无题目')),
+      );
+      return;
+    }
+
+    try {
+      await es.startPaperExam(
+        paperId: paper.id!,
+        subject: paper.subject,
+        questions: questions,
+        timeLimitSeconds: paper.timeLimit,
+      );
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('开始模考失败：$e')),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GlassCard(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 标题行
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  gradient: AppTheme.warmGradient,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(
+                  Icons.history_edu,
+                  color: Colors.white,
+                  size: 18,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                '真题模考',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            '选择一套完整真题开始模拟考试',
+            style: TextStyle(fontSize: 13, color: Colors.grey[500]),
+          ),
+          const SizedBox(height: 16),
+          if (_loading)
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: CircularProgressIndicator(),
+              ),
+            )
+          else if (_groupedPapers.isEmpty)
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  '暂无真题试卷，请先导入真题数据',
+                  style: TextStyle(color: Colors.grey[500], fontSize: 13),
+                ),
+              ),
+            )
+          else
+            // 按考试类型分组展示
+            ...(_groupedPapers.entries.map((entry) {
+              return _buildExamTypeGroup(context, entry.key, entry.value);
+            })),
+        ],
+      ),
+    );
+  }
+
+  /// 构建单个考试类型分组
+  Widget _buildExamTypeGroup(
+    BuildContext context,
+    String examType,
+    List<RealExamPaper> papers,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Row(
+            children: [
+              Container(
+                width: 3,
+                height: 14,
+                decoration: BoxDecoration(
+                  gradient: AppTheme.primaryGradient,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Text(
+                examType,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                  color: Color(0xFF667eea),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Text(
+                '${papers.length}套',
+                style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+              ),
+            ],
+          ),
+        ),
+        // 试卷列表（最多显示5套，避免过长）
+        ...papers.take(5).map((paper) => _PaperExamCard(
+              paper: paper,
+              onTap: () => _startPaperExam(context, paper),
+            )),
+        const SizedBox(height: 12),
+      ],
+    );
+  }
+}
+
+/// 试卷模考卡片
+class _PaperExamCard extends StatelessWidget {
+  final RealExamPaper paper;
+  final VoidCallback onTap;
+
+  const _PaperExamCard({
+    required this.paper,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final timeMinutes = paper.timeLimit ~/ 60;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          decoration: BoxDecoration(
+            color: const Color(0xFF667eea).withValues(alpha: 0.06),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: const Color(0xFF667eea).withValues(alpha: 0.15),
+            ),
+          ),
+          child: Row(
+            children: [
+              // 年份标识
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: AppTheme.primaryGradient,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text(
+                    '${paper.year}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      paper.name,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 3),
+                    Row(
+                      children: [
+                        Text(
+                          '${paper.questionIds.length}题',
+                          style: TextStyle(
+                              fontSize: 11, color: Colors.grey[500]),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '$timeMinutes分钟',
+                          style: TextStyle(
+                              fontSize: 11, color: Colors.grey[500]),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          paper.subject,
+                          style: TextStyle(
+                              fontSize: 11, color: Colors.grey[500]),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  gradient: AppTheme.primaryGradient,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: const Text(
+                  '开始',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

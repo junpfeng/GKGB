@@ -70,6 +70,24 @@ class RealExamService extends ChangeNotifier {
     return questions;
   }
 
+  /// 按考试类型分组加载所有试卷，每组内按年份降序排列
+  Future<Map<String, List<RealExamPaper>>> loadPapersGroupedByExamType() async {
+    await ensureSampleData();
+    final rows = await _db.queryRealExamPapers();
+    final allPapers = rows.map((r) => RealExamPaper.fromDb(r)).toList();
+
+    // 按 examType 分组
+    final grouped = <String, List<RealExamPaper>>{};
+    for (final paper in allPapers) {
+      grouped.putIfAbsent(paper.examType, () => []).add(paper);
+    }
+    // 每组按年份降序排列
+    for (final key in grouped.keys) {
+      grouped[key]!.sort((a, b) => b.year.compareTo(a.year));
+    }
+    return grouped;
+  }
+
   /// 用户贡献真题：LLM 结构化解析，返回流式 Stream
   Stream<String> contributeQuestion(String rawText) {
     const prompt = '''

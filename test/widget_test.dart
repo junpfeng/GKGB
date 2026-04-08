@@ -13,6 +13,8 @@ import 'package:exam_prep_app/services/assistant_service.dart';
 import 'package:exam_prep_app/services/voice_service.dart';
 import 'package:exam_prep_app/services/dashboard_service.dart';
 import 'package:exam_prep_app/services/calendar_service.dart';
+import 'package:exam_prep_app/services/exam_category_service.dart';
+import 'package:exam_prep_app/services/real_exam_service.dart';
 
 void main() {
   setUpAll(() {
@@ -27,10 +29,13 @@ void main() {
     final llmManager = LlmManager();
     final examService = ExamService(questionService);
     final matchService = MatchService(profileService, llmManager);
-    final studyPlanService = StudyPlanService(questionService, llmManager);
+    final examCategoryService = ExamCategoryService();
+    examCategoryService.setExploreModeSync();
+    final studyPlanService = StudyPlanService(questionService, llmManager, examCategoryService);
     final baselineService = BaselineService(questionService);
     final voiceService = VoiceService();
-    final dashboardService = DashboardService(questionService, examService, llmManager);
+    final realExamService = RealExamService(questionService, llmManager);
+    final dashboardService = DashboardService(questionService, examService, llmManager, examCategoryService);
     final calendarService = CalendarService();
     final assistantService = AssistantService(
       llm: llmManager,
@@ -40,11 +45,13 @@ void main() {
       studyPlanService: studyPlanService,
       profileService: profileService,
       baselineService: baselineService,
+      examCategoryService: examCategoryService,
     );
 
     await tester.pumpWidget(
       MultiProvider(
         providers: [
+          ChangeNotifierProvider.value(value: examCategoryService),
           ChangeNotifierProvider.value(value: questionService),
           ChangeNotifierProvider.value(value: profileService),
           ChangeNotifierProvider.value(value: llmManager),
@@ -53,6 +60,7 @@ void main() {
           ChangeNotifierProvider.value(value: studyPlanService),
           ChangeNotifierProvider.value(value: baselineService),
           ChangeNotifierProvider.value(value: voiceService),
+          ChangeNotifierProvider.value(value: realExamService),
           ChangeNotifierProvider.value(value: dashboardService),
           ChangeNotifierProvider.value(value: calendarService),
           ChangeNotifierProvider.value(value: assistantService),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../models/exam_category.dart';
+import '../services/exam_category_service.dart';
 import '../services/question_service.dart';
 import '../services/wrong_analysis_service.dart';
 import '../models/question.dart';
@@ -7,6 +9,7 @@ import '../widgets/question_card.dart';
 import '../widgets/ai_chat_dialog.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
+import '../widgets/subject_category_ui.dart';
 import '../theme/app_theme.dart';
 import 'real_exam_screen.dart';
 import 'interview_home_screen.dart';
@@ -17,61 +20,24 @@ import 'adaptive_quiz_screen.dart';
 class PracticeScreen extends StatelessWidget {
   const PracticeScreen({super.key});
 
-  // 科目配置（增加渐变色映射）
-  static const List<Map<String, dynamic>> _subjects = [
-    {
-      'subject': '行测',
-      'category': '言语理解',
-      'label': '言语理解',
-      'icon': Icons.text_fields,
-      'gradient': [Color(0xFF667eea), Color(0xFF764ba2)],
-    },
-    {
-      'subject': '行测',
-      'category': '数量关系',
-      'label': '数量关系',
-      'icon': Icons.calculate,
-      'gradient': [Color(0xFFf093fb), Color(0xFFf5576c)],
-    },
-    {
-      'subject': '行测',
-      'category': '判断推理',
-      'label': '判断推理',
-      'icon': Icons.psychology,
-      'gradient': [Color(0xFF4776E6), Color(0xFF8E54E9)],
-    },
-    {
-      'subject': '行测',
-      'category': '资料分析',
-      'label': '资料分析',
-      'icon': Icons.analytics,
-      'gradient': [Color(0xFF0ED2F7), Color(0xFF09A6C3)],
-    },
-    {
-      'subject': '行测',
-      'category': '常识判断',
-      'label': '常识判断',
-      'icon': Icons.lightbulb,
-      'gradient': [Color(0xFFF7971E), Color(0xFFFFD200)],
-    },
-    {
-      'subject': '申论',
-      'category': '申论',
-      'label': '申论写作',
-      'icon': Icons.article,
-      'gradient': [Color(0xFF43E97B), Color(0xFF38F9D7)],
-    },
-    {
-      'subject': '公基',
-      'category': '公共基础知识',
-      'label': '公共基础',
-      'icon': Icons.menu_book,
-      'gradient': [Color(0xFF09A6C3), Color(0xFF0ED2F7)],
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final ecService = context.watch<ExamCategoryService>();
+    // 从活跃科目动态构建科目列表
+    final subjects = <Map<String, dynamic>>[];
+    for (final s in ecService.activeSubjects) {
+      for (final c in s.categories) {
+        subjects.add({
+          'subject': s.subject,
+          'category': c.category,
+          'label': c.label,
+          'icon': c.icon,
+          'gradient': c.gradient,
+        });
+      }
+    }
+    final showInterview = ecService.isFeatureSupported(Feature.interview);
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -91,7 +57,7 @@ class PracticeScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            _SubjectList(subjects: _subjects),
+            _SubjectList(subjects: subjects, showInterview: showInterview),
             const _WrongQuestionList(),
             const RealExamScreen(),
           ],
@@ -101,100 +67,158 @@ class PracticeScreen extends StatelessWidget {
   }
 }
 
-class _SubjectList extends StatelessWidget {
+class _SubjectList extends StatefulWidget {
   final List<Map<String, dynamic>> subjects;
-  const _SubjectList({required this.subjects});
+  final bool showInterview;
+  const _SubjectList({required this.subjects, this.showInterview = true});
+
+  @override
+  State<_SubjectList> createState() => _SubjectListState();
+}
+
+class _SubjectListState extends State<_SubjectList> {
+  /// 缓存每个分类的真题数量，key = "subject::category"
+  final Map<String, int> _realExamCounts = {};
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadRealExamCounts();
+  }
+
+  /// 异步预加载所有分类的真题数量
+  Future<void> _loadRealExamCounts() async {
+    final qs = context.read<QuestionService>();
+    for (final s in widget.subjects) {
+      final key = '${s['subject']}::${s['category']}';
+      if (!_realExamCounts.containsKey(key)) {
+        final count = await qs.countRealExamByCategory(
+          subject: s['subject'] as String,
+          category: s['category'] as String,
+        );
+        if (mounted) {
+          setState(() => _realExamCounts[key] = count);
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<QuestionService>(
-      builder: (context, service, _) {
-        return ListView.builder(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-          itemCount: subjects.length + 3,
-          itemBuilder: (context, index) {
-            // 面试入口横幅卡片
-            if (index == 0) {
-              return _buildInterviewEntryCard(context);
-            }
-            // 智能练习入口卡片（面试入口下方）
-            if (index == 1) {
-              return _buildAdaptiveQuizCard(context);
-            }
-            if (index == subjects.length + 2) {
-              return _buildFavoritesCard(context);
-            }
-            final subject = subjects[index - 2];
-            final gradientColors = subject['gradient'] as List<Color>;
-            final gradient = LinearGradient(
-              colors: gradientColors,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            );
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: AccentCard(
-                accentGradient: gradient,
-                accentWidth: 5,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => QuestionListScreen(
-                      subject: subject['subject'] as String,
-                      category: subject['category'] as String,
-                      title: subject['label'] as String,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    // 渐变图标容器
-                    Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: gradientColors
-                              .map((c) => c.withValues(alpha: 0.15))
-                              .toList(),
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Icon(
-                        subject['icon'] as IconData,
-                        color: gradientColors.first,
-                        size: 22,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            subject['label'] as String,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            '点击开始练习',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[500],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Icon(Icons.chevron_right, color: Colors.grey[400], size: 20),
-                  ],
+    // 特殊卡片数量（面试+自适应+收藏）
+    final extraCards = widget.showInterview ? 3 : 2;
+    return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+      itemCount: widget.subjects.length + extraCards,
+      itemBuilder: (context, index) {
+        // 面试入口横幅卡片（仅支持面试功能时显示）
+        if (widget.showInterview && index == 0) {
+          return _buildInterviewEntryCard(context);
+        }
+        // 智能练习入口卡片
+        final quizIndex = widget.showInterview ? 1 : 0;
+        if (index == quizIndex) {
+          return _buildAdaptiveQuizCard(context);
+        }
+        if (index == widget.subjects.length + extraCards - 1) {
+          return _buildFavoritesCard(context);
+        }
+        final subjectIndex = widget.showInterview ? index - 2 : index - 1;
+        final subject = widget.subjects[subjectIndex];
+        final gradientColors = subject['gradient'] as List<Color>;
+        final gradient = LinearGradient(
+          colors: gradientColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        );
+        // 从缓存读取真题数量
+        final cacheKey = '${subject['subject']}::${subject['category']}';
+        final realExamCount = _realExamCounts[cacheKey];
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: AccentCard(
+            accentGradient: gradient,
+            accentWidth: 5,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => QuestionListScreen(
+                  subject: subject['subject'] as String,
+                  category: subject['category'] as String,
+                  title: subject['label'] as String,
                 ),
               ),
-            );
-          },
+            ),
+            child: Row(
+              children: [
+                // 渐变图标容器
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: gradientColors
+                          .map((c) => c.withValues(alpha: 0.15))
+                          .toList(),
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    subject['icon'] as IconData,
+                    color: gradientColors.first,
+                    size: 22,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        subject['label'] as String,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '点击开始练习',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[500],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // 真题数量角标
+                if (realExamCount != null && realExamCount > 0)
+                  Container(
+                    margin: const EdgeInsets.only(right: 6),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 7, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: gradientColors.first.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: gradientColors.first.withValues(alpha: 0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      '真题$realExamCount',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: gradientColors.first,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                Icon(Icons.chevron_right, color: Colors.grey[400], size: 20),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -554,6 +578,8 @@ class QuestionListScreen extends StatefulWidget {
 class _QuestionListScreenState extends State<QuestionListScreen> {
   List<Question> _questions = [];
   bool _loading = true;
+  /// 是否仅显示真题
+  bool _realExamOnly = false;
 
   @override
   void initState() {
@@ -562,9 +588,11 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
   }
 
   Future<void> _loadQuestions() async {
+    setState(() => _loading = true);
     final questions = await context.read<QuestionService>().loadQuestions(
       subject: widget.subject,
       category: widget.category,
+      realExamOnly: _realExamOnly ? true : null,
       limit: 50,
     );
     if (mounted) {
@@ -573,6 +601,12 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
         _loading = false;
       });
     }
+  }
+
+  /// 切换"仅看真题"筛选
+  void _toggleRealExamFilter(bool? selected) {
+    setState(() => _realExamOnly = selected ?? false);
+    _loadQuestions();
   }
 
   @override
@@ -601,64 +635,153 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
             ),
         ],
       ),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : _questions.isEmpty
-              ? const Center(child: Text('暂无题目，请检查题库'))
-              : ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
-                  itemCount: _questions.length,
-                  itemBuilder: (context, index) {
-                    final q = _questions[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: GlassCard(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 10),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => QuestionDetailScreen(question: q),
-                          ),
+      body: Column(
+        children: [
+          // 顶部筛选 Chip
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+            child: Row(
+              children: [
+                FilterChip(
+                  label: const Text('仅看真题'),
+                  selected: _realExamOnly,
+                  onSelected: _toggleRealExamFilter,
+                  selectedColor: const Color(0xFF667eea).withValues(alpha: 0.15),
+                  checkmarkColor: const Color(0xFF667eea),
+                  labelStyle: TextStyle(
+                    fontSize: 12,
+                    color: _realExamOnly
+                        ? const Color(0xFF667eea)
+                        : Colors.grey[600],
+                    fontWeight: _realExamOnly
+                        ? FontWeight.w600
+                        : FontWeight.normal,
+                  ),
+                  side: BorderSide(
+                    color: _realExamOnly
+                        ? const Color(0xFF667eea)
+                        : Colors.grey[300]!,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 0),
+                ),
+              ],
+            ),
+          ),
+          // 题目列表
+          Expanded(
+            child: _loading
+                ? const Center(child: CircularProgressIndicator())
+                : _questions.isEmpty
+                    ? Center(
+                        child: Text(
+                          _realExamOnly ? '该分类暂无真题' : '暂无题目，请检查题库',
                         ),
-                        child: Row(
-                          children: [
-                            // 题号圆形
-                            Container(
-                              width: 28,
-                              height: 28,
-                              decoration: const BoxDecoration(
-                                gradient: AppTheme.primaryGradient,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '${index + 1}',
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                      )
+                    : ListView.builder(
+                        padding:
+                            const EdgeInsets.fromLTRB(12, 8, 12, 24),
+                        itemCount: _questions.length,
+                        itemBuilder: (context, index) {
+                          final q = _questions[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: GlassCard(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 10),
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      QuestionDetailScreen(question: q),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                q.content,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(fontSize: 13),
+                              child: Row(
+                                children: [
+                                  // 题号圆形
+                                  Container(
+                                    width: 28,
+                                    height: 28,
+                                    decoration: const BoxDecoration(
+                                      gradient: AppTheme.primaryGradient,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        '${index + 1}',
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          q.content,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontSize: 13),
+                                        ),
+                                        // 真题题目显示年份+考试类型标签
+                                        if (q.isRealExam == 1 &&
+                                            (q.year > 0 ||
+                                                q.examType.isNotEmpty))
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 4),
+                                            child: Row(
+                                              children: [
+                                                if (q.year > 0)
+                                                  _buildQuestionTag(
+                                                      '${q.year}'),
+                                                if (q.examType.isNotEmpty) ...[
+                                                  const SizedBox(width: 4),
+                                                  _buildQuestionTag(
+                                                      q.examType),
+                                                ],
+                                              ],
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                  Icon(Icons.chevron_right,
+                                      color: Colors.grey[400], size: 16),
+                                ],
                               ),
                             ),
-                            Icon(Icons.chevron_right,
-                                color: Colors.grey[400], size: 16),
-                          ],
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 构建真题年份/类型小标签
+  Widget _buildQuestionTag(String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+      decoration: BoxDecoration(
+        color: const Color(0xFF667eea).withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 10,
+          color: Color(0xFF667eea),
+        ),
+      ),
     );
   }
 }

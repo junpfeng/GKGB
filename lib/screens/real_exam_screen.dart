@@ -38,6 +38,9 @@ class _RealExamScreenState extends State<RealExamScreen> {
   int _currentPage = 0;
   static const int _pageSize = 20;
 
+  /// 快捷统计：各考试类型的真题总数，key=examType, value=count
+  Map<String, int> _quickStats = {};
+
   @override
   void initState() {
     super.initState();
@@ -57,7 +60,22 @@ class _RealExamScreenState extends State<RealExamScreen> {
         _loading = false;
       });
     }
+    // 异步加载快捷统计
+    _loadQuickStats(examTypes, qs);
     await _loadResults();
+  }
+
+  /// 异步加载各考试类型的题目数量统计
+  Future<void> _loadQuickStats(
+    List<String> examTypes,
+    QuestionService qs,
+  ) async {
+    final stats = <String, int>{};
+    for (final et in examTypes) {
+      final count = await qs.countRealExamQuestions(examType: et);
+      stats[et] = count;
+    }
+    if (mounted) setState(() => _quickStats = stats);
   }
 
   Future<void> _onExamTypeChanged(String? value) async {
@@ -162,6 +180,8 @@ class _RealExamScreenState extends State<RealExamScreen> {
 
     return Column(
       children: [
+        // 快捷统计条
+        if (_quickStats.isNotEmpty) _buildQuickStatsBar(),
         // 筛选区
         _buildFilterBar(),
         // 结果区
@@ -171,6 +191,71 @@ class _RealExamScreenState extends State<RealExamScreen> {
               : _buildResultList(),
         ),
       ],
+    );
+  }
+
+  /// 顶部快捷统计卡片横向滚动条
+  Widget _buildQuickStatsBar() {
+    return Container(
+      height: 60,
+      color: Theme.of(context).colorScheme.surface,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        itemCount: _quickStats.length,
+        separatorBuilder: (context, i) => const SizedBox(width: 8),
+        itemBuilder: (context, index) {
+          final entry = _quickStats.entries.elementAt(index);
+          final isSelected = entry.key == _selectedExamType;
+          return GestureDetector(
+            onTap: () => _onExamTypeChanged(
+              isSelected ? null : entry.key,
+            ),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                gradient: isSelected
+                    ? AppTheme.primaryGradient
+                    : null,
+                color: isSelected
+                    ? null
+                    : const Color(0xFF667eea).withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: isSelected
+                      ? Colors.transparent
+                      : const Color(0xFF667eea).withValues(alpha: 0.2),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    entry.key,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: isSelected
+                          ? Colors.white
+                          : const Color(0xFF667eea),
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${entry.value}题',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: isSelected
+                          ? Colors.white70
+                          : Colors.grey[500],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -323,17 +408,19 @@ class _RealExamScreenState extends State<RealExamScreen> {
                             style: const TextStyle(fontSize: 13),
                           ),
                           const SizedBox(height: 4),
-                          Row(
+                          Wrap(
+                            spacing: 4,
+                            runSpacing: 2,
                             children: [
+                              // 知识点分类标签
+                              if (q.category.isNotEmpty)
+                                _buildTag(q.category,
+                                    color: const Color(0xFF38B2AC)),
                               _buildTag(q.examType),
-                              if (q.region.isNotEmpty) ...[
-                                const SizedBox(width: 4),
+                              if (q.region.isNotEmpty)
                                 _buildTag(q.region),
-                              ],
-                              if (q.year > 0) ...[
-                                const SizedBox(width: 4),
+                              if (q.year > 0)
                                 _buildTag('${q.year}'),
-                              ],
                             ],
                           ),
                         ],
@@ -358,17 +445,18 @@ class _RealExamScreenState extends State<RealExamScreen> {
     );
   }
 
-  Widget _buildTag(String text) {
+  Widget _buildTag(String text, {Color? color}) {
     if (text.isEmpty) return const SizedBox.shrink();
+    final tagColor = color ?? const Color(0xFF667eea);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: const Color(0xFF667eea).withValues(alpha: 0.1),
+        color: tagColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 10, color: Color(0xFF667eea)),
+        style: TextStyle(fontSize: 10, color: tagColor),
       ),
     );
   }
