@@ -27,10 +27,11 @@ USER_AGENT = (
 FENBI_CONFIG = {
     "base_url": "https://fenbi.com",
     "api_url": "https://tiku.fenbi.com/api",
-    # TODO: 填入实际题目列表 API 端点（需调研）
-    "question_list_endpoint": "/questions",
     "enabled": True,
 }
+
+# 粉笔网 Cookie（通过命令行参数 --fenbi-cookie 传入更安全）
+FENBI_COOKIE = os.environ.get("FENBI_COOKIE", "")
 
 # QZZN 论坛
 QZZN_CONFIG = {

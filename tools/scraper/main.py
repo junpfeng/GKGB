@@ -27,6 +27,7 @@ from datetime import datetime
 from typing import Optional
 
 from config import (
+    FENBI_COOKIE,
     GUOKAO_DIR,
     SHENGKAO_DIR,
     SHIYEBIAN_DIR,
@@ -234,7 +235,8 @@ def main():
 
         if source in ("all", "fenbi"):
             logger.info("▶ 粉笔网爬虫...")
-            raw_questions.extend(run_fenbi(cookie=args.fenbi_cookie))
+            cookie = args.fenbi_cookie or FENBI_COOKIE
+            raw_questions.extend(run_fenbi(cookie=cookie))
 
         if source in ("all", "qzzn"):
             logger.info("▶ QZZN 论坛爬虫...")
