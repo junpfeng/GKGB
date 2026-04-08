@@ -38,19 +38,19 @@
 ```
 ┌─────────────────────────────────────────────┐
 │  UI 层 (screens/ + widgets/)                │
-│  28 个页面 + 17 个通用组件                    │
+│  35 个页面 + 21 个通用组件                    │
 ├─────────────────────────────────────────────┤
 │  状态管理层 (Provider)                       │
-│  18 个 ChangeNotifier，依赖注入              │
+│  26 个 ChangeNotifier，依赖注入              │
 ├─────────────────────────────────────────────┤
 │  服务层 (services/)                          │
-│  29 个服务类，业务逻辑集中                    │
+│  37 个服务类，业务逻辑集中                    │
 ├─────────────────────────────────────────────┤
 │  LLM 抽象层 (services/llm/)                 │
 │  统一接口 + 6 个模型 Provider + fallback     │
 ├─────────────────────────────────────────────┤
 │  数据层 (db/ + models/)                      │
-│  SQLite 27 张表 + 27 个数据模型              │
+│  SQLite 42 张表 + 41 个数据模型              │
 └─────────────────────────────────────────────┘
 ```
 
@@ -62,11 +62,21 @@
 App
 ├── ExamTargetScreen（未设目标时显示）
 └── HomeScreen（底部 5 Tab）
-    ├── Tab 0: PracticeScreen → QuestionListScreen → QuestionDetailScreen
-    │   └── IdiomListScreen（言语理解入口）
-    ├── Tab 1: ExamScreen（模拟考试）
-    │   └── RealExamScreen → RealExamPaperScreen
-    ├── Tab 2: PolicyMatchScreen → PolicyMatchDetailScreen
+    ├── Tab 0: PracticeScreen（刷题总入口）
+    │   ├── QuestionListScreen → QuestionDetailScreen
+    │   ├── IdiomListScreen（言语理解入口）
+    │   ├── RealExamScreen → RealExamPaperScreen / ContributeQuestionScreen
+    │   ├── InterviewHomeScreen → InterviewSessionScreen → InterviewReportScreen
+    │   ├── AdaptiveQuizScreen → MasteryOverviewScreen
+    │   ├── SpeedTrainingScreen（首页/训练中/训练结束 3 视图）
+    │   ├── WrongAnalysisScreen → KnowledgeMapScreen
+    │   ├── PoliticalTheoryScreen（3 Tab: 文件解读 / 口诀记忆 / 概念对比）
+    │   │   └── ExamPointListScreen → ExamPointDetailScreen（口诀生成）
+    │   ├── EssayComparisonScreen（试卷选择 → 小题列表 → 答案对比）
+    │   ├── VisualExplanationScreen（数量关系可视化解题播放器）
+    │   └── FavoriteListScreen
+    ├── Tab 1: ExamScreen（模拟考试）→ ExamReportScreen
+    ├── Tab 2: PolicyMatchScreen → PositionDetailScreen
     ├── Tab 3: DashboardScreen
     │   ├── KnowledgeMapScreen
     │   ├── MasteryOverviewScreen
@@ -118,10 +128,16 @@ App
 | `llm_settings_screen.dart` | `LLMSettingsScreen` | LLM 模型配置 |
 | `contribute_question_screen.dart` | `ContributeQuestionScreen` | 用户贡献题目 |
 | `adaptive_quiz_screen.dart` | `AdaptiveQuizScreen` | 自适应刷题 |
+| `exam_entry_scores_screen.dart` | `ExamEntryScoresScreen` | 进面分数线查询 |
+| `spatial_viz_screen.dart` | `SpatialVizScreen` | 空间可视化全屏播放器 |
+| `political_theory_screen.dart` | `PoliticalTheoryScreen` | 政治理论专项（3 Tab: 文件解读/口诀记忆/概念对比） |
+| `visual_explanation_screen.dart` | `VisualExplanationScreen` | 数量关系可视化解题播放器（方程推导动画） |
+| `essay_comparison_screen.dart` | `EssayComparisonScreen` | 申论小题多名师答案对比（三级导航：试卷→小题→答案对比） |
+| `speed_training_screen.dart` | `SpeedTrainingScreen` | 资料分析速算训练（首页/训练中/训练结束 3 视图） |
 
 ---
 
-## 5. 服务层清单（29 个）
+## 5. 服务层清单（37 个）
 
 ### 5.1 核心业务服务
 
@@ -148,6 +164,13 @@ App
 | `DashboardService` | 学习数据聚合 |
 | `AdaptiveQuizService` | 薄弱点自适应出题 |
 | `CalendarService` | 考试日历与提醒 |
+| `ExamEntryScoreService` | 进面分数线（asset 预置导入 + 查询/排行/趋势） |
+| `MasterQuestionService` | 母题类型 CRUD + 题目标签关联 + 按类型查题 |
+| `SpatialVizService` | 空间可视化数据查询 + 预置 JSON 导入 |
+| `PoliticalTheoryService` | 政治理论文件解读 + AI 口诀生成（流式） + 概念对比 + 预置数据导入 |
+| `VisualExplanationService` | 数量关系可视化解题（AI 生成 + DB 缓存 + 预置数据导入） |
+| `EssayComparisonService` | 申论小题多名师答案对比 + AI 流式分析得分要点 + 预置数据导入 |
+| `SpeedTrainingService` | 速算训练（算法生成练习题 + 训练管理 + 历史统计 + 预置数据导入） |
 
 ### 5.3 基础设施服务
 
@@ -172,7 +195,7 @@ App
 
 ---
 
-## 6. 数据模型清单（27 个）
+## 6. 数据模型清单（39 个）
 
 ### 6.1 题目与作答
 
@@ -225,10 +248,11 @@ App
 | `EssaySubmission` | topic, content, aiScore, aiComment | 申论提交 |
 | `Idiom` | text, definition | 成语 |
 | `IdiomExample` | sentence, year, sourceUrl | 成语例句 |
+| `VisualExplanation` | questionId, explanationType, stepsJson, templateId | 可视化解题步骤 |
 
 ---
 
-## 7. 通用组件（17 个）
+## 7. 通用组件（21 个）
 
 | 组件 | 说明 |
 |------|------|
@@ -249,12 +273,15 @@ App
 | `AssistantInputBar` | 文本 + 语音输入栏 |
 | `AssistantMessage` | 消息气泡（支持 ACTION 按钮） |
 | `AssistantTools` | 工具注册 + 消息模型 + ACTION 解析 |
+| `SpatialPlayerWidget` | 空间可视化播放控制器（步骤导航+解题思路） |
+| `VisualPlayerWidget` | 可视化解题播放控制器（步骤导航+速度调节） |
+| `EquationPainter` | 方程推导 CustomPainter（逐步绘制+高亮+动画） |
 
 ---
 
-## 8. 数据库设计（SQLite, 27 张表）
+## 8. 数据库设计（SQLite, 39 张表）
 
-当前版本：**v12**
+当前版本：**v16**
 
 ### 核心表
 
@@ -310,6 +337,12 @@ idiom_examples     — 成语例句
 idiom_question_links — 成语-题目关联
 ```
 
+### 可视化解题表
+
+```
+visual_explanations   — 可视化解题步骤（UNIQUE(question_id)，AI 生成 + 预置导入）
+```
+
 ### 配置表
 
 ```
@@ -355,6 +388,10 @@ LlmManager
 | 公告解析 | chat | MatchService |
 | 全局助手对话 | streamChat | AssistantService |
 | 自适应出题 | chat | AdaptiveQuizService |
+| 口诀生成 | streamChat | PoliticalTheoryService |
+| 概念对比 | streamChat | PoliticalTheoryService |
+| 可视化解题步骤生成 | streamChat | VisualExplanationService |
+| 名师答案分析 | streamChat | EssayComparisonService |
 
 ### 9.4 API Key 安全
 
@@ -501,7 +538,36 @@ python tools/scraper/main.py --normalize-only --input raw.json
 - 超时 30s，最多重试 3 次（指数退避）
 - 数据仅用于本地学习分析，禁止二次分发
 
-### 11.2 成语采集脚本 (`tools/collect_idioms.dart`)
+### 11.2 进面分数线采集工具 (`tools/exam_score_scraper/`)
+
+Python 实现，采集国考/省考/事业编进面分数线数据。
+
+```bash
+pip install -r tools/exam_score_scraper/requirements.txt
+python tools/exam_score_scraper/export_json.py
+```
+
+**数据流**：
+
+```
+数据源（华图API/上岸鸭/qihejy/官方网站）
+  → ScraperBase（限速≥2s/robots.txt/UA）
+  → HuatuApiScraper（双轨：fs_list真实分数 / get_distinct代理分数）
+  → GuokaoScraper / ShengkaoScraper / ShiyebianScraper
+  → HuatuEchartsScraper（省级汇总）
+  → DataCleaner（标准化/去重/校验）
+  → export_json.py → assets/data/exam_entry_scores/{file}.json + index.json
+```
+
+| 爬虫 | 文件 | 数据源 | 数据量 |
+|------|------|--------|--------|
+| 华图 API | `huatu_api_scraper.py` | apis.huatu.com（fs_list + get_distinct） | ~34,000（江苏）+ ~12,000（浙沪鲁） |
+| 国考 | `guokao_scraper.py` | eoffcn.com + gwy.com + 内置历史 | ~57 |
+| 省考 | `shengkao_scraper.py` | qihejy.com Excel（江苏） | ~2,152 |
+| 华图汇总 | `huatu_echarts_scraper.py` | 华图 skfscx 静态页面 | ~4（省级汇总） |
+| 事业编 | `shiyebian_scraper.py` | （暂无可用来源） | 0 |
+
+### 11.3 成语采集脚本 (`tools/collect_idioms.dart`)
 
 Dart 实现，开发阶段使用。
 
