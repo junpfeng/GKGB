@@ -21,8 +21,19 @@ class IdiomService extends ChangeNotifier {
 
   /// 导入预置成语数据 + 动态建立题目关联
   Future<void> importPresetIdioms() async {
-    final count = await _db.countIdioms();
-    if (count > 0) return;
+    final idiomCount = await _db.countIdioms();
+    if (idiomCount > 0) {
+      // 成语已存在，检查例句是否也已导入
+      final db = await _db.database;
+      final exResult = await db.rawQuery(
+          'SELECT COUNT(*) as cnt FROM idiom_examples');
+      final exCount = (exResult.first['cnt'] as int?) ?? 0;
+      if (exCount > 0) return; // 数据完整，跳过
+      // 成语存在但例句为空（旧版残留），清除后重新导入
+      await db.delete('idiom_question_links');
+      await db.delete('idiom_examples');
+      await db.delete('idioms');
+    }
 
     try {
       // 1. 从 assets 加载预置 JSON
