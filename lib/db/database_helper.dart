@@ -865,6 +865,19 @@ class DatabaseHelper {
     return await db.insert('questions', question);
   }
 
+  // 科目名称等效映射：职测和行测的知识点本质相同，查询时互通
+  static const _subjectAliases = {
+    '职测': ['职测', '行测'],
+    '行测': ['行测', '职测'],
+  };
+  // 分类名称等效映射：不同考试类型对同一知识点的叫法不同
+  static const _categoryAliases = {
+    '言语运用': ['言语运用', '言语理解'],
+    '言语理解': ['言语理解', '言语运用'],
+    '数量分析': ['数量分析', '数量关系'],
+    '数量关系': ['数量关系', '数量分析'],
+  };
+
   Future<List<Map<String, dynamic>>> queryQuestions({
     String? subject,
     String? category,
@@ -877,12 +890,24 @@ class DatabaseHelper {
     final conditions = <String>[];
     final args = <dynamic>[];
     if (subject != null) {
-      conditions.add('subject = ?');
-      args.add(subject);
+      final aliases = _subjectAliases[subject];
+      if (aliases != null && aliases.length > 1) {
+        conditions.add('subject IN (${aliases.map((_) => '?').join(', ')})');
+        args.addAll(aliases);
+      } else {
+        conditions.add('subject = ?');
+        args.add(subject);
+      }
     }
     if (category != null) {
-      conditions.add('category = ?');
-      args.add(category);
+      final aliases = _categoryAliases[category];
+      if (aliases != null && aliases.length > 1) {
+        conditions.add('category IN (${aliases.map((_) => '?').join(', ')})');
+        args.addAll(aliases);
+      } else {
+        conditions.add('category = ?');
+        args.add(category);
+      }
     }
     if (type != null) {
       conditions.add('type = ?');
@@ -903,7 +928,7 @@ class DatabaseHelper {
     );
   }
 
-  /// 按科目/分类统计真题数量
+  /// 按科目/分类统计真题数量（自动匹配等效科目/分类名称）
   Future<int> countRealExamByCategory({
     String? subject,
     String? category,
@@ -912,12 +937,24 @@ class DatabaseHelper {
     final conditions = <String>['is_real_exam = 1'];
     final args = <dynamic>[];
     if (subject != null && subject.isNotEmpty) {
-      conditions.add('subject = ?');
-      args.add(subject);
+      final aliases = _subjectAliases[subject];
+      if (aliases != null && aliases.length > 1) {
+        conditions.add('subject IN (${aliases.map((_) => '?').join(', ')})');
+        args.addAll(aliases);
+      } else {
+        conditions.add('subject = ?');
+        args.add(subject);
+      }
     }
     if (category != null && category.isNotEmpty) {
-      conditions.add('category = ?');
-      args.add(category);
+      final aliases = _categoryAliases[category];
+      if (aliases != null && aliases.length > 1) {
+        conditions.add('category IN (${aliases.map((_) => '?').join(', ')})');
+        args.addAll(aliases);
+      } else {
+        conditions.add('category = ?');
+        args.add(category);
+      }
     }
     final where = conditions.join(' AND ');
     final result = await db.rawQuery(
