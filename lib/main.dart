@@ -22,6 +22,8 @@ import 'services/hot_topic_service.dart';
 import 'services/essay_service.dart';
 import 'services/dashboard_service.dart';
 import 'services/adaptive_quiz_service.dart';
+import 'services/exam_category_service.dart';
+import 'services/idiom_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +48,10 @@ void main() async {
   final configService = LlmConfigService();
   await configService.loadAndApply(llmManager);
 
+  // 加载用户备考目标
+  final examCategoryService = ExamCategoryService();
+  await examCategoryService.loadTargets();
+
   // 导入预置时政热点和申论素材
   final hotTopicService = HotTopicService(llmManager);
   await hotTopicService.importPresetTopics();
@@ -54,74 +60,77 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        // 0. CalendarService（启动时已加载数据）
+        // 0. ExamCategoryService（启动时已加载目标）
+        ChangeNotifierProvider.value(value: examCategoryService),
+        // 1. CalendarService（启动时已加载数据）
         ChangeNotifierProvider.value(value: calendarService),
-        // 1. QuestionService（无依赖）
+        // 2. QuestionService（无依赖）
         ChangeNotifierProvider(create: (_) => QuestionService()),
-        // 2. ProfileService（无依赖）
+        // 3. ProfileService（无依赖）
         ChangeNotifierProvider(create: (_) => ProfileService()),
-        // 3. LlmManager（启动时已加载配置）
+        // 4. LlmManager（启动时已加载配置）
         ChangeNotifierProvider.value(value: llmManager),
-        // 4. ExamService（依赖 QuestionService）
+        // 5. ExamService（依赖 QuestionService）
         ChangeNotifierProxyProvider<QuestionService, ExamService>(
           create: (ctx) => ExamService(ctx.read<QuestionService>()),
           update: (ctx, qs, prev) => prev ?? ExamService(qs),
         ),
-        // 5. MatchService（依赖 ProfileService, LlmManager）
+        // 6. MatchService（依赖 ProfileService, LlmManager）
         ChangeNotifierProxyProvider2<ProfileService, LlmManager, MatchService>(
           create: (ctx) => MatchService(ctx.read<ProfileService>(), ctx.read<LlmManager>()),
           update: (ctx, ps, lm, prev) => prev ?? MatchService(ps, lm),
         ),
-        // 6. StudyPlanService（依赖 QuestionService, LlmManager）
-        ChangeNotifierProxyProvider2<QuestionService, LlmManager, StudyPlanService>(
-          create: (ctx) => StudyPlanService(ctx.read<QuestionService>(), ctx.read<LlmManager>()),
-          update: (ctx, qs, lm, prev) => prev ?? StudyPlanService(qs, lm),
+        // 7. StudyPlanService（依赖 QuestionService, LlmManager, ExamCategoryService）
+        ChangeNotifierProxyProvider3<QuestionService, LlmManager, ExamCategoryService, StudyPlanService>(
+          create: (ctx) => StudyPlanService(ctx.read<QuestionService>(), ctx.read<LlmManager>(), ctx.read<ExamCategoryService>()),
+          update: (ctx, qs, lm, ecs, prev) => prev ?? StudyPlanService(qs, lm, ecs),
         ),
-        // 7. BaselineService（依赖 QuestionService）
+        // 8. BaselineService（依赖 QuestionService）
         ChangeNotifierProxyProvider<QuestionService, BaselineService>(
           create: (ctx) => BaselineService(ctx.read<QuestionService>()),
           update: (ctx, qs, prev) => prev ?? BaselineService(qs),
         ),
-        // 8. RealExamService（依赖 QuestionService, LlmManager）
+        // 9. RealExamService（依赖 QuestionService, LlmManager）
         ChangeNotifierProxyProvider2<QuestionService, LlmManager, RealExamService>(
           create: (ctx) => RealExamService(ctx.read<QuestionService>(), ctx.read<LlmManager>()),
           update: (ctx, qs, lm, prev) => prev ?? RealExamService(qs, lm),
         ),
-        // 9. InterviewService（依赖 LlmManager）
-        ChangeNotifierProxyProvider<LlmManager, InterviewService>(
-          create: (ctx) => InterviewService(ctx.read<LlmManager>()),
-          update: (ctx, lm, prev) => prev ?? InterviewService(lm),
+        // 10. InterviewService（依赖 LlmManager, ExamCategoryService）
+        ChangeNotifierProxyProvider2<LlmManager, ExamCategoryService, InterviewService>(
+          create: (ctx) => InterviewService(ctx.read<LlmManager>(), ctx.read<ExamCategoryService>()),
+          update: (ctx, lm, ecs, prev) => prev ?? InterviewService(lm, ecs),
         ),
-        // 10. WrongAnalysisService（依赖 LlmManager）
+        // 11. WrongAnalysisService（依赖 LlmManager）
         ChangeNotifierProxyProvider<LlmManager, WrongAnalysisService>(
           create: (ctx) => WrongAnalysisService(ctx.read<LlmManager>()),
           update: (ctx, lm, prev) => prev ?? WrongAnalysisService(lm),
         ),
-        // 11. HotTopicService（启动时已导入预置数据）
+        // 12. HotTopicService（启动时已导入预置数据）
         ChangeNotifierProvider.value(value: hotTopicService),
-        // 12. EssayService（依赖 LlmManager）
+        // 13. EssayService（依赖 LlmManager）
         ChangeNotifierProxyProvider<LlmManager, EssayService>(
           create: (ctx) => EssayService(ctx.read<LlmManager>()),
           update: (ctx, lm, prev) => prev ?? EssayService(lm),
         ),
-        // 13. VoiceService（无依赖）
+        // 14. VoiceService（无依赖）
         ChangeNotifierProvider(create: (_) => VoiceService()),
-        // 14. DashboardService（依赖 QuestionService, ExamService, LlmManager）
+        // 15. DashboardService（依赖 QuestionService, ExamService, LlmManager, ExamCategoryService）
         ChangeNotifierProxyProvider3<QuestionService, ExamService, LlmManager, DashboardService>(
           create: (ctx) => DashboardService(
             ctx.read<QuestionService>(),
             ctx.read<ExamService>(),
             ctx.read<LlmManager>(),
+            ctx.read<ExamCategoryService>(),
           ),
           update: (ctx, qs, es, lm, prev) =>
-              prev ?? DashboardService(qs, es, lm),
+              prev ?? DashboardService(qs, es, lm, ctx.read<ExamCategoryService>()),
         ),
-        // 15. AdaptiveQuizService（依赖 LlmManager）
+        // 16. AdaptiveQuizService（依赖 LlmManager）
         ChangeNotifierProxyProvider<LlmManager, AdaptiveQuizService>(
           create: (ctx) => AdaptiveQuizService(ctx.read<LlmManager>()),
           update: (ctx, lm, prev) => prev ?? AdaptiveQuizService(lm),
         ),
-        // 10. AssistantService（依赖全部 service，ctx.read 一次性注入）
+        // 17. AssistantService（依赖全部 service，ctx.read 一次性注入）
         ChangeNotifierProvider(
           create: (ctx) => AssistantService(
             llm: ctx.read<LlmManager>(),
@@ -131,8 +140,11 @@ void main() async {
             studyPlanService: ctx.read<StudyPlanService>(),
             profileService: ctx.read<ProfileService>(),
             baselineService: ctx.read<BaselineService>(),
+            examCategoryService: ctx.read<ExamCategoryService>(),
           ),
         ),
+        // 18. IdiomService（无依赖）
+        ChangeNotifierProvider(create: (_) => IdiomService()),
       ],
       child: const ExamPrepApp(),
     ),

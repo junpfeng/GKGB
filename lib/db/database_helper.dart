@@ -23,7 +23,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 11,
+      version: 12,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -415,6 +415,41 @@ class DatabaseHelper {
         created_at TEXT DEFAULT CURRENT_TIMESTAMP,
         updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
         UNIQUE(exam_category_id, sub_type_id, province)
+      )
+    ''');
+
+    // 成语表
+    await db.execute('''
+      CREATE TABLE idioms (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        text TEXT NOT NULL UNIQUE,
+        definition TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+
+    // 成语例句表（来源：人民日报）
+    await db.execute('''
+      CREATE TABLE idiom_examples (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        idiom_id INTEGER NOT NULL,
+        sentence TEXT NOT NULL,
+        year INTEGER NOT NULL,
+        source_url TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (idiom_id) REFERENCES idioms (id)
+      )
+    ''');
+
+    // 成语-题目关联表
+    await db.execute('''
+      CREATE TABLE idiom_question_links (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        idiom_id INTEGER NOT NULL,
+        question_id INTEGER NOT NULL,
+        FOREIGN KEY (idiom_id) REFERENCES idioms (id),
+        FOREIGN KEY (question_id) REFERENCES questions (id),
+        UNIQUE(idiom_id, question_id)
       )
     ''');
 
@@ -830,6 +865,44 @@ class DatabaseHelper {
         debugPrint('迁移 user_exam_targets 表跳过: $e');
       }
     }
+
+    if (oldVersion < 12) {
+      // v11→v12：新增成语整理相关表
+      try {
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS idioms (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            text TEXT NOT NULL UNIQUE,
+            definition TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS idiom_examples (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            idiom_id INTEGER NOT NULL,
+            sentence TEXT NOT NULL,
+            year INTEGER NOT NULL,
+            source_url TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (idiom_id) REFERENCES idioms (id)
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS idiom_question_links (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            idiom_id INTEGER NOT NULL,
+            question_id INTEGER NOT NULL,
+            FOREIGN KEY (idiom_id) REFERENCES idioms (id),
+            FOREIGN KEY (question_id) REFERENCES questions (id),
+            UNIQUE(idiom_id, question_id)
+          )
+        ''');
+        await _createIndexes(db);
+      } catch (e) {
+        debugPrint('迁移成语整理表跳过: $e');
+      }
+    }
   }
 
   /// 创建所有索引
@@ -856,6 +929,11 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_essay_submissions_date ON essay_submissions(created_at)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_mastery_scores_review ON mastery_scores(next_review_at)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_knowledge_points_subject ON knowledge_points(subject, category)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_idioms_text ON idioms(text)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_idiom_examples_idiom_id ON idiom_examples(idiom_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_idiom_examples_year ON idiom_examples(year DESC)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_iql_idiom ON idiom_question_links(idiom_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_iql_question ON idiom_question_links(question_id)');
   }
 
   // ===== questions CRUD =====
@@ -2214,6 +2292,82 @@ class DatabaseHelper {
   Future<void> deleteAllExamTargets() async {
     final db = await database;
     await db.delete('user_exam_targets');
+  }
+
+  // ===== idioms CRUD =====
+
+  Future<int> insertIdiom(Map<String, dynamic> idiom) async {
+    final db = await database;
+    return await db.insert('idioms', idiom, conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  Future<List<Map<String, dynamic>>> queryAllIdioms({int? limit, int? offset}) async {
+    final db = await database;
+    return await db.query('idioms', orderBy: 'text ASC', limit: limit, offset: offset);
+  }
+
+  Future<Map<String, dynamic>?> queryIdiomByText(String text) async {
+    final db = await database;
+    final rows = await db.query('idioms', where: 'text = ?', whereArgs: [text], limit: 1);
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  /// 查询某道题关联的所有成语（通过 idiom_question_links JOIN）
+  Future<List<Map<String, dynamic>>> queryIdiomsByQuestionId(int questionId) async {
+    final db = await database;
+    return await db.rawQuery('''
+      SELECT i.* FROM idioms i
+      JOIN idiom_question_links l ON i.id = l.idiom_id
+      WHERE l.question_id = ?
+      ORDER BY i.text ASC
+    ''', [questionId]);
+  }
+
+  Future<int> updateIdiomDefinition(int id, String definition) async {
+    final db = await database;
+    return await db.update('idioms', {'definition': definition}, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> countIdioms() async {
+    final db = await database;
+    final result = await db.rawQuery('SELECT COUNT(*) as cnt FROM idioms');
+    return (result.first['cnt'] as int?) ?? 0;
+  }
+
+  // ===== idiom_examples CRUD =====
+
+  Future<int> insertIdiomExample(Map<String, dynamic> example) async {
+    final db = await database;
+    return await db.insert('idiom_examples', example);
+  }
+
+  Future<List<Map<String, dynamic>>> queryExamplesByIdiomId(int idiomId, {int? limit}) async {
+    final db = await database;
+    return await db.query('idiom_examples',
+      where: 'idiom_id = ?', whereArgs: [idiomId],
+      orderBy: 'year DESC', limit: limit);
+  }
+
+  Future<int> countExamplesByIdiomId(int idiomId) async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as cnt FROM idiom_examples WHERE idiom_id = ?', [idiomId]);
+    return (result.first['cnt'] as int?) ?? 0;
+  }
+
+  Future<void> deleteExamplesByIdiomId(int idiomId) async {
+    final db = await database;
+    await db.delete('idiom_examples', where: 'idiom_id = ?', whereArgs: [idiomId]);
+  }
+
+  // ===== idiom_question_links CRUD =====
+
+  Future<int> insertIdiomQuestionLink(int idiomId, int questionId) async {
+    final db = await database;
+    return await db.insert('idiom_question_links', {
+      'idiom_id': idiomId,
+      'question_id': questionId,
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 }
 
