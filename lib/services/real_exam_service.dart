@@ -17,6 +17,7 @@ class RealExamService extends ChangeNotifier {
   List<RealExamPaper> _papers = [];
   bool _isLoading = false;
   bool _sampleImported = false;
+  String _lastImportedVersion = '';
 
   List<RealExamPaper> get papers => List.unmodifiable(_papers);
   bool get isLoading => _isLoading;
@@ -132,13 +133,11 @@ class RealExamService extends ChangeNotifier {
     // 确保普通题库也已导入
     await _questionService.ensureSampleData();
     final count = await _db.countRealExamQuestions();
-    if (count > 0) {
-      _sampleImported = true;
-      return;
+    if (count == 0) {
+      // 首次导入：先导入旧版示例数据（兼容现有流程）
+      await _importSampleData();
     }
-    // 先导入旧版示例数据（兼容现有流程）
-    await _importSampleData();
-    // 再批量导入 real_exam/ 目录下的真题数据
+    // 每次都尝试增量导入 real_exam/ 目录（基于内容哈希去重，已有的会跳过）
     await importRealExamDirectory();
     _sampleImported = true;
   }
@@ -219,6 +218,16 @@ class RealExamService extends ChangeNotifier {
               .toList() ??
           [];
 
+      if (files.isEmpty) return;
+
+      // 快速检查：如果已有真题数 >= 索引文件预期总量，跳过导入
+      final existingCount = await _db.countRealExamQuestions();
+      final indexVersion = index['version'] as String? ?? '0';
+      // 超过 100 题且版本未变化时认为已导入完成（避免每次启动重复扫描）
+      if (existingCount > 100 && indexVersion == _lastImportedVersion) {
+        return;
+      }
+
       // 获取已有真题的内容哈希集合，用于增量去重
       final existingHashes = await _db.getRealExamContentHashes();
 
@@ -231,7 +240,10 @@ class RealExamService extends ChangeNotifier {
           debugPrint('导入真题文件 $filePath 失败: $e');
         }
       }
-      debugPrint('真题批量导入完成，共导入 $totalImported 道题');
+      _lastImportedVersion = indexVersion;
+      if (totalImported > 0) {
+        debugPrint('真题批量导入完成，新增 $totalImported 道题');
+      }
     } catch (e) {
       debugPrint('读取真题目录索引失败: $e');
     }
