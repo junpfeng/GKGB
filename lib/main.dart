@@ -57,6 +57,10 @@ void main() async {
   await hotTopicService.importPresetTopics();
   await hotTopicService.importPresetMaterials();
 
+  // 导入预置成语数据
+  final idiomService = IdiomService();
+  await idiomService.importPresetIdioms();
+
   runApp(
     MultiProvider(
       providers: [
@@ -143,8 +147,8 @@ void main() async {
             examCategoryService: ctx.read<ExamCategoryService>(),
           ),
         ),
-        // 18. IdiomService（无依赖）
-        ChangeNotifierProvider(create: (_) => IdiomService()),
+        // 18. IdiomService（启动时已导入预置数据）
+        ChangeNotifierProvider.value(value: idiomService),
       ],
       child: const ExamPrepApp(),
     ),

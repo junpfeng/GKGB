@@ -19,7 +19,6 @@ class _IdiomListScreenState extends State<IdiomListScreen> {
   @override
   void initState() {
     super.initState();
-    // 首次进入时加载成语列表
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<IdiomService>().loadIdioms();
     });
@@ -31,66 +30,11 @@ class _IdiomListScreenState extends State<IdiomListScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('成语整理')),
-      body: Column(
-        children: [
-          // 顶部：一键整理按钮 + 进度
-          _buildCollectHeader(service),
-          // 成语列表
-          Expanded(child: _buildIdiomList(service)),
-        ],
-      ),
+      body: _buildBody(service),
     );
   }
 
-  Widget _buildCollectHeader(IdiomService service) {
-    return GlassCard(
-      margin: const EdgeInsets.all(12),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (service.isCollecting) ...[
-            // 进度条
-            LinearProgressIndicator(
-              value: service.collectProgress,
-              backgroundColor: Colors.grey[200],
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF667eea)),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              service.collectStatus,
-              style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-              textAlign: TextAlign.center,
-            ),
-          ] else ...[
-            // 一键整理按钮
-            ElevatedButton.icon(
-              onPressed: () => service.collectIdioms(),
-              icon: const Icon(Icons.auto_fix_high, size: 18),
-              label: Text(service.idioms.isEmpty ? '一键整理' : '更新整理'),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              ).copyWith(
-                backgroundColor: WidgetStateProperty.all(const Color(0xFF667eea)),
-              ),
-            ),
-            if (service.collectStatus.isNotEmpty && !service.isCollecting) ...[
-              const SizedBox(height: 6),
-              Text(
-                service.collectStatus,
-                style: TextStyle(fontSize: 12, color: Colors.grey[500]),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildIdiomList(IdiomService service) {
+  Widget _buildBody(IdiomService service) {
     if (service.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -108,7 +52,7 @@ class _IdiomListScreenState extends State<IdiomListScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              '点击上方按钮从选词填空题中提取成语',
+              '成语数据将随题库更新自动导入',
               style: TextStyle(fontSize: 13, color: Colors.grey[400]),
             ),
           ],
@@ -116,12 +60,33 @@ class _IdiomListScreenState extends State<IdiomListScreen> {
       );
     }
 
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      itemCount: service.idioms.length,
-      itemBuilder: (context, index) {
-        return _IdiomExpandableCard(idiom: service.idioms[index]);
-      },
+    return Column(
+      children: [
+        // 统计信息
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+          child: Row(
+            children: [
+              Icon(Icons.menu_book, size: 16, color: Colors.grey[500]),
+              const SizedBox(width: 6),
+              Text(
+                '共 ${service.idioms.length} 个成语',
+                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+              ),
+            ],
+          ),
+        ),
+        // 成语列表
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            itemCount: service.idioms.length,
+            itemBuilder: (context, index) {
+              return _IdiomExpandableCard(idiom: service.idioms[index]);
+            },
+          ),
+        ),
+      ],
     );
   }
 }
@@ -166,7 +131,6 @@ class _IdiomExpandableCardState extends State<_IdiomExpandableCard> {
               // 成语标题行
               Row(
                 children: [
-                  // 成语文字
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
@@ -189,7 +153,7 @@ class _IdiomExpandableCardState extends State<_IdiomExpandableCard> {
                   ),
                 ],
               ),
-              // 释义（收起时单行截断，展开时全部显示）
+              // 释义
               if (widget.idiom.definition.isNotEmpty) ...[
                 const SizedBox(height: 8),
                 Text(
@@ -259,7 +223,6 @@ class _IdiomExpandableCardState extends State<_IdiomExpandableCard> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 年份标签
           Container(
             margin: const EdgeInsets.only(top: 2, right: 8),
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -276,7 +239,6 @@ class _IdiomExpandableCardState extends State<_IdiomExpandableCard> {
               ),
             ),
           ),
-          // 例句
           Expanded(
             child: Text(
               example.sentence,

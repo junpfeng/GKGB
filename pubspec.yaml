@@ -90,6 +90,7 @@ flutter:
     - assets/data/exam_calendar_sample.json
     - assets/data/hot_topics_sample.json
     - assets/data/essay_materials_sample.json
+    - assets/data/idioms_preset.json
     - assets/questions/real_exam/index.json
     - assets/questions/real_exam/guokao/
     - assets/questions/real_exam/shengkao/
