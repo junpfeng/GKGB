@@ -38,6 +38,7 @@ class QuestionService extends ChangeNotifier {
     String? subject,
     String? category,
     String? type,
+    bool? realExamOnly,
     int? limit,
     int? offset,
   }) async {
@@ -52,6 +53,7 @@ class QuestionService extends ChangeNotifier {
         subject: subject,
         category: category,
         type: type,
+        realExamOnly: realExamOnly,
         limit: limit ?? 20,
         offset: offset ?? 0,
       );
@@ -61,6 +63,17 @@ class QuestionService extends ChangeNotifier {
       _isLoading = false;
       _safeNotify();
     }
+  }
+
+  /// 统计某科目/分类下的真题数量
+  Future<int> countRealExamByCategory({
+    String? subject,
+    String? category,
+  }) async {
+    return await _db.countRealExamByCategory(
+      subject: subject,
+      category: category,
+    );
   }
 
   /// 获取题目总数（按科目）
