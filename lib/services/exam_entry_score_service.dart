@@ -26,8 +26,10 @@ class ExamEntryScoreService extends ChangeNotifier {
   String? _selectedCity;
   int? _selectedYear;
   String? _selectedExamType;
+  String? _selectedDepartment;
   List<String> _availableCities = [];
   List<int> _availableYears = [];
+  List<String> _availableDepartments = [];
 
   bool get isLoading => _isLoading;
   bool get isImporting => _isImporting;
@@ -40,50 +42,88 @@ class ExamEntryScoreService extends ChangeNotifier {
   String? get selectedCity => _selectedCity;
   int? get selectedYear => _selectedYear;
   String? get selectedExamType => _selectedExamType;
+  String? get selectedDepartment => _selectedDepartment;
   List<String> get availableCities => _availableCities;
   List<int> get availableYears => _availableYears;
+  List<String> get availableDepartments => _availableDepartments;
 
-  /// 设置省份筛选（联动刷新城市列表和年份列表）
+  /// 刷新联动列表（年份、城市、单位）
+  Future<void> _refreshFilterOptions() async {
+    _availableYears = await _db.queryEntryScoreYears(
+      province: _selectedProvince,
+      examType: _selectedExamType,
+    );
+    _availableCities = _selectedProvince != null
+        ? await _db.queryEntryScoreCities(_selectedProvince!)
+        : [];
+    _availableDepartments = await _db.queryEntryScoreDepartments(
+      province: _selectedProvince,
+      city: _selectedCity,
+      year: _selectedYear,
+      examType: _selectedExamType,
+    );
+  }
+
+  /// 初始化筛选列表（首次加载数据后调用）
+  Future<void> initFilters() async {
+    await _refreshFilterOptions();
+    notifyListeners();
+  }
+
+  /// 设置省份筛选（联动刷新城市、单位列表）
   Future<void> setProvince(String? province) async {
     _selectedProvince = province;
     _selectedCity = null;
+    _selectedDepartment = null;
     notifyListeners();
-    if (province != null) {
-      _availableCities = await _db.queryEntryScoreCities(province);
-      _availableYears = await _db.queryEntryScoreYears(
-        province: province,
-        examType: _selectedExamType,
-      );
-    } else {
-      _availableCities = [];
-      _availableYears = [];
-    }
+    await _refreshFilterOptions();
     notifyListeners();
     await loadScores();
   }
 
-  /// 设置城市筛选
+  /// 设置城市筛选（联动刷新单位列表）
   Future<void> setCity(String? city) async {
     _selectedCity = city;
+    _selectedDepartment = null;
+    notifyListeners();
+    _availableDepartments = await _db.queryEntryScoreDepartments(
+      province: _selectedProvince,
+      city: city,
+      year: _selectedYear,
+      examType: _selectedExamType,
+    );
     notifyListeners();
     await loadScores();
   }
 
-  /// 设置年份筛选
+  /// 设置年份筛选（联动刷新单位列表）
   Future<void> setYear(int? year) async {
     _selectedYear = year;
+    _selectedDepartment = null;
+    notifyListeners();
+    _availableDepartments = await _db.queryEntryScoreDepartments(
+      province: _selectedProvince,
+      city: _selectedCity,
+      year: year,
+      examType: _selectedExamType,
+    );
     notifyListeners();
     await loadScores();
   }
 
-  /// 设置考试类型筛选（联动刷新年份列表）
+  /// 设置考试类型筛选（联动刷新年份和单位列表）
   Future<void> setExamType(String? examType) async {
     _selectedExamType = examType;
+    _selectedDepartment = null;
     notifyListeners();
-    _availableYears = await _db.queryEntryScoreYears(
-      province: _selectedProvince,
-      examType: examType,
-    );
+    await _refreshFilterOptions();
+    notifyListeners();
+    await loadScores();
+  }
+
+  /// 设置单位筛选
+  Future<void> setDepartment(String? department) async {
+    _selectedDepartment = department;
     notifyListeners();
     await loadScores();
   }
@@ -99,6 +139,7 @@ class ExamEntryScoreService extends ChangeNotifier {
         city: _selectedCity,
         year: _selectedYear,
         examType: _selectedExamType,
+        department: _selectedDepartment,
         offset: offset,
         limit: limit,
       );
@@ -112,6 +153,7 @@ class ExamEntryScoreService extends ChangeNotifier {
         city: _selectedCity,
         year: _selectedYear,
         examType: _selectedExamType,
+        department: _selectedDepartment,
       );
     } catch (e) {
       _error = '加载分数线数据失败: $e';

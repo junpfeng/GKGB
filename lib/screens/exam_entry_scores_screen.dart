@@ -29,6 +29,7 @@ class _ExamEntryScoresScreenState extends State<ExamEntryScoresScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final service = context.read<ExamEntryScoreService>();
       await service.loadFromAssets();
+      await service.initFilters();
       await service.loadScores();
       service.getHeatRanking();
     });
@@ -126,7 +127,7 @@ class _ExamEntryScoresScreenState extends State<ExamEntryScoresScreen>
                 selected: service.selectedProvince,
                 onSelected: (v) => service.setProvince(v),
               ),
-              // 年份（联动）
+              // 年份
               if (service.availableYears.isNotEmpty)
                 _FilterChipDropdown(
                   label: service.selectedYear?.toString() ?? '年份',
@@ -134,13 +135,21 @@ class _ExamEntryScoresScreenState extends State<ExamEntryScoresScreen>
                   selected: service.selectedYear?.toString(),
                   onSelected: (v) => service.setYear(v != null ? int.tryParse(v) : null),
                 ),
-              // 城市（联动）
+              // 城市
               if (service.availableCities.isNotEmpty)
                 _FilterChipDropdown(
                   label: service.selectedCity ?? '城市',
                   items: service.availableCities,
                   selected: service.selectedCity,
                   onSelected: (v) => service.setCity(v),
+                ),
+              // 单位
+              if (service.availableDepartments.isNotEmpty)
+                _FilterChipDropdown(
+                  label: service.selectedDepartment ?? '单位',
+                  items: service.availableDepartments,
+                  selected: service.selectedDepartment,
+                  onSelected: (v) => service.setDepartment(v),
                 ),
             ],
           ),

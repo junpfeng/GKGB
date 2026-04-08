@@ -2589,6 +2589,7 @@ class DatabaseHelper {
     String? city,
     int? year,
     String? examType,
+    String? department,
     int offset = 0,
     int limit = 50,
   }) async {
@@ -2599,6 +2600,7 @@ class DatabaseHelper {
     if (city != null) { where.add('city = ?'); args.add(city); }
     if (year != null) { where.add('year = ?'); args.add(year); }
     if (examType != null) { where.add('exam_type = ?'); args.add(examType); }
+    if (department != null) { where.add('department = ?'); args.add(department); }
     return await db.query(
       'exam_entry_scores',
       where: where.isEmpty ? null : where.join(' AND '),
@@ -2677,8 +2679,8 @@ class DatabaseHelper {
     return rows.map((r) => r['year'] as int).toList();
   }
 
-  /// 查询进面分数线总条数
-  Future<int> queryEntryScoreCount({
+  /// 查询指定条件下的单位列表（去重）
+  Future<List<String>> queryEntryScoreDepartments({
     String? province,
     String? city,
     int? year,
@@ -2691,6 +2693,30 @@ class DatabaseHelper {
     if (city != null) { where.add('city = ?'); args.add(city); }
     if (year != null) { where.add('year = ?'); args.add(year); }
     if (examType != null) { where.add('exam_type = ?'); args.add(examType); }
+    final whereClause = where.isEmpty ? '' : 'WHERE ${where.join(' AND ')}';
+    final rows = await db.rawQuery(
+      'SELECT DISTINCT department FROM exam_entry_scores $whereClause ORDER BY department',
+      args,
+    );
+    return rows.map((r) => r['department'] as String).where((d) => d.isNotEmpty).toList();
+  }
+
+  /// 查询进面分数线总条数
+  Future<int> queryEntryScoreCount({
+    String? province,
+    String? city,
+    int? year,
+    String? examType,
+    String? department,
+  }) async {
+    final db = await database;
+    final where = <String>[];
+    final args = <dynamic>[];
+    if (province != null) { where.add('province = ?'); args.add(province); }
+    if (city != null) { where.add('city = ?'); args.add(city); }
+    if (year != null) { where.add('year = ?'); args.add(year); }
+    if (examType != null) { where.add('exam_type = ?'); args.add(examType); }
+    if (department != null) { where.add('department = ?'); args.add(department); }
     final whereClause = where.isEmpty ? '' : 'WHERE ${where.join(' AND ')}';
     final result = await db.rawQuery(
       'SELECT COUNT(*) as count FROM exam_entry_scores $whereClause',
