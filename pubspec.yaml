@@ -42,6 +42,7 @@ dependencies:
   connectivity_plus: ^7.1.0
   path: ^1.9.1
   flutter_secure_storage: ^9.2.4
+  sqflite_common: ^2.5.4+5
   sqflite_common_ffi: ^2.3.4+4
   sqlite3_flutter_libs: ^0.5.29
   fl_chart: ^0.70.2
@@ -52,6 +53,8 @@ dependencies:
   table_calendar: ^3.2.0
   flutter_local_notifications: ^21.0.0
   timezone: ^0.11.0
+  url_launcher: ^6.3.2
+  args: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -99,6 +102,7 @@ flutter:
     - assets/questions/real_exam/shiyebian/
     - assets/data/rencaiyinjin_policies_preset.json
     - assets/data/exam_entry_scores/
+    - assets/config/crawl_sites.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

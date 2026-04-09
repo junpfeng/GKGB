@@ -42,6 +42,9 @@ void main() async {
 
   await DatabaseHelper.instance.database;
 
+  // 加载爬虫站点配置（供 CrawlerService 静态方法使用）
+  await CrawlerService.loadStaticSites();
+
   // 初始化通知服务
   await NotificationService.instance.init();
 

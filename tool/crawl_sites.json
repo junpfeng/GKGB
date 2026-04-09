@@ -1,0 +1,538 @@
+[
+  {
+    "name": "江苏省人力资源和社会保障厅",
+    "province": "江苏",
+    "city": null,
+    "base_url": "https://jshrss.jiangsu.gov.cn",
+    "list_path": "/col/col78503/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "江苏省人事考试网",
+    "province": "江苏",
+    "city": null,
+    "base_url": "https://jshrss.jiangsu.gov.cn",
+    "list_path": "/col/col57253/index.html",
+    "policy_type": "shiyebian"
+  },
+  {
+    "name": "南京市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "南京",
+    "base_url": "https://rsj.nanjing.gov.cn",
+    "list_path": "/njsrsj/ggtz/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "苏州市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "苏州",
+    "base_url": "https://hrss.suzhou.gov.cn",
+    "list_path": "/szrskszl/index.shtml",
+    "policy_type": "shiyebian"
+  },
+  {
+    "name": "无锡市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "无锡",
+    "base_url": "https://hrss.wuxi.gov.cn",
+    "list_path": "/ztzl/wxrskszl/index.shtml",
+    "policy_type": "shiyebian"
+  },
+  {
+    "name": "常州市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "常州",
+    "base_url": "https://rsj.changzhou.gov.cn",
+    "list_path": "/rsj/zwdt/gsgg/index.shtml",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "镇江市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "镇江",
+    "base_url": "https://hrss.zhenjiang.gov.cn",
+    "list_path": "/hrss/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "扬州市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "扬州",
+    "base_url": "http://hrss.yangzhou.gov.cn",
+    "list_path": "/hrss/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "南通市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "南通",
+    "base_url": "https://rsj.nantong.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "泰州市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "泰州",
+    "base_url": "https://rsj.taizhou.gov.cn",
+    "list_path": "/xwzx/gsgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "盐城市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "盐城",
+    "base_url": "https://jsychrss.yancheng.gov.cn",
+    "list_path": "/jsychrss/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "徐州市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "徐州",
+    "base_url": "https://hrss.xz.gov.cn",
+    "list_path": "/xzhrss/tzgg/index.shtml",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "淮安市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "淮安",
+    "base_url": "https://rsj.huaian.gov.cn",
+    "list_path": "/harsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "连云港市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "连云港",
+    "base_url": "http://rsj.lyg.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "宿迁市人力资源和社会保障局",
+    "province": "江苏",
+    "city": "宿迁",
+    "base_url": "http://sqhrss.suqian.gov.cn",
+    "list_path": "/sqhrss/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "浙江省人力资源和社会保障厅",
+    "province": "浙江",
+    "city": null,
+    "base_url": "https://rlsbt.zj.gov.cn",
+    "list_path": "/col/col1229639379/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "浙江省人事考试网",
+    "province": "浙江",
+    "city": null,
+    "base_url": "http://zjks.rlsbt.zj.gov.cn",
+    "list_path": "/col/col1229635545/index.html",
+    "policy_type": "shiyebian"
+  },
+  {
+    "name": "杭州市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "杭州",
+    "base_url": "https://hrss.hangzhou.gov.cn",
+    "list_path": "/col/col1229440651/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "宁波市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "宁波",
+    "base_url": "http://rsj.ningbo.gov.cn",
+    "list_path": "/col/col1229676729/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "温州市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "温州",
+    "base_url": "https://hrss.wenzhou.gov.cn",
+    "list_path": "/col/col1229398655/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "嘉兴市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "嘉兴",
+    "base_url": "https://rlsbj.jiaxing.gov.cn",
+    "list_path": "/col/col1229850734/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "湖州市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "湖州",
+    "base_url": "https://hrss.huzhou.gov.cn",
+    "list_path": "/hzgov/front/s33/col/col6/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "绍兴市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "绍兴",
+    "base_url": "https://rsj.sx.gov.cn",
+    "list_path": "/col/col1630531/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "金华市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "金华",
+    "base_url": "http://rsj.jinhua.gov.cn",
+    "list_path": "/col/col69914/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "衢州市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "衢州",
+    "base_url": "http://rsj.qz.gov.cn",
+    "list_path": "/col/col1229091574/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "舟山市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "舟山",
+    "base_url": "https://zsrls.zhoushan.gov.cn",
+    "list_path": "/col/col1229284979/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "台州市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "台州",
+    "base_url": "https://rsj.zjtz.gov.cn",
+    "list_path": "/col/col1229396688/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "丽水市人力资源和社会保障局",
+    "province": "浙江",
+    "city": "丽水",
+    "base_url": "http://rsj.lishui.gov.cn",
+    "list_path": "/col/col1229330697/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "上海市人力资源和社会保障局",
+    "province": "上海",
+    "city": null,
+    "base_url": "https://rsj.sh.gov.cn",
+    "list_path": "/trsks_17824/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "上海市职业能力考试院",
+    "province": "上海",
+    "city": null,
+    "base_url": "https://rsj.sh.gov.cn",
+    "list_path": "/trsks_17824/index.html",
+    "policy_type": "shiyebian"
+  },
+  {
+    "name": "21世纪人才网",
+    "province": "上海",
+    "city": null,
+    "base_url": "http://www.21cnhr.gov.cn",
+    "list_path": "/sydwzp/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "安徽省人力资源和社会保障厅",
+    "province": "安徽",
+    "city": null,
+    "base_url": "https://hrss.ah.gov.cn",
+    "list_path": "/zxzx/ztzl/ahssydwgkzp/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "安徽省人事考试网",
+    "province": "安徽",
+    "city": null,
+    "base_url": "http://www.apta.gov.cn",
+    "list_path": "/pages/RegionalManagement/ExamNotice.html",
+    "policy_type": "shiyebian"
+  },
+  {
+    "name": "合肥市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "合肥",
+    "base_url": "http://rsj.hefei.gov.cn",
+    "list_path": "/xxfb/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "芜湖市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "芜湖",
+    "base_url": "https://rsj.wuhu.gov.cn",
+    "list_path": "/zwgk/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "蚌埠市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "蚌埠",
+    "base_url": "http://rsj.bengbu.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "淮南市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "淮南",
+    "base_url": "https://rsj.huainan.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "马鞍山市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "马鞍山",
+    "base_url": "https://rsj.mas.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "淮北市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "淮北",
+    "base_url": "https://rsj.huaibei.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "铜陵市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "铜陵",
+    "base_url": "https://rsj.tl.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "安庆市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "安庆",
+    "base_url": "https://rsj.anqing.gov.cn",
+    "list_path": "/xxfb/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "黄山市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "黄山",
+    "base_url": "https://rsj.huangshan.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "阜阳市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "阜阳",
+    "base_url": "http://rsj.fy.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "宿州市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "宿州",
+    "base_url": "https://rsj.ahsz.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "滁州市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "滁州",
+    "base_url": "https://rsj.chuzhou.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "六安市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "六安",
+    "base_url": "https://rsj.luan.gov.cn",
+    "list_path": "/rsgz/rsks/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "亳州市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "亳州",
+    "base_url": "https://rsj.bozhou.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "池州市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "池州",
+    "base_url": "https://czsrsj.chizhou.gov.cn",
+    "list_path": "/czsrsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "宣城市人力资源和社会保障局",
+    "province": "安徽",
+    "city": "宣城",
+    "base_url": "https://rsj.xuancheng.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "山东省人力资源和社会保障厅",
+    "province": "山东",
+    "city": null,
+    "base_url": "http://hrss.shandong.gov.cn",
+    "list_path": "/channels/ch03577/",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "山东人事考试信息网",
+    "province": "山东",
+    "city": null,
+    "base_url": "http://hrss.shandong.gov.cn",
+    "list_path": "/rsks/",
+    "policy_type": "shiyebian"
+  },
+  {
+    "name": "济南市人力资源和社会保障局",
+    "province": "山东",
+    "city": "济南",
+    "base_url": "https://jnhrss.jinan.gov.cn",
+    "list_path": "/col/col41069/",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "青岛市人力资源和社会保障局",
+    "province": "山东",
+    "city": "青岛",
+    "base_url": "https://hrss.qingdao.gov.cn",
+    "list_path": "/n32561948/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "烟台市人力资源和社会保障局",
+    "province": "山东",
+    "city": "烟台",
+    "base_url": "https://rshj.yantai.gov.cn",
+    "list_path": "/col/col11737/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "潍坊市人力资源和社会保障局",
+    "province": "山东",
+    "city": "潍坊",
+    "base_url": "http://rsj.weifang.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "淄博市人力资源和社会保障局",
+    "province": "山东",
+    "city": "淄博",
+    "base_url": "https://hrss.zibo.gov.cn",
+    "list_path": "/col/col2387/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "济宁市人力资源和社会保障局",
+    "province": "山东",
+    "city": "济宁",
+    "base_url": "http://hrss.jining.gov.cn",
+    "list_path": "/col/col25917/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "临沂市人力资源和社会保障局",
+    "province": "山东",
+    "city": "临沂",
+    "base_url": "http://rsj.linyi.gov.cn",
+    "list_path": "/index/rdjj/25.htm",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "泰安市人力资源和社会保障局",
+    "province": "山东",
+    "city": "泰安",
+    "base_url": "https://rsj.taian.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "威海市人力资源和社会保障局",
+    "province": "山东",
+    "city": "威海",
+    "base_url": "https://rsj.weihai.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "日照市人力资源和社会保障局",
+    "province": "山东",
+    "city": "日照",
+    "base_url": "http://hrss.rizhao.gov.cn",
+    "list_path": "/col/col15629/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "德州市人力资源和社会保障局",
+    "province": "山东",
+    "city": "德州",
+    "base_url": "http://rsj.dezhou.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "聊城市人力资源和社会保障局",
+    "province": "山东",
+    "city": "聊城",
+    "base_url": "http://rsj.liaocheng.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "滨州市人力资源和社会保障局",
+    "province": "山东",
+    "city": "滨州",
+    "base_url": "http://rsj.binzhou.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "菏泽市人力资源和社会保障局",
+    "province": "山东",
+    "city": "菏泽",
+    "base_url": "http://rsj.heze.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "东营市人力资源和社会保障局",
+    "province": "山东",
+    "city": "东营",
+    "base_url": "http://rsj.dongying.gov.cn",
+    "list_path": "/rsj/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  },
+  {
+    "name": "枣庄市人力资源和社会保障局",
+    "province": "山东",
+    "city": "枣庄",
+    "base_url": "http://zzhrss.zaozhuang.gov.cn",
+    "list_path": "/zzhrss/tzgg/index.html",
+    "policy_type": "rencaiyinjin"
+  }
+]

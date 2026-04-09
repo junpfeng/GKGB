@@ -48,6 +48,15 @@ abstract class OpenAiCompatibleProvider implements LlmProvider {
 
   String get _effectiveModel => _modelName ?? defaultModel;
 
+  /// 当前生效的 API Key（供 CrawlerCore 等需要直调 API 的场景读取）
+  String? get currentApiKey => _apiKey;
+
+  /// 当前生效的模型名
+  String get currentModel => _effectiveModel;
+
+  /// 当前生效的 baseUrl
+  String get currentBaseUrl => _dio.options.baseUrl;
+
   Map<String, String> get _authHeader {
     if (_apiKey == null || _apiKey!.isEmpty) return {};
     return {'Authorization': 'Bearer $_apiKey'};

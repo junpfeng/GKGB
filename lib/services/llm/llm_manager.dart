@@ -124,6 +124,20 @@ class LlmManager extends ChangeNotifier {
     return controller.stream;
   }
 
+  /// 获取当前活跃 Provider 的 API 配置（apiKey, baseUrl, model）
+  /// 供 CrawlerCore 等需要直调 API 的场景使用
+  Map<String, String>? getActiveProviderConfig() {
+    final provider = defaultProvider;
+    if (provider is OpenAiCompatibleProvider) {
+      return {
+        'apiKey': provider.currentApiKey ?? '',
+        'baseUrl': provider.currentBaseUrl,
+        'model': provider.currentModel,
+      };
+    }
+    return null;
+  }
+
   /// 根据配置设置 API Key（由 LlmConfigService 调用）
   void applyApiKey(String providerName, String apiKey) {
     final provider = _providers[providerName];
