@@ -106,9 +106,10 @@ class MatchService extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 加载预置人才引进公告（增量合并，不覆盖已有数据）
+  /// 加载预置人才引进公告及岗位数据（增量合并，不覆盖已有数据）
   ///
   /// 以 title+province+city 为去重键，仅插入本地不存在的公告。
+  /// 同时插入每条公告关联的预解析岗位（positions）。
   Future<int> loadPresetPolicies() async {
     try {
       final jsonStr = await rootBundle.loadString(
@@ -116,16 +117,68 @@ class MatchService extends ChangeNotifier {
       );
       final List<dynamic> items = jsonDecode(jsonStr);
 
-      // 获取已有公告的去重键集合
+      // 构建预置数据的去重键集合和城市集合
+      final presetKeys = <String>{};
+      final presetCities = <String, String>{}; // city -> province
+      for (final item in items) {
+        final map = item as Map<String, dynamic>;
+        final title = map['title'] as String? ?? '';
+        final province = map['province'] as String?;
+        final city = map['city'] as String?;
+        presetKeys.add(_policyDeduplicationKey(title, province, city));
+        if (city != null && province != null) {
+          presetCities[city] = province;
+        }
+      }
+
+      // 获取已有公告
       final existingRows = await _db.queryPolicies();
-      final existingKeys = <String>{};
+
+      // 清理旧预置数据：同城市同省份但标题不匹配的条目（已被替换的虚假公告）
       for (final row in existingRows) {
+        final title = row['title'] as String;
+        final province = row['province'] as String?;
+        final city = row['city'] as String?;
+        final key = _policyDeduplicationKey(title, province, city);
+
+        // 如果该城市在预置数据中，但这条记录的标题不在预置数据里，说明是旧版预置数据
+        if (city != null && province != null &&
+            presetCities[city] == province &&
+            !presetKeys.contains(key)) {
+          final policyId = row['id'] as int;
+          // 删除关联的匹配结果、岗位、公告
+          final positions = await _db.queryPositionsByPolicy(policyId);
+          for (final pos in positions) {
+            final posId = pos['id'] as int;
+            await _db.deleteMatchResultByPosition(posId);
+            await _db.deletePosition(posId);
+          }
+          await _db.deletePolicy(policyId);
+          debugPrint('清理旧预置公告: $title ($city)');
+        }
+      }
+
+      // 重新获取清理后的公告列表
+      final cleanedRows = await _db.queryPolicies();
+      final existingKeys = <String>{};
+      for (final row in cleanedRows) {
         final key = _policyDeduplicationKey(
           row['title'] as String,
           row['province'] as String?,
           row['city'] as String?,
         );
         existingKeys.add(key);
+      }
+
+      // 构建已有公告 id 映射（用于存量刷新）
+      final existingIdByKey = <String, int>{};
+      for (final row in cleanedRows) {
+        final key = _policyDeduplicationKey(
+          row['title'] as String,
+          row['province'] as String?,
+          row['city'] as String?,
+        );
+        existingIdByKey[key] = row['id'] as int;
       }
 
       int added = 0;
@@ -136,10 +189,18 @@ class MatchService extends ChangeNotifier {
         final city = map['city'] as String?;
         final key = _policyDeduplicationKey(title, province, city);
 
-        if (existingKeys.contains(key)) continue; // 跳过已有
+        if (existingKeys.contains(key)) {
+          // 存量数据刷新：补充 source_url 等缺失字段
+          final existingId = existingIdByKey[key];
+          if (existingId != null) {
+            await _refreshExistingPresetPolicy(existingId, map);
+          }
+          continue;
+        }
 
-        await _db.insertPolicy({
+        final policyId = await _db.insertPolicy({
           'title': title,
+          'source_url': map['source_url'] as String?,
           'province': province,
           'city': city,
           'policy_type': map['policy_type'] as String?,
@@ -148,15 +209,79 @@ class MatchService extends ChangeNotifier {
           'content': map['content'] as String?,
           'attachment_urls': '[]',
         });
+
+        // 插入预解析的岗位数据
+        final positions = map['positions'] as List<dynamic>? ?? [];
+        for (final pos in positions) {
+          final p = pos as Map<String, dynamic>;
+          await _db.insertPosition({
+            'policy_id': policyId,
+            'position_name': p['position_name'] as String? ?? '未知岗位',
+            'department': p['department'] as String?,
+            'recruit_count': p['recruit_count'] as int? ?? 1,
+            'education_req': p['education_req'] as String?,
+            'degree_req': p['degree_req'] as String?,
+            'major_req': p['major_req'] as String?,
+            'age_req': p['age_req'] as String?,
+            'political_req': p['political_req'] as String?,
+            'work_exp_req': p['work_exp_req'] as String?,
+            'certificate_req': p['certificate_req'] as String?,
+            'gender_req': p['gender_req'] as String?,
+            'hukou_req': p['hukou_req'] as String?,
+            'other_req': p['other_req'] as String?,
+            'exam_subjects': p['exam_subjects'] as String?,
+            'exam_date': p['exam_date'] as String?,
+          });
+        }
+
         existingKeys.add(key);
         added++;
       }
 
-      if (added > 0) await loadPolicies(); // 刷新内存列表
+      await loadPolicies(); // 刷新内存列表（含存量刷新后的数据）
       return added;
     } catch (e) {
       debugPrint('加载预置公告失败: $e');
       return 0;
+    }
+  }
+
+  /// 刷新已有预置公告：补充 source_url 等缺失字段 + 更新关联岗位的缺失字段
+  Future<void> _refreshExistingPresetPolicy(int policyId, Map<String, dynamic> presetMap) async {
+    // 补充公告的 source_url（仅当 DB 中为空时更新）
+    final sourceUrl = presetMap['source_url'] as String?;
+    if (sourceUrl != null && sourceUrl.isNotEmpty) {
+      final existing = await _db.queryPolicyById(policyId);
+      if (existing != null && (existing['source_url'] == null || (existing['source_url'] as String).isEmpty)) {
+        await _db.updatePolicy(policyId, {'source_url': sourceUrl});
+      }
+    }
+
+    // 补充岗位的 hukou_req 等缺失字段
+    final presetPositions = presetMap['positions'] as List<dynamic>? ?? [];
+    final dbPositions = await _db.queryPositionsByPolicy(policyId);
+
+    for (final dbPos in dbPositions) {
+      final dbPosId = dbPos['id'] as int;
+      final dbPosName = dbPos['position_name'] as String;
+
+      // 按岗位名匹配预置数据
+      final matchingPreset = presetPositions.cast<Map<String, dynamic>>().where(
+        (p) => (p['position_name'] as String?) == dbPosName,
+      );
+      if (matchingPreset.isEmpty) continue;
+      final preset = matchingPreset.first;
+
+      final updates = <String, dynamic>{};
+      // 补充 hukou_req
+      if ((dbPos['hukou_req'] == null || (dbPos['hukou_req'] as String).isEmpty) &&
+          preset['hukou_req'] != null) {
+        updates['hukou_req'] = preset['hukou_req'];
+      }
+      if (updates.isNotEmpty) {
+        final db = await _db.database;
+        await db.update('positions', updates, where: 'id = ?', whereArgs: [dbPosId]);
+      }
     }
   }
 
