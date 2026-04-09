@@ -129,19 +129,25 @@ def main():
     用法：
         python export_json.py
         python export_json.py --province 山东 --year 2024
+        python export_json.py --type huatu_api
+        python export_json.py --skip-slow
     """
     import argparse
 
     parser = argparse.ArgumentParser(description='爬取并导出进面分数线数据')
     parser.add_argument('--province', type=str, help='指定省份')
     parser.add_argument('--year', type=int, help='指定年份')
-    parser.add_argument('--type', type=str, choices=['guokao', 'shengkao', 'shiyebian', 'all'],
+    parser.add_argument('--type', type=str,
+                        choices=['guokao', 'shengkao', 'shiyebian', 'huatu_api', 'huatu_echarts', 'all'],
                         default='all', help='爬取类型')
     parser.add_argument('--output', type=str, default=OUTPUT_DIR, help='输出目录')
+    parser.add_argument('--skip-slow', action='store_true',
+                        help='跳过耗时的华图API fs_list遍历，仅用内置/已有数据')
     args = parser.parse_args()
 
     all_records = []
 
+    # Phase 3: 国考
     if args.type in ('guokao', 'all'):
         from guokao_scraper import GuokaoScraper
         scraper = GuokaoScraper()
@@ -149,13 +155,37 @@ def main():
         all_records.extend(data)
         print(f'国考: {len(data)} 条')
 
+    # Phase 2: 省考
     if args.type in ('shengkao', 'all'):
         from shengkao_scraper import ShengkaoScraper
         scraper = ShengkaoScraper()
         data = scraper.scrape(province=args.province, year=args.year)
         all_records.extend(data)
-        print(f'省考: {len(data)} 条')
+        print(f'省考 (shengkao): {len(data)} 条')
 
+    # Phase 1: 华图 API
+    if args.type in ('huatu_api', 'all') and not args.skip_slow:
+        try:
+            from huatu_api_scraper import HuatuApiScraper
+            scraper = HuatuApiScraper()
+            data = scraper.scrape(province=args.province, year=args.year)
+            all_records.extend(data)
+            print(f'华图 API (huatu_api): {len(data)} 条')
+        except Exception as e:
+            print(f'华图 API 爬虫失败: {e}，跳过')
+
+    # Phase 4: 华图 ECharts 汇总
+    if args.type in ('huatu_echarts', 'all'):
+        try:
+            from huatu_echarts_scraper import HuatuEchartsScraper
+            scraper = HuatuEchartsScraper()
+            data = scraper.scrape(province=args.province, year=args.year)
+            all_records.extend(data)
+            print(f'华图汇总 (huatu_echarts): {len(data)} 条')
+        except Exception as e:
+            print(f'华图 ECharts 爬虫失败: {e}，跳过')
+
+    # Phase 5: 事业编
     if args.type in ('shiyebian', 'all'):
         from shiyebian_scraper import ShiyebianScraper
         scraper = ShiyebianScraper()

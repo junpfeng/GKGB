@@ -1,11 +1,11 @@
 [
   {
-    "province": "浙江",
-    "city": "浙江",
+    "province": "上海",
+    "city": "上海",
     "year": 2025,
     "exam_type": "省考",
     "department": "全省汇总",
-    "position_name": "浙江省考综合分数线",
+    "position_name": "上海省考综合分数线",
     "position_code": null,
     "recruit_count": null,
     "major_req": null,
@@ -14,8 +14,8 @@
     "political_req": null,
     "work_exp_req": null,
     "other_req": null,
-    "min_entry_score": 35.0,
-    "max_entry_score": 165.0,
+    "min_entry_score": 87.0,
+    "max_entry_score": 140.0,
     "entry_count": null,
     "source_url": "https://www.huatu.com/z/2024skfscx/"
   }
