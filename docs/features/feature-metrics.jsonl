@@ -8,3 +8,4 @@
 {"feature":"exam_entry_scores","timestamp":"2026-04-08T18:00:00+08:00","ac_total":7,"ac_pass":6,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":12}
 {"feature":"exam_entry_scores_data","timestamp":"2026-04-08T12:00:00+08:00","ac_total":10,"ac_pass":9,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":2}
 {"feature":"essay_comparison","timestamp":"2026-04-08T12:00:00Z","ac_total":9,"ac_pass":8,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":2,"adversarial_issues_found":17}
+{"feature":"talent_recruit_notice","timestamp":"2026-04-09T07:15:00Z","ac_total":7,"ac_pass":6,"ac_manual":1,"acceptance_rounds":1,"adversarial_rounds":1,"adversarial_issues_found":0}
