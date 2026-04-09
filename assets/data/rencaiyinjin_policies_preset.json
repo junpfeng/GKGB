@@ -1,227 +1,914 @@
 [
   {
-    "title": "2026年杭州市高层次人才引进公告",
+    "title": "2026年杭州市市属事业单位统一公开招聘工作人员公告",
     "province": "浙江",
     "city": "杭州",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-01",
-    "deadline": "2026-06-30",
-    "content": "杭州市面向全国引进高层次人才50名，涉及数字经济、生物医药、人工智能等领域。报名条件：硕士及以上学历，35岁以下（博士可放宽至40岁），相关专业背景。考试科目：行政职业能力测验+申论，面试采用结构化面试。提供安家补贴、人才公寓等配套政策。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-03-17",
+    "deadline": "2026-03-25",
+    "content": "杭州市委组织部、杭州市人社局组织2026年市属事业单位统一公开招聘274名工作人员。年龄一般38周岁以下，报名通过浙江省通用招聘网报平台进行。笔试科目为《综合应用能力》和《职业能力倾向测验》各100分，笔试成绩占40%，面试成绩占60%，面试合格分60分。笔试时间2026年4月25日。",
+    "positions": [
+      {
+        "position_name": "综合管理岗",
+        "department": "杭州市市属事业单位",
+        "recruit_count": 90,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学、经济学等相关专业",
+        "age_req": "38周岁以下",
+        "exam_subjects": "综合应用能力+职业能力倾向测验"
+      },
+      {
+        "position_name": "专业技术岗（计算机类）",
+        "department": "杭州市市属事业单位",
+        "recruit_count": 45,
+        "education_req": "本科及以上",
+        "major_req": "计算机科学与技术、软件工程相关专业",
+        "age_req": "38周岁以下",
+        "exam_subjects": "综合应用能力+职业能力倾向测验"
+      },
+      {
+        "position_name": "专业技术岗（经济类）",
+        "department": "杭州市市属事业单位",
+        "recruit_count": 40,
+        "education_req": "本科及以上",
+        "major_req": "经济学、金融学、会计学相关专业",
+        "age_req": "38周岁以下",
+        "exam_subjects": "综合应用能力+职业能力倾向测验"
+      }
+    ],
+    "source_url": "https://hrss.hangzhou.gov.cn/col/col1229782005/art/2026/art_20caf8c3b50c48309a092525c34624ae.html"
   },
   {
-    "title": "2026年宁波市「甬江引才」专项计划",
+    "title": "宁波市自然资源和规划局下属事业单位公开招聘工作人员公告",
     "province": "浙江",
     "city": "宁波",
-    "policy_type": "人才引进",
-    "publish_date": "2026-02-20",
-    "deadline": "2026-05-31",
-    "content": "宁波市甬江引才计划面向全国招录紧缺人才80名，覆盖先进制造、港口物流、新材料等产业。学历要求：本科及以上。考试科目：综合知识+专业测试，面试环节包括结构化面试和专业答辩。入选者享受购房补贴最高60万元，薪酬不低于当地同级别公务员水平。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2025-10-30",
+    "deadline": "2025-11-07",
+    "content": "宁波市自然资源和规划局下属4家事业单位面向社会公开招聘4名事业编制工作人员，涉及国土空间规划、海洋监测、林木遗传育种、公众宣传等岗位。笔试占40%，面试占60%。",
+    "positions": [
+      {
+        "position_name": "国土空间规划岗",
+        "department": "宁波市规划设计研究院",
+        "recruit_count": 1,
+        "education_req": "本科及以上",
+        "major_req": "城乡规划相关专业",
+        "age_req": "40周岁以下",
+        "exam_subjects": "公共知识+专业知识"
+      },
+      {
+        "position_name": "海洋监测岗",
+        "department": "宁波市生态修复和海洋管理服务中心",
+        "recruit_count": 1,
+        "education_req": "硕士研究生",
+        "major_req": "海洋科学相关专业",
+        "age_req": "应届毕业生",
+        "exam_subjects": "公共知识"
+      },
+      {
+        "position_name": "林木遗传育种研究推广岗",
+        "department": "宁波市林业发展中心",
+        "recruit_count": 1,
+        "education_req": "硕士研究生",
+        "major_req": "林学、遗传育种相关专业",
+        "age_req": "38周岁以下",
+        "exam_subjects": "公共知识+专业知识"
+      }
+    ],
+    "source_url": "https://rsj.ningbo.gov.cn/art/2025/10/30/art_1229676740_4695192.html"
   },
   {
-    "title": "2026年南京市紫金山英才计划招聘公告",
+    "title": "南京市2026年事业单位统一公开招聘工作人员公告",
     "province": "江苏",
     "city": "南京",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-15",
-    "deadline": "2026-06-15",
-    "content": "南京市紫金山英才计划面向海内外引进高层次人才100名，涵盖集成电路、软件信息、生命健康等重点产业。硕士及以上学历，年龄不超过35周岁（博士40周岁）。考试方式：笔试（行政职业能力测验+申论）+面试（结构化面试）。享受最高300万元购房补贴和科研启动资金。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-03-18",
+    "deadline": "2026-03-25",
+    "content": "南京市、区事业单位拿出541个岗位共招聘607名工作人员，另面向退役大学生士兵专项招聘89名。笔试科目为《综合知识和能力素质》，按岗位类别分为管理类、法律类、计算机类、经济类等。笔试时间2026年4月18日。面试采用结构化面试、专业测试等方式。",
+    "positions": [
+      {
+        "position_name": "综合管理类岗位",
+        "department": "南京市、区属事业单位",
+        "recruit_count": 200,
+        "education_req": "本科及以上",
+        "major_req": "管理学、中文、法学等相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "综合知识和能力素质（管理类）"
+      },
+      {
+        "position_name": "计算机类专业技术岗位",
+        "department": "南京市、区属事业单位",
+        "recruit_count": 80,
+        "education_req": "本科及以上",
+        "major_req": "计算机科学与技术相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "综合知识和能力素质（计算机类）"
+      },
+      {
+        "position_name": "经济类专业技术岗位",
+        "department": "南京市、区属事业单位",
+        "recruit_count": 100,
+        "education_req": "本科及以上",
+        "major_req": "经济学、会计学、审计学相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "综合知识和能力素质（经济类）"
+      }
+    ],
+    "source_url": "https://rsj.nanjing.gov.cn/njsrlzyhshbzj/202603/t20260318_5807842.html"
   },
   {
-    "title": "2026年苏州市姑苏人才计划引进公告",
+    "title": "苏州市2026年市属事业单位公开招聘工作人员公告",
     "province": "江苏",
     "city": "苏州",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-10",
-    "deadline": "2026-05-30",
-    "content": "苏州市姑苏人才计划招录各类紧缺人才60名。面向全日制本科及以上学历毕业生，重点引进电子信息、装备制造、纳米技术等领域人才。考试形式：公共基础知识+专业能力测试。面试采用结构化面试。提供生活补贴、租房补贴及落户绿色通道。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-03-18",
+    "deadline": "2026-03-25",
+    "content": "苏州市2026年市属事业单位面向社会公开招聘107名工作人员（22个岗位），全市含各区县共招726人。笔试科目为《综合知识和能力素质》，笔试成绩占40%，面试占60%，笔试合格线50分，面试合格线60分。年龄18-38周岁，硕士可放宽至43周岁，博士可放宽至45周岁。笔试时间2026年4月18日。",
+    "positions": [
+      {
+        "position_name": "产业发展岗",
+        "department": "苏州市市属事业单位",
+        "recruit_count": 35,
+        "education_req": "本科及以上",
+        "major_req": "经济学、管理学相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "综合知识和能力素质"
+      },
+      {
+        "position_name": "综合管理岗",
+        "department": "苏州市市属事业单位",
+        "recruit_count": 40,
+        "education_req": "本科及以上",
+        "major_req": "公共管理、行政管理相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "综合知识和能力素质"
+      },
+      {
+        "position_name": "专业技术岗",
+        "department": "苏州市市属事业单位",
+        "recruit_count": 32,
+        "education_req": "本科及以上",
+        "major_req": "计算机、电子信息相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "综合知识和能力素质"
+      }
+    ],
+    "source_url": "https://suzhou.bendibao.com/job/2026318/135627.shtm"
   },
   {
-    "title": "2026年深圳市「鹏城孔雀」人才引进计划",
+    "title": "深圳市事业单位2026年集中公开招聘高校毕业生公告",
     "province": "广东",
     "city": "深圳",
-    "policy_type": "人才引进",
-    "publish_date": "2026-02-28",
-    "deadline": "2026-07-31",
-    "content": "深圳市面向全球引进高精尖人才120名，覆盖新一代信息技术、生物医药、新能源等战略新兴产业。要求硕士及以上学历，海外知名高校优先。考核方式：专业面试+综合素质评估，部分岗位需答辩。入选者享受最高160万元奖励补贴，配偶可随迁安排工作。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2025-11-25",
+    "deadline": "2025-12-05",
+    "content": "深圳市各级事业单位集中公开招聘高校毕业生658名，贯彻落实省委省政府'百万英才汇南粤'行动计划。笔试分一般类、教育类、医疗类三类，时间为2025年12月27日。综合成绩=笔试50%+面试50%。",
+    "positions": [
+      {
+        "position_name": "一般类岗位（综合管理方向）",
+        "department": "深圳市社会治理服务中心等市属单位",
+        "recruit_count": 300,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学、经济学相关专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "一般类笔试+面试"
+      },
+      {
+        "position_name": "教育类岗位",
+        "department": "深圳市第三高级中学等教育类事业单位",
+        "recruit_count": 200,
+        "education_req": "本科及以上",
+        "major_req": "教育学、学科教育相关专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "教育类笔试+面试（含试讲）"
+      },
+      {
+        "position_name": "医疗类岗位",
+        "department": "福田区疾病预防控制中心等卫生类事业单位",
+        "recruit_count": 158,
+        "education_req": "本科及以上",
+        "major_req": "临床医学、公共卫生相关专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "医疗类笔试+面试"
+      }
+    ],
+    "source_url": "https://sydw.huatu.com/2025/1125/2841125.html"
   },
   {
-    "title": "2026年广州市黄埔区急需紧缺人才招聘",
+    "title": "2026年广州市事业单位统一公开招聘人才的公告",
     "province": "广东",
     "city": "广州",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-05",
-    "deadline": "2026-06-20",
-    "content": "广州市黄埔区面向社会公开招聘急需紧缺人才45名，岗位涵盖规划建设、金融监管、卫生健康、教育管理等。本科及以上学历，部分岗位要求硕士。笔试科目：行政职业能力测验+申论，面试采用结构化面试+无领导小组讨论。享受区级人才住房及子女入学保障。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-03-04",
+    "deadline": "2026-03-13",
+    "content": "广州市委组织部和市人社局组织2026年广州市事业单位统一公开招聘91名人才（编内），落实'人才强市'战略。岗位分A类（面试或直接业务考核）和B类（笔试40%+面试60%）。面试形式包括结构化面试、无领导小组讨论、实际操作测试等。",
+    "positions": [
+      {
+        "position_name": "A类岗位（高层次紧缺人才）",
+        "department": "广州市属事业单位",
+        "recruit_count": 40,
+        "education_req": "硕士及以上",
+        "major_req": "岗位对口专业",
+        "age_req": "40周岁以下",
+        "exam_subjects": "面试或直接业务考核"
+      },
+      {
+        "position_name": "B类岗位（综合管理）",
+        "department": "广州市属事业单位",
+        "recruit_count": 51,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学、经济学等相关专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "笔试40%+面试60%"
+      }
+    ],
+    "source_url": "https://rsj.gz.gov.cn/zwdt/tzgg/content/post_10717753.html"
   },
   {
-    "title": "2026年济南市泉城人才引进专项行动",
+    "title": "济南市2025年泉优计划引进急需紧缺专业人才公告",
     "province": "山东",
     "city": "济南",
     "policy_type": "人才引进",
-    "publish_date": "2026-03-20",
-    "deadline": "2026-06-30",
-    "content": "济南市面向全国引进优秀人才90名，重点领域包括大数据、量子科技、空天信息等。全日制硕士及以上学历，211/985高校本科毕业生也可报名。笔试内容：行政职业能力测验+申论。面试为结构化面试。入职即享受泉城安居补贴和科研经费支持。"
+    "publish_date": "2025-03-14",
+    "deadline": "2025-03-28",
+    "content": "济南市2025年泉优计划面向国内外高校引进87名急需紧缺专业人才到事业单位工作。引进范围为应届高校毕业生及择业期内未落实工作的毕业生。纳入事业编制管理，博士可享每月1500元生活补贴（最长36个月）及15万元一次性购房补贴。选拔程序为面谈、资格复审、面试、体检考察、公示聘用。",
+    "positions": [
+      {
+        "position_name": "城乡规划管理岗",
+        "department": "济南市市属事业单位",
+        "recruit_count": 2,
+        "education_req": "硕士研究生及以上",
+        "major_req": "城乡规划学、地理学、公共管理学相关专业",
+        "age_req": "硕士30岁以下，博士35岁以下",
+        "exam_subjects": "面谈+面试"
+      },
+      {
+        "position_name": "农业技术岗",
+        "department": "济南市市属事业单位",
+        "recruit_count": 1,
+        "education_req": "本科及以上",
+        "major_req": "园艺学、农业工程相关专业",
+        "age_req": "本科26岁以下，硕士30岁以下",
+        "exam_subjects": "面谈+面试"
+      },
+      {
+        "position_name": "测绘信息管理岗",
+        "department": "济南市市属事业单位",
+        "recruit_count": 1,
+        "education_req": "硕士研究生及以上",
+        "major_req": "测绘科学与技术、遥感科学与技术相关专业",
+        "age_req": "硕士30岁以下",
+        "exam_subjects": "面谈+面试"
+      }
+    ],
+    "source_url": "http://jnhrss.jinan.gov.cn/art/2025/3/15/art_18309_4806190.html"
   },
   {
-    "title": "2026年青岛市海洋人才引进计划",
+    "title": "2026年度青岛市市属事业单位公开招聘工作人员公告",
     "province": "山东",
     "city": "青岛",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-08",
-    "deadline": "2026-06-10",
-    "content": "青岛市聚焦海洋经济、港口贸易、海洋生物等领域引进专业人才55名。本科及以上学历，海洋科学、水产、船舶工程等相关专业优先。考试科目：综合知识（含公共基础知识和专业知识）+面试。提供人才公寓、安家费及科研平台支持。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-01-22",
+    "deadline": "2026-01-30",
+    "content": "2026年度青岛市市属事业单位面向社会公开招聘工作人员144名。笔试时间3月22日，科目为《职业能力倾向测验》和《综合应用能力》两科，各100分。年龄40周岁以下，硕士博士应届生可放宽至43周岁。",
+    "positions": [
+      {
+        "position_name": "通信信息管理岗",
+        "department": "青岛市专用通信局",
+        "recruit_count": 1,
+        "education_req": "本科及以上",
+        "major_req": "计算机类、电子信息类相关专业",
+        "age_req": "40周岁以下",
+        "exam_subjects": "职业能力倾向测验+综合应用能力"
+      },
+      {
+        "position_name": "财务管理岗",
+        "department": "青岛市台港澳事务中心",
+        "recruit_count": 1,
+        "education_req": "硕士研究生及以上",
+        "major_req": "会计学、财务管理、审计学相关专业",
+        "age_req": "43周岁以下",
+        "exam_subjects": "职业能力倾向测验+综合应用能力"
+      },
+      {
+        "position_name": "会计岗",
+        "department": "山东省青岛第二中学分校",
+        "recruit_count": 1,
+        "education_req": "本科及以上",
+        "major_req": "会计学、财务管理相关专业",
+        "age_req": "40周岁以下",
+        "exam_subjects": "职业能力倾向测验+综合应用能力"
+      }
+    ],
+    "source_url": "https://hrss.qingdao.gov.cn/ztzl_47/sydwzp_47/zpjz_47/202601/t20260121_10477644.shtml"
   },
   {
-    "title": "2026年成都市「蓉漂」人才荟萃计划",
+    "title": "2026年成都市事业单位公开考试招聘工作人员（第一批）公告",
     "province": "四川",
     "city": "成都",
-    "policy_type": "人才引进",
+    "policy_type": "事业单位招聘",
     "publish_date": "2026-03-12",
-    "deadline": "2026-06-25",
-    "content": "成都市蓉漂人才计划面向全国招引各类人才110名，覆盖电子信息、航空航天、先进制造、现代金融等支柱产业。全日制本科及以上学历，35周岁以下。笔试：行政职业能力测验，面试采用结构化面试。享受最高50万元安家补贴、免费人才公寓及子女入学保障。"
+    "deadline": "2026-03-24",
+    "content": "2026年成都市各级事业单位拟公开考试招聘工作人员471名（第一批），涉及6个市级部门所属事业单位及13个区(市)县。网上报名通过四川省人力资源和社会保障厅官网进行。笔试时间4月26日。综合类岗位考《综合知识》，卫生类考卫生专业技术科目。",
+    "positions": [
+      {
+        "position_name": "综合管理岗",
+        "department": "成都市各区县事业单位",
+        "recruit_count": 300,
+        "education_req": "本科及以上",
+        "major_req": "综合类相关专业",
+        "age_req": "18-35周岁",
+        "exam_subjects": "综合知识"
+      },
+      {
+        "position_name": "卫生专业技术岗",
+        "department": "成都市卫健委所属事业单位",
+        "recruit_count": 80,
+        "education_req": "本科及以上",
+        "major_req": "临床医学、护理学等卫生类专业",
+        "age_req": "18-35周岁",
+        "exam_subjects": "职业能力倾向测验+医学能力素质"
+      },
+      {
+        "position_name": "教育类专业技术岗",
+        "department": "成都市教育局所属事业单位",
+        "recruit_count": 91,
+        "education_req": "本科及以上",
+        "major_req": "教育学、学科教育相关专业",
+        "age_req": "18-35周岁",
+        "exam_subjects": "教育公共基础+面试"
+      }
+    ],
+    "source_url": "https://m.cd.bendibao.com/job/206156.shtm"
   },
   {
-    "title": "2026年北京市朝阳区高端人才引进",
+    "title": "北京市东城区2026年事业单位公开招聘工作人员公告",
     "province": "北京",
     "city": "北京",
-    "policy_type": "人才引进",
+    "policy_type": "事业单位招聘",
     "publish_date": "2026-03-18",
-    "deadline": "2026-07-15",
-    "content": "北京市朝阳区面向全国引进高端人才30名，覆盖金融科技、文化创意、国际商务等领域。要求硕士及以上学历，具有3年以上相关工作经验。考核方式：综合素质面试+专业能力答辩，免笔试。提供落户指标、人才公寓及专项工作经费。"
+    "deadline": "2026-03-27",
+    "content": "北京市东城区2026年部分事业单位面向社会公开招聘工作人员58人。笔试时间4月18日，科目为公共基本能力测验，笔试合格线60分，按1:3进入面试。要求本科及以上学历，38周岁及以下，社会人员需北京市常住户口。",
+    "positions": [
+      {
+        "position_name": "综合管理岗（法学类）",
+        "department": "东城区区属事业单位",
+        "recruit_count": 8,
+        "education_req": "本科及以上",
+        "major_req": "法学、政治学相关专业",
+        "age_req": "38周岁及以下",
+        "exam_subjects": "公共基本能力测验+面试"
+      },
+      {
+        "position_name": "专业技术岗（经济类）",
+        "department": "东城区区属事业单位",
+        "recruit_count": 10,
+        "education_req": "本科及以上",
+        "major_req": "经济学、金融学、统计学相关专业",
+        "age_req": "38周岁及以下",
+        "exam_subjects": "公共基本能力测验+面试"
+      },
+      {
+        "position_name": "综合管理岗（计算机类）",
+        "department": "东城区区属事业单位",
+        "recruit_count": 6,
+        "education_req": "本科及以上",
+        "major_req": "计算机科学与技术相关专业",
+        "age_req": "38周岁及以下",
+        "exam_subjects": "公共基本能力测验+面试"
+      }
+    ],
+    "source_url": "https://www.bjdch.gov.cn/zwgk/tzgg/202603/t20260318_4560478.html"
   },
   {
-    "title": "2026年上海市浦东新区人才储备计划",
+    "title": "上海市2026年事业单位公开招聘公告",
     "province": "上海",
     "city": "上海",
-    "policy_type": "人才引进",
-    "publish_date": "2026-02-25",
-    "deadline": "2026-06-30",
-    "content": "上海市浦东新区面向应届毕业生及社会优秀人才招录储备干部70名，涵盖自贸区管理、科技创新、城市治理等方向。全日制硕士及以上学历，海外名校优先。笔试：行测+申论，面试：结构化面试。享受浦东人才政策全覆盖，包括落户加分、租房补贴等。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-01-28",
+    "deadline": "2026-02-06",
+    "content": "上海市2026年事业单位公开招聘共计1899个岗位、2468人（含三支一扶300人）。专技岗1192人，管理岗976人，应届毕业生岗位1677人。笔试时间3月28日，科目为《职业能力倾向测验》和《综合应用能力》。报名通过随申办市民云APP进行。",
+    "positions": [
+      {
+        "position_name": "管理岗（行政、人事、党务）",
+        "department": "上海市市属事业单位",
+        "recruit_count": 976,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学、中文等相关专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "职业能力倾向测验+综合应用能力"
+      },
+      {
+        "position_name": "专技岗（工程师、财务会计等）",
+        "department": "上海市市属事业单位",
+        "recruit_count": 1192,
+        "education_req": "本科及以上",
+        "major_req": "对应专业背景，部分需相关职称",
+        "age_req": "35周岁以下",
+        "exam_subjects": "职业能力倾向测验+综合应用能力"
+      },
+      {
+        "position_name": "三支一扶岗（支教、支农、支医）",
+        "department": "上海各郊区乡镇",
+        "recruit_count": 300,
+        "education_req": "本科及以上",
+        "major_req": "专业要求相对宽松",
+        "age_req": "应届毕业生",
+        "exam_subjects": "职业能力倾向测验+综合应用能力"
+      }
+    ],
+    "source_url": "https://rsj.sh.gov.cn/tgsgg_17341/20260128/t0035_1438398.html"
   },
   {
-    "title": "2026年武汉市「英雄城市」人才引进工程",
+    "title": "武汉市2026年度事业单位公开招聘公告",
     "province": "湖北",
     "city": "武汉",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-06",
-    "deadline": "2026-06-15",
-    "content": "武汉市面向全国引进急需紧缺人才85名，覆盖光电子信息、汽车制造、生物医药等优势产业。全日制本科及以上学历，重点高校毕业生优先。笔试科目：行政职业能力测验+申论。面试：结构化面试。入选者享受购房优惠、安居补贴及专属人才服务。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-02-02",
+    "deadline": "2026-02-10",
+    "content": "武汉市2026年度事业单位公开招聘3208人。笔试分两天：3月28日和3月29日。笔试科目为《职业能力倾向测验》和《综合应用能力》，分五类：综合管理类(A)、社会科学专技类(B)、自然科学专技类(C)、中小学教师类(D)、医疗卫生类(E)。年龄18-38周岁，部分岗位放宽至43或48周岁。",
+    "positions": [
+      {
+        "position_name": "综合管理岗（A类）",
+        "department": "武汉市市属事业单位",
+        "recruit_count": 800,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学、经济学、文学等相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "职业能力倾向测验(A)+综合应用能力(A)"
+      },
+      {
+        "position_name": "自然科学专技岗（C类）",
+        "department": "武汉市市属事业单位",
+        "recruit_count": 600,
+        "education_req": "本科及以上",
+        "major_req": "理工科相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "职业能力倾向测验(C)+综合应用能力(C)"
+      },
+      {
+        "position_name": "中小学教师岗（D类）",
+        "department": "武汉市各区教育局所属学校",
+        "recruit_count": 700,
+        "education_req": "本科及以上",
+        "major_req": "教育学、学科教育相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "职业能力倾向测验(D)+综合应用能力(D)"
+      }
+    ],
+    "source_url": "https://www.wuhan.gov.cn/zwgk/xxgk/rsxx/gwyzl/202602/t20260202_2723791.shtml"
   },
   {
-    "title": "2026年郑州市「中原英才」引进计划",
+    "title": "2025年郑州市事业单位公开招聘联考工作的公告",
     "province": "河南",
     "city": "郑州",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-22",
-    "deadline": "2026-06-20",
-    "content": "郑州市中原英才计划面向全国招引各类人才65名，涵盖装备制造、食品加工、现代物流、电子商务等重点行业。全日制本科及以上学历，年龄35周岁以下。考试科目：公共基础知识+申论。面试采用结构化面试方式。提供人才补贴、配偶就业安置及子女教育保障。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2025-08-08",
+    "deadline": "2025-08-18",
+    "content": "郑州市12个开发区、区县（市）事业单位联合招聘，共设782个岗位、招聘2054人。考试分三类，每类含职业能力测验和专业知识两科，每科100分。笔试成绩按职测50%+专业知识50%+政策加分计算。",
+    "positions": [
+      {
+        "position_name": "综合管理岗",
+        "department": "郑州市各区县事业单位",
+        "recruit_count": 800,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学等相关专业",
+        "age_req": "18-35周岁",
+        "exam_subjects": "职业能力测验+专业知识（综合类）"
+      },
+      {
+        "position_name": "专业技术岗（教育类）",
+        "department": "郑州市各区县教育事业单位",
+        "recruit_count": 700,
+        "education_req": "本科及以上",
+        "major_req": "教育学类相关专业",
+        "age_req": "18-35周岁",
+        "exam_subjects": "职业能力测验+专业知识（教育类）"
+      },
+      {
+        "position_name": "专业技术岗（医疗类）",
+        "department": "郑州市各区县卫生事业单位",
+        "recruit_count": 554,
+        "education_req": "本科及以上",
+        "major_req": "临床医学、护理学等医学类专业",
+        "age_req": "18-35周岁",
+        "exam_subjects": "职业能力测验+专业知识（医疗类）"
+      }
+    ],
+    "source_url": "https://public.zhengzhou.gov.cn/D1703X/9531798.jhtml"
   },
   {
-    "title": "2026年厦门市「鹭岛英才」高层次人才招聘",
+    "title": "2026年厦门市事业单位公开招聘工作人员公告",
     "province": "福建",
     "city": "厦门",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-02",
-    "deadline": "2026-05-31",
-    "content": "厦门市面向海内外引进高层次人才40名，重点引进半导体、平板显示、软件信息等领域专家和青年才俊。硕士及以上学历，有海外留学或工作经历者优先。考核方式：专业面试+业绩答辩，部分岗位免笔试。享受最高200万元安家补贴及住房保障。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-03-25",
+    "deadline": "2026-04-02",
+    "content": "厦门市部分事业单位面向社会公开招聘工作人员。报名时间2026年3月25日至4月2日，笔试时间4月25日。年龄要求18-38周岁，每人限报1个岗位，须通过闽政通APP L4级身份认证方可报名。",
+    "positions": [
+      {
+        "position_name": "综合事务岗",
+        "department": "厦门市思明区鹭江街道党群服务中心",
+        "recruit_count": 1,
+        "education_req": "本科及以上",
+        "major_req": "不限",
+        "age_req": "45周岁以下",
+        "exam_subjects": "综合基础知识"
+      },
+      {
+        "position_name": "智慧平台管理维护岗",
+        "department": "厦门市人大法律研究与代表服务中心",
+        "recruit_count": 1,
+        "education_req": "本科及以上",
+        "major_req": "计算机科学与技术类、软件技术类相关专业",
+        "age_req": "38周岁以下",
+        "exam_subjects": "综合基础知识"
+      },
+      {
+        "position_name": "校医岗",
+        "department": "福建省厦门第一中学",
+        "recruit_count": 2,
+        "education_req": "本科及以上",
+        "major_req": "临床医学类相关专业",
+        "age_req": "38周岁以下",
+        "exam_subjects": "综合基础知识"
+      }
+    ],
+    "source_url": "http://xm.bendibao.com/job/2026325/95549.shtm"
   },
   {
-    "title": "2026年合肥市「科技新城」人才引进计划",
+    "title": "合肥市2025年度定向招录选调生同步人才引进工作公告",
     "province": "安徽",
     "city": "合肥",
     "policy_type": "人才引进",
-    "publish_date": "2026-03-15",
-    "deadline": "2026-06-30",
-    "content": "合肥市面向全国公开招录人才75名，涵盖人工智能、量子信息、新能源汽车等创新领域。全日制本科及以上学历，中国科大/合工大等本地高校及双一流高校毕业生优先。笔试：行测+申论，面试：结构化面试。享受最高40万元购房补贴。"
+    "publish_date": "2025-04-03",
+    "deadline": "2025-04-14",
+    "content": "合肥市委组织部等五部门联合发布，计划引进160名人才，其中市直事业单位100名、市属国有企业60名。报考人员须符合安徽省2025年度定向选调生资格条件。采用笔试成绩与面试成绩按4:6合成总成绩。提供省外考生交通食宿补贴。",
+    "positions": [
+      {
+        "position_name": "市直事业单位综合管理岗",
+        "department": "合肥市市直事业单位",
+        "recruit_count": 100,
+        "education_req": "硕士研究生及以上",
+        "major_req": "经济、法律、管理、工程等多领域",
+        "age_req": "按选调生标准",
+        "exam_subjects": "笔试40%+面试60%"
+      },
+      {
+        "position_name": "市属国有企业管理岗",
+        "department": "合肥市市属国有企业",
+        "recruit_count": 60,
+        "education_req": "硕士研究生及以上",
+        "major_req": "经济、管理、工程等相关专业",
+        "age_req": "按选调生标准",
+        "exam_subjects": "笔试40%+面试60%"
+      }
+    ],
+    "source_url": "https://finance.sina.com.cn/jjxw/2025-04-04/doc-inerxxva7732041.shtml"
   },
   {
-    "title": "2026年长沙市「星城聚才」专项引进",
+    "title": "2026年长沙市教育局所属事业单位公开招聘教职工公告",
     "province": "湖南",
     "city": "长沙",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-10",
-    "deadline": "2026-06-15",
-    "content": "长沙市面向全国招引优秀人才60名，覆盖工程机械、新材料、文化传媒、种业创新等优势领域。全日制本科及以上学历，35周岁以下。笔试：行政职业能力测验+申论。面试：结构化面试+专业技能展示。提供人才补贴、免费人才公寓及家属随迁支持。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2025-10-16",
+    "deadline": "2025-11-10",
+    "content": "长沙市教育局所属38个事业单位公开招聘教职工662名，分公费师范生、高校毕业研究生、骨干教师、学科竞赛教练、体育教练员五类。笔试11月22日，考核12月13-21日。另有'星斗'工程引进教育类硕博人才460名。",
+    "positions": [
+      {
+        "position_name": "公费师范生教师岗",
+        "department": "长沙市教育局所属中学",
+        "recruit_count": 200,
+        "education_req": "教育部直属师范院校应届公费师范毕业生",
+        "major_req": "师范类相关学科专业",
+        "age_req": "应届毕业生",
+        "exam_subjects": "考核（免笔试）"
+      },
+      {
+        "position_name": "高校毕业研究生教师岗",
+        "department": "长沙市教育局所属学校",
+        "recruit_count": 300,
+        "education_req": "硕士研究生及以上",
+        "major_req": "教育学、学科教学相关专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "笔试+考核"
+      },
+      {
+        "position_name": "骨干教师岗",
+        "department": "长沙市教育局所属学校",
+        "recruit_count": 162,
+        "education_req": "本科及以上",
+        "major_req": "对应学科专业，需高级教师职称",
+        "age_req": "45岁以下",
+        "exam_subjects": "笔试+考核"
+      }
+    ],
+    "source_url": "https://www.gxrcyj.com/shiye/202510/20101675.html"
   },
   {
-    "title": "2026年重庆市两江新区急需人才招聘",
+    "title": "重庆市属事业单位2026年第一季度考核招聘高层次和紧缺人才公告",
     "province": "重庆",
     "city": "重庆",
     "policy_type": "人才引进",
-    "publish_date": "2026-03-08",
-    "deadline": "2026-06-10",
-    "content": "重庆市两江新区面向全国招聘急需紧缺人才50名，岗位涉及智能网联汽车、生物制药、数字经济管理等。全日制硕士及以上学历。笔试科目：综合能力测试（含行测和公共基础知识）。面试：结构化面试。提供安居补贴最高30万元、科研启动金及落户便利。"
+    "publish_date": "2026-01-30",
+    "deadline": "2026-02-09",
+    "content": "重庆市属事业单位2026年第一季度考核招聘高层次和紧缺人才310名，重点引进博士198人、高级职称人员52人。报名2月3日-9日。考试与考核相结合方式选拔，涵盖医疗卫生、自然科学、农业发展等重点领域。",
+    "positions": [
+      {
+        "position_name": "病理科医师岗",
+        "department": "重庆市人民医院",
+        "recruit_count": 2,
+        "education_req": "博士研究生",
+        "major_req": "临床医学（病理学方向）",
+        "age_req": "40周岁以下",
+        "exam_subjects": "考核招聘（面试+考察）"
+      },
+      {
+        "position_name": "超声科医师岗",
+        "department": "重庆医科大学附属第二医院",
+        "recruit_count": 1,
+        "education_req": "博士研究生",
+        "major_req": "临床医学（超声医学方向）",
+        "age_req": "40周岁以下",
+        "exam_subjects": "考核招聘（面试+考察）"
+      },
+      {
+        "position_name": "临床医师岗",
+        "department": "重庆医科大学附属大学城医院",
+        "recruit_count": 4,
+        "education_req": "博士研究生",
+        "major_req": "临床医学相关专业",
+        "age_req": "40周岁以下",
+        "exam_subjects": "考核招聘（面试+考察）"
+      }
+    ],
+    "source_url": "https://rlsbj.cq.gov.cn/zwxx_182/sydw/sydwgkzp2026/202601/t20260130_15369555.html"
   },
   {
-    "title": "2026年天津市滨海新区人才引进公告",
+    "title": "天津市北辰区2026年事业单位公开招聘工作人员公告",
     "province": "天津",
     "city": "天津",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-20",
-    "deadline": "2026-07-01",
-    "content": "天津市滨海新区公开引进优秀人才45名，覆盖石化新材料、装备制造、海洋科技、航空航天等领域。本科及以上学历，部分岗位需硕士。笔试：行政职业能力测验，面试：结构化面试+专业测试。享受滨海新区人才专项补贴及海河英才计划落户政策。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-02-05",
+    "deadline": "2026-03-07",
+    "content": "天津市北辰区2026年事业单位公开招聘工作人员21人。报名时间3月1日-9日，笔试3月22日，面试4月12日。笔试含职业能力测验和综合知识两科（各100分），面试采取结构化面谈。总成绩=笔试成绩/2*50%+面试成绩*50%。",
+    "positions": [
+      {
+        "position_name": "综合管理岗",
+        "department": "天津市北辰区所属事业单位",
+        "recruit_count": 10,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学等相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "职业能力测验+综合知识+结构化面试"
+      },
+      {
+        "position_name": "专业技术岗（教育类）",
+        "department": "天津市北辰区所属事业单位",
+        "recruit_count": 6,
+        "education_req": "本科及以上",
+        "major_req": "教育学相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "职业能力测验+综合知识+结构化面试"
+      },
+      {
+        "position_name": "专业技术岗（计算机类）",
+        "department": "天津市北辰区所属事业单位",
+        "recruit_count": 5,
+        "education_req": "本科及以上",
+        "major_req": "计算机科学与技术相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "职业能力测验+综合知识+结构化面试"
+      }
+    ],
+    "source_url": "https://www.tjbc.gov.cn/zwgk/tzgg/202602/t20260205_7240210.html"
   },
   {
-    "title": "2026年西安市「西引力」人才引进行动",
+    "title": "2025年下半年西安市事业单位公开招聘工作人员公告",
     "province": "陕西",
     "city": "西安",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-05",
-    "deadline": "2026-06-20",
-    "content": "西安市面向全国引进各类人才80名，聚焦航空航天、新能源、半导体、文化旅游等领域。全日制本科及以上学历，西安交大/西工大/西电等本地高校及985高校毕业生优先。笔试：行测+申论，面试：结构化面试。提供人才公寓、安家费补贴及配偶就业安排。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2025-08-22",
+    "deadline": "2025-09-04",
+    "content": "西安市事业单位面向社会统一公开招聘工作人员650名，共496个岗位。笔试科目为《职业能力倾向测验》和《综合应用能力》各150分，笔试时间2025年9月27日。报名网站为西安人事考试网。",
+    "positions": [
+      {
+        "position_name": "综合管理类岗位（A类）",
+        "department": "西安市市属事业单位",
+        "recruit_count": 300,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学、经济学相关专业",
+        "age_req": "18-35周岁",
+        "exam_subjects": "职业能力倾向测验+综合应用能力"
+      },
+      {
+        "position_name": "自然科学专技类岗位（C类）",
+        "department": "西安市市属事业单位",
+        "recruit_count": 200,
+        "education_req": "本科及以上",
+        "major_req": "理工科相关专业",
+        "age_req": "18-35周岁",
+        "exam_subjects": "职业能力倾向测验+综合应用能力"
+      },
+      {
+        "position_name": "医疗卫生类岗位（E类）",
+        "department": "西安市市属医疗卫生事业单位",
+        "recruit_count": 150,
+        "education_req": "本科及以上",
+        "major_req": "临床医学、护理学等相关专业",
+        "age_req": "18-35周岁",
+        "exam_subjects": "职业能力倾向测验+综合应用能力"
+      }
+    ],
+    "source_url": "http://xa.bendibao.com/job/2025822/143810.shtm"
   },
   {
-    "title": "2026年东莞市松山湖高新区人才招引计划",
+    "title": "东莞市发展和改革局下属事业单位2025年公开招聘人员公告",
     "province": "广东",
     "city": "东莞",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-12",
-    "deadline": "2026-05-30",
-    "content": "东莞市松山湖高新区面向全国引进科技创新和产业发展人才35名，涵盖新一代信息技术、高端装备、新材料等。全日制本科及以上学历，有相关科研或产业经验者优先。考核方式：综合面试+专业能力评估，免笔试。享受松山湖人才专项资助及住房保障。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2025-09-28",
+    "deadline": "2025-10-17",
+    "content": "东莞市发展和改革局下属事业单位面向社会公开招聘6名工作人员，事业编制。报名时间2025年10月9日至10月17日，笔试成绩占40%，面试成绩占60%。",
+    "positions": [
+      {
+        "position_name": "综合管理岗",
+        "department": "东莞市发展和改革局下属事业单位",
+        "recruit_count": 3,
+        "education_req": "本科及以上",
+        "major_req": "经济学、管理学相关专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "基本能力测评40%+面试60%"
+      },
+      {
+        "position_name": "专业技术岗",
+        "department": "东莞市发展和改革局下属事业单位",
+        "recruit_count": 3,
+        "education_req": "本科及以上",
+        "major_req": "计算机、统计学相关专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "基本能力测评40%+面试60%"
+      }
+    ],
+    "source_url": "https://dgdp.dg.gov.cn/gkmlpt/content/4/4441/post_4441683.html"
   },
   {
-    "title": "2026年温州市「瓯越英才」引进计划",
+    "title": "温州市市级事业单位2025年下半年面向社会公开招聘工作人员公告",
     "province": "浙江",
     "city": "温州",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-18",
-    "deadline": "2026-06-30",
-    "content": "温州市面向全国引进各类紧缺人才40名，重点涵盖电气制造、鞋服设计、跨境电商等特色产业。全日制本科及以上学历，年龄35周岁以下。笔试：公共基础知识+行政职业能力测验。面试：结构化面试。入选者享受安家补贴20-50万元及人才公寓。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2025-08-18",
+    "deadline": "2025-08-29",
+    "content": "温州市市级事业单位面向社会公开招聘工作人员25人，共20个岗位。笔试时间9月27日，科目为《综合应用能力》和《职业能力倾向测验》。户籍要求为温州市的岗位限温州户籍或温州生源应届毕业生。",
+    "positions": [
+      {
+        "position_name": "综合管理类岗位",
+        "department": "温州市市级事业单位",
+        "recruit_count": 15,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学、经济学相关专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "综合应用能力+职业能力倾向测验"
+      },
+      {
+        "position_name": "专业技术类岗位",
+        "department": "温州市市级事业单位",
+        "recruit_count": 10,
+        "education_req": "本科及以上",
+        "major_req": "理工科或对口专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "综合应用能力+职业能力倾向测验"
+      }
+    ],
+    "source_url": "https://wz.bendibao.com/job/2025818/74041.shtm"
   },
   {
-    "title": "2026年无锡市「太湖之光」高端人才引进",
+    "title": "无锡市2026年市属事业单位统一公开招聘人员公告",
     "province": "江苏",
     "city": "无锡",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-08",
-    "deadline": "2026-06-15",
-    "content": "无锡市面向海内外引进高端人才50名，覆盖物联网、集成电路、生物医药、新能源等战略新兴产业。硕士及以上学历，有海外留学经历或产业经验者优先。考核：专业面试+综合答辩。提供最高100万元安家补贴、人才公寓及科研经费。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2026-03-18",
+    "deadline": "2026-03-25",
+    "content": "中共无锡市委组织部、无锡市人力资源和社会保障局统一公开招聘市属事业单位人员39名。笔试时间2026年4月18日，科目为《综合知识和能力素质》。考试方式为笔试+面试，满分均为100分。",
+    "positions": [
+      {
+        "position_name": "综合管理岗",
+        "department": "无锡市市属事业单位",
+        "recruit_count": 20,
+        "education_req": "本科及以上",
+        "major_req": "管理学、法学相关专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "综合知识和能力素质+面试"
+      },
+      {
+        "position_name": "专业技术岗",
+        "department": "无锡市市属事业单位",
+        "recruit_count": 19,
+        "education_req": "本科及以上",
+        "major_req": "计算机、经济学等对口专业",
+        "age_req": "18-38周岁",
+        "exam_subjects": "综合知识和能力素质+面试"
+      }
+    ],
+    "source_url": "https://hrss.wuxi.gov.cn/doc/2026/03/18/4747264.shtml"
   },
   {
-    "title": "2026年烟台市蓝色经济人才引进计划",
+    "title": "2026年烟台市青年干部人才菁英计划选聘公告",
     "province": "山东",
     "city": "烟台",
     "policy_type": "人才引进",
-    "publish_date": "2026-03-15",
-    "deadline": "2026-06-20",
-    "content": "烟台市面向全国引进蓝色经济相关人才35名，涵盖海洋牧场、核电装备、葡萄酒产业、化工新材料等。全日制本科及以上学历，年龄40周岁以下。笔试：综合知识（公共基础知识+专业常识），面试：结构化面试。享受人才津贴及安家补贴。"
+    "publish_date": "2026-01-14",
+    "deadline": "2026-01-25",
+    "content": "烟台市面向全国应届博士、硕士研究生定向选聘一批优秀毕业生到市直事业单位工作，共计60人。报名时间2026年1月17日至1月25日，通过烟台党建云官网报名系统报名。采用预选和面试相结合的选拔方式。",
+    "positions": [
+      {
+        "position_name": "市直事业单位博士岗位",
+        "department": "烟台市市直事业单位",
+        "recruit_count": 30,
+        "education_req": "博士研究生",
+        "major_req": "不限定特定专业",
+        "age_req": "35周岁以下",
+        "exam_subjects": "预选+面试"
+      },
+      {
+        "position_name": "市直事业单位硕士岗位",
+        "department": "烟台市市直事业单位",
+        "recruit_count": 30,
+        "education_req": "硕士研究生",
+        "major_req": "不限定特定专业",
+        "age_req": "30周岁以下",
+        "exam_subjects": "预选+面试"
+      }
+    ],
+    "source_url": "https://www.yantai.gov.cn/col/col51398/art/2026/art_e1ee6805f78b4c288c0a4d66de277ee8.html"
   },
   {
-    "title": "2026年佛山市顺德区产业人才引进公告",
+    "title": "佛山市南海区教育系统2025-2026学年面向社会公开招聘教师公告",
     "province": "广东",
     "city": "佛山",
-    "policy_type": "人才引进",
-    "publish_date": "2026-03-20",
-    "deadline": "2026-06-10",
-    "content": "佛山市顺德区面向全国招引产业人才40名，涵盖智能家电、机器人、食品加工等优势产业。全日制本科及以上学历，具备相关行业工作经验者优先。考试形式：行政职业能力测验+专业面试。入选者享受安家补贴、租房补贴及顺德英才卡服务。"
+    "policy_type": "事业单位招聘",
+    "publish_date": "2025-04-22",
+    "deadline": "2025-05-06",
+    "content": "佛山市南海区教育系统面向社会公开招聘公益一类事业编制教师224名。报名时间2025年4月26日至5月6日。笔试内容为教育学、心理学、文化素养、职业道德及教育法律法规。笔试40%权重（合格线60分），面试60%权重（合格线70分），总成绩合格线66分。",
+    "positions": [
+      {
+        "position_name": "普通中小学教师岗",
+        "department": "南海区教育系统（石门中学、南海中学等）",
+        "recruit_count": 180,
+        "education_req": "本科及以上",
+        "major_req": "专业对口，需持有教师资格证",
+        "age_req": "35岁以下",
+        "exam_subjects": "教育学心理学笔试40%+面试60%"
+      },
+      {
+        "position_name": "职业学校教师岗",
+        "department": "南海区信息技术学校等",
+        "recruit_count": 44,
+        "education_req": "本科及以上",
+        "major_req": "对口专业，需持有教师资格证",
+        "age_req": "35岁以下",
+        "exam_subjects": "教育学心理学笔试40%+面试60%"
+      }
+    ],
+    "source_url": "https://www.bianzhia.com/guangdong/foshan/20250422/199352.html"
   },
   {
-    "title": "2026年绍兴市「名士之乡」人才引进计划",
-    "province": "浙江",
-    "city": "绍兴",
+    "title": "太原市卫生健康委员会直属事业单位2026年公开招聘博士研究生公告",
+    "province": "山西",
+    "city": "太原",
     "policy_type": "人才引进",
-    "publish_date": "2026-03-25",
-    "deadline": "2026-06-30",
-    "content": "绍兴市名士之乡人才引进计划面向全国招录各类人才30名，覆盖纺织新材料、高端装备、集成电路、黄酒产业现代化等特色领域。全日制本科及以上学历，年龄35周岁以下。考试科目：行测+申论，面试为结构化面试。提供最高80万元安家补贴及人才公寓。"
+    "publish_date": "2026-03-30",
+    "deadline": "2026-12-31",
+    "content": "太原市卫生健康委员会直属事业单位面向社会公开招聘博士研究生18名，均为专业技术岗位。采取邮件报名方式，报名时间2026年3月至12月（招满即止）。采用直接考核方式选拔（最低合格线60分），无笔试。",
+    "positions": [
+      {
+        "position_name": "临床医学博士岗",
+        "department": "太原市卫生健康委员会直属事业单位",
+        "recruit_count": 10,
+        "education_req": "博士研究生",
+        "major_req": "临床医学相关专业",
+        "age_req": "18-43周岁",
+        "exam_subjects": "直接考核（合格线60分）"
+      },
+      {
+        "position_name": "公共卫生博士岗",
+        "department": "太原市卫生健康委员会直属事业单位",
+        "recruit_count": 5,
+        "education_req": "博士研究生",
+        "major_req": "公共卫生、预防医学相关专业",
+        "age_req": "18-43周岁",
+        "exam_subjects": "直接考核（合格线60分）"
+      },
+      {
+        "position_name": "药学博士岗",
+        "department": "太原市卫生健康委员会直属事业单位",
+        "recruit_count": 3,
+        "education_req": "博士研究生",
+        "major_req": "药学相关专业",
+        "age_req": "18-43周岁",
+        "exam_subjects": "直接考核（合格线60分）"
+      }
+    ],
+    "source_url": "https://www.rcyjw.com/shanxi2/taiyuan/139384.html"
   }
 ]

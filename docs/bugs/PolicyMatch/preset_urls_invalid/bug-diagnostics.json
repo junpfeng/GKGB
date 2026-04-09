@@ -1,0 +1,20 @@
+{
+  "collection_timestamp": "2026-04-09T10:00:00+08:00",
+  "analyze_output": "N/A - 非代码错误，数据质量问题",
+  "test_output": "N/A",
+  "error_logs": "WebFetch 验证 24 个 URL：15 个指向列表页，5 个指向首页，1 个内容不匹配，3 个无法访问（SSL/412/521错误）",
+  "related_code": [
+    "assets/data/rencaiyinjin_policies_preset.json",
+    "lib/screens/policy_match_screen.dart (PolicyContentScreen:1052-1282, PositionDetailScreen:716-1042)",
+    "lib/services/match_service.dart (loadPresetPolicies)"
+  ],
+  "reproduction_steps": [
+    "选择人才引进考试类别",
+    "进入岗位匹配页面（自动加载预置公告）",
+    "点击任一公告进入详情",
+    "点击"查看公告原文"链接",
+    "打开的页面不是对应的公告内容"
+  ],
+  "bug_category": "数据质量",
+  "covered_dimensions": ["现象", "复现", "范围", "证据", "影响"]
+}
