@@ -14,6 +14,12 @@ class ExamCategoryService extends ChangeNotifier {
   ExamSubType? _activeSubType;
   bool _isExploreMode = false;
 
+  /// 待跳转的 Tab 索引（选择人才引进后自动跳转到岗位匹配 Tab）
+  int? _pendingTabIndex;
+
+  /// 被目标岗位动态覆盖的科目列表（仅人才引进使用）
+  List<ExamSubject>? _overrideSubjects;
+
   // getter
   bool get hasTarget => _primaryTarget != null && _activeCategory != null;
   bool get isExploreMode => _isExploreMode;
@@ -21,8 +27,18 @@ class ExamCategoryService extends ChangeNotifier {
   ExamCategory? get activeCategory => _activeCategory;
   ExamSubType? get activeSubType => _activeSubType;
 
-  /// 当前活跃科目列表（优先子类型，回退到默认科目）
+  /// 消费待跳转 Tab 索引（读取后自动清除）
+  int? consumePendingTabIndex() {
+    final idx = _pendingTabIndex;
+    _pendingTabIndex = null;
+    return idx;
+  }
+
+  /// 当前活跃科目列表（优先动态覆盖 → 子类型 → 默认科目）
   List<ExamSubject> get activeSubjects {
+    if (_overrideSubjects != null && _overrideSubjects!.isNotEmpty) {
+      return _overrideSubjects!;
+    }
     if (_activeSubType != null && _activeSubType!.subjects.isNotEmpty) {
       return _activeSubType!.subjects;
     }
@@ -101,6 +117,13 @@ class ExamCategoryService extends ChangeNotifier {
         ? ExamCategoryRegistry.findSubType(target.examCategoryId, target.subTypeId)
         : null;
     _isExploreMode = false;
+    _overrideSubjects = null; // 切换目标时清除动态覆盖
+
+    // 人才引进：设置待跳转到岗位匹配 Tab（index=2）
+    if (target.examCategoryId == 'rencaiyinjin') {
+      _pendingTabIndex = 2;
+    }
+
     notifyListeners();
   }
 
@@ -218,6 +241,65 @@ class ExamCategoryService extends ChangeNotifier {
     await db.rawUpdate(
       "UPDATE study_plans SET status = 'paused' WHERE status = 'active'",
     );
+  }
+
+  /// 根据目标岗位的考试科目文本，动态覆盖活跃科目（仅人才引进使用）
+  ///
+  /// 关键词映射：
+  /// - "行测"/"行政职业能力" → 行测科目
+  /// - "申论" → 申论科目
+  /// - "公基"/"公共基础知识"/"综合知识" → 公基科目
+  /// - "职测"/"职业能力倾向" → 职测科目（事业编 A 类）
+  /// - 无法识别 → 回退到默认科目（行测+申论）
+  void updateSubjectsFromExamText(String? examSubjects) {
+    if (_activeCategory?.id != 'rencaiyinjin') return;
+
+    if (examSubjects == null || examSubjects.trim().isEmpty) {
+      _overrideSubjects = null; // 回退到 defaultSubjects
+      notifyListeners();
+      return;
+    }
+
+    final text = examSubjects;
+    final subjects = <ExamSubject>[];
+
+    // 从 Registry 的已有科目定义中匹配
+    final allCategories = ExamCategoryRegistry.allCategories;
+    final subjectPool = <String, ExamSubject>{};
+    for (final cat in allCategories) {
+      for (final s in cat.defaultSubjects) {
+        subjectPool[s.subject] = s;
+      }
+      for (final st in cat.subTypes) {
+        for (final s in st.subjects) {
+          subjectPool[s.subject] = s;
+        }
+      }
+    }
+
+    if (text.contains('行测') || text.contains('行政职业能力')) {
+      final s = subjectPool['行测'];
+      if (s != null) subjects.add(s);
+    }
+    if (text.contains('申论')) {
+      final s = subjectPool['申论'];
+      if (s != null) subjects.add(s);
+    }
+    if (text.contains('公基') || text.contains('公共基础知识') || text.contains('综合知识')) {
+      final s = subjectPool['公基'];
+      if (s != null) subjects.add(s);
+    }
+    if (text.contains('职测') || text.contains('职业能力倾向')) {
+      final s = subjectPool['职测'];
+      if (s != null) subjects.add(s);
+    }
+
+    if (subjects.isEmpty) {
+      _overrideSubjects = null; // 无法识别，回退默认
+    } else {
+      _overrideSubjects = subjects;
+    }
+    notifyListeners();
   }
 
   /// 获取当前目标的显示文本

@@ -97,6 +97,7 @@ flutter:
     - assets/questions/real_exam/guokao/
     - assets/questions/real_exam/shengkao/
     - assets/questions/real_exam/shiyebian/
+    - assets/data/rencaiyinjin_policies_preset.json
     - assets/data/exam_entry_scores/
 
   # An image asset can refer to one or more resolution-specific "variants", see

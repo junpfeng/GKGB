@@ -35,50 +35,24 @@ dart run build_runner build --delete-conflicting-outputs
 flutter test
 ```
 
-## 目录结构
+## 架构概览
 
 ```
-GKGB/
-├── lib/
-│   ├── main.dart                # 入口 + Provider 注入
-│   ├── app.dart                 # MaterialApp 配置（主题、路由）
-│   ├── models/                  # 数据模型（json_serializable）[待建]
-│   ├── db/                      # 数据库层
-│   │   └── database_helper.dart # SQLite 建表与升级
-│   ├── services/                # 业务服务
-│   │   ├── llm/                 # 多大模型抽象层
-│   │   │   ├── llm_provider.dart    # 统一接口
-│   │   │   └── llm_manager.dart     # 模型管理 + fallback
-│   │   └── question_service.dart    # 题目服务
-│   ├── screens/                 # 页面
-│   │   ├── home_screen.dart         # 首页（底部导航）
-│   │   ├── practice_screen.dart     # 刷题
-│   │   ├── exam_screen.dart         # 模拟考试
-│   │   ├── stats_screen.dart        # 统计
-│   │   ├── policy_match_screen.dart # 公告匹配
-│   │   └── profile_screen.dart      # 个人信息
-│   └── widgets/                 # 通用组件 [待建]
-├── assets/                      # 静态资源（题库 JSON 等）[待建]
-├── docs/
-│   ├── product-design.md        # 产品设计文档
-│   └── skill-adaptation-plan.md # Skill 适配计划
-├── android/                     # Android 工程（flutter create 生成）
-├── windows/                     # Windows 工程（flutter create 生成）
-├── test/                        # 测试
-└── pubspec.yaml                 # 依赖配置
+screens (32) → services (33) → db/models (38表 + 38模型)
+               ↑ LLM 抽象层: 6 Provider + fallback
+               ↑ 状态管理: 23 个 ChangeNotifier (Provider)
 ```
 
-> **注意**：完整的目标目录结构见 [`docs/product-design.md`](docs/product-design.md) 第 3.2 节，上表仅反映当前已实现的文件。
+| 层 | 目录 | 说明 |
+|----|------|------|
+| UI | `lib/screens/` + `lib/widgets/` | 32 页面 + 18 通用组件，底部 5 Tab 导航 |
+| 服务 | `lib/services/` | 业务逻辑，含 `llm/` 多模型抽象子目录 |
+| 数据 | `lib/models/` + `lib/db/` | json_serializable 模型 + SQLite v19 |
+| 资产 | `assets/` | 题库 JSON、真题卷、预置数据 |
 
-## 核心模块
-
-| 模块 | 说明 |
-|------|------|
-| 题库刷题 | 行测/申论/公基分科练习，错题本，收藏 |
-| 模拟考试 | 按真实考试时间题量模拟，自动评分 |
-| 人才引进匹配 | 两级匹配（公告粗筛→岗位精准），筛选理由卡片 |
-| 学习路线 | 目标岗位→摸底测试→分阶段每日计划→动态调整 |
-| 多模型 AI | 统一 LLM 接口，支持 Claude/DeepSeek/千问/Ollama |
+> **完整架构文档**（导航树、页面/服务/模型/表清单、Provider 注册顺序、AI 调用链路等）：
+> [`docs/app-architecture.md`](docs/app-architecture.md)
+> 需要了解某个模块的上下文时，优先查阅该文档。
 
 ## 开发规范
 

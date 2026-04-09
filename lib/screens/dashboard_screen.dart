@@ -11,6 +11,8 @@ import '../widgets/progress_ring.dart';
 import '../theme/app_theme.dart';
 import 'exam_calendar_screen.dart';
 import 'exam_entry_scores_screen.dart';
+import 'speed_training_screen.dart';
+import '../services/speed_training_service.dart';
 
 /// 个性化数据看板（替换原 StatsScreen）
 class DashboardScreen extends StatefulWidget {
@@ -95,6 +97,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const SizedBox(height: 16),
           // 今日概览
           _buildTodayOverview(context, data),
+          const SizedBox(height: 16),
+          // 速算训练每日挑战提示
+          _buildSpeedTrainingPrompt(context),
           const SizedBox(height: 16),
           // 连续打卡 + 备考进度
           _buildStreakAndProgress(context, data),
@@ -310,6 +315,80 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  // ===== 速算训练每日挑战提示 =====
+
+  Widget _buildSpeedTrainingPrompt(BuildContext context) {
+    final service = context.read<SpeedTrainingService>();
+    return FutureBuilder<bool>(
+      future: service.hasTodayChallenge(),
+      builder: (context, snapshot) {
+        final todayDone = snapshot.data ?? false;
+        if (todayDone) return const SizedBox.shrink();
+        return GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const SpeedTrainingScreen()),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(14),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF667eea).withValues(alpha: 0.3),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(Icons.bolt, color: Colors.white, size: 22),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '今日速算挑战',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        '每日 20 题限时速算，提升资料分析速度',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.white.withAlpha(200),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: Colors.white70),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

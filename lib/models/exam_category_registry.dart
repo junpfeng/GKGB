@@ -221,12 +221,12 @@ class ExamCategoryRegistry {
     label: '人才引进',
     description: '各地人才引进计划',
     scope: 'variable',
-    requiresProvince: true,
-    contentStatus: ContentStatus.comingSoon,
-    supportedFeatures: {Feature.positionMatch},
+    requiresProvince: false, // 人才引进不限定省份，通过岗位匹配选择具体地区
+    contentStatus: ContentStatus.partial,
+    supportedFeatures: {Feature.positionMatch, Feature.practice, Feature.interview, Feature.studyPlan},
     dbExamTypeValues: ['人才引进'],
-    interviewCategories: [],
-    defaultSubjects: [],
+    interviewCategories: ['综合分析', '计划组织', '人际关系', '应急应变', '自我认知'],
+    defaultSubjects: [_xingce120, _shenlun], // 默认行测+申论，可被目标岗位动态覆盖
     subTypes: [],
   );
 

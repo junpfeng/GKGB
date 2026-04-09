@@ -1,0 +1,1 @@
+- [Project Security Patterns](project_security_patterns.md) — flutter_secure_storage usage patterns and security architecture in GKGB

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:html/parser.dart' as html_parser;
 import '../db/database_helper.dart';
 import '../models/talent_policy.dart';
@@ -8,6 +9,7 @@ import '../models/position.dart';
 import '../models/match_result.dart';
 import '../models/user_profile.dart';
 import 'profile_service.dart';
+import 'exam_category_service.dart';
 import 'llm/llm_manager.dart';
 import 'llm/llm_provider.dart';
 
@@ -39,7 +41,14 @@ class MatchService extends ChangeNotifier {
     },
   ));
 
+  ExamCategoryService? _examCategoryService;
+
   MatchService(this._profileService, this._llmManager);
+
+  /// 注入 ExamCategoryService（避免循环依赖，延迟注入）
+  void setExamCategoryService(ExamCategoryService service) {
+    _examCategoryService = service;
+  }
 
   // ===== 公告管理 =====
 
@@ -95,6 +104,96 @@ class MatchService extends ChangeNotifier {
       return false; // 简化处理
     });
     notifyListeners();
+  }
+
+  /// 加载预置人才引进公告（增量合并，不覆盖已有数据）
+  ///
+  /// 以 title+province+city 为去重键，仅插入本地不存在的公告。
+  Future<int> loadPresetPolicies() async {
+    try {
+      final jsonStr = await rootBundle.loadString(
+        'assets/data/rencaiyinjin_policies_preset.json',
+      );
+      final List<dynamic> items = jsonDecode(jsonStr);
+
+      // 获取已有公告的去重键集合
+      final existingRows = await _db.queryPolicies();
+      final existingKeys = <String>{};
+      for (final row in existingRows) {
+        final key = _policyDeduplicationKey(
+          row['title'] as String,
+          row['province'] as String?,
+          row['city'] as String?,
+        );
+        existingKeys.add(key);
+      }
+
+      int added = 0;
+      for (final item in items) {
+        final map = item as Map<String, dynamic>;
+        final title = map['title'] as String? ?? '';
+        final province = map['province'] as String?;
+        final city = map['city'] as String?;
+        final key = _policyDeduplicationKey(title, province, city);
+
+        if (existingKeys.contains(key)) continue; // 跳过已有
+
+        await _db.insertPolicy({
+          'title': title,
+          'province': province,
+          'city': city,
+          'policy_type': map['policy_type'] as String?,
+          'publish_date': map['publish_date'] as String?,
+          'deadline': map['deadline'] as String?,
+          'content': map['content'] as String?,
+          'attachment_urls': '[]',
+        });
+        existingKeys.add(key);
+        added++;
+      }
+
+      if (added > 0) await loadPolicies(); // 刷新内存列表
+      return added;
+    } catch (e) {
+      debugPrint('加载预置公告失败: $e');
+      return 0;
+    }
+  }
+
+  /// 增量添加公告（先去重检查）
+  /// 返回 null 表示重复未入库，返回 TalentPolicy 表示成功入库
+  Future<TalentPolicy?> addPolicyIfNotExists({
+    required String title,
+    String? province,
+    String? city,
+    String? policyType,
+    String? content,
+    String? deadline,
+  }) async {
+    // 去重检查
+    final existingRows = await _db.queryPolicies();
+    final key = _policyDeduplicationKey(title, province, city);
+    for (final row in existingRows) {
+      final existingKey = _policyDeduplicationKey(
+        row['title'] as String,
+        row['province'] as String?,
+        row['city'] as String?,
+      );
+      if (existingKey == key) return null; // 已存在
+    }
+    return addPolicy(
+      title: title,
+      province: province,
+      city: city,
+      policyType: policyType,
+      content: content,
+      deadline: deadline,
+    );
+  }
+
+  /// 公告去重键：title + province + city 的规范化拼接
+  static String _policyDeduplicationKey(String title, String? province, String? city) {
+    return '${title.trim()}|${(province ?? '').trim()}|${(city ?? '').trim()}'.toLowerCase();
   }
 
   // ===== 智能获取公告 =====
@@ -492,6 +591,8 @@ ${policy.content}
   }
 
   /// 标记/取消目标岗位
+  ///
+  /// 设为目标时，同步通知 ExamCategoryService 根据岗位考试科目动态调整功能。
   Future<void> toggleTarget(int matchResultId) async {
     final index = _matchResults.indexWhere((r) => r.id == matchResultId);
     if (index < 0) return;
@@ -501,6 +602,21 @@ ${policy.content}
     await _db.updateMatchResult(matchResultId, {'is_target': newIsTarget ? 1 : 0});
     _matchResults[index] = result.copyWith(isTarget: newIsTarget);
     notifyListeners();
+
+    // 通知 ExamCategoryService 更新动态科目（仅人才引进目标生效）
+    if (_examCategoryService != null) {
+      if (newIsTarget) {
+        // 查询目标岗位的考试科目
+        final posRow = await _db.queryPositionById(result.positionId);
+        if (posRow != null) {
+          final examSubjects = posRow['exam_subjects'] as String?;
+          _examCategoryService!.updateSubjectsFromExamText(examSubjects);
+        }
+      } else {
+        // 取消目标时，清除动态覆盖
+        _examCategoryService!.updateSubjectsFromExamText(null);
+      }
+    }
   }
 
   // ===== 匹配算法（内部） =====

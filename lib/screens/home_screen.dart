@@ -74,6 +74,14 @@ class _HomeScreenState extends State<HomeScreen>
           assistantService.updateContext(_screenNames[tabIndex]);
         }
       });
+
+      // 检查是否有待跳转 Tab（如选择人才引进后自动跳转岗位匹配）
+      final ecService = context.read<ExamCategoryService>();
+      final pendingTab = ecService.consumePendingTabIndex();
+      if (pendingTab != null && pendingTab >= 0 && pendingTab < _screenNames.length) {
+        setState(() => _currentIndex = pendingTab);
+      }
+
       // 初始化上下文
       assistantService.updateContext(_screenNames[_currentIndex]);
     });

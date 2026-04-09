@@ -23,7 +23,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 16,
+      version: 19,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -594,6 +594,116 @@ class DatabaseHelper {
       )
     ''');
 
+    // 申论小题表
+    await db.execute('''
+      CREATE TABLE essay_sub_questions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        year INTEGER NOT NULL,
+        region TEXT NOT NULL,
+        exam_type TEXT NOT NULL,
+        exam_session TEXT DEFAULT '',
+        question_number INTEGER NOT NULL,
+        question_text TEXT NOT NULL,
+        question_type TEXT DEFAULT '',
+        material_summary TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(year, region, exam_type, exam_session, question_number)
+      )
+    ''');
+
+    // 名师答案表
+    await db.execute('''
+      CREATE TABLE teacher_answers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sub_question_id INTEGER NOT NULL,
+        teacher_name TEXT NOT NULL,
+        teacher_type TEXT DEFAULT 'teacher',
+        answer_text TEXT NOT NULL,
+        score_points TEXT DEFAULT '[]',
+        word_count INTEGER DEFAULT 0,
+        source_note TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (sub_question_id) REFERENCES essay_sub_questions (id),
+        UNIQUE(sub_question_id, teacher_name)
+      )
+    ''');
+
+    // 用户综合答案表
+    await db.execute('''
+      CREATE TABLE user_composite_answers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sub_question_id INTEGER NOT NULL,
+        content TEXT NOT NULL,
+        notes TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (sub_question_id) REFERENCES essay_sub_questions (id),
+        UNIQUE(sub_question_id)
+      )
+    ''');
+
+    // 速算练习题表
+    await db.execute('''
+      CREATE TABLE speed_calc_exercises (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        calc_type TEXT NOT NULL,
+        expression TEXT NOT NULL,
+        display_text TEXT NOT NULL,
+        correct_answer TEXT NOT NULL,
+        tolerance REAL DEFAULT 0.01,
+        difficulty INTEGER DEFAULT 3,
+        shortcut_hint TEXT DEFAULT '',
+        explanation TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(calc_type, expression)
+      )
+    ''');
+
+    // 速算训练会话表
+    await db.execute('''
+      CREATE TABLE speed_training_sessions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_date TEXT NOT NULL,
+        session_type TEXT NOT NULL,
+        calc_type TEXT DEFAULT '',
+        total_questions INTEGER NOT NULL,
+        correct_count INTEGER DEFAULT 0,
+        total_time_ms INTEGER DEFAULT 0,
+        avg_time_ms INTEGER DEFAULT 0,
+        accuracy REAL DEFAULT 0,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+
+    // 速算训练答题记录表
+    await db.execute('''
+      CREATE TABLE speed_training_answers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_id INTEGER NOT NULL,
+        exercise_id INTEGER NOT NULL,
+        user_answer TEXT NOT NULL,
+        is_correct INTEGER NOT NULL,
+        time_ms INTEGER NOT NULL,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (session_id) REFERENCES speed_training_sessions (id),
+        FOREIGN KEY (exercise_id) REFERENCES speed_calc_exercises (id)
+      )
+    ''');
+
+    // 空间可视化配置表
+    await db.execute('''
+      CREATE TABLE spatial_visualizations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        question_id INTEGER NOT NULL,
+        viz_type TEXT NOT NULL,
+        config_json TEXT NOT NULL,
+        solving_approach TEXT DEFAULT '',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (question_id) REFERENCES questions (id),
+        UNIQUE(question_id)
+      )
+    ''');
+
     // 建立索引
     await _createIndexes(db);
   }
@@ -670,8 +780,6 @@ class DatabaseHelper {
         debugPrint('迁移 favorites 表跳过: $e');
       }
 
-      // 建立索引
-      await _createIndexes(db);
     }
 
     if (oldVersion < 3) {
@@ -1039,7 +1147,6 @@ class DatabaseHelper {
             UNIQUE(idiom_id, question_id)
           )
         ''');
-        await _createIndexes(db);
       } catch (e) {
         debugPrint('迁移成语整理表跳过: $e');
       }
@@ -1074,7 +1181,6 @@ class DatabaseHelper {
             UNIQUE(province, city, year, exam_type, position_code, department)
           )
         ''');
-        await _createIndexes(db);
       } catch (e) {
         debugPrint('迁移进面分数线表跳过: $e');
       }
@@ -1111,7 +1217,6 @@ class DatabaseHelper {
 
       // 预置母题类型数据
       await _insertPresetMasterTypes(db);
-      await _createIndexes(db);
     }
 
     if (oldVersion < 15) {
@@ -1185,8 +1290,6 @@ class DatabaseHelper {
           )
         ''');
       });
-
-      await _createIndexes(db);
     }
 
     if (oldVersion < 16) {
@@ -1208,6 +1311,130 @@ class DatabaseHelper {
         await txn.execute('CREATE INDEX IF NOT EXISTS idx_visual_explanations_question ON visual_explanations(question_id)');
       });
     }
+
+    if (oldVersion < 17) {
+      // v16→v17：速算训练功能，3 张新表
+      await db.transaction((txn) async {
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS speed_calc_exercises (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            calc_type TEXT NOT NULL,
+            expression TEXT NOT NULL,
+            display_text TEXT NOT NULL,
+            correct_answer TEXT NOT NULL,
+            tolerance REAL DEFAULT 0.01,
+            difficulty INTEGER DEFAULT 3,
+            shortcut_hint TEXT DEFAULT '',
+            explanation TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(calc_type, expression)
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS speed_training_sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_date TEXT NOT NULL,
+            session_type TEXT NOT NULL,
+            calc_type TEXT DEFAULT '',
+            total_questions INTEGER NOT NULL,
+            correct_count INTEGER DEFAULT 0,
+            total_time_ms INTEGER DEFAULT 0,
+            avg_time_ms INTEGER DEFAULT 0,
+            accuracy REAL DEFAULT 0,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS speed_training_answers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id INTEGER NOT NULL,
+            exercise_id INTEGER NOT NULL,
+            user_answer TEXT NOT NULL,
+            is_correct INTEGER NOT NULL,
+            time_ms INTEGER NOT NULL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (session_id) REFERENCES speed_training_sessions (id),
+            FOREIGN KEY (exercise_id) REFERENCES speed_calc_exercises (id)
+          )
+        ''');
+      });
+    }
+
+    if (oldVersion < 18) {
+      // v17→v18：空间可视化功能
+      try {
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS spatial_visualizations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            question_id INTEGER NOT NULL,
+            viz_type TEXT NOT NULL,
+            config_json TEXT NOT NULL,
+            solving_approach TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (question_id) REFERENCES questions (id),
+            UNIQUE(question_id)
+          )
+        ''');
+      } catch (e) {
+        debugPrint('迁移空间可视化表跳过: $e');
+      }
+    }
+
+    if (oldVersion < 19) {
+      // v18→v19：申论小题多名师答案对比
+      await db.transaction((txn) async {
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS essay_sub_questions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            year INTEGER NOT NULL,
+            region TEXT NOT NULL,
+            exam_type TEXT NOT NULL,
+            exam_session TEXT DEFAULT '',
+            question_number INTEGER NOT NULL,
+            question_text TEXT NOT NULL,
+            question_type TEXT DEFAULT '',
+            material_summary TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(year, region, exam_type, exam_session, question_number)
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS teacher_answers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sub_question_id INTEGER NOT NULL,
+            teacher_name TEXT NOT NULL,
+            teacher_type TEXT DEFAULT 'teacher',
+            answer_text TEXT NOT NULL,
+            score_points TEXT DEFAULT '[]',
+            word_count INTEGER DEFAULT 0,
+            source_note TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (sub_question_id) REFERENCES essay_sub_questions (id),
+            UNIQUE(sub_question_id, teacher_name)
+          )
+        ''');
+
+        await txn.execute('''
+          CREATE TABLE IF NOT EXISTS user_composite_answers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sub_question_id INTEGER NOT NULL,
+            content TEXT NOT NULL,
+            notes TEXT DEFAULT '',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (sub_question_id) REFERENCES essay_sub_questions (id),
+            UNIQUE(sub_question_id)
+          )
+        ''');
+      });
+
+    }
+
+    // 所有表创建完毕后，统一建立索引
+    await _createIndexes(db);
   }
 
   /// 预置母题类型数据
@@ -1289,6 +1516,18 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_concept_comparisons_document ON concept_comparisons(source_document_id)');
     // 可视化解题索引
     await db.execute('CREATE INDEX IF NOT EXISTS idx_visual_explanations_question ON visual_explanations(question_id)');
+    // 速算训练索引
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_speed_exercises_type ON speed_calc_exercises(calc_type, difficulty)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_speed_sessions_date ON speed_training_sessions(session_date)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_speed_sessions_type ON speed_training_sessions(session_type, calc_type)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_speed_answers_session ON speed_training_answers(session_id)');
+    // 空间可视化索引
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_spatial_viz_question ON spatial_visualizations(question_id)');
+
+    // 申论小题对比索引
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_essay_sub_questions_filter ON essay_sub_questions(year, region, exam_type)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_teacher_answers_question ON teacher_answers(sub_question_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_user_composite_answers_question ON user_composite_answers(sub_question_id)');
   }
 
   // ===== questions CRUD =====
@@ -3110,6 +3349,145 @@ class DatabaseHelper {
       whereArgs: [examPointId],
     );
     return rows.map((r) => r['question_id'] as int).toList();
+  }
+
+  // ===== essay_sub_questions CRUD =====
+
+  Future<int> insertEssaySubQuestion(Map<String, dynamic> data) async {
+    final db = await database;
+    return await db.insert('essay_sub_questions', data,
+        conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  /// 查询试卷维度去重列表
+  Future<List<Map<String, dynamic>>> queryEssayExams({
+    int? year,
+    String? region,
+    String? examType,
+  }) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (year != null) {
+      conditions.add('year = ?');
+      args.add(year);
+    }
+    if (region != null && region.isNotEmpty) {
+      conditions.add('region = ?');
+      args.add(region);
+    }
+    if (examType != null && examType.isNotEmpty) {
+      conditions.add('exam_type = ?');
+      args.add(examType);
+    }
+    final where = conditions.isEmpty ? '' : 'WHERE ${conditions.join(' AND ')}';
+    return await db.rawQuery(
+      'SELECT year, region, exam_type, exam_session, COUNT(*) as question_count '
+      'FROM essay_sub_questions $where '
+      'GROUP BY year, region, exam_type, exam_session '
+      'ORDER BY year DESC, region ASC',
+      args,
+    );
+  }
+
+  /// 查询某套试卷的小题列表
+  Future<List<Map<String, dynamic>>> queryEssaySubQuestions({
+    required int year,
+    required String region,
+    required String examType,
+    String? examSession,
+  }) async {
+    final db = await database;
+    final conditions = ['year = ?', 'region = ?', 'exam_type = ?'];
+    final args = <dynamic>[year, region, examType];
+    if (examSession != null) {
+      conditions.add('exam_session = ?');
+      args.add(examSession);
+    }
+    return await db.query(
+      'essay_sub_questions',
+      where: conditions.join(' AND '),
+      whereArgs: args,
+      orderBy: 'question_number ASC',
+    );
+  }
+
+  /// 查询可用的筛选选项
+  Future<List<int>> queryEssaySubQuestionYears() async {
+    final db = await database;
+    final rows = await db.rawQuery(
+      'SELECT DISTINCT year FROM essay_sub_questions ORDER BY year DESC',
+    );
+    return rows.map((r) => r['year'] as int).toList();
+  }
+
+  Future<List<String>> queryEssaySubQuestionRegions() async {
+    final db = await database;
+    final rows = await db.rawQuery(
+      'SELECT DISTINCT region FROM essay_sub_questions ORDER BY region ASC',
+    );
+    return rows.map((r) => r['region'] as String).toList();
+  }
+
+  Future<List<String>> queryEssaySubQuestionExamTypes() async {
+    final db = await database;
+    final rows = await db.rawQuery(
+      'SELECT DISTINCT exam_type FROM essay_sub_questions ORDER BY exam_type ASC',
+    );
+    return rows.map((r) => r['exam_type'] as String).toList();
+  }
+
+  // ===== teacher_answers CRUD =====
+
+  Future<int> insertTeacherAnswer(Map<String, dynamic> data) async {
+    final db = await database;
+    return await db.insert('teacher_answers', data,
+        conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  Future<List<Map<String, dynamic>>> queryTeacherAnswers(int subQuestionId) async {
+    final db = await database;
+    return await db.query(
+      'teacher_answers',
+      where: 'sub_question_id = ?',
+      whereArgs: [subQuestionId],
+      orderBy: 'teacher_name ASC',
+    );
+  }
+
+  /// 名师统计（各名师答案数量）
+  Future<List<Map<String, dynamic>>> queryTeacherStats() async {
+    final db = await database;
+    return await db.rawQuery(
+      'SELECT teacher_name, teacher_type, COUNT(*) as answer_count '
+      'FROM teacher_answers GROUP BY teacher_name ORDER BY answer_count DESC',
+    );
+  }
+
+  // ===== user_composite_answers CRUD =====
+
+  Future<int> upsertCompositeAnswer(Map<String, dynamic> data) async {
+    final db = await database;
+    return await db.insert('user_composite_answers', data,
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<Map<String, dynamic>?> queryCompositeAnswer(int subQuestionId) async {
+    final db = await database;
+    final rows = await db.query(
+      'user_composite_answers',
+      where: 'sub_question_id = ?',
+      whereArgs: [subQuestionId],
+      limit: 1,
+    );
+    return rows.isEmpty ? null : rows.first;
+  }
+
+  /// 统计申论小题数量
+  Future<int> countEssaySubQuestions() async {
+    final db = await database;
+    final result = await db.rawQuery('SELECT COUNT(*) as cnt FROM essay_sub_questions');
+    return (result.first['cnt'] as int?) ?? 0;
   }
 }
 

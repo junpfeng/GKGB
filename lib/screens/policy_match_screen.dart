@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../services/match_service.dart';
 import '../services/profile_service.dart';
+import '../services/exam_category_service.dart';
 import '../models/talent_policy.dart';
 import '../models/match_result.dart';
 import '../widgets/match_reason_card.dart';
@@ -27,9 +28,23 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MatchService>().loadPolicies();
-      context.read<MatchService>().loadMatchResults();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final matchService = context.read<MatchService>();
+      await matchService.loadPolicies();
+      await matchService.loadMatchResults();
+
+      // 人才引进目标：自动加载预置公告（增量合并，不覆盖已有）
+      if (mounted) {
+        final ecService = context.read<ExamCategoryService>();
+        if (ecService.activeCategory?.id == 'rencaiyinjin') {
+          final added = await matchService.loadPresetPolicies();
+          if (added > 0 && mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('已加载 $added 条全国人才引进公告')),
+            );
+          }
+        }
+      }
     });
   }
 

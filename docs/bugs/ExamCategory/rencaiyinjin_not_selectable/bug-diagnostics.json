@@ -1,0 +1,20 @@
+{
+  "collection_timestamp": "2026-04-09T00:00:00+08:00",
+  "analyze_output": "无编译错误",
+  "test_output": "N/A",
+  "error_logs": "无崩溃，行为性问题",
+  "related_code": [
+    "lib/models/exam_category_registry.dart:219-231",
+    "lib/screens/exam_target_screen.dart:121,146-151",
+    "lib/services/exam_category_service.dart",
+    "lib/screens/policy_match_screen.dart",
+    "lib/services/match_service.dart"
+  ],
+  "reproduction_steps": [
+    "打开 App → 进入备考目标选择页",
+    "点击"人才引进"卡片",
+    "弹出"题库建设中，敬请期待"，无法设为目标"
+  ],
+  "bug_category": "功能缺失",
+  "covered_dimensions": ["现象", "复现", "范围", "证据", "影响"]
+}

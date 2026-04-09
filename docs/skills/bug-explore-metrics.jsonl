@@ -1,0 +1,1 @@
+{"timestamp": "2026-04-09T03:00:02.684782+00:00", "module": "ExamCategory", "fix_result": "success", "strategies_matched": ["代码搜索,文件阅读,数据库检查"], "phase1_actions": 6, "phase1_rounds": 1, "phase1_actions_cited": 4, "phase2_rounds": 3, "phase2_early_exit": false, "phase4_retries": 0, "variant": "main"}

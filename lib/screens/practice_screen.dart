@@ -17,6 +17,8 @@ import 'wrong_analysis_screen.dart';
 import 'adaptive_quiz_screen.dart';
 import 'idiom_list_screen.dart';
 import 'political_theory_screen.dart';
+import 'essay_comparison_screen.dart';
+import 'speed_training_screen.dart';
 
 /// 刷题页：科目选择 → 题目列表 → 答题界面
 class PracticeScreen extends StatelessWidget {
@@ -107,8 +109,8 @@ class _SubjectListState extends State<_SubjectList> {
 
   @override
   Widget build(BuildContext context) {
-    // 特殊卡片数量（面试+自适应+政治理论+收藏）
-    final extraCards = widget.showInterview ? 4 : 3;
+    // 特殊卡片数量（面试+自适应+速算训练+政治理论+小题对比+收藏）
+    final extraCards = widget.showInterview ? 6 : 5;
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       itemCount: widget.subjects.length + extraCards,
@@ -122,15 +124,25 @@ class _SubjectListState extends State<_SubjectList> {
         if (index == quizIndex) {
           return _buildAdaptiveQuizCard(context);
         }
+        // 速算训练入口卡片
+        final stIndex = widget.showInterview ? 2 : 1;
+        if (index == stIndex) {
+          return _buildSpeedTrainingCard(context);
+        }
         // 政治理论专项入口卡片
-        final ptIndex = widget.showInterview ? 2 : 1;
+        final ptIndex = widget.showInterview ? 3 : 2;
         if (index == ptIndex) {
           return _buildPoliticalTheoryCard(context);
+        }
+        // 申论小题对比入口卡片
+        final ecIndex = widget.showInterview ? 4 : 3;
+        if (index == ecIndex) {
+          return _buildEssayComparisonCard(context);
         }
         if (index == widget.subjects.length + extraCards - 1) {
           return _buildFavoritesCard(context);
         }
-        final subjectIndex = widget.showInterview ? index - 3 : index - 2;
+        final subjectIndex = widget.showInterview ? index - 5 : index - 4;
         final subject = widget.subjects[subjectIndex];
         final gradientColors = subject['gradient'] as List<Color>;
         final gradient = LinearGradient(
@@ -361,6 +373,71 @@ class _SubjectListState extends State<_SubjectList> {
     );
   }
 
+  Widget _buildSpeedTrainingCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const SpeedTrainingScreen()),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFF7971E), Color(0xFFFFD200)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFF7971E).withValues(alpha: 0.35),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.bolt, color: Colors.white, size: 22),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '速算训练',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      '资料分析 · 限时速算 · 每日挑战',
+                      style: TextStyle(fontSize: 12, color: Colors.white70),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.white70, size: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildPoliticalTheoryCard(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
@@ -413,6 +490,71 @@ class _SubjectListState extends State<_SubjectList> {
                     SizedBox(height: 2),
                     Text(
                       '文件解读 · 口诀记忆 · 概念对比',
+                      style: TextStyle(fontSize: 12, color: Colors.white70),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.white70, size: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEssayComparisonCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const EssayComparisonScreen()),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFf093fb), Color(0xFFf5576c)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFf093fb).withValues(alpha: 0.35),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.compare_arrows, color: Colors.white, size: 22),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '申论小题对比',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      '多名师答案 · AI 分析要点 · 综合答案',
                       style: TextStyle(fontSize: 12, color: Colors.white70),
                     ),
                   ],

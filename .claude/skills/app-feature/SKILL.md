@@ -315,20 +315,6 @@ UI 层：
 
 ## Step 4：全自动完成实现
 
-### 创建 Feature 分支
-
-```bash
-ORIGINAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-echo "$ORIGINAL_BRANCH" > "{FEATURE_DIR}/.original_branch"
-
-# 检查分支是否已存在（断点恢复场景）
-if git show-ref --verify --quiet "refs/heads/feature/{FEATURE_NAME}"; then
-  git checkout "feature/{FEATURE_NAME}"
-else
-  git checkout -b "feature/{FEATURE_NAME}"
-fi
-```
-
 ### 执行实现
 
 ```bash
@@ -408,7 +394,7 @@ flutter test       # 全通过
 验证完成后告诉我结果。
 ```
 
-### 5.3 验收报告 + 合并
+### 5.3 验收报告
 
 写入 `{FEATURE_DIR}/acceptance-report.md`：
 
@@ -449,26 +435,6 @@ git status  # 确认暂存区内容正确，无敏感文件
 git commit -m "feat({FEATURE_NAME}): {一句话功能描述}"
 ```
 
-**合并分支**（需用户确认）：
-
-向用户展示即将执行的合并操作，等待确认后执行：
-
-```
-Feature 分支开发完成，准备合并：
-  feature/{FEATURE_NAME} → {ORIGINAL_BRANCH}
-
-是否合并？(是/稍后手动合并)
-```
-
-用户确认后：
-```bash
-ORIGINAL_BRANCH=$(cat "{FEATURE_DIR}/.original_branch" 2>/dev/null || echo "main")
-git checkout "$ORIGINAL_BRANCH"
-git merge --no-ff "feature/{FEATURE_NAME}" -m "merge: feat({FEATURE_NAME})"
-```
-
-> 合并后不自动删除 feature 分支，由用户决定是否清理。
-
 ### 5.4 指标归档
 
 追加到 `docs/features/feature-metrics.jsonl`（文件不存在则创建）：
@@ -484,4 +450,4 @@ git merge --no-ff "feature/{FEATURE_NAME}" -m "merge: feat({FEATURE_NAME})"
 用户在任何阶段说"取消"/"不做了"/"先到这里"时：
 - Step 0-2（无代码变更）：直接告知用户，保留已创建的 `{FEATURE_DIR}` 目录供下次恢复
 - Step 3（方案确认中）：保存当前 idea.md 进度，告知用户下次可从断点恢复
-- Step 4-5（已有代码变更）：提示用户 feature 分支上的代码变更已保留，可用 `git checkout {ORIGINAL_BRANCH}` 回到原分支，后续可恢复
+- Step 4-5（已有代码变更）：提示用户当前分支上的代码变更已保留，后续可恢复

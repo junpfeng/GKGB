@@ -27,6 +27,9 @@ import 'services/idiom_service.dart';
 import 'services/exam_entry_score_service.dart';
 import 'services/political_theory_service.dart';
 import 'services/visual_explanation_service.dart';
+import 'services/essay_comparison_service.dart';
+import 'services/speed_training_service.dart';
+import 'services/spatial_viz_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,6 +75,14 @@ void main() async {
   final visualExplanationService = VisualExplanationService(llmManager);
   await visualExplanationService.importPresetData();
 
+  // 导入预置速算练习数据
+  final speedTrainingService = SpeedTrainingService();
+  await speedTrainingService.importPresetExercises();
+
+  // 导入预置空间可视化数据
+  final spatialVizService = SpatialVizService();
+  await spatialVizService.importPresetData();
+
   runApp(
     MultiProvider(
       providers: [
@@ -90,9 +101,13 @@ void main() async {
           create: (ctx) => ExamService(ctx.read<QuestionService>()),
           update: (ctx, qs, prev) => prev ?? ExamService(qs),
         ),
-        // 6. MatchService（依赖 ProfileService, LlmManager）
+        // 6. MatchService（依赖 ProfileService, LlmManager, 延迟注入 ExamCategoryService）
         ChangeNotifierProxyProvider2<ProfileService, LlmManager, MatchService>(
-          create: (ctx) => MatchService(ctx.read<ProfileService>(), ctx.read<LlmManager>()),
+          create: (ctx) {
+            final ms = MatchService(ctx.read<ProfileService>(), ctx.read<LlmManager>());
+            ms.setExamCategoryService(ctx.read<ExamCategoryService>());
+            return ms;
+          },
           update: (ctx, ps, lm, prev) => prev ?? MatchService(ps, lm),
         ),
         // 7. StudyPlanService（依赖 QuestionService, LlmManager, ExamCategoryService）
@@ -166,6 +181,15 @@ void main() async {
         ChangeNotifierProvider.value(value: politicalTheoryService),
         // 21. VisualExplanationService（启动时已导入预置数据）
         ChangeNotifierProvider.value(value: visualExplanationService),
+        // 22. EssayComparisonService（依赖 LlmManager）
+        ChangeNotifierProxyProvider<LlmManager, EssayComparisonService>(
+          create: (ctx) => EssayComparisonService(ctx.read<LlmManager>()),
+          update: (ctx, lm, prev) => prev ?? EssayComparisonService(lm),
+        ),
+        // 23. SpeedTrainingService（启动时已导入预置数据）
+        ChangeNotifierProvider.value(value: speedTrainingService),
+        // 24. SpatialVizService（启动时已导入预置数据）
+        ChangeNotifierProvider.value(value: spatialVizService),
       ],
       child: const ExamPrepApp(),
     ),

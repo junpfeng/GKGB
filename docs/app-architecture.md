@@ -28,6 +28,7 @@
 | 自适应刷题 | 基于薄弱知识点的智能出题 | 出题策略 |
 | 全局 AI 助手 | 浮动气泡，上下文感知，跨页面对话 | 核心 |
 | 成语整理 | 选词填空成语释义 + 人民日报例句 | — |
+| 速算训练 | 资料分析速算专项，5 种计算类型，每日挑战 + 自选练习 + 历史统计 | — |
 
 ---
 
@@ -195,7 +196,7 @@ App
 
 ---
 
-## 6. 数据模型清单（39 个）
+## 6. 数据模型清单（39 个，不含 .g.dart）
 
 ### 6.1 题目与作答
 
@@ -250,6 +251,13 @@ App
 | `IdiomExample` | sentence, year, sourceUrl | 成语例句 |
 | `VisualExplanation` | questionId, explanationType, stepsJson, templateId | 可视化解题步骤 |
 
+### 6.7 速算训练
+
+| 模型 | 核心字段 | 说明 |
+|------|---------|------|
+| `SpeedCalcExercise` | calcType, expression, displayText, correctAnswer, tolerance, difficulty, shortcutHint | 速算练习题（5 种计算类型 × 3 难度） |
+| `SpeedTrainingSession` | sessionDate, sessionType, calcType, totalQuestions, correctCount, accuracy, avgTimeMs | 训练会话记录（每日挑战/自选练习） |
+
 ---
 
 ## 7. 通用组件（21 个）
@@ -279,9 +287,9 @@ App
 
 ---
 
-## 8. 数据库设计（SQLite, 39 张表）
+## 8. 数据库设计（SQLite, 41 张表）
 
-当前版本：**v16**
+当前版本：**v19**
 
 ### 核心表
 
@@ -341,6 +349,14 @@ idiom_question_links — 成语-题目关联
 
 ```
 visual_explanations   — 可视化解题步骤（UNIQUE(question_id)，AI 生成 + 预置导入）
+```
+
+### 速算训练表
+
+```
+speed_calc_exercises     — 速算练习题（UNIQUE(calc_type, expression)，5 种计算类型）
+speed_training_sessions  — 训练会话记录（每日挑战/自选练习，含冗余统计字段）
+speed_training_answers   — 答题记录（FK→sessions, FK→exercises）
 ```
 
 ### 配置表
@@ -429,7 +445,8 @@ assets/data/
 ├── exam_calendar_sample.json    — 考试日历种子数据
 ├── hot_topics_sample.json       — 时政热点种子数据
 ├── essay_materials_sample.json  — 申论素材种子数据
-└── idioms_preset.json           — 成语释义 + 人民日报例句
+├── idioms_preset.json           — 成语释义 + 人民日报例句
+└── speed_calc_preset.json       — 速算练习题预置数据（210 题，5 种类型 × 3 难度）
 ```
 
 ---

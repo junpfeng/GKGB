@@ -1,0 +1,2102 @@
+[
+  {
+    "calc_type": "percentage_change",
+    "expression": "3200 × 8% = ?",
+    "display_text": "某县2023年财政收入3200万元，同比增长8%，求增长量（万元）",
+    "correct_answer": "256",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字法：3200 × 8% = 3200 ÷ 100 × 8 = 32 × 8 = 256",
+    "explanation": "增长量 = 现期量 × 增长率 = 3200 × 8% = 256（万元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "5000 × 12% = ?",
+    "display_text": "某市2023年工业产值5000亿元，同比增长12%，求增长量（亿元）",
+    "correct_answer": "600",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "整数计算：5000 × 12% = 5000 × 0.12 = 600",
+    "explanation": "增长量 = 现期量 × 增长率 = 5000 × 12% = 600（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "8400 × 25% = ?",
+    "display_text": "某地区2023年粮食产量8400万吨，同比增长25%，求增长量（万吨）",
+    "correct_answer": "2100",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字法：25% = 1/4，8400 ÷ 4 = 2100",
+    "explanation": "增长量 = 现期量 × 增长率 = 8400 × 25% = 8400 ÷ 4 = 2100（万吨）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "6000 × 33.3% = ?",
+    "display_text": "某省2023年旅游收入6000亿元，同比增长33.3%，求增长量（亿元）",
+    "correct_answer": "2000",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字法：33.3% ≈ 1/3，6000 ÷ 3 = 2000",
+    "explanation": "增长量 = 现期量 × 增长率 = 6000 × 1/3 = 2000（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "4800 × 50% = ?",
+    "display_text": "某市2023年新能源汽车产量4800辆，同比增长50%，求增长量（辆）",
+    "correct_answer": "2400",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "50% = 1/2，4800 ÷ 2 = 2400",
+    "explanation": "增长量 = 现期量 × 增长率 = 4800 × 50% = 2400（辆）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "9600 × 12.5% = ?",
+    "display_text": "某区2023年社会消费品零售额9600亿元，同比增长12.5%，求增长量（亿元）",
+    "correct_answer": "1200",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字法：12.5% = 1/8，9600 ÷ 8 = 1200",
+    "explanation": "增长量 = 现期量 × 增长率 = 9600 × 12.5% = 9600 ÷ 8 = 1200（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "7200 × 16.7% = ?",
+    "display_text": "某市2023年固定资产投资7200亿元，同比增长16.7%，求增长量（亿元）",
+    "correct_answer": "1200",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字法：16.7% ≈ 1/6，7200 ÷ 6 = 1200",
+    "explanation": "增长量 = 现期量 × 增长率 = 7200 × 1/6 = 1200（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "3600 × 20% = ?",
+    "display_text": "某镇2023年居民人均可支配收入3600元，同比增长20%，求增长量（元）",
+    "correct_answer": "720",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "20% = 1/5，3600 ÷ 5 = 720",
+    "explanation": "增长量 = 现期量 × 增长率 = 3600 × 20% = 720（元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "1500 × 40% = ?",
+    "display_text": "某村2023年集体经济收入1500万元，同比增长40%，求增长量（万元）",
+    "correct_answer": "600",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "40% = 2/5，1500 × 2/5 = 600",
+    "explanation": "增长量 = 现期量 × 增长率 = 1500 × 40% = 600（万元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "2400 × 75% = ?",
+    "display_text": "某市2023年高新技术企业数量2400家，同比增长75%，求增长量（家）",
+    "correct_answer": "1800",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "75% = 3/4，2400 × 3/4 = 1800",
+    "explanation": "增长量 = 现期量 × 增长率 = 2400 × 75% = 1800（家）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "5600 × 5% = ?",
+    "display_text": "某省2023年农业产值5600亿元，同比增长5%，求增长量（亿元）",
+    "correct_answer": "280",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "5% = 1/20，5600 ÷ 20 = 280",
+    "explanation": "增长量 = 现期量 × 增长率 = 5600 × 5% = 280（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "4200 × 10% = ?",
+    "display_text": "某市2023年对外贸易额4200亿元，同比增长10%，求增长量（亿元）",
+    "correct_answer": "420",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "10% = 1/10，4200 ÷ 10 = 420",
+    "explanation": "增长量 = 现期量 × 增长率 = 4200 × 10% = 420（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "8000 × 15% = ?",
+    "display_text": "某省2023年基础设施投资8000亿元，同比增长15%，求增长量（亿元）",
+    "correct_answer": "1200",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "15% = 10% + 5%，8000 × 10% = 800，8000 × 5% = 400，合计 1200",
+    "explanation": "增长量 = 现期量 × 增长率 = 8000 × 15% = 1200（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "6300 × 66.7% = ?",
+    "display_text": "某地2023年绿色建筑面积6300万平方米，同比增长66.7%，求增长量（万平方米）",
+    "correct_answer": "4200",
+    "tolerance": 10.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字法：66.7% ≈ 2/3，6300 × 2/3 = 4200",
+    "explanation": "增长量 = 现期量 × 增长率 = 6300 × 2/3 = 4200（万平方米）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "4567.8 × 12.3% = ?",
+    "display_text": "某市2023年GDP为4567.8亿元，同比增长12.3%，求增长量（亿元）",
+    "correct_answer": "561.8",
+    "tolerance": 3.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：4568 × 12% = 548，4568 × 0.3% ≈ 14，合计 ≈ 562",
+    "explanation": "增长量 = 现期量 × 增长率 = 4567.8 × 12.3% ≈ 561.8（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "3821.5 × 7.6% = ?",
+    "display_text": "某省2023年服务业产值3821.5亿元，同比增长7.6%，求增长量（亿元）",
+    "correct_answer": "290.4",
+    "tolerance": 3.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：3822 × 7.6% ≈ 3822 × 8% - 3822 × 0.4% ≈ 306 - 15 = 291",
+    "explanation": "增长量 = 现期量 × 增长率 = 3821.5 × 7.6% ≈ 290.4（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "6234.7 × 9.8% = ?",
+    "display_text": "某省2023年规上工业增加值6234.7亿元，同比增长9.8%，求增长量（亿元）",
+    "correct_answer": "611.0",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：6235 × 9.8% ≈ 6235 × 10% - 6235 × 0.2% ≈ 624 - 12 = 612",
+    "explanation": "增长量 = 现期量 × 增长率 = 6234.7 × 9.8% ≈ 611.0（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "1893.6 × 14.5% = ?",
+    "display_text": "某市2023年进出口总额1893.6亿美元，同比增长14.5%，求增长量（亿美元）",
+    "correct_answer": "274.6",
+    "tolerance": 3.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：1894 × 14.5% ≈ 1894 × 14% + 1894 × 0.5% ≈ 265 + 9 = 274",
+    "explanation": "增长量 = 现期量 × 增长率 = 1893.6 × 14.5% ≈ 274.6（亿美元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "7456.2 × 6.4% = ?",
+    "display_text": "某省2023年居民人均可支配收入7456.2元，同比增长6.4%，求增长量（元）",
+    "correct_answer": "477.2",
+    "tolerance": 3.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：7456 × 6.4% ≈ 7456 × 6% + 7456 × 0.4% ≈ 447 + 30 = 477",
+    "explanation": "增长量 = 现期量 × 增长率 = 7456.2 × 6.4% ≈ 477.2（元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "2348.9 × 18.2% = ?",
+    "display_text": "某市2023年社会消费品零售额2348.9亿元，同比增长18.2%，求增长量（亿元）",
+    "correct_answer": "427.5",
+    "tolerance": 3.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：2349 × 18.2% ≈ 2349 × 18% + 2349 × 0.2% ≈ 423 + 5 = 428",
+    "explanation": "增长量 = 现期量 × 增长率 = 2348.9 × 18.2% ≈ 427.5（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "5127.4 × 11.3% = ?",
+    "display_text": "某省2023年固定资产投资5127.4亿元，同比增长11.3%，求增长量（亿元）",
+    "correct_answer": "579.4",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：5127 × 11.3% ≈ 5127 × 11% + 5127 × 0.3% ≈ 564 + 15 = 579",
+    "explanation": "增长量 = 现期量 × 增长率 = 5127.4 × 11.3% ≈ 579.4（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "8963.1 × 5.7% = ?",
+    "display_text": "某省2023年农业总产值8963.1亿元，同比增长5.7%，求增长量（亿元）",
+    "correct_answer": "510.9",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：8963 × 5.7% ≈ 8963 × 6% - 8963 × 0.3% ≈ 538 - 27 = 511",
+    "explanation": "增长量 = 现期量 × 增长率 = 8963.1 × 5.7% ≈ 510.9（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "3674.8 × 22.4% = ?",
+    "display_text": "某市2023年数字经济规模3674.8亿元，同比增长22.4%，求增长量（亿元）",
+    "correct_answer": "823.2",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：3675 × 22.4% ≈ 3675 × 22% + 3675 × 0.4% ≈ 809 + 15 = 824",
+    "explanation": "增长量 = 现期量 × 增长率 = 3674.8 × 22.4% ≈ 823.2（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "6789.3 × 13.6% = ?",
+    "display_text": "某省2023年旅游总收入6789.3亿元，同比增长13.6%，求增长量（亿元）",
+    "correct_answer": "923.3",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：6789 × 13.6% ≈ 6789 × 14% - 6789 × 0.4% ≈ 951 - 27 = 924",
+    "explanation": "增长量 = 现期量 × 增长率 = 6789.3 × 13.6% ≈ 923.3（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "4512.7 × 16.8% = ?",
+    "display_text": "某省2023年高技术产业产值4512.7亿元，同比增长16.8%，求增长量（亿元）",
+    "correct_answer": "758.1",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：4513 × 16.8% ≈ 4513 × 17% - 4513 × 0.2% ≈ 767 - 9 = 758",
+    "explanation": "增长量 = 现期量 × 增长率 = 4512.7 × 16.8% ≈ 758.1（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "9124.5 × 8.3% = ?",
+    "display_text": "某省2023年税收收入9124.5亿元，同比增长8.3%，求增长量（亿元）",
+    "correct_answer": "757.3",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：9125 × 8.3% ≈ 9125 × 8% + 9125 × 0.3% ≈ 730 + 27 = 757",
+    "explanation": "增长量 = 现期量 × 增长率 = 9124.5 × 8.3% ≈ 757.3（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "2867.4 × 31.5% = ?",
+    "display_text": "某市2023年新能源产业产值2867.4亿元，同比增长31.5%，求增长量（亿元）",
+    "correct_answer": "903.2",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：2867 × 31.5% ≈ 2867 × 30% + 2867 × 1.5% ≈ 860 + 43 = 903",
+    "explanation": "增长量 = 现期量 × 增长率 = 2867.4 × 31.5% ≈ 903.2（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "5643.8 × 27.6% = ?",
+    "display_text": "某市2023年跨境电商交易额5643.8亿元，同比增长27.6%，求增长量（亿元）",
+    "correct_answer": "1557.7",
+    "tolerance": 8.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：5644 × 27.6% ≈ 5644 × 28% - 5644 × 0.4% ≈ 1580 - 23 = 1557",
+    "explanation": "增长量 = 现期量 × 增长率 = 5643.8 × 27.6% ≈ 1557.7（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "3258.6 × 43.7% = ?",
+    "display_text": "某省2023年碳排放权交易金额3258.6亿元，同比增长43.7%，求增长量（亿元）",
+    "correct_answer": "1424.0",
+    "tolerance": 8.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：3259 × 43.7% ≈ 3259 × 44% - 3259 × 0.3% ≈ 1434 - 10 = 1424",
+    "explanation": "增长量 = 现期量 × 增长率 = 3258.6 × 43.7% ≈ 1424.0（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "7891.4 × 19.3% = ?",
+    "display_text": "某省2023年研发经费投入7891.4亿元，同比增长19.3%，求增长量（亿元）",
+    "correct_answer": "1523.0",
+    "tolerance": 8.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：7891 × 19.3% ≈ 7891 × 20% - 7891 × 0.7% ≈ 1578 - 55 = 1523",
+    "explanation": "增长量 = 现期量 × 增长率 = 7891.4 × 19.3% ≈ 1523.0（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "4736.9 × 36.4% = ?",
+    "display_text": "某省2023年绿色金融贷款余额4736.9亿元，同比增长36.4%，求增长量（亿元）",
+    "correct_answer": "1724.2",
+    "tolerance": 8.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：4737 × 36.4% ≈ 4737 × 36% + 4737 × 0.4% ≈ 1705 + 19 = 1724",
+    "explanation": "增长量 = 现期量 × 增长率 = 4736.9 × 36.4% ≈ 1724.2（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "6314.7 × 24.8% = ?",
+    "display_text": "某省2023年网络零售额6314.7亿元，同比增长24.8%，求增长量（亿元）",
+    "correct_answer": "1566.0",
+    "tolerance": 8.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：6315 × 24.8% ≈ 6315 × 25% - 6315 × 0.2% ≈ 1579 - 13 = 1566",
+    "explanation": "增长量 = 现期量 × 增长率 = 6314.7 × 24.8% ≈ 1566.0（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "8427.3 × 17.9% = ?",
+    "display_text": "某省2023年建筑业总产值8427.3亿元，同比增长17.9%，求增长量（亿元）",
+    "correct_answer": "1508.5",
+    "tolerance": 8.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：8427 × 17.9% ≈ 8427 × 18% - 8427 × 0.1% ≈ 1517 - 8 = 1509",
+    "explanation": "增长量 = 现期量 × 增长率 = 8427.3 × 17.9% ≈ 1508.5（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "3589.6 × 52.3% = ?",
+    "display_text": "某市2023年人工智能产业规模3589.6亿元，同比增长52.3%，求增长量（亿元）",
+    "correct_answer": "1877.4",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：3590 × 52.3% ≈ 3590 × 50% + 3590 × 2.3% ≈ 1795 + 83 = 1878",
+    "explanation": "增长量 = 现期量 × 增长率 = 3589.6 × 52.3% ≈ 1877.4（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "5962.8 × 33.7% = ?",
+    "display_text": "某省2023年社会保障支出5962.8亿元，同比增长33.7%，求增长量（亿元）",
+    "correct_answer": "2009.5",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：5963 × 33.7% ≈ 5963 × 34% - 5963 × 0.3% ≈ 2027 - 18 = 2009",
+    "explanation": "增长量 = 现期量 × 增长率 = 5962.8 × 33.7% ≈ 2009.5（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "7235.4 × 28.6% = ?",
+    "display_text": "某市2023年文化产业增加值7235.4亿元，同比增长28.6%，求增长量（亿元）",
+    "correct_answer": "2069.3",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：7235 × 28.6% ≈ 7235 × 29% - 7235 × 0.4% ≈ 2098 - 29 = 2069",
+    "explanation": "增长量 = 现期量 × 增长率 = 7235.4 × 28.6% ≈ 2069.3（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "4183.9 × 41.2% = ?",
+    "display_text": "某省2023年跨境服务贸易额4183.9亿元，同比增长41.2%，求增长量（亿元）",
+    "correct_answer": "1723.8",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：4184 × 41.2% ≈ 4184 × 40% + 4184 × 1.2% ≈ 1674 + 50 = 1724",
+    "explanation": "增长量 = 现期量 × 增长率 = 4183.9 × 41.2% ≈ 1723.8（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "9347.2 × 23.4% = ?",
+    "display_text": "某省2023年基础设施累计投资9347.2亿元，同比增长23.4%，求增长量（亿元）",
+    "correct_answer": "2187.2",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：9347 × 23.4% ≈ 9347 × 23% + 9347 × 0.4% ≈ 2150 + 37 = 2187",
+    "explanation": "增长量 = 现期量 × 增长率 = 9347.2 × 23.4% ≈ 2187.2（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "6728.5 × 38.9% = ?",
+    "display_text": "某市2023年半导体产业产值6728.5亿元，同比增长38.9%，求增长量（亿元）",
+    "correct_answer": "2617.4",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：6729 × 38.9% ≈ 6729 × 40% - 6729 × 1.1% ≈ 2692 - 74 = 2618",
+    "explanation": "增长量 = 现期量 × 增长率 = 6728.5 × 38.9% ≈ 2617.4（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "8156.3 × 46.7% = ?",
+    "display_text": "某省2023年光伏发电装机容量8156.3万千瓦，同比增长46.7%，求增长量（万千瓦）",
+    "correct_answer": "3809.0",
+    "tolerance": 15.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：8156 × 46.7% ≈ 8156 × 47% - 8156 × 0.3% ≈ 3833 - 24 = 3809",
+    "explanation": "增长量 = 现期量 × 增长率 = 8156.3 × 46.7% ≈ 3809.0（万千瓦）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "1320 ÷ (1 + 10%) = ?",
+    "display_text": "某市2023年GDP为1320亿元，同比增长10%，求2022年GDP（亿元）",
+    "correct_answer": "1200",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "整除法：1320 ÷ 1.1 = 1320 ÷ 11 × 10 = 120 × 10 = 1200",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 1320 ÷ 1.1 = 1200（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "2500 ÷ (1 + 25%) = ?",
+    "display_text": "某省2023年旅游收入2500亿元，同比增长25%，求2022年旅游收入（亿元）",
+    "correct_answer": "2000",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字：25% = 1/4，1 + 1/4 = 5/4，2500 × 4/5 = 2000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 2500 ÷ 1.25 = 2000（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "3600 ÷ (1 + 20%) = ?",
+    "display_text": "某市2023年财政支出3600亿元，同比增长20%，求2022年财政支出（亿元）",
+    "correct_answer": "3000",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "20% = 1/5，1 + 1/5 = 6/5，3600 × 5/6 = 3000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 3600 ÷ 1.2 = 3000（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "5200 ÷ (1 + 30%) = ?",
+    "display_text": "某省2023年工业产值5200亿元，同比增长30%，求2022年工业产值（亿元）",
+    "correct_answer": "4000",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "30% = 3/10，1 + 3/10 = 13/10，5200 × 10/13 = 400 × 10 = 4000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 5200 ÷ 1.3 = 4000（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "7700 ÷ (1 + 40%) = ?",
+    "display_text": "某市2023年对外贸易总额7700亿元，同比增长40%，求2022年对外贸易总额（亿元）",
+    "correct_answer": "5500",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "40% = 2/5，1 + 2/5 = 7/5，7700 × 5/7 = 1100 × 5 = 5500",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 7700 ÷ 1.4 = 5500（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "6000 ÷ (1 + 50%) = ?",
+    "display_text": "某省2023年新能源装机容量6000万千瓦，同比增长50%，求2022年装机容量（万千瓦）",
+    "correct_answer": "4000",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "50% = 1/2，1 + 1/2 = 3/2，6000 × 2/3 = 4000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 6000 ÷ 1.5 = 4000（万千瓦）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "4500 ÷ (1 + 12.5%) = ?",
+    "display_text": "某市2023年社会消费品零售额4500亿元，同比增长12.5%，求2022年数据（亿元）",
+    "correct_answer": "4000",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "12.5% = 1/8，1 + 1/8 = 9/8，4500 × 8/9 = 500 × 8 = 4000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 4500 ÷ 1.125 = 4000（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "7000 ÷ (1 + 16.7%) = ?",
+    "display_text": "某省2023年交通运输量7000万吨，同比增长16.7%，求2022年数据（万吨）",
+    "correct_answer": "6000",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "16.7% ≈ 1/6，1 + 1/6 = 7/6，7000 × 6/7 = 6000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 7000 ÷ 1.167 ≈ 6000（万吨）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "4800 ÷ (1 + 60%) = ?",
+    "display_text": "某省2023年光伏发电量4800亿千瓦时，同比增长60%，求2022年数据（亿千瓦时）",
+    "correct_answer": "3000",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "60% = 3/5，1 + 3/5 = 8/5，4800 × 5/8 = 600 × 5 = 3000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 4800 ÷ 1.6 = 3000（亿千瓦时）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "9100 ÷ (1 + 30%) = ?",
+    "display_text": "某市2023年进出口贸易额9100亿元，同比增长30%，求2022年数据（亿元）",
+    "correct_answer": "7000",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "1.3 = 13/10，9100 × 10/13 = 700 × 10 = 7000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 9100 ÷ 1.3 = 7000（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "8800 ÷ (1 + 10%) = ?",
+    "display_text": "某省2023年研发投入8800亿元，同比增长10%，求2022年研发投入（亿元）",
+    "correct_answer": "8000",
+    "tolerance": 5.0,
+    "difficulty": 1,
+    "shortcut_hint": "1.1 = 11/10，8800 × 10/11 = 800 × 10 = 8000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 8800 ÷ 1.1 = 8000（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "5250 ÷ (1 + 5%) = ?",
+    "display_text": "某市2023年居民人均可支配收入5250元，同比增长5%，求2022年数据（元）",
+    "correct_answer": "5000",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "1.05 = 21/20，5250 × 20/21 = 250 × 20 = 5000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 5250 ÷ 1.05 = 5000（元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "2860 ÷ (1 + 10%) = ?",
+    "display_text": "某镇2023年集体经济收入2860万元，同比增长10%，求2022年收入（万元）",
+    "correct_answer": "2600",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "1.1 = 11/10，2860 × 10/11 = 260 × 10 = 2600",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 2860 ÷ 1.1 = 2600（万元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "6240 ÷ (1 + 4%) = ?",
+    "display_text": "某省2023年粮食总产量6240万吨，同比增长4%，求2022年粮食产量（万吨）",
+    "correct_answer": "6000",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "1.04 = 26/25，6240 × 25/26 = 240 × 25 = 6000",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 6240 ÷ 1.04 = 6000（万吨）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "4567.8 ÷ (1 + 8.6%) = ?",
+    "display_text": "某省2023年服务业增加值4567.8亿元，同比增长8.6%，求2022年数据（亿元）",
+    "correct_answer": "4207.0",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：4568 ÷ 1.086 ≈ 4568 × (1 - 8.6% + 8.6%²) ≈ 4568 × 0.921 ≈ 4207",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 4567.8 ÷ 1.086 ≈ 4207.0（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "7823.6 ÷ (1 + 7.3%) = ?",
+    "display_text": "某省2023年规上工业产值7823.6亿元，同比增长7.3%，求2022年数据（亿元）",
+    "correct_answer": "7291.3",
+    "tolerance": 8.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：7824 ÷ 1.073 ≈ 7824 × (1 - 7.3%) ≈ 7824 - 571 = 7253，稍作修正 ≈ 7291",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 7823.6 ÷ 1.073 ≈ 7291.3（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "3456.9 ÷ (1 + 12.4%) = ?",
+    "display_text": "某市2023年财政收入3456.9亿元，同比增长12.4%，求2022年数据（亿元）",
+    "correct_answer": "3076.4",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：3457 ÷ 1.124 ≈ 3457 × (1 - 12.4% + 12.4%²) ≈ 3457 × 0.890 ≈ 3077",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 3456.9 ÷ 1.124 ≈ 3076.4（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "9234.5 ÷ (1 + 5.6%) = ?",
+    "display_text": "某省2023年居民人均可支配收入9234.5元，同比增长5.6%，求2022年数据（元）",
+    "correct_answer": "8745.7",
+    "tolerance": 8.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：9235 ÷ 1.056 ≈ 9235 × (1 - 5.6%) ≈ 9235 - 517 = 8718，约 ≈ 8746",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 9234.5 ÷ 1.056 ≈ 8745.7（元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "5678.3 ÷ (1 + 15.2%) = ?",
+    "display_text": "某市2023年固定资产投资5678.3亿元，同比增长15.2%，求2022年数据（亿元）",
+    "correct_answer": "4930.0",
+    "tolerance": 8.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：5678 ÷ 1.152 ≈ 5678 × (1 - 15.2% + 15.2%²) ≈ 5678 × 0.869 ≈ 4934",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 5678.3 ÷ 1.152 ≈ 4930.0（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "2349.7 ÷ (1 + 18.6%) = ?",
+    "display_text": "某省2023年跨境贸易额2349.7亿元，同比增长18.6%，求2022年数据（亿元）",
+    "correct_answer": "1980.3",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：2350 ÷ 1.186 ≈ 2350 × (1 - 18.6%) ≈ 2350 - 437 = 1913，修正 ≈ 1981",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 2349.7 ÷ 1.186 ≈ 1980.3（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "6789.4 ÷ (1 + 9.4%) = ?",
+    "display_text": "某省2023年社会消费品零售额6789.4亿元，同比增长9.4%，求2022年数据（亿元）",
+    "correct_answer": "6207.0",
+    "tolerance": 8.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：6789 ÷ 1.094 ≈ 6789 × (1 - 9.4%) ≈ 6789 - 638 = 6151，修正 ≈ 6207",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 6789.4 ÷ 1.094 ≈ 6207.0（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "8123.6 ÷ (1 + 11.5%) = ?",
+    "display_text": "某市2023年税收收入8123.6亿元，同比增长11.5%，求2022年数据（亿元）",
+    "correct_answer": "7286.2",
+    "tolerance": 8.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：8124 ÷ 1.115 ≈ 8124 × (1 - 11.5% + 11.5%²) ≈ 8124 × 0.897 ≈ 7287",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 8123.6 ÷ 1.115 ≈ 7286.2（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "4321.8 ÷ (1 + 6.8%) = ?",
+    "display_text": "某省2023年农林牧渔业产值4321.8亿元，同比增长6.8%，求2022年数据（亿元）",
+    "correct_answer": "4046.6",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：4322 ÷ 1.068 ≈ 4322 × (1 - 6.8%) ≈ 4322 - 294 = 4028，修正 ≈ 4047",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 4321.8 ÷ 1.068 ≈ 4046.6（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "7456.2 ÷ (1 + 13.7%) = ?",
+    "display_text": "某省2023年高技术产业产值7456.2亿元，同比增长13.7%，求2022年数据（亿元）",
+    "correct_answer": "6557.0",
+    "tolerance": 8.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：7456 ÷ 1.137 ≈ 7456 × (1 - 13.7%) ≈ 7456 - 1021 = 6435，修正 ≈ 6557",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 7456.2 ÷ 1.137 ≈ 6557.0（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "3891.5 ÷ (1 + 10.3%) = ?",
+    "display_text": "某市2023年建筑业产值3891.5亿元，同比增长10.3%，求2022年数据（亿元）",
+    "correct_answer": "3527.7",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：3892 ÷ 1.103 ≈ 3892 × (1 - 10.3% + 10.3%²) ≈ 3892 × 0.907 ≈ 3530",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 3891.5 ÷ 1.103 ≈ 3527.7（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "6543.8 ÷ (1 + 4.3%) = ?",
+    "display_text": "某省2023年粮食产量6543.8万吨，同比增长4.3%，求2022年数据（万吨）",
+    "correct_answer": "6274.6",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：6544 ÷ 1.043 ≈ 6544 × (1 - 4.3%) ≈ 6544 - 281 = 6263，修正 ≈ 6275",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 6543.8 ÷ 1.043 ≈ 6274.6（万吨）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "5327.9 ÷ (1 + 24.6%) = ?",
+    "display_text": "某市2023年数字经济规模5327.9亿元，同比增长24.6%，求2022年规模（亿元）",
+    "correct_answer": "4275.2",
+    "tolerance": 8.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：5328 ÷ 1.246 ≈ 5328 × (1 - 24.6% + 24.6%²) ≈ 5328 × 0.803 ≈ 4278",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 5327.9 ÷ 1.246 ≈ 4275.2（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "8764.3 ÷ (1 + 31.8%) = ?",
+    "display_text": "某省2023年新能源发电量8764.3亿千瓦时，同比增长31.8%，求2022年数据",
+    "correct_answer": "6649.7",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：8764 ÷ 1.318 ≈ 8764 × (1 - 31.8% + 31.8%²) ≈ 8764 × 0.759 ≈ 6652",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 8764.3 ÷ 1.318 ≈ 6649.7（亿千瓦时）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "3947.6 ÷ (1 + 19.4%) = ?",
+    "display_text": "某市2023年人工智能产业营收3947.6亿元，同比增长19.4%，求2022年数据（亿元）",
+    "correct_answer": "3306.2",
+    "tolerance": 8.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：3948 ÷ 1.194 ≈ 3948 × (1 - 19.4% + 19.4%²) ≈ 3948 × 0.843 ≈ 3328，修正 ≈ 3306",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 3947.6 ÷ 1.194 ≈ 3306.2（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "7256.8 ÷ (1 + 27.3%) = ?",
+    "display_text": "某省2023年跨境电商额7256.8亿元，同比增长27.3%，求2022年数据（亿元）",
+    "correct_answer": "5699.1",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：7257 ÷ 1.273 ≈ 7257 × (1 - 27.3% + 27.3%²) ≈ 7257 × 0.786 ≈ 5704",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 7256.8 ÷ 1.273 ≈ 5699.1（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "4589.3 ÷ (1 + 38.5%) = ?",
+    "display_text": "某市2023年文化旅游收入4589.3亿元，同比增长38.5%，求2022年数据（亿元）",
+    "correct_answer": "3314.6",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：4589 ÷ 1.385 ≈ 4589 × (1 - 38.5% + 38.5%²) ≈ 4589 × 0.722 ≈ 3313",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 4589.3 ÷ 1.385 ≈ 3314.6（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "9123.7 ÷ (1 + 22.8%) = ?",
+    "display_text": "某省2023年社会保障支出9123.7亿元，同比增长22.8%，求2022年数据（亿元）",
+    "correct_answer": "7428.9",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：9124 ÷ 1.228 ≈ 9124 × (1 - 22.8% + 22.8%²) ≈ 9124 × 0.815 ≈ 7436",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 9123.7 ÷ 1.228 ≈ 7428.9（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "6347.4 ÷ (1 + 43.2%) = ?",
+    "display_text": "某省2023年光伏装机总量6347.4万千瓦，同比增长43.2%，求2022年数据（万千瓦）",
+    "correct_answer": "4433.2",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：6347 ÷ 1.432 ≈ 6347 × (1 - 43.2% + 43.2%²) ≈ 6347 × 0.699 ≈ 4437",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 6347.4 ÷ 1.432 ≈ 4433.2（万千瓦）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "8456.9 ÷ (1 + 16.7%) = ?",
+    "display_text": "某市2023年建筑面积8456.9万平方米，同比增长16.7%，求2022年数据（万平方米）",
+    "correct_answer": "7247.1",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "16.7% ≈ 1/6，1 + 1/6 = 7/6，8457 × 6/7 = 7249",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 8456.9 ÷ 1.167 ≈ 7247.1（万平方米）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "3724.5 ÷ (1 + 55.6%) = ?",
+    "display_text": "某市2023年半导体产业产值3724.5亿元，同比增长55.6%，求2022年数据（亿元）",
+    "correct_answer": "2393.6",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：3725 ÷ 1.556 ≈ 3725 × (1 - 55.6% + 55.6%²) ≈ 3725 × 0.644 ≈ 2399",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 3724.5 ÷ 1.556 ≈ 2393.6（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "7834.6 ÷ (1 + 34.5%) = ?",
+    "display_text": "某省2023年农村居民人均纯收入7834.6元，同比增长34.5%，求2022年数据（元）",
+    "correct_answer": "5822.7",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：7835 ÷ 1.345 ≈ 7835 × (1 - 34.5% + 34.5%²) ≈ 7835 × 0.743 ≈ 5822",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 7834.6 ÷ 1.345 ≈ 5822.7（元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "5219.8 ÷ (1 + 47.3%) = ?",
+    "display_text": "某市2023年碳排放权交易量5219.8万吨，同比增长47.3%，求2022年数据（万吨）",
+    "correct_answer": "3546.0",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：5220 ÷ 1.473 ≈ 5220 × (1 - 47.3% + 47.3%²) ≈ 5220 × 0.679 ≈ 3544",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 5219.8 ÷ 1.473 ≈ 3546.0（万吨）"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "480 ÷ 1200 = ?%",
+    "display_text": "某市2023年财政收入1200亿元，其中税收收入480亿元，税收占财政收入的比重是多少",
+    "correct_answer": "40",
+    "tolerance": 1.0,
+    "difficulty": 1,
+    "shortcut_hint": "整数法：480 ÷ 1200 = 48 ÷ 120 = 4 ÷ 10 = 40%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 480 ÷ 1200 = 40%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "750 ÷ 3000 = ?%",
+    "display_text": "某省2023年GDP为3000亿元，其中工业产值750亿元，工业占GDP的比重是多少",
+    "correct_answer": "25",
+    "tolerance": 1.0,
+    "difficulty": 1,
+    "shortcut_hint": "整数法：750 ÷ 3000 = 75 ÷ 300 = 1 ÷ 4 = 25%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 750 ÷ 3000 = 25%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "200 ÷ 1600 = ?%",
+    "display_text": "某市2023年进口额为1600亿美元，其中能源进口200亿美元，能源进口占比是多少",
+    "correct_answer": "12.5",
+    "tolerance": 0.5,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字：200 ÷ 1600 = 2 ÷ 16 = 1 ÷ 8 = 12.5%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 200 ÷ 1600 = 12.5%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "900 ÷ 2700 = ?%",
+    "display_text": "某省2023年农业产值2700亿元，粮食产业产值900亿元，粮食产业占农业的比重是多少",
+    "correct_answer": "33.3",
+    "tolerance": 1.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字：900 ÷ 2700 = 1 ÷ 3 ≈ 33.3%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 900 ÷ 2700 = 33.3%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "360 ÷ 1800 = ?%",
+    "display_text": "某市2023年教育支出1800亿元，其中高等教育支出360亿元，高等教育占比是多少",
+    "correct_answer": "20",
+    "tolerance": 0.5,
+    "difficulty": 1,
+    "shortcut_hint": "整数法：360 ÷ 1800 = 36 ÷ 180 = 1 ÷ 5 = 20%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 360 ÷ 1800 = 20%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "630 ÷ 4200 = ?%",
+    "display_text": "某省2023年社保支出4200亿元，其中养老保险支出630亿元，养老保险占比是多少",
+    "correct_answer": "15",
+    "tolerance": 0.5,
+    "difficulty": 1,
+    "shortcut_hint": "整数法：630 ÷ 4200 = 63 ÷ 420 = 9 ÷ 60 = 3 ÷ 20 = 15%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 630 ÷ 4200 = 15%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "1250 ÷ 5000 = ?%",
+    "display_text": "某市2023年固定资产投资5000亿元，房地产投资1250亿元，房地产投资占比是多少",
+    "correct_answer": "25",
+    "tolerance": 0.5,
+    "difficulty": 1,
+    "shortcut_hint": "整数法：1250 ÷ 5000 = 125 ÷ 500 = 1 ÷ 4 = 25%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 1250 ÷ 5000 = 25%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "500 ÷ 4000 = ?%",
+    "display_text": "某省2023年财政支出4000亿元，其中科技支出500亿元，科技支出占比是多少",
+    "correct_answer": "12.5",
+    "tolerance": 0.5,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字：500 ÷ 4000 = 5 ÷ 40 = 1 ÷ 8 = 12.5%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 500 ÷ 4000 = 12.5%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "240 ÷ 1440 = ?%",
+    "display_text": "某市2023年能源消费1440万吨标准煤，其中煤炭240万吨，煤炭占比是多少",
+    "correct_answer": "16.7",
+    "tolerance": 1.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字：240 ÷ 1440 = 24 ÷ 144 = 1 ÷ 6 ≈ 16.7%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 240 ÷ 1440 = 16.7%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "875 ÷ 3500 = ?%",
+    "display_text": "某省2023年税收3500亿元，其中增值税875亿元，增值税占税收比重是多少",
+    "correct_answer": "25",
+    "tolerance": 0.5,
+    "difficulty": 1,
+    "shortcut_hint": "整数法：875 ÷ 3500 = 875 ÷ 3500 = 1 ÷ 4 = 25%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 875 ÷ 3500 = 25%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "1800 ÷ 7200 = ?%",
+    "display_text": "某市2023年交通运输总里程7200公里，其中高速公路1800公里，高速公路占比是多少",
+    "correct_answer": "25",
+    "tolerance": 0.5,
+    "difficulty": 1,
+    "shortcut_hint": "整数法：1800 ÷ 7200 = 18 ÷ 72 = 1 ÷ 4 = 25%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 1800 ÷ 7200 = 25%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "960 ÷ 6400 = ?%",
+    "display_text": "某省2023年工业用水6400万立方米，其中循环利用水960万立方米，循环利用占比是多少",
+    "correct_answer": "15",
+    "tolerance": 0.5,
+    "difficulty": 1,
+    "shortcut_hint": "整数法：960 ÷ 6400 = 96 ÷ 640 = 3 ÷ 20 = 15%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 960 ÷ 6400 = 15%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "420 ÷ 2520 = ?%",
+    "display_text": "某市2023年城镇居民人均消费2520元，其中食品支出420元，食品支出占比是多少",
+    "correct_answer": "16.7",
+    "tolerance": 1.0,
+    "difficulty": 1,
+    "shortcut_hint": "特征数字：420 ÷ 2520 = 42 ÷ 252 = 1 ÷ 6 ≈ 16.7%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 420 ÷ 2520 ≈ 16.7%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "330 ÷ 2200 = ?%",
+    "display_text": "某省2023年出口总额2200亿美元，机电产品出口330亿美元，机电产品出口占比是多少",
+    "correct_answer": "15",
+    "tolerance": 0.5,
+    "difficulty": 1,
+    "shortcut_hint": "整数法：330 ÷ 2200 = 33 ÷ 220 = 3 ÷ 20 = 15%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 330 ÷ 2200 = 15%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "1247 ÷ 4863 = ?%",
+    "display_text": "某市2023年工业产值4863亿元，其中高新技术产业产值1247亿元，高新技术产业占比是多少",
+    "correct_answer": "25.6",
+    "tolerance": 1.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：1247 ÷ 4863 ≈ 1247 ÷ 4863，首位估算 1/4 = 25%，精算 ≈ 25.6%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 1247 ÷ 4863 ≈ 25.6%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "3456 ÷ 9123 = ?%",
+    "display_text": "某省2023年服务业增加值9123亿元，其中金融业增加值3456亿元，金融业占比是多少",
+    "correct_answer": "37.9",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：3456 ÷ 9123 ≈ 3456 ÷ 9123，约 3.5/9.1 ≈ 38%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 3456 ÷ 9123 ≈ 37.9%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "2134 ÷ 7896 = ?%",
+    "display_text": "某市2023年进出口总额7896亿美元，其中进口额2134亿美元，进口占比是多少",
+    "correct_answer": "27.0",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：2134 ÷ 7896 ≈ 2134 ÷ 7896，约 2.1/7.9 ≈ 26.6%，精算 ≈ 27%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 2134 ÷ 7896 ≈ 27.0%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "4567 ÷ 8234 = ?%",
+    "display_text": "某省2023年居民消费8234亿元，其中城镇居民消费4567亿元，城镇居民消费占比是多少",
+    "correct_answer": "55.5",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：4567 ÷ 8234 ≈ 4567 ÷ 8234，约 4.5/8.2 ≈ 54.9%，精算 ≈ 55.5%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 4567 ÷ 8234 ≈ 55.5%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "1893 ÷ 6742 = ?%",
+    "display_text": "某市2023年财政支出6742亿元，其中教育支出1893亿元，教育支出占比是多少",
+    "correct_answer": "28.1",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：1893 ÷ 6742 ≈ 189 ÷ 674 ≈ 1.9/6.7 ≈ 28%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 1893 ÷ 6742 ≈ 28.1%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "5678 ÷ 12345 = ?%",
+    "display_text": "某省2023年GDP为12345亿元，其中第二产业产值5678亿元，第二产业占比是多少",
+    "correct_answer": "46.0",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：5678 ÷ 12345 ≈ 567.8 ÷ 1234.5 ≈ 5.7/12.3 ≈ 46.3%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 5678 ÷ 12345 ≈ 46.0%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "2345 ÷ 8956 = ?%",
+    "display_text": "某市2023年全社会用电量8956亿千瓦时，工业用电2345亿千瓦时，工业用电占比是多少",
+    "correct_answer": "26.2",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：2345 ÷ 8956 ≈ 234.5 ÷ 895.6 ≈ 2.3/9.0 ≈ 26.2%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 2345 ÷ 8956 ≈ 26.2%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "3214 ÷ 9876 = ?%",
+    "display_text": "某省2023年税收总额9876亿元，其中所得税3214亿元，所得税占比是多少",
+    "correct_answer": "32.5",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：3214 ÷ 9876 ≈ 321.4 ÷ 987.6 ≈ 3.2/9.9 ≈ 32.5%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 3214 ÷ 9876 ≈ 32.5%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "7823 ÷ 23456 = ?%",
+    "display_text": "某市2023年全市人口23456万人，城镇人口7823万人，城镇人口占比（城镇化率）是多少",
+    "correct_answer": "33.4",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：7823 ÷ 23456 ≈ 782 ÷ 2346 ≈ 7.8/23.5 ≈ 33.2%，精算 ≈ 33.4%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 7823 ÷ 23456 ≈ 33.4%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "4123 ÷ 11234 = ?%",
+    "display_text": "某省2023年固定资产投资11234亿元，制造业投资4123亿元，制造业投资占比是多少",
+    "correct_answer": "36.7",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：4123 ÷ 11234 ≈ 412.3 ÷ 1123.4 ≈ 4.1/11.2 ≈ 36.6%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 4123 ÷ 11234 ≈ 36.7%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "6789 ÷ 15678 = ?%",
+    "display_text": "某市2023年居民储蓄总额15678亿元，城镇居民储蓄6789亿元，城镇居民储蓄占比是多少",
+    "correct_answer": "43.3",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：6789 ÷ 15678 ≈ 679 ÷ 1568 ≈ 6.8/15.7 ≈ 43.3%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 6789 ÷ 15678 ≈ 43.3%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "1567 ÷ 5432 = ?%",
+    "display_text": "某市2023年企业总数5432家，高新技术企业1567家，高新技术企业占比是多少",
+    "correct_answer": "28.8",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：1567 ÷ 5432 ≈ 156.7 ÷ 543.2 ≈ 1.6/5.4 ≈ 28.9%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 1567 ÷ 5432 ≈ 28.8%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "2678 ÷ 7543 = ?%",
+    "display_text": "某省2023年医疗卫生支出7543亿元，基层医疗机构获得支出2678亿元，基层占比是多少",
+    "correct_answer": "35.5",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：2678 ÷ 7543 ≈ 267.8 ÷ 754.3 ≈ 2.7/7.5 ≈ 35.5%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 2678 ÷ 7543 ≈ 35.5%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "3456.7 ÷ 9873.4 = ?%",
+    "display_text": "某省2023年能源消费总量9873.4万吨标准煤，其中非化石能源3456.7万吨，非化石能源占比是多少",
+    "correct_answer": "35.0",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：3457 ÷ 9873 ≈ 3457 ÷ 9873，取有效数字 3.46/9.87 ≈ 35.1%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 3456.7 ÷ 9873.4 ≈ 35.0%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "6789.3 ÷ 23456.8 = ?%",
+    "display_text": "某市2023年全社会固定资产投资23456.8亿元，制造业投资6789.3亿元，制造业投资占比是多少",
+    "correct_answer": "28.9",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：6789 ÷ 23457 ≈ 6789 ÷ 23457，取有效数字 6.79/23.46 ≈ 28.9%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 6789.3 ÷ 23456.8 ≈ 28.9%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "4567.8 ÷ 13456.9 = ?%",
+    "display_text": "某省2023年社会保险基金收入13456.9亿元，养老保险收入4567.8亿元，养老保险占比是多少",
+    "correct_answer": "33.9",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：4568 ÷ 13457 ≈ 4568 ÷ 13457，取有效数字 4.57/13.46 ≈ 33.9%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 4567.8 ÷ 13456.9 ≈ 33.9%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "8234.6 ÷ 27890.3 = ?%",
+    "display_text": "某市2023年全市贷款余额27890.3亿元，绿色信贷余额8234.6亿元，绿色信贷占比是多少",
+    "correct_answer": "29.5",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：8235 ÷ 27890 ≈ 8235 ÷ 27890，取有效数字 8.23/27.89 ≈ 29.5%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 8234.6 ÷ 27890.3 ≈ 29.5%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "5678.9 ÷ 19234.7 = ?%",
+    "display_text": "某省2023年进出口总额19234.7亿美元，服务贸易5678.9亿美元，服务贸易占比是多少",
+    "correct_answer": "29.5",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：5679 ÷ 19235 ≈ 5679 ÷ 19235，取有效数字 5.68/19.23 ≈ 29.5%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 5678.9 ÷ 19234.7 ≈ 29.5%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "7456.3 ÷ 24678.5 = ?%",
+    "display_text": "某市2023年全市财政支出24678.5亿元，民生支出7456.3亿元，民生支出占比是多少",
+    "correct_answer": "30.2",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：7456 ÷ 24679 ≈ 7456 ÷ 24679，取有效数字 7.46/24.68 ≈ 30.2%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 7456.3 ÷ 24678.5 ≈ 30.2%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "2345.6 ÷ 8912.3 = ?%",
+    "display_text": "某省2023年工业能耗8912.3万吨标准煤，高耗能行业能耗2345.6万吨，高耗能行业占比是多少",
+    "correct_answer": "26.3",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：2346 ÷ 8912 ≈ 2346 ÷ 8912，取有效数字 2.35/8.91 ≈ 26.4%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 2345.6 ÷ 8912.3 ≈ 26.3%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "9123.4 ÷ 31456.7 = ?%",
+    "display_text": "某市2023年全市社会消费品零售总额31456.7亿元，网络零售额9123.4亿元，网络零售占比是多少",
+    "correct_answer": "29.0",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：9123 ÷ 31457 ≈ 9123 ÷ 31457，取有效数字 9.12/31.46 ≈ 29.0%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 9123.4 ÷ 31456.7 ≈ 29.0%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "4567.2 ÷ 16789.4 = ?%",
+    "display_text": "某省2023年科技研发总投入16789.4亿元，企业研发投入4567.2亿元，企业研发占比是多少",
+    "correct_answer": "27.2",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：4567 ÷ 16789 ≈ 4567 ÷ 16789，取有效数字 4.57/16.79 ≈ 27.2%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 4567.2 ÷ 16789.4 ≈ 27.2%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "6789.4 ÷ 21345.6 = ?%",
+    "display_text": "某市2023年商品房销售总额21345.6亿元，住宅销售6789.4亿元，住宅销售占比是多少",
+    "correct_answer": "31.8",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：6789 ÷ 21346 ≈ 6789 ÷ 21346，取有效数字 6.79/21.35 ≈ 31.8%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 6789.4 ÷ 21345.6 ≈ 31.8%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "3456.8 ÷ 12678.9 = ?%",
+    "display_text": "某省2023年交通运输总里程12678.9公里，高铁里程3456.8公里，高铁占比是多少",
+    "correct_answer": "27.3",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：3457 ÷ 12679 ≈ 3457 ÷ 12679，取有效数字 3.46/12.68 ≈ 27.3%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 3456.8 ÷ 12678.9 ≈ 27.3%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "8901.2 ÷ 28345.6 = ?%",
+    "display_text": "某省2023年建设用地总面积28345.6万亩，城镇建设用地8901.2万亩，城镇建设用地占比是多少",
+    "correct_answer": "31.4",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：8901 ÷ 28346 ≈ 8901 ÷ 28346，取有效数字 8.90/28.35 ≈ 31.4%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 8901.2 ÷ 28345.6 ≈ 31.4%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "7234.5 ÷ 24567.8 = ?%",
+    "display_text": "某市2023年全市能源消费24567.8万吨标准煤，清洁能源消费7234.5万吨，清洁能源占比是多少",
+    "correct_answer": "29.4",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：7235 ÷ 24568 ≈ 7235 ÷ 24568，取有效数字 7.24/24.57 ≈ 29.5%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 7234.5 ÷ 24567.8 ≈ 29.4%"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 1200→1320（+10%）vs B: 800→920（+15%）",
+    "display_text": "甲市GDP从1200亿增至1320亿，乙市GDP从800亿增至920亿，哪个城市增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=10%，B=15%，B增速更快",
+    "explanation": "A增长率=(1320-1200)/1200=10%，B增长率=(920-800)/800=15%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 2000→2500（+25%）vs B: 1500→2100（+40%）",
+    "display_text": "甲省工业产值从2000亿增至2500亿，乙省从1500亿增至2100亿，哪省增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=25%，B=40%，B增速更快",
+    "explanation": "A增长率=25%，B增长率=40%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 6000→6600（+10%）vs B: 4000→4360（+9%）",
+    "display_text": "某市财政收入增长10%，税收增长9%，哪个增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=10%，B=9%，A增速更快",
+    "explanation": "A增长率=10%，B增长率=9%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 3000→4500（+50%）vs B: 2000→2800（+40%）",
+    "display_text": "某省新能源汽车产量增长50%，传统汽车产量增长40%，哪种增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=50%，B=40%，A增速更快",
+    "explanation": "A增长率=50%，B增长率=40%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 800→960（+20%）vs B: 500→650（+30%）",
+    "display_text": "某市城镇就业人口从800万增至960万，农村就业人口从500万增至650万，哪组增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=20%，B=30%，B增速更快",
+    "explanation": "A增长率=20%，B增长率=30%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 5000→5250（+5%）vs B: 3000→3360（+12%）",
+    "display_text": "某省粮食产量增长5%，蔬菜产量增长12%，哪种农作物增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=5%，B=12%，B增速更快",
+    "explanation": "A增长率=5%，B增长率=12%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 1200→1320（+10%）vs B: 1200→1440（+20%）",
+    "display_text": "某市医疗支出与教育支出起点均为1200亿，医疗增至1320亿，教育增至1440亿，哪类支出增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=10%，B=20%，B增速更快",
+    "explanation": "A增长率=10%，B增长率=20%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 4000→4800（+20%）vs B: 6000→6600（+10%）",
+    "display_text": "某市高新技术产业从4000亿增至4800亿，传统产业从6000亿增至6600亿，哪类产业增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=20%，B=10%，A增速更快",
+    "explanation": "A增长率=20%，B增长率=10%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 2000→2250（+12.5%）vs B: 1600→1760（+10%）",
+    "display_text": "某省出口增长12.5%，进口增长10%，哪个增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=12.5%，B=10%，A增速更快",
+    "explanation": "A增长率=12.5%，B增长率=10%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 3000→4000（+33.3%）vs B: 2500→3125（+25%）",
+    "display_text": "某市数字经济从3000亿增至4000亿，实体经济从2500亿增至3125亿，哪类经济增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A≈33.3%，B=25%，A增速更快",
+    "explanation": "A增长率=33.3%，B增长率=25%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 800→880（+10%）vs B: 1200→1320（+10%）",
+    "display_text": "两个工厂产量都增长了同比，甲厂从800吨增至880吨，乙厂从1200吨增至1320吨，哪厂增速更快？",
+    "correct_answer": "C",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "两者增长率相同：A=10%，B=10%，增速相同",
+    "explanation": "A增长率=10%，B增长率=10%，两者增速相同（C选项：两者相同）"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 4500→4950（+10%）vs B: 3600→3960（+10%）",
+    "display_text": "某省城镇人均消费从4500元增至4950元，农村人均消费从3600元增至3960元，哪类增速更快？",
+    "correct_answer": "C",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "两者增长率相同：A=10%，B=10%，增速相同",
+    "explanation": "A增长率=10%，B增长率=10%，两者增速相同（C：相同）"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 1500→1650（+10%）vs B: 2500→2750（+10%）",
+    "display_text": "两类保险产品销售额均增长相同比例，产品A从1500万增至1650万，B从2500万增至2750万，哪个增速更快？",
+    "correct_answer": "C",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "两者增长率相同：A=10%，B=10%，增速相同",
+    "explanation": "A增长率=10%，B增长率=10%，两者增速相同（C：相同）"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 2340→2691（+15%）vs B: 1850→2220（+20%）",
+    "display_text": "甲地工资总额从2340亿增至2691亿，乙地从1850亿增至2220亿，哪地工资总额增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "计算增长率：A=(2691-2340)/2340=351/2340=15%，B=(2220-1850)/1850=370/1850=20%，B更快",
+    "explanation": "A增长率=(2691-2340)/2340≈15%，B增长率=(2220-1850)/1850=20%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 4823→5547（+15%）vs B: 3214→3857（+20%）",
+    "display_text": "甲省服务业增加值从4823亿增至5547亿，乙省从3214亿增至3857亿，哪省增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(5547-4823)/4823≈724/4823≈15%，B=(3857-3214)/3214≈643/3214≈20%，B更快",
+    "explanation": "A增长率≈15%，B增长率≈20%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 7654→8573（+12%）vs B: 6234→6857（+10%）",
+    "display_text": "某省规上工业产值从7654亿增至8573亿，同期服务业从6234亿增至6857亿，哪类增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(8573-7654)/7654≈919/7654≈12%，B=(6857-6234)/6234≈623/6234≈10%，A更快",
+    "explanation": "A增长率≈12%，B增长率≈10%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 3456→3802（+10%）vs B: 2345→2579（+10%）",
+    "display_text": "两地财政收入同步增长，A从3456亿增至3802亿，B从2345亿增至2579亿，哪地增速更快？",
+    "correct_answer": "C",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(3802-3456)/3456≈346/3456≈10%，B=(2579-2345)/2345≈234/2345≈10%，相同",
+    "explanation": "A增长率≈10%，B增长率≈10%，两者增速相同（C：相同）"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 8912→9803（+10%）vs B: 5678→6359（+12%）",
+    "display_text": "某市常住人口从8912万增至9803万，城镇人口从5678万增至6359万，哪类人口增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(9803-8912)/8912≈891/8912≈10%，B=(6359-5678)/5678≈681/5678≈12%，B更快",
+    "explanation": "A增长率≈10%，B增长率≈12%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 6789→7468（+10%）vs B: 4567→5252（+15%）",
+    "display_text": "某省城镇就业人员从6789万增至7468万，农村从4567万增至5252万，哪类增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(7468-6789)/6789≈679/6789≈10%，B=(5252-4567)/4567≈685/4567≈15%，B更快",
+    "explanation": "A增长率≈10%，B增长率≈15%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 2347→2699（+15%）vs B: 3456→3802（+10%）",
+    "display_text": "某市科技支出从2347亿增至2699亿，教育支出从3456亿增至3802亿，哪类支出增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(2699-2347)/2347≈352/2347≈15%，B=(3802-3456)/3456≈346/3456≈10%，A更快",
+    "explanation": "A增长率≈15%，B增长率≈10%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 5432→5976（+10%）vs B: 4321→4971（+15%）",
+    "display_text": "某省城市化从5432万人增至5976万人，乡镇化从4321万人增至4971万人，哪类增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(5976-5432)/5432≈544/5432≈10%，B=(4971-4321)/4321≈650/4321≈15%，B更快",
+    "explanation": "A增长率≈10%，B增长率≈15%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 7890→8679（+10%）vs B: 6543→7263（+11%）",
+    "display_text": "某市GDP从7890亿增至8679亿，人均GDP从6543元增至7263元，哪个增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(8679-7890)/7890≈789/7890≈10%，B=(7263-6543)/6543≈720/6543≈11%，B稍快",
+    "explanation": "A增长率≈10%，B增长率≈11%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 3214→3536（+10%）vs B: 2156→2371（+10%）",
+    "display_text": "某省工业用电从3214亿千瓦时增至3536亿千瓦时，居民用电从2156亿千瓦时增至2371亿千瓦时，哪类增速更快？",
+    "correct_answer": "C",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(3536-3214)/3214≈322/3214≈10%，B=(2371-2156)/2156≈215/2156≈10%，相同",
+    "explanation": "A增长率≈10%，B增长率≈10%，两者增速相同（C：相同）"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 4567→5024（+10%）vs B: 6789→7536（+11%）",
+    "display_text": "某省进口从4567亿美元增至5024亿美元，出口从6789亿美元增至7536亿美元，哪个增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(5024-4567)/4567≈457/4567≈10%，B=(7536-6789)/6789≈747/6789≈11%，B稍快",
+    "explanation": "A增长率≈10%，B增长率≈11%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 8904→9794（+10%）vs B: 7654→8497（+11%）",
+    "display_text": "某市税收从8904亿增至9794亿，财政支出从7654亿增至8497亿，哪个增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位比较：A=(9794-8904)/8904≈890/8904≈10%，B=(8497-7654)/7654≈843/7654≈11%，B稍快",
+    "explanation": "A增长率≈10%，B增长率≈11%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 4567.8→5252.9（+15%）vs B: 7890.3→8759.2（+11%）",
+    "display_text": "某省数字经济从4567.8亿增至5252.9亿，传统产业从7890.3亿增至8759.2亿，哪类增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(5252.9-4567.8)/4567.8≈685.1/4567.8≈15%，B=(8759.2-7890.3)/7890.3≈868.9/7890.3≈11%，A更快",
+    "explanation": "A增长率≈15%，B增长率≈11%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 6789.4→7738.9（+14%）vs B: 5234.7→5862.1（+12%）",
+    "display_text": "某市网络零售从6789.4亿增至7738.9亿，实体零售从5234.7亿增至5862.1亿，哪类增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(7738.9-6789.4)/6789.4≈949.5/6789.4≈14%，B=(5862.1-5234.7)/5234.7≈627.4/5234.7≈12%，A更快",
+    "explanation": "A增长率≈14%，B增长率≈12%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 3456.9→3768.0（+9.0%）vs B: 2345.6→2579.4（+9.97%）",
+    "display_text": "某省医疗支出从3456.9亿增至3768.0亿，科研支出从2345.6亿增至2579.4亿，哪类增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(3768.0-3456.9)/3456.9≈311.1/3456.9≈9.0%，B=(2579.4-2345.6)/2345.6≈233.8/2345.6≈9.97%，B更快",
+    "explanation": "A增长率≈9.0%，B增长率≈9.97%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 8912.3→9714.4（+9.0%）vs B: 6789.5→7424.5（+9.35%）",
+    "display_text": "某省工业增加值从8912.3亿增至9714.4亿，农业增加值从6789.5亿增至7424.5亿，哪类增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(9714.4-8912.3)/8912.3≈802.1/8912.3≈9.0%，B=(7424.5-6789.5)/6789.5≈635.0/6789.5≈9.35%，B更快",
+    "explanation": "A增长率≈9.0%，B增长率≈9.35%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 5678.4→6246.2（+10.0%）vs B: 4321.6→4753.6（+10.0%）",
+    "display_text": "某市城镇就业人口从5678.4万增至6246.2万，农业就业人口从4321.6万增至4753.6万，哪类增速更快？",
+    "correct_answer": "C",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(6246.2-5678.4)/5678.4≈567.8/5678.4≈10.0%，B=(4753.6-4321.6)/4321.6≈432.0/4321.6≈10.0%，相同",
+    "explanation": "A增长率≈10.0%，B增长率≈10.0%，两者增速相同（C：相同）"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 7654.3→8727.9（+14.0%）vs B: 6543.2→7394.2（+13.0%）",
+    "display_text": "某省光伏装机容量从7654.3万千瓦增至8727.9万千瓦，风电装机从6543.2万千瓦增至7394.2万千瓦，哪类增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(8727.9-7654.3)/7654.3≈1073.6/7654.3≈14.0%，B=(7394.2-6543.2)/6543.2≈851.0/6543.2≈13.0%，A更快",
+    "explanation": "A增长率≈14.0%，B增长率≈13.0%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 9123.4→10217.0（+12.0%）vs B: 8456.7→9442.2（+11.65%）",
+    "display_text": "某市GDP从9123.4亿增至10217.0亿，工业产值从8456.7亿增至9442.2亿，哪个增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(10217.0-9123.4)/9123.4≈1093.6/9123.4≈12.0%，B=(9442.2-8456.7)/8456.7≈985.5/8456.7≈11.65%，A更快",
+    "explanation": "A增长率≈12.0%，B增长率≈11.65%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 3456.8→3870.6（+11.97%）vs B: 4567.9→5082.4（+11.27%）",
+    "display_text": "某省生态保护支出从3456.8亿增至3870.6亿，基础设施支出从4567.9亿增至5082.4亿，哪类增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(3870.6-3456.8)/3456.8≈413.8/3456.8≈11.97%，B=(5082.4-4567.9)/4567.9≈514.5/4567.9≈11.27%，A更快",
+    "explanation": "A增长率≈11.97%，B增长率≈11.27%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 6789.4→7611.3（+12.1%）vs B: 5432.1→6094.4（+12.2%）",
+    "display_text": "某省跨境电商从6789.4亿增至7611.3亿，数字服务从5432.1亿增至6094.4亿，哪类增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(7611.3-6789.4)/6789.4≈821.9/6789.4≈12.1%，B=(6094.4-5432.1)/5432.1≈662.3/5432.1≈12.2%，B稍快",
+    "explanation": "A增长率≈12.1%，B增长率≈12.2%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 8234.5→9222.6（+12.0%）vs B: 7654.3→8571.8（+11.99%）",
+    "display_text": "某市A产业从8234.5亿增至9222.6亿，B产业从7654.3亿增至8571.8亿，哪类增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(9222.6-8234.5)/8234.5≈988.1/8234.5≈12.0%，B=(8571.8-7654.3)/7654.3≈917.5/7654.3≈11.99%，A稍快",
+    "explanation": "A增长率≈12.0%，B增长率≈11.99%，A增速更快（极微差，通过精确计算区分）"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 5678.9→6360.6（+12.0%）vs B: 4321.5→4841.1（+12.02%）",
+    "display_text": "某省建筑业产值从5678.9亿增至6360.6亿，房地产业从4321.5亿增至4841.1亿，哪类增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(6360.6-5678.9)/5678.9≈681.7/5678.9≈12.0%，B=(4841.1-4321.5)/4321.5≈519.6/4321.5≈12.02%，B稍快",
+    "explanation": "A增长率≈12.0%，B增长率≈12.02%，B增速稍快（需精确计算区分）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "4567 ÷ 89 ≈ ?",
+    "display_text": "某省2023年累计生产粮食4567万吨，全省共89个县，平均每县生产粮食约多少万吨",
+    "correct_answer": "51.3",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "有效数字法：4567 ÷ 89 ≈ 4600 ÷ 90 ≈ 46/9 ≈ 51",
+    "explanation": "4567 ÷ 89 ≈ 51.3（万吨）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "12345 ÷ 123 ≈ ?",
+    "display_text": "某市2023年GDP为12345亿元，全市共123万人，人均GDP约多少亿元/万人",
+    "correct_answer": "100.4",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "尾数法：12345 ÷ 123 ≈ 12300 ÷ 123 = 100",
+    "explanation": "12345 ÷ 123 ≈ 100.4"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "8976 ÷ 48 ≈ ?",
+    "display_text": "某省2023年快递业务量8976万件，共48个配送中心，平均每中心配送量约多少万件",
+    "correct_answer": "187.0",
+    "tolerance": 3.0,
+    "difficulty": 1,
+    "shortcut_hint": "有效数字法：8976 ÷ 48 ≈ 9000 ÷ 48 = 9000 ÷ 48 ≈ 187.5",
+    "explanation": "8976 ÷ 48 ≈ 187.0（万件）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "6789 ÷ 33 ≈ ?",
+    "display_text": "某市2023年专利申请6789项，全市共33家科研院所，平均每所申请专利约多少项",
+    "correct_answer": "205.7",
+    "tolerance": 3.0,
+    "difficulty": 1,
+    "shortcut_hint": "有效数字法：6789 ÷ 33 ≈ 6600 ÷ 33 = 200，余 189 ÷ 33 ≈ 5.7，合计 ≈ 206",
+    "explanation": "6789 ÷ 33 ≈ 205.7（项）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "23456 ÷ 245 ≈ ?",
+    "display_text": "某省2023年财政总支出23456亿元，全省245个乡镇，平均每乡镇获得财政支出约多少亿元",
+    "correct_answer": "95.7",
+    "tolerance": 3.0,
+    "difficulty": 1,
+    "shortcut_hint": "有效数字法：23456 ÷ 245 ≈ 23500 ÷ 245 ≈ 23500 ÷ 250 = 94，精算 ≈ 96",
+    "explanation": "23456 ÷ 245 ≈ 95.7（亿元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "34567 ÷ 167 ≈ ?",
+    "display_text": "某市2023年货物运输量34567万吨，通过167条干线运输，平均每条干线运输量约多少万吨",
+    "correct_answer": "206.9",
+    "tolerance": 3.0,
+    "difficulty": 1,
+    "shortcut_hint": "有效数字法：34567 ÷ 167 ≈ 34000 ÷ 167 ≈ 34000 ÷ 170 = 200，精算 ≈ 207",
+    "explanation": "34567 ÷ 167 ≈ 206.9（万吨）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "7654 ÷ 76 ≈ ?",
+    "display_text": "某省2023年社会消费品零售额7654亿元，全省76个县级市，平均每市零售额约多少亿元",
+    "correct_answer": "100.7",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "尾数法：7654 ÷ 76 ≈ 7600 ÷ 76 = 100，余 54 ÷ 76 ≈ 0.7，合计 ≈ 100.7",
+    "explanation": "7654 ÷ 76 ≈ 100.7（亿元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "9123 ÷ 91 ≈ ?",
+    "display_text": "某省2023年研发人员9123人，全省91家重点研发机构，平均每机构研发人员约多少人",
+    "correct_answer": "100.3",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "尾数法：9123 ÷ 91 ≈ 9100 ÷ 91 = 100，余 23 ÷ 91 ≈ 0.3，合计 ≈ 100.3",
+    "explanation": "9123 ÷ 91 ≈ 100.3（人）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "5678 ÷ 57 ≈ ?",
+    "display_text": "某市2023年高新技术企业产值5678亿元，全市57家高新技术企业，平均每家产值约多少亿元",
+    "correct_answer": "99.6",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "尾数法：5678 ÷ 57 ≈ 5700 ÷ 57 = 100，精算 ≈ 99.6",
+    "explanation": "5678 ÷ 57 ≈ 99.6（亿元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "34500 ÷ 345 ≈ ?",
+    "display_text": "某省2023年全省民营企业总营收34500亿元，全省共345家规模以上民营企业，平均营收约多少亿元",
+    "correct_answer": "100.0",
+    "tolerance": 1.0,
+    "difficulty": 1,
+    "shortcut_hint": "整除：34500 ÷ 345 = 100",
+    "explanation": "34500 ÷ 345 = 100（亿元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "4321 ÷ 43 ≈ ?",
+    "display_text": "某市2023年城市生活污水处理量4321万吨，全市43个污水处理厂，平均每厂处理量约多少万吨",
+    "correct_answer": "100.5",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "尾数法：4321 ÷ 43 ≈ 4300 ÷ 43 = 100，余 21 ÷ 43 ≈ 0.5，合计 ≈ 100.5",
+    "explanation": "4321 ÷ 43 ≈ 100.5（万吨）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "8765 ÷ 87 ≈ ?",
+    "display_text": "某省2023年新建保障性住房8765套，全省87个区县，平均每区县新建保障性住房约多少套",
+    "correct_answer": "100.7",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "尾数法：8765 ÷ 87 ≈ 8700 ÷ 87 = 100，余 65 ÷ 87 ≈ 0.7，合计 ≈ 100.7",
+    "explanation": "8765 ÷ 87 ≈ 100.7（套）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "56789 ÷ 567 ≈ ?",
+    "display_text": "某省2023年全省村庄数量567个，共有农村居民56789万人，平均每村居民约多少万人",
+    "correct_answer": "100.2",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "尾数法：56789 ÷ 567 ≈ 56700 ÷ 567 = 100，余 89 ÷ 567 ≈ 0.2，合计 ≈ 100.2",
+    "explanation": "56789 ÷ 567 ≈ 100.2（万人）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "19876 ÷ 199 ≈ ?",
+    "display_text": "某省2023年企业总数19876家，全省199个开发区，平均每个开发区企业约多少家",
+    "correct_answer": "99.9",
+    "tolerance": 2.0,
+    "difficulty": 1,
+    "shortcut_hint": "尾数法：19876 ÷ 199 ≈ 19900 ÷ 199 = 100，精算 ≈ 99.9",
+    "explanation": "19876 ÷ 199 ≈ 99.9（家）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "4567.3 ÷ 89.4 ≈ ?",
+    "display_text": "某省2023年非化石能源发电量4567.3亿千瓦时，平均每月89.4亿千瓦时以上，全年约利用多少个月等效",
+    "correct_answer": "51.1",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：4567 ÷ 89.4 ≈ 4600 ÷ 90 ≈ 51.1",
+    "explanation": "4567.3 ÷ 89.4 ≈ 51.1"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "7823.6 ÷ 134.7 ≈ ?",
+    "display_text": "某市2023年完成固定资产投资7823.6亿元，全市共134.7个重点项目，平均每个项目投资约多少亿元",
+    "correct_answer": "58.1",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：7824 ÷ 134.7 ≈ 7800 ÷ 135 = 7800 ÷ 135 ≈ 57.8，精算 ≈ 58.1",
+    "explanation": "7823.6 ÷ 134.7 ≈ 58.1（亿元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "23456.7 ÷ 456.8 ≈ ?",
+    "display_text": "某省2023年全省农业总产值23456.7亿元，全省456.8万农业从业人员，人均产值约多少亿元/万人",
+    "correct_answer": "51.4",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：23457 ÷ 456.8 ≈ 23000 ÷ 460 = 50，精算 ≈ 51.4",
+    "explanation": "23456.7 ÷ 456.8 ≈ 51.4（亿元/万人）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "6789.4 ÷ 123.5 ≈ ?",
+    "display_text": "某省2023年新建绿色建筑面积6789.4万平方米，全省共123.5个施工项目，平均每项目面积约多少万平方米",
+    "correct_answer": "54.98",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：6789 ÷ 123.5 ≈ 6800 ÷ 124 ≈ 54.8，精算 ≈ 55.0",
+    "explanation": "6789.4 ÷ 123.5 ≈ 55.0（万平方米）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "34567.8 ÷ 678.9 ≈ ?",
+    "display_text": "某省2023年社会消费品零售总额34567.8亿元，全省678.9万个零售商户，户均零售额约多少亿元/万户",
+    "correct_answer": "50.9",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：34568 ÷ 678.9 ≈ 35000 ÷ 680 = 51.5，精算 ≈ 50.9",
+    "explanation": "34567.8 ÷ 678.9 ≈ 50.9（亿元/万户）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "8901.3 ÷ 178.2 ≈ ?",
+    "display_text": "某省2023年对外直接投资8901.3亿美元，全省178.2家境外企业，平均每家投资约多少亿美元",
+    "correct_answer": "49.9",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：8901 ÷ 178.2 ≈ 9000 ÷ 180 = 50，精算 ≈ 49.9",
+    "explanation": "8901.3 ÷ 178.2 ≈ 49.9（亿美元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "56789.4 ÷ 1123.5 ≈ ?",
+    "display_text": "某省2023年累计吸引外资56789.4亿元，全省1123.5家外资企业，平均每家吸引外资约多少亿元",
+    "correct_answer": "50.5",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：56789 ÷ 1123.5 ≈ 57000 ÷ 1125 = 50.7，精算 ≈ 50.5",
+    "explanation": "56789.4 ÷ 1123.5 ≈ 50.5（亿元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "12345.6 ÷ 234.5 ≈ ?",
+    "display_text": "某市2023年全市学校建筑面积12345.6万平方米，全市共234.5所中小学，平均每校面积约多少万平方米",
+    "correct_answer": "52.6",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：12346 ÷ 234.5 ≈ 12300 ÷ 235 ≈ 52.3，精算 ≈ 52.6",
+    "explanation": "12345.6 ÷ 234.5 ≈ 52.6（万平方米）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "7654.3 ÷ 156.8 ≈ ?",
+    "display_text": "某省2023年煤炭总产量7654.3万吨，共156.8家煤矿，平均每矿产量约多少万吨",
+    "correct_answer": "48.8",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：7654 ÷ 156.8 ≈ 7700 ÷ 157 ≈ 49.0，精算 ≈ 48.8",
+    "explanation": "7654.3 ÷ 156.8 ≈ 48.8（万吨）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "45678.9 ÷ 891.2 ≈ ?",
+    "display_text": "某省2023年全省污水处理量45678.9万吨，共891.2座处理设施，平均每座处理量约多少万吨",
+    "correct_answer": "51.2",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：45679 ÷ 891.2 ≈ 46000 ÷ 892 ≈ 51.6，精算 ≈ 51.2",
+    "explanation": "45678.9 ÷ 891.2 ≈ 51.2（万吨）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "19876.5 ÷ 389.4 ≈ ?",
+    "display_text": "某省2023年全省中等职业教育在校生19876.5万人，全省389.4所中职院校，平均每校在校生约多少万人",
+    "correct_answer": "51.0",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：19877 ÷ 389.4 ≈ 20000 ÷ 390 ≈ 51.3，精算 ≈ 51.0",
+    "explanation": "19876.5 ÷ 389.4 ≈ 51.0（万人）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "67890.3 ÷ 1345.6 ≈ ?",
+    "display_text": "某省2023年全省农村基础设施投资67890.3亿元，受益1345.6个村庄，平均每村获得投资约多少亿元",
+    "correct_answer": "50.5",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：67890 ÷ 1345.6 ≈ 68000 ÷ 1346 ≈ 50.5",
+    "explanation": "67890.3 ÷ 1345.6 ≈ 50.5（亿元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "23456.78 ÷ 456.89 ≈ ?",
+    "display_text": "某省2023年全省新能源汽车累计销量23456.78万辆，全省456.89家新能源车企，平均每家销量约多少万辆",
+    "correct_answer": "51.3",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：23457 ÷ 456.9 ≈ 23000 ÷ 460 = 50，精算 ≈ 51.3",
+    "explanation": "23456.78 ÷ 456.89 ≈ 51.3（万辆）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "34567.89 ÷ 678.23 ≈ ?",
+    "display_text": "某省2023年乡村振兴投资总额34567.89亿元，678.23个示范村庄受益，平均每村获投资约多少亿元",
+    "correct_answer": "50.97",
+    "tolerance": 2.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：34568 ÷ 678.2 ≈ 35000 ÷ 680 = 51.5，精算 ≈ 51.0",
+    "explanation": "34567.89 ÷ 678.23 ≈ 51.0（亿元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "456789.3 ÷ 8956.7 ≈ ?",
+    "display_text": "某省2023年全省发电总量456789.3亿千瓦时，全省8956.7万用电户，平均每户用电约多少亿千瓦时",
+    "correct_answer": "51.0",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：456789 ÷ 8956.7 ≈ 456789 ÷ 8957 ≈ 45.6/8.96 × 10 ≈ 5.09 × 10 = 50.9",
+    "explanation": "456789.3 ÷ 8956.7 ≈ 51.0（亿千瓦时）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "1234567 ÷ 24567 ≈ ?",
+    "display_text": "某省2023年累计处理公共服务事项1234567件，全省24567个基层服务窗口，平均每窗口处理约多少件",
+    "correct_answer": "50.3",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：1234567 ÷ 24567 ≈ 1234567 ÷ 24567 ≈ 123/24.6 × 10 ≈ 50",
+    "explanation": "1234567 ÷ 24567 ≈ 50.3（件）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "78901.23 ÷ 1578.45 ≈ ?",
+    "display_text": "某省2023年全省科技成果转化收入78901.23亿元，1578.45家企业参与转化，平均每家收入约多少亿元",
+    "correct_answer": "50.0",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：78901 ÷ 1578.45 ≈ 78900 ÷ 1578 ≈ 789/15.78 ≈ 50.0",
+    "explanation": "78901.23 ÷ 1578.45 ≈ 50.0（亿元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "56789.34 ÷ 1123.45 ≈ ?",
+    "display_text": "某省2023年全省水利设施年供水量56789.34万立方米，全省1123.45处水利工程，平均每处供水量约多少万立方米",
+    "correct_answer": "50.5",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：56789 ÷ 1123.45 ≈ 56800 ÷ 1123 ≈ 568/11.23 ≈ 50.6",
+    "explanation": "56789.34 ÷ 1123.45 ≈ 50.5（万立方米）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "345678.9 ÷ 6789.5 ≈ ?",
+    "display_text": "某省2023年智慧城市投资总额345678.9万元，全省6789.5个智慧设备接入点，平均每接入点投入约多少万元",
+    "correct_answer": "50.9",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：345679 ÷ 6789.5 ≈ 345000 ÷ 6789 ≈ 50.8",
+    "explanation": "345678.9 ÷ 6789.5 ≈ 50.9（万元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "234567.8 ÷ 4678.9 ≈ ?",
+    "display_text": "某省2023年全省清洁能源发电量234567.8万千瓦时，共4678.9座清洁能源发电站，平均每站发电量约多少万千瓦时",
+    "correct_answer": "50.1",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：234568 ÷ 4678.9 ≈ 235000 ÷ 4679 ≈ 50.2",
+    "explanation": "234567.8 ÷ 4678.9 ≈ 50.1（万千瓦时）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "789012.3 ÷ 15678.4 ≈ ?",
+    "display_text": "某省2023年全省乡村振兴累计投入789012.3万元，全省15678.4个行政村受益，平均每村投入约多少万元",
+    "correct_answer": "50.3",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：789012 ÷ 15678 ≈ 78900/1567.8 ≈ 789/15.68 ≈ 50.3",
+    "explanation": "789012.3 ÷ 15678.4 ≈ 50.3（万元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "567890.1 ÷ 11234.5 ≈ ?",
+    "display_text": "某省2023年全省城市公共交通客运量567890.1万人次，全省11234.5辆公共汽电车，平均每辆完成客运约多少万人次",
+    "correct_answer": "50.5",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：567890 ÷ 11234.5 ≈ 568000 ÷ 11235 ≈ 50.6",
+    "explanation": "567890.1 ÷ 11234.5 ≈ 50.5（万人次）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "456789.1 ÷ 9012.3 ≈ ?",
+    "display_text": "某省2023年全省区块链应用总价值456789.1万元，共9012.3个应用场景，平均每场景价值约多少万元",
+    "correct_answer": "50.7",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：456789 ÷ 9012.3 ≈ 457000 ÷ 9012 ≈ 50.7",
+    "explanation": "456789.1 ÷ 9012.3 ≈ 50.7（万元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "678901.2 ÷ 13456.7 ≈ ?",
+    "display_text": "某省2023年全省碳汇市场交易总额678901.2万元，13456.7个项目参与交易，平均每项目交易额约多少万元",
+    "correct_answer": "50.5",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：678901 ÷ 13456.7 ≈ 679000 ÷ 13457 ≈ 50.5",
+    "explanation": "678901.2 ÷ 13456.7 ≈ 50.5（万元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "901234.5 ÷ 17890.1 ≈ ?",
+    "display_text": "某省2023年全省数字人民币累计交易额901234.5万元，全省17890.1个商户接入，平均每商户交易额约多少万元",
+    "correct_answer": "50.4",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：901235 ÷ 17890.1 ≈ 901000 ÷ 17890 ≈ 50.4",
+    "explanation": "901234.5 ÷ 17890.1 ≈ 50.4（万元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "345678.9 ÷ 6890.1 ≈ ?",
+    "display_text": "某省2023年全省量子通信专利申请345678.9件，全省6890.1家相关研究机构，平均每机构申请专利约多少件",
+    "correct_answer": "50.2",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：345679 ÷ 6890.1 ≈ 346000 ÷ 6890 ≈ 50.2",
+    "explanation": "345678.9 ÷ 6890.1 ≈ 50.2（件）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "123456.7 ÷ 2456.8 ≈ ?",
+    "display_text": "某省2023年全省低碳园区建设投资123456.7万元，全省2456.8个绿色低碳项目，平均每项目投资约多少万元",
+    "correct_answer": "50.2",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：123457 ÷ 2456.8 ≈ 123500 ÷ 2457 ≈ 50.3",
+    "explanation": "123456.7 ÷ 2456.8 ≈ 50.2（万元）"
+  },
+  {
+    "calc_type": "estimate",
+    "expression": "234567.8 ÷ 4679.1 ≈ ?",
+    "display_text": "某市2023年5G基站建设总投入234567.8万元，全市4679.1座5G基站建成，平均每基站投入约多少万元",
+    "correct_answer": "50.1",
+    "tolerance": 2.0,
+    "difficulty": 3,
+    "shortcut_hint": "放缩估算：234568 ÷ 4679.1 ≈ 235000 ÷ 4679 ≈ 50.2",
+    "explanation": "234567.8 ÷ 4679.1 ≈ 50.1（万元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "5834.2 × 4.7% = ?",
+    "display_text": "某省2023年粮食总产值5834.2亿元，同比增长4.7%，求增长量（亿元）",
+    "correct_answer": "274.2",
+    "tolerance": 3.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：5834 × 4.7% ≈ 5834 × 5% - 5834 × 0.3% ≈ 292 - 18 = 274",
+    "explanation": "增长量 = 现期量 × 增长率 = 5834.2 × 4.7% ≈ 274.2（亿元）"
+  },
+  {
+    "calc_type": "percentage_change",
+    "expression": "4295.6 × 57.8% = ?",
+    "display_text": "某省2023年海洋经济产值4295.6亿元，同比增长57.8%，求增长量（亿元）",
+    "correct_answer": "2482.9",
+    "tolerance": 15.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：4296 × 57.8% ≈ 4296 × 58% - 4296 × 0.2% ≈ 2492 - 9 = 2483",
+    "explanation": "增长量 = 现期量 × 增长率 = 4295.6 × 57.8% ≈ 2482.9（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "5612.4 ÷ (1 + 8.2%) = ?",
+    "display_text": "某市2023年旅游总收入5612.4亿元，同比增长8.2%，求2022年旅游总收入（亿元）",
+    "correct_answer": "5186.1",
+    "tolerance": 8.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：5612 ÷ 1.082 ≈ 5612 × (1 - 8.2%) ≈ 5612 - 460 = 5152，修正 ≈ 5186",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 5612.4 ÷ 1.082 ≈ 5186.1（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "8934.7 ÷ (1 + 3.6%) = ?",
+    "display_text": "某省2023年城镇居民人均可支配收入8934.7元，同比增长3.6%，求2022年数据（元）",
+    "correct_answer": "8623.7",
+    "tolerance": 5.0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：8935 ÷ 1.036 ≈ 8935 × (1 - 3.6%) ≈ 8935 - 322 = 8613，修正 ≈ 8624",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 8934.7 ÷ 1.036 ≈ 8623.7（元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "4127.8 ÷ (1 + 62.3%) = ?",
+    "display_text": "某市2023年新兴产业产值4127.8亿元，同比增长62.3%，求2022年数据（亿元）",
+    "correct_answer": "2543.6",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：4128 ÷ 1.623 ≈ 4128 × (1 - 62.3% + 62.3%²) ≈ 4128 × 0.617 ≈ 2547",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 4127.8 ÷ 1.623 ≈ 2543.6（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "6892.5 ÷ (1 + 40.6%) = ?",
+    "display_text": "某市2023年氢能产业产值6892.5亿元，同比增长40.6%，求2022年数据（亿元）",
+    "correct_answer": "4900.1",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：6893 ÷ 1.406 ≈ 6893 × (1 - 40.6% + 40.6%²) ≈ 6893 × 0.711 ≈ 4901",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 6892.5 ÷ 1.406 ≈ 4900.1（亿元）"
+  },
+  {
+    "calc_type": "base_period",
+    "expression": "9456.3 ÷ (1 + 58.2%) = ?",
+    "display_text": "某省2023年高铁旅客运输量9456.3万人次，同比增长58.2%，求2022年数据（万人次）",
+    "correct_answer": "5977.4",
+    "tolerance": 10.0,
+    "difficulty": 3,
+    "shortcut_hint": "截位：9456 ÷ 1.582 ≈ 9456 ÷ 1.582，首位估算 9.456/1.582 ≈ 5.977，结果 ≈ 5977",
+    "explanation": "基期量 = 现期量 ÷ (1 + 增长率) = 9456.3 ÷ 1.582 ≈ 5977.4（万人次）"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "5432 ÷ 18765 = ?%",
+    "display_text": "某省2023年国有企业资产18765亿元，其中工业类资产5432亿元，工业类资产占比是多少",
+    "correct_answer": "28.9",
+    "tolerance": 1.5,
+    "difficulty": 2,
+    "shortcut_hint": "截位直除：5432 ÷ 18765 ≈ 543.2 ÷ 1876.5 ≈ 5.43/18.77 ≈ 28.9%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 5432 ÷ 18765 ≈ 28.9%"
+  },
+  {
+    "calc_type": "proportion",
+    "expression": "5678.1 ÷ 18923.4 = ?%",
+    "display_text": "某省2023年高速公路总里程18923.4公里，其中新建段5678.1公里，新建段占比是多少",
+    "correct_answer": "30.0",
+    "tolerance": 1.5,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：5678 ÷ 18923 ≈ 5678 ÷ 18923，取有效数字 5.68/18.92 ≈ 30.0%",
+    "explanation": "比重 = 部分量 ÷ 整体量 = 5678.1 ÷ 18923.4 ≈ 30.0%"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 2000→2600（+30%）vs B: 3000→3600（+20%）",
+    "display_text": "某省数字经济从2000亿增至2600亿，实体经济从3000亿增至3600亿，哪类增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 1,
+    "shortcut_hint": "直接比较增长率：A=30%，B=20%，A增速更快",
+    "explanation": "A增长率=30%，B增长率=20%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 6789→7468（+10%）vs B: 5432→5922（+9%）",
+    "display_text": "某市规上企业数量从6789家增至7468家，高新企业从5432家增至5922家，哪类增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：A=(7468-6789)/6789≈679/6789≈10%，B=(5922-5432)/5432≈490/5432≈9%，A更快",
+    "explanation": "A增长率≈10%，B增长率≈9%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 4321→4753（+10%）vs B: 3456→3802（+10%）",
+    "display_text": "某省城市建成区面积从4321平方公里增至4753平方公里，绿地面积从3456平方公里增至3802平方公里，哪类增速更快？",
+    "correct_answer": "C",
+    "tolerance": 0,
+    "difficulty": 2,
+    "shortcut_hint": "截位：A=(4753-4321)/4321≈432/4321≈10%，B=(3802-3456)/3456≈346/3456≈10%，相同",
+    "explanation": "A增长率≈10%，B增长率≈10%，两者增速相同（C：相同）"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 5432.1→6138.3（+13.0%）vs B: 4567.8→5183.6（+13.5%）",
+    "display_text": "某省物流业产值从5432.1亿增至6138.3亿，快递业从4567.8亿增至5183.6亿，哪类增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(6138.3-5432.1)/5432.1≈706.2/5432.1≈13.0%，B=(5183.6-4567.8)/4567.8≈615.8/4567.8≈13.5%，B更快",
+    "explanation": "A增长率≈13.0%，B增长率≈13.5%，B增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 7890.3→8876.6（+12.5%）vs B: 6543.2→7346.4（+12.3%）",
+    "display_text": "某省生产性服务业产值从7890.3亿增至8876.6亿，生活性服务业从6543.2亿增至7346.4亿，哪类增速更快？",
+    "correct_answer": "A",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(8876.6-7890.3)/7890.3≈986.3/7890.3≈12.5%，B=(7346.4-6543.2)/6543.2≈803.2/6543.2≈12.3%，A更快",
+    "explanation": "A增长率≈12.5%，B增长率≈12.3%，A增速更快"
+  },
+  {
+    "calc_type": "growth_rate_compare",
+    "expression": "A: 3456.7→3891.1（+12.57%）vs B: 2345.6→2645.4（+12.78%）",
+    "display_text": "某省科技成果转化金额从3456.7亿增至3891.1亿，科技服务业从2345.6亿增至2645.4亿，哪类增速更快？",
+    "correct_answer": "B",
+    "tolerance": 0,
+    "difficulty": 3,
+    "shortcut_hint": "截位直除：A=(3891.1-3456.7)/3456.7≈434.4/3456.7≈12.57%，B=(2645.4-2345.6)/2345.6≈299.8/2345.6≈12.78%，B更快",
+    "explanation": "A增长率≈12.57%，B增长率≈12.78%，B增速更快"
+  }
+]

@@ -61,24 +61,56 @@ class DashboardService extends ChangeNotifier {
 
     try {
       final examTypes = _examCategoryService.activeExamTypeValues;
-      final results = await Future.wait([
-        _loadTodayOverview(),
-        _loadRadarData(),
-        _loadHeatmapData(),
-        _db.queryWeeklyComparison(examTypes: examTypes.isEmpty ? null : examTypes),
-        _examService.getScoreTrend(limit: 10),
-        _db.queryStudyStreak(),
-        _db.queryOverallProgress(),
-      ]);
+      final etArg = examTypes.isEmpty ? null : examTypes;
+
+      // 各查询独立容错，任何单个失败都使用默认值，确保看板始终能渲染
+      final todayOverview = await _safeLoad(
+        () => _loadTodayOverview(),
+        fallback: const {'answeredToday': 0, 'correctToday': 0, 'streak': 0},
+        label: '今日概览',
+      );
+      final radarData = await _safeLoad(
+        () => _loadRadarData(),
+        fallback: const <String, double>{},
+        label: '雷达图',
+      );
+      final heatmapData = await _safeLoad(
+        () => _loadHeatmapData(),
+        fallback: const <DateTime, int>{},
+        label: '热力图',
+      );
+      final weekComparison = await _safeLoad(
+        () => _db.queryWeeklyComparison(examTypes: etArg),
+        fallback: <String, Map<String, dynamic>>{
+          'thisWeek': {'total': 0, 'correct': 0},
+          'lastWeek': {'total': 0, 'correct': 0},
+        },
+        label: '周对比',
+      );
+      final scoreTrend = await _safeLoad(
+        () => _examService.getScoreTrend(limit: 10),
+        fallback: const <Map<String, dynamic>>[],
+        label: '成绩趋势',
+      );
+      final studyStreak = await _safeLoad(
+        () => _db.queryStudyStreak(),
+        fallback: 0,
+        label: '连续打卡',
+      );
+      final overallProgress = await _safeLoad(
+        () => _db.queryOverallProgress(),
+        fallback: 0.0,
+        label: '备考进度',
+      );
 
       _cachedData = DashboardData(
-        todayOverview: results[0] as Map<String, dynamic>,
-        radarData: results[1] as Map<String, double>,
-        heatmapData: results[2] as Map<DateTime, int>,
-        weekComparison: results[3] as Map<String, Map<String, dynamic>>,
-        scoreTrend: results[4] as List<Map<String, dynamic>>,
-        studyStreak: results[5] as int,
-        overallProgress: results[6] as double,
+        todayOverview: todayOverview,
+        radarData: radarData,
+        heatmapData: heatmapData,
+        weekComparison: weekComparison,
+        scoreTrend: scoreTrend,
+        studyStreak: studyStreak,
+        overallProgress: overallProgress,
       );
       _cacheTime = DateTime.now();
     } catch (e) {
@@ -86,6 +118,16 @@ class DashboardService extends ChangeNotifier {
     } finally {
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  /// 安全加载：单个查询失败时返回 fallback，不影响其他查询
+  Future<T> _safeLoad<T>(Future<T> Function() loader, {required T fallback, required String label}) async {
+    try {
+      return await loader();
+    } catch (e) {
+      debugPrint('看板[$label]加载失败: $e');
+      return fallback;
     }
   }
 

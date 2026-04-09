@@ -1,0 +1,83 @@
+[
+  {
+    "question_id": 1,
+    "viz_type": "cube_fold",
+    "config": {
+      "type": "cube_fold",
+      "faces": [
+        {"position": "front", "pattern": "circle", "color": "#E53935"},
+        {"position": "top", "pattern": "triangle", "color": "#43A047"},
+        {"position": "right", "pattern": "arrow_up", "color": "#1E88E5"},
+        {"position": "back", "pattern": "cross", "color": "#FB8C00"},
+        {"position": "bottom", "pattern": "star", "color": "#8E24AA"},
+        {"position": "left", "pattern": "diamond", "color": "#00ACC1"}
+      ],
+      "fold_sequence": [0, 1, 2, 3, 4, 5],
+      "answer_rotation": {"x": 30, "y": 45, "z": 0},
+      "steps": [
+        {"face_index": -1, "description": "这是正方体的展开图，共6个面。底面（紫色星形）位于中心。"},
+        {"face_index": 0, "description": "前面（红色圆形）向上折起90度，竖立在底面前方。"},
+        {"face_index": 1, "description": "顶面（绿色三角形）继续向内折，将成为正方体的顶面。"},
+        {"face_index": 2, "description": "右面（蓝色箭头）向上折起，注意：箭头方向朝上。"},
+        {"face_index": 3, "description": "后面（橙色十字）向上折起。注意：圆形面与十字面相对，不可能同时看到。"},
+        {"face_index": 5, "description": "左面（青色菱形）向上折起，正方体折叠完成。"},
+        {"face_index": -2, "description": "旋转到答案视角。记住对面关系：圆⟷十字、三角⟷星、箭头⟷菱形。"}
+      ]
+    },
+    "solving_approach": "展开图折叠判断技巧：1）找出三组对面（不相邻的面互为对面）；2）对面不可能同时看到；3）相邻面的相对位置关系在折叠后保持不变。"
+  },
+  {
+    "question_id": 2,
+    "viz_type": "cube_fold",
+    "config": {
+      "type": "cube_fold",
+      "faces": [
+        {"position": "front", "pattern": "star", "color": "#FF6F00"},
+        {"position": "top", "pattern": "circle", "color": "#D32F2F"},
+        {"position": "right", "pattern": "diamond", "color": "#7B1FA2"},
+        {"position": "back", "pattern": "triangle", "color": "#388E3C"},
+        {"position": "bottom", "pattern": "cross", "color": "#1565C0"},
+        {"position": "left", "pattern": "arrow_up", "color": "#F57F17"}
+      ],
+      "fold_sequence": [0, 1, 2, 3, 4, 5],
+      "answer_rotation": {"x": 20, "y": -30, "z": 0},
+      "steps": [
+        {"face_index": -1, "description": "观察展开图：底面（蓝色十字）在中心位置。"},
+        {"face_index": 0, "description": "前面（橙色星形）向上折起。"},
+        {"face_index": 1, "description": "顶面（红色圆形）折向内侧，成为顶面。注意：十字与圆形是对面。"},
+        {"face_index": 2, "description": "右面（紫色菱形）向上折起。"},
+        {"face_index": 3, "description": "后面（绿色三角形）向上折起。星形与三角形是对面。"},
+        {"face_index": 5, "description": "左面（黄色箭头）向上折起，完成折叠。菱形与箭头是对面。"},
+        {"face_index": -2, "description": "旋转到答案视角。三组对面：星⟷三角、圆⟷十字、菱形⟷箭头。"}
+      ]
+    },
+    "solving_approach": "十字形展开图是最常见的类型。中心面为底面，与中心面隔一个面的面是顶面（对面）。左右两翼的面在折叠后也互为对面。"
+  },
+  {
+    "question_id": 3,
+    "viz_type": "cube_fold",
+    "config": {
+      "type": "cube_fold",
+      "faces": [
+        {"position": "front", "pattern": "arrow_up", "color": "#00897B"},
+        {"position": "top", "pattern": "cross", "color": "#C62828"},
+        {"position": "right", "pattern": "star", "color": "#AD1457"},
+        {"position": "back", "pattern": "circle", "color": "#4527A0"},
+        {"position": "bottom", "pattern": "diamond", "color": "#2E7D32"},
+        {"position": "left", "pattern": "triangle", "color": "#EF6C00"}
+      ],
+      "fold_sequence": [0, 1, 2, 3, 4, 5],
+      "answer_rotation": {"x": 25, "y": 60, "z": 0},
+      "steps": [
+        {"face_index": -1, "description": "展开图呈十字形。底面（绿色菱形）位于中心。"},
+        {"face_index": 0, "description": "前面（青色箭头）向上折起，箭头方向朝上。"},
+        {"face_index": 1, "description": "顶面（红色十字）折入，与菱形面（底面）相对。"},
+        {"face_index": 2, "description": "右面（粉色星形）向上折起。"},
+        {"face_index": 3, "description": "后面（紫色圆形）向上折起。箭头与圆形相对。"},
+        {"face_index": 5, "description": "左面（橙色三角形）折起完成。星形与三角形相对。"},
+        {"face_index": -2, "description": "旋转观察。关键：判断选项时，先排除包含对面的选项，再验证相邻面方向。"}
+      ]
+    },
+    "solving_approach": "做题步骤：①确定三组对面 ②排除同时出现对面的选项 ③对剩余选项验证相邻面的相对方向是否正确（可用"画钟法"辅助判断）。"
+  }
+]

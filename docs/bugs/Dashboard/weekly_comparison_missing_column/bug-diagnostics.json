@@ -1,0 +1,18 @@
+{
+  "collection_timestamp": "2026-04-08T00:00:00+08:00",
+  "analyze_output": "flutter analyze: No issues found",
+  "test_output": "flutter test: 54 passed",
+  "error_logs": "SQLite error: no such column: exam_type (in user_answers table when examTypes filter is applied via queryWeeklyComparison)",
+  "related_code": [
+    "lib/db/database_helper.dart:queryWeeklyComparison",
+    "lib/services/dashboard_service.dart:refreshDashboard",
+    "lib/screens/dashboard_screen.dart:Consumer<DashboardService>"
+  ],
+  "reproduction_steps": [
+    "1. Set any exam target or enter explore mode",
+    "2. Switch to Dashboard tab",
+    "3. See empty state instead of full dashboard"
+  ],
+  "bug_category": "数据库",
+  "covered_dimensions": ["现象", "复现", "范围", "证据"]
+}
