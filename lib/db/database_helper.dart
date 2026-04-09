@@ -23,7 +23,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 19,
+      version: 20,
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
     );
@@ -158,6 +158,22 @@ class DatabaseHelper {
         is_target INTEGER DEFAULT 0,
         matched_at TEXT DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (position_id) REFERENCES positions (id)
+      )
+    ''');
+
+    // 抓取源站点配置表
+    await db.execute('''
+      CREATE TABLE crawl_sources (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        province TEXT NOT NULL,
+        city TEXT,
+        base_url TEXT NOT NULL,
+        list_path TEXT NOT NULL,
+        policy_type TEXT DEFAULT 'rencaiyinjin',
+        last_crawled_at TEXT,
+        status TEXT DEFAULT 'pending',
+        enabled INTEGER DEFAULT 1
       )
     ''');
 
@@ -1433,6 +1449,24 @@ class DatabaseHelper {
 
     }
 
+    if (oldVersion < 20) {
+      // v19→v20：公告抓取源站点配置表
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS crawl_sources (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          province TEXT NOT NULL,
+          city TEXT,
+          base_url TEXT NOT NULL,
+          list_path TEXT NOT NULL,
+          policy_type TEXT DEFAULT 'rencaiyinjin',
+          last_crawled_at TEXT,
+          status TEXT DEFAULT 'pending',
+          enabled INTEGER DEFAULT 1
+        )
+      ''');
+    }
+
     // 所有表创建完毕后，统一建立索引
     await _createIndexes(db);
   }
@@ -1528,6 +1562,8 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_essay_sub_questions_filter ON essay_sub_questions(year, region, exam_type)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_teacher_answers_question ON teacher_answers(sub_question_id)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_user_composite_answers_question ON user_composite_answers(sub_question_id)');
+    // 抓取源索引
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_crawl_sources_province ON crawl_sources(province, city)');
   }
 
   // ===== questions CRUD =====
@@ -1960,6 +1996,12 @@ class DatabaseHelper {
     return await db.update('talent_policies', policy, where: 'id = ?', whereArgs: [id]);
   }
 
+  Future<Map<String, dynamic>?> queryPolicyById(int id) async {
+    final db = await database;
+    final rows = await db.query('talent_policies', where: 'id = ?', whereArgs: [id]);
+    return rows.isEmpty ? null : rows.first;
+  }
+
   Future<int> deletePolicy(int id) async {
     final db = await database;
     return await db.delete('talent_policies', where: 'id = ?', whereArgs: [id]);
@@ -2016,6 +2058,44 @@ class DatabaseHelper {
   Future<int> deleteMatchResultByPosition(int positionId) async {
     final db = await database;
     return await db.delete('match_results', where: 'position_id = ?', whereArgs: [positionId]);
+  }
+
+  // ===== crawl_sources CRUD =====
+
+  Future<int> insertCrawlSource(Map<String, dynamic> source) async {
+    final db = await database;
+    return await db.insert('crawl_sources', source);
+  }
+
+  Future<List<Map<String, dynamic>>> queryCrawlSources({String? province, bool enabledOnly = true}) async {
+    final db = await database;
+    final conditions = <String>[];
+    final args = <dynamic>[];
+    if (enabledOnly) {
+      conditions.add('enabled = 1');
+    }
+    if (province != null) {
+      conditions.add('province = ?');
+      args.add(province);
+    }
+    final where = conditions.isEmpty ? null : conditions.join(' AND ');
+    return await db.query(
+      'crawl_sources',
+      where: where,
+      whereArgs: args.isEmpty ? null : args,
+      orderBy: 'province, city',
+    );
+  }
+
+  Future<int> updateCrawlSource(int id, Map<String, dynamic> source) async {
+    final db = await database;
+    return await db.update('crawl_sources', source, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> countCrawlSources() async {
+    final db = await database;
+    final result = await db.rawQuery('SELECT COUNT(*) as cnt FROM crawl_sources');
+    return result.first['cnt'] as int;
   }
 
   // ===== exams CRUD =====

@@ -15,6 +15,7 @@ import 'package:exam_prep_app/services/dashboard_service.dart';
 import 'package:exam_prep_app/services/calendar_service.dart';
 import 'package:exam_prep_app/services/exam_category_service.dart';
 import 'package:exam_prep_app/services/real_exam_service.dart';
+import 'package:exam_prep_app/services/crawler_service.dart';
 
 void main() {
   setUpAll(() {
@@ -64,6 +65,7 @@ void main() {
           ChangeNotifierProvider.value(value: dashboardService),
           ChangeNotifierProvider.value(value: calendarService),
           ChangeNotifierProvider.value(value: assistantService),
+          ChangeNotifierProvider.value(value: CrawlerService(llmManager, matchService)),
         ],
         child: const ExamPrepApp(),
       ),

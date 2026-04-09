@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../db/database_helper.dart';
 import '../services/match_service.dart';
+import '../services/crawler_service.dart';
 import '../services/profile_service.dart';
 import '../services/exam_category_service.dart';
 import '../models/talent_policy.dart';
@@ -78,6 +79,21 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
       appBar: AppBar(
         title: const Text('岗位匹配'),
         actions: [
+          Consumer<CrawlerService>(
+            builder: (ctx, crawler, _) => IconButton(
+              icon: crawler.isCrawling
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.cloud_download),
+              tooltip: '抓取公告',
+              onPressed: crawler.isCrawling
+                  ? null
+                  : () => _showCrawlDialog(context),
+            ),
+          ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.add_link),
             tooltip: '智能获取公告',
@@ -162,6 +178,14 @@ class _PolicyMatchScreenState extends State<PolicyMatchScreen>
         SnackBar(content: Text('匹配失败：$e')),
       );
     }
+  }
+
+  void _showCrawlDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const _CrawlProgressDialog(),
+    );
   }
 
   Future<void> _showAddPolicyDialog(BuildContext context) async {
@@ -1718,5 +1742,163 @@ class _PreviewCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+/// 抓取进度对话框
+class _CrawlProgressDialog extends StatefulWidget {
+  const _CrawlProgressDialog();
+
+  @override
+  State<_CrawlProgressDialog> createState() => _CrawlProgressDialogState();
+}
+
+class _CrawlProgressDialogState extends State<_CrawlProgressDialog> {
+  String? _selectedProvince;
+  bool _started = false;
+  CrawlReport? _report;
+
+  @override
+  Widget build(BuildContext context) {
+    final crawler = context.watch<CrawlerService>();
+
+    return AlertDialog(
+      title: const Text('抓取公告'),
+      content: SizedBox(
+        width: 400,
+        child: _started ? _buildProgress(crawler) : _buildSetup(),
+      ),
+      actions: [
+        if (!_started) ...[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('取消'),
+          ),
+          FilledButton(
+            onPressed: () => _startCrawl(),
+            child: const Text('开始抓取'),
+          ),
+        ] else if (crawler.isCrawling) ...[
+          TextButton(
+            onPressed: () {
+              crawler.cancelCrawl();
+            },
+            child: const Text('停止'),
+          ),
+        ] else ...[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              // 刷新列表
+              context.read<MatchService>().loadPolicies();
+            },
+            child: const Text('关闭'),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildSetup() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '从江浙沪皖鲁五省 ${CrawlerService.totalSiteCount} 个政府人社网站抓取人才引进和事业编招聘公告。',
+          style: const TextStyle(fontSize: 13),
+        ),
+        const SizedBox(height: 16),
+        DropdownButtonFormField<String?>(
+          initialValue: _selectedProvince,
+          decoration: const InputDecoration(
+            labelText: '选择省份',
+            helperText: '留空则抓取全部五省',
+            border: OutlineInputBorder(),
+            isDense: true,
+          ),
+          items: [
+            const DropdownMenuItem<String?>(
+              value: null,
+              child: Text('全部五省'),
+            ),
+            ...CrawlerService.provinces.map((p) => DropdownMenuItem(
+              value: p,
+              child: Text('$p（${CrawlerService.getSitesByProvince(p).length}个站点）'),
+            )),
+          ],
+          onChanged: (v) => setState(() => _selectedProvince = v),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          '提示：抓取过程需要调用 AI 解析，请确保已配置 LLM。每个站点间隔 ≥2s。',
+          style: TextStyle(fontSize: 11, color: Colors.grey),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProgress(CrawlerService crawler) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        LinearProgressIndicator(
+          value: crawler.isCrawling ? crawler.progress : 1.0,
+        ),
+        const SizedBox(height: 12),
+        Text(
+          crawler.currentStatus,
+          style: const TextStyle(fontSize: 13),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          '已发现公告: ${crawler.policiesFound} 条',
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+        ),
+        if (_report != null && !crawler.isCrawling) ...[
+          const Divider(),
+          Text('成功站点: ${_report!.successSources} / ${_report!.totalSources}'),
+          Text('失败站点: ${_report!.failedSources}'),
+          Text('新增公告: ${_report!.newPolicies} 条'),
+          Text('新增岗位: ${_report!.newPositions} 个'),
+          if (_report!.errors.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            const Text('错误:', style: TextStyle(color: Colors.red, fontSize: 12)),
+            ...(_report!.errors.take(5).map((e) => Text(
+              e,
+              style: const TextStyle(fontSize: 11, color: Colors.red),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ))),
+            if (_report!.errors.length > 5)
+              Text('... 共 ${_report!.errors.length} 个错误',
+                  style: const TextStyle(fontSize: 11, color: Colors.red)),
+          ],
+        ],
+      ],
+    );
+  }
+
+  Future<void> _startCrawl() async {
+    setState(() => _started = true);
+
+    final crawler = context.read<CrawlerService>();
+
+    // 初始化站点数据到数据库
+    await crawler.initSources();
+
+    CrawlReport report;
+    if (_selectedProvince != null) {
+      report = await crawler.crawlProvince(_selectedProvince!);
+    } else {
+      report = await crawler.crawlAllProvinces();
+    }
+
+    if (mounted) {
+      setState(() => _report = report);
+    }
   }
 }

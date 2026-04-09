@@ -30,6 +30,7 @@ import 'services/visual_explanation_service.dart';
 import 'services/essay_comparison_service.dart';
 import 'services/speed_training_service.dart';
 import 'services/spatial_viz_service.dart';
+import 'services/crawler_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -110,7 +111,12 @@ void main() async {
           },
           update: (ctx, ps, lm, prev) => prev ?? MatchService(ps, lm),
         ),
-        // 7. StudyPlanService（依赖 QuestionService, LlmManager, ExamCategoryService）
+        // 7. CrawlerService（依赖 LlmManager, MatchService）
+        ChangeNotifierProxyProvider2<LlmManager, MatchService, CrawlerService>(
+          create: (ctx) => CrawlerService(ctx.read<LlmManager>(), ctx.read<MatchService>()),
+          update: (ctx, lm, ms, prev) => prev ?? CrawlerService(lm, ms),
+        ),
+        // 8. StudyPlanService（依赖 QuestionService, LlmManager, ExamCategoryService）
         ChangeNotifierProxyProvider3<QuestionService, LlmManager, ExamCategoryService, StudyPlanService>(
           create: (ctx) => StudyPlanService(ctx.read<QuestionService>(), ctx.read<LlmManager>(), ctx.read<ExamCategoryService>()),
           update: (ctx, qs, lm, ecs, prev) => prev ?? StudyPlanService(qs, lm, ecs),
