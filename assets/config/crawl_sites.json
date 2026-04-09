@@ -20,7 +20,7 @@
     "province": "江苏",
     "city": "南京",
     "base_url": "https://rsj.nanjing.gov.cn",
-    "list_path": "/njsrsj/ggtz/index.html",
+    "list_path": "/njsrlzyhshbzj/?id=xxgk_228",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -68,7 +68,7 @@
     "province": "江苏",
     "city": "南通",
     "base_url": "https://rsj.nantong.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/ntsrsj/gggs/gggs.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -84,7 +84,7 @@
     "province": "江苏",
     "city": "盐城",
     "base_url": "https://jsychrss.yancheng.gov.cn",
-    "list_path": "/jsychrss/tzgg/index.html",
+    "list_path": "/col/col3431/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -92,7 +92,7 @@
     "province": "江苏",
     "city": "徐州",
     "base_url": "https://hrss.xz.gov.cn",
-    "list_path": "/xzhrss/tzgg/index.shtml",
+    "list_path": "/001/001004/subPage.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -100,7 +100,7 @@
     "province": "江苏",
     "city": "淮安",
     "base_url": "https://rsj.huaian.gov.cn",
-    "list_path": "/harsj/tzgg/index.html",
+    "list_path": "/col/3937_835478/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -108,7 +108,7 @@
     "province": "江苏",
     "city": "连云港",
     "base_url": "http://rsj.lyg.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/hrzxzx/zhgg/zhgg.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -116,7 +116,7 @@
     "province": "江苏",
     "city": "宿迁",
     "base_url": "http://sqhrss.suqian.gov.cn",
-    "list_path": "/sqhrss/tzgg/index.html",
+    "list_path": "/rlzyj/tzgg/list.shtml",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -124,7 +124,7 @@
     "province": "浙江",
     "city": null,
     "base_url": "https://rlsbt.zj.gov.cn",
-    "list_path": "/col/col1229639379/index.html",
+    "list_path": "/col/col1229116948/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -140,7 +140,7 @@
     "province": "浙江",
     "city": "杭州",
     "base_url": "https://hrss.hangzhou.gov.cn",
-    "list_path": "/col/col1229440651/index.html",
+    "list_path": "/col/col1229125918/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -156,7 +156,7 @@
     "province": "浙江",
     "city": "温州",
     "base_url": "https://hrss.wenzhou.gov.cn",
-    "list_path": "/col/col1229398655/index.html",
+    "list_path": "/col/col1229204115/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -172,7 +172,7 @@
     "province": "浙江",
     "city": "湖州",
     "base_url": "https://hrss.huzhou.gov.cn",
-    "list_path": "/hzgov/front/s33/col/col6/index.html",
+    "list_path": "/col/col1229208337/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -188,7 +188,7 @@
     "province": "浙江",
     "city": "金华",
     "base_url": "http://rsj.jinhua.gov.cn",
-    "list_path": "/col/col69914/index.html",
+    "list_path": "/col/col1229164938/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -196,7 +196,7 @@
     "province": "浙江",
     "city": "衢州",
     "base_url": "http://rsj.qz.gov.cn",
-    "list_path": "/col/col1229091574/index.html",
+    "list_path": "/col/col1229850746/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -204,7 +204,7 @@
     "province": "浙江",
     "city": "舟山",
     "base_url": "https://zsrls.zhoushan.gov.cn",
-    "list_path": "/col/col1229284979/index.html",
+    "list_path": "/col/col1664873/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -212,7 +212,7 @@
     "province": "浙江",
     "city": "台州",
     "base_url": "https://rsj.zjtz.gov.cn",
-    "list_path": "/col/col1229396688/index.html",
+    "list_path": "/col/col1229045927/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -220,7 +220,7 @@
     "province": "浙江",
     "city": "丽水",
     "base_url": "http://rsj.lishui.gov.cn",
-    "list_path": "/col/col1229330697/index.html",
+    "list_path": "/col/col1229275321/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -240,11 +240,11 @@
     "policy_type": "shiyebian"
   },
   {
-    "name": "21世纪人才网",
+    "name": "上海市人社局事业单位招聘",
     "province": "上海",
     "city": null,
-    "base_url": "http://www.21cnhr.gov.cn",
-    "list_path": "/sydwzp/index.html",
+    "base_url": "https://rsj.sh.gov.cn",
+    "list_path": "/tzpgg_17408/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -268,7 +268,9 @@
     "province": "安徽",
     "city": "合肥",
     "base_url": "http://rsj.hefei.gov.cn",
-    "list_path": "/xxfb/tzgg/index.html",
+    "list_path": "/zxzx/tzgg/index.html",
+    "enabled": false,
+    "disabled_reason": "网站启用Cloudflare防护，持续返回521错误，无法正常爬取",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -276,15 +278,15 @@
     "province": "安徽",
     "city": "芜湖",
     "base_url": "https://rsj.wuhu.gov.cn",
-    "list_path": "/zwgk/tzgg/index.html",
+    "list_path": "/xwzx/tzgg/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
     "name": "蚌埠市人力资源和社会保障局",
     "province": "安徽",
     "city": "蚌埠",
-    "base_url": "http://rsj.bengbu.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "base_url": "https://rsj.bengbu.gov.cn",
+    "list_path": "/xwdt/tzgg/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -292,7 +294,7 @@
     "province": "安徽",
     "city": "淮南",
     "base_url": "https://rsj.huainan.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/gzqk/tzgg/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -300,7 +302,7 @@
     "province": "安徽",
     "city": "马鞍山",
     "base_url": "https://rsj.mas.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/xxfb/tzgg/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -308,7 +310,7 @@
     "province": "安徽",
     "city": "淮北",
     "base_url": "https://rsj.huaibei.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/gggs/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -332,7 +334,7 @@
     "province": "安徽",
     "city": "黄山",
     "base_url": "https://rsj.huangshan.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/tzgg/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -340,7 +342,7 @@
     "province": "安徽",
     "city": "阜阳",
     "base_url": "http://rsj.fy.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/Content/showList/7/page_1.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -348,7 +350,7 @@
     "province": "安徽",
     "city": "宿州",
     "base_url": "https://rsj.ahsz.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/xwzx/tzgg/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -356,7 +358,7 @@
     "province": "安徽",
     "city": "滁州",
     "base_url": "https://rsj.chuzhou.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/gsgg/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -380,7 +382,7 @@
     "province": "安徽",
     "city": "池州",
     "base_url": "https://czsrsj.chizhou.gov.cn",
-    "list_path": "/czsrsj/tzgg/index.html",
+    "list_path": "/News/showList/2464/page_1.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -388,7 +390,7 @@
     "province": "安徽",
     "city": "宣城",
     "base_url": "https://rsj.xuancheng.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/News/showList/3710/page_1.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -396,7 +398,7 @@
     "province": "山东",
     "city": null,
     "base_url": "http://hrss.shandong.gov.cn",
-    "list_path": "/channels/ch03577/",
+    "list_path": "/channels/ch00586/",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -420,7 +422,7 @@
     "province": "山东",
     "city": "青岛",
     "base_url": "https://hrss.qingdao.gov.cn",
-    "list_path": "/n32561948/index.html",
+    "list_path": "/zxzx_47/tzgg_47/index.shtml",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -436,7 +438,7 @@
     "province": "山东",
     "city": "潍坊",
     "base_url": "http://rsj.weifang.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/rsjzxzx/rsjtzgg/",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -452,7 +454,7 @@
     "province": "山东",
     "city": "济宁",
     "base_url": "http://hrss.jining.gov.cn",
-    "list_path": "/col/col25917/index.html",
+    "list_path": "/col/col15073/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -468,7 +470,7 @@
     "province": "山东",
     "city": "泰安",
     "base_url": "https://rsj.taian.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/col/col47929/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -476,7 +478,7 @@
     "province": "山东",
     "city": "威海",
     "base_url": "https://rsj.weihai.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "list_path": "/col/col45565/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -484,47 +486,47 @@
     "province": "山东",
     "city": "日照",
     "base_url": "http://hrss.rizhao.gov.cn",
-    "list_path": "/col/col15629/index.html",
+    "list_path": "/col/col33220/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
     "name": "德州市人力资源和社会保障局",
     "province": "山东",
     "city": "德州",
-    "base_url": "http://rsj.dezhou.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "base_url": "http://hrss.dezhou.gov.cn",
+    "list_path": "/n49548047/n49548127/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
     "name": "聊城市人力资源和社会保障局",
     "province": "山东",
     "city": "聊城",
-    "base_url": "http://rsj.liaocheng.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "base_url": "http://sdlc12333.com",
+    "list_path": "/web/class?cid=1019",
     "policy_type": "rencaiyinjin"
   },
   {
     "name": "滨州市人力资源和社会保障局",
     "province": "山东",
     "city": "滨州",
-    "base_url": "http://rsj.binzhou.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "base_url": "http://rs.binzhou.gov.cn",
+    "list_path": "/col/col120545/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
     "name": "菏泽市人力资源和社会保障局",
     "province": "山东",
     "city": "菏泽",
-    "base_url": "http://rsj.heze.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "base_url": "http://hzrsj.heze.gov.cn",
+    "list_path": "/col/col120190/",
     "policy_type": "rencaiyinjin"
   },
   {
     "name": "东营市人力资源和社会保障局",
     "province": "山东",
     "city": "东营",
-    "base_url": "http://rsj.dongying.gov.cn",
-    "list_path": "/rsj/tzgg/index.html",
+    "base_url": "http://dylss.dongying.gov.cn",
+    "list_path": "/col/col39508/index.html",
     "policy_type": "rencaiyinjin"
   },
   {
@@ -532,7 +534,7 @@
     "province": "山东",
     "city": "枣庄",
     "base_url": "http://zzhrss.zaozhuang.gov.cn",
-    "list_path": "/zzhrss/tzgg/index.html",
+    "list_path": "/ywdt/tzgg/",
     "policy_type": "rencaiyinjin"
   }
 ]
