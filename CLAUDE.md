@@ -63,6 +63,7 @@ screens (32) → services (33) → db/models (38表 + 38模型)
 - **数据库**: 表结构变更通过 `database_helper.dart` 的版本迁移，禁止手动删库
 - **LLM 调用**: 所有 AI 场景通过 `LlmManager.chat()` 调用，不直接耦合具体模型
 - **API Key 安全**: 用户 API Key 通过 `flutter_secure_storage` 或等效加密方案存储，禁止明文存储或日志输出
+- **提交推送**: 改动完成后，必须提交代码并推送到远程仓库（`git@github.com:junpfeng/GKGB.git`）
 
 ## 常见操作
 
