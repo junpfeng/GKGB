@@ -1,9 +1,33 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="TjVKa84YTS8DDpujgxdv">
-    <mxGraphModel>
+    <mxGraphModel dx="772" dy="1102" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="Mv8ugUtpiIwvDlgzU_Km-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=15;" value="起止框" vertex="1">
+          <mxGeometry height="60" width="120" x="190" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="Mv8ugUtpiIwvDlgzU_Km-2" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=15;" value="输入输出框" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="Mv8ugUtpiIwvDlgzU_Km-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;" value="处理框" vertex="1">
+          <mxGeometry height="60" width="120" x="260" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="Mv8ugUtpiIwvDlgzU_Km-5" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontSize=15;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="450" y="440" as="sourcePoint" />
+            <mxPoint x="500" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Mv8ugUtpiIwvDlgzU_Km-6" parent="1" style="html=1;whiteSpace=wrap;aspect=fixed;shape=isoRectangle;fontSize=15;" value="判断框" vertex="1">
+          <mxGeometry height="81" width="135" x="510" y="289.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Mv8ugUtpiIwvDlgzU_Km-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=15;" value="流程线" vertex="1">
+          <mxGeometry height="30" width="60" x="510" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="Mv8ugUtpiIwvDlgzU_Km-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="连接点" vertex="1">
+          <mxGeometry height="50" width="50" x="389" y="470" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
