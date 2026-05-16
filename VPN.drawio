@@ -1,9 +1,79 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="x75mBBePGTJKtWfh-TEs">
-    <mxGraphModel>
+    <mxGraphModel dx="532" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="源IP" vertex="1">
+          <mxGeometry height="30" width="60" x="110" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-8" edge="1" parent="1" source="bX55yH_OHmuiz4Lmo6q1-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="bX55yH_OHmuiz4Lmo6q1-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-4" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/laptop_client.svg;" value="" vertex="1">
+          <mxGeometry height="50" width="45" x="110" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-6" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/generic_server.svg;" value="" vertex="1">
+          <mxGeometry height="50" width="28.000000000000004" x="416" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="目标IP" vertex="1">
+          <mxGeometry height="30" width="60" x="400" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="正常通信，源IP和目标IP必然同时&lt;div&gt;暴露在公网&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="178" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-10" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/laptop_client.svg;" value="" vertex="1">
+          <mxGeometry height="50" width="45" x="118" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-11" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/generic_server.svg;" value="" vertex="1">
+          <mxGeometry height="50" width="28.000000000000004" x="270" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-12" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/generic_server.svg;" value="" vertex="1">
+          <mxGeometry height="50" width="28.000000000000004" x="416" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-13" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="源IP" vertex="1">
+          <mxGeometry height="30" width="60" x="118" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="VPN服务器" vertex="1">
+          <mxGeometry height="30" width="66" x="251" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-15" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="目标服务器" vertex="1">
+          <mxGeometry height="30" width="80" x="390" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="目标IP" vertex="1">
+          <mxGeometry height="30" width="60" x="400" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-17" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="VPN IP" vertex="1">
+          <mxGeometry height="30" width="60" x="254" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-20" edge="1" parent="1" source="bX55yH_OHmuiz4Lmo6q1-11" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="bX55yH_OHmuiz4Lmo6q1-12" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="310" y="450" as="sourcePoint" />
+            <mxPoint x="424" y="542" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-25" connectable="0" parent="bX55yH_OHmuiz4Lmo6q1-20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="正常网络" vertex="1">
+          <mxGeometry relative="1" x="-0.0706" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-21" edge="1" parent="1" source="bX55yH_OHmuiz4Lmo6q1-10" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" target="bX55yH_OHmuiz4Lmo6q1-11" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="50" y="550" as="sourcePoint" />
+            <mxPoint x="100" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-24" connectable="0" parent="bX55yH_OHmuiz4Lmo6q1-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="加密隧道" vertex="1">
+          <mxGeometry relative="1" x="-0.2225" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-26" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="暴露了VPN的IP和目标IP" vertex="1">
+          <mxGeometry height="30" width="140" x="298" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="bX55yH_OHmuiz4Lmo6q1-27" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="暴露了源IP和VPN IP" vertex="1">
+          <mxGeometry height="30" width="117" x="163" y="320" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
