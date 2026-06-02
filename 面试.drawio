@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="q7nh2H4dNFJDwA8JAoQh">
-    <mxGraphModel dx="856" dy="1574" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1273" dy="1574" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -549,6 +549,9 @@
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-198" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="111" vertex="1">
           <mxGeometry height="30" width="60" x="2402" y="1782.88" as="geometry" />
         </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-242" edge="1" parent="1" source="WZ7CzRqIMZjIEVyAvSS3-199" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="WZ7CzRqIMZjIEVyAvSS3-241" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-199" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="公基（公共基础知识）" vertex="1">
           <mxGeometry height="60" width="120" x="270" y="1959.88" as="geometry" />
         </mxCell>
@@ -579,16 +582,28 @@
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-208" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="科学" vertex="1">
           <mxGeometry height="60" width="120" x="650" y="2097" as="geometry" />
         </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-231" edge="1" parent="1" source="WZ7CzRqIMZjIEVyAvSS3-209" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="WZ7CzRqIMZjIEVyAvSS3-230" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-209" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="言语" vertex="1">
           <mxGeometry height="60" width="120" x="479" y="2360" as="geometry" />
         </mxCell>
-        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-210" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="判断" vertex="1">
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-233" edge="1" parent="1" source="WZ7CzRqIMZjIEVyAvSS3-210" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="WZ7CzRqIMZjIEVyAvSS3-232" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-210" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="判断推理" vertex="1">
           <mxGeometry height="60" width="120" x="479" y="2449.88" as="geometry" />
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-235" edge="1" parent="1" source="WZ7CzRqIMZjIEVyAvSS3-211" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="WZ7CzRqIMZjIEVyAvSS3-234" value="">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-211" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="数量" vertex="1">
           <mxGeometry height="60" width="120" x="479" y="2527" as="geometry" />
         </mxCell>
-        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-212" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="资料" vertex="1">
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-237" edge="1" parent="1" source="WZ7CzRqIMZjIEVyAvSS3-212" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="WZ7CzRqIMZjIEVyAvSS3-236" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-212" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="资料分析" vertex="1">
           <mxGeometry height="60" width="120" x="479" y="2610" as="geometry" />
         </mxCell>
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-213" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="法律" vertex="1">
@@ -686,6 +701,27 @@
             <mxPoint x="580" y="2320" as="sourcePoint" />
             <mxPoint x="630" y="2270" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-230" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;葛欣&lt;/div&gt;阿里木江" vertex="1">
+          <mxGeometry height="60" width="120" x="679" y="2360" as="geometry" />
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-232" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;聂佳&lt;/div&gt;&lt;div&gt;龙飞&lt;/div&gt;&lt;div&gt;江砚&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="679" y="2449.88" as="geometry" />
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-234" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="齐麟&lt;div&gt;灰兔&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="679" y="2527" as="geometry" />
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-236" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="高照&lt;div&gt;花生&lt;/div&gt;&lt;div&gt;陈怀安&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="679" y="2610" as="geometry" />
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-238" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="只做真题，江苏近5年的事考和省考" vertex="1">
+          <mxGeometry height="30" width="200" x="880" y="2320" as="geometry" />
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-239" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="这部分真的凭常识，复习优先级不高" vertex="1">
+          <mxGeometry height="33" width="220" x="310" y="2187" as="geometry" />
+        </mxCell>
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-241" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="李梦娇" vertex="1">
+          <mxGeometry height="60" width="120" x="440" y="1959.88" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
