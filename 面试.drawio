@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="q7nh2H4dNFJDwA8JAoQh">
-    <mxGraphModel dx="785" dy="1102" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="748" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -665,7 +665,7 @@
           <mxGeometry height="30" width="200" x="880" y="2320" as="geometry" />
         </mxCell>
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-239" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="这部分真的凭常识，复习优先级不高" vertex="1">
-          <mxGeometry height="33" width="220" x="310" y="2187" as="geometry" />
+          <mxGeometry height="33" width="220" x="230" y="2113.5" as="geometry" />
         </mxCell>
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-241" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="李梦娇" vertex="1">
           <mxGeometry height="60" width="120" x="440" y="1959.88" as="geometry" />
