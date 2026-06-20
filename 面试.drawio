@@ -837,14 +837,14 @@
         <mxCell id="7VxsyDUOUG0ip1iRfFXI-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=20;" value="交叉" vertex="1">
           <mxGeometry height="30" width="60" x="-60" y="3507" as="geometry" />
         </mxCell>
-        <mxCell id="7VxsyDUOUG0ip1iRfFXI-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="职业教育" vertex="1">
+        <mxCell id="7VxsyDUOUG0ip1iRfFXI-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="职业教育/职业教育法" vertex="1">
           <mxGeometry height="60" width="120" x="480" y="2760" as="geometry" />
         </mxCell>
-        <mxCell id="7VxsyDUOUG0ip1iRfFXI-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教育学" vertex="1">
-          <mxGeometry height="60" width="120" x="480" y="2850" as="geometry" />
+        <mxCell id="7VxsyDUOUG0ip1iRfFXI-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="高等教育学" vertex="1">
+          <mxGeometry height="60" width="120" x="480" y="2830" as="geometry" />
         </mxCell>
-        <mxCell id="7VxsyDUOUG0ip1iRfFXI-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="心理学" vertex="1">
-          <mxGeometry height="60" width="120" x="479" y="2950" as="geometry" />
+        <mxCell id="7VxsyDUOUG0ip1iRfFXI-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="高等教育心理学" vertex="1">
+          <mxGeometry height="60" width="120" x="479" y="2920" as="geometry" />
         </mxCell>
         <mxCell id="7VxsyDUOUG0ip1iRfFXI-24" edge="1" parent="1" source="WZ7CzRqIMZjIEVyAvSS3-202" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" target="7VxsyDUOUG0ip1iRfFXI-21" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
