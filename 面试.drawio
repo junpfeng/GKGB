@@ -843,6 +843,27 @@
         <mxCell id="7VxsyDUOUG0ip1iRfFXI-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教育学" vertex="1">
           <mxGeometry height="60" width="120" x="480" y="2850" as="geometry" />
         </mxCell>
+        <mxCell id="7VxsyDUOUG0ip1iRfFXI-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="心理学" vertex="1">
+          <mxGeometry height="60" width="120" x="479" y="2950" as="geometry" />
+        </mxCell>
+        <mxCell id="7VxsyDUOUG0ip1iRfFXI-24" edge="1" parent="1" source="WZ7CzRqIMZjIEVyAvSS3-202" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" target="7VxsyDUOUG0ip1iRfFXI-21" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="350" y="2790" as="sourcePoint" />
+            <mxPoint x="400" y="2740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7VxsyDUOUG0ip1iRfFXI-25" edge="1" parent="1" source="WZ7CzRqIMZjIEVyAvSS3-202" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="7VxsyDUOUG0ip1iRfFXI-22" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="400" y="2990" as="sourcePoint" />
+            <mxPoint x="450" y="2940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7VxsyDUOUG0ip1iRfFXI-26" edge="1" parent="1" source="WZ7CzRqIMZjIEVyAvSS3-202" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=1;exitDx=0;exitDy=0;" target="7VxsyDUOUG0ip1iRfFXI-23" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="400" y="3020" as="sourcePoint" />
+            <mxPoint x="450" y="2970" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
