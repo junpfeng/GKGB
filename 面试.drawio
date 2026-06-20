@@ -840,6 +840,9 @@
         <mxCell id="7VxsyDUOUG0ip1iRfFXI-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="职业教育" vertex="1">
           <mxGeometry height="60" width="120" x="480" y="2760" as="geometry" />
         </mxCell>
+        <mxCell id="7VxsyDUOUG0ip1iRfFXI-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教育学" vertex="1">
+          <mxGeometry height="60" width="120" x="480" y="2850" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
