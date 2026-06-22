@@ -508,7 +508,7 @@
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-201" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="综合知识和能力素质" vertex="1">
           <mxGeometry height="60" width="120" x="59" y="2360" as="geometry" />
         </mxCell>
-        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-202" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教综（教学基础知识）" vertex="1">
+        <mxCell id="WZ7CzRqIMZjIEVyAvSS3-202" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教综（教学综合知识）" vertex="1">
           <mxGeometry height="60" width="120" x="270" y="2830" as="geometry" />
         </mxCell>
         <mxCell id="WZ7CzRqIMZjIEVyAvSS3-203" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="专业知识" vertex="1">
