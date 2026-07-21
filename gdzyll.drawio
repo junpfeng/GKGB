@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="B6tJuSRjG2tVTe5BHy2S">
-    <mxGraphModel dx="2108" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2467" dy="1160" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -215,19 +215,16 @@
         <mxCell id="Sspnw460WEY0gJR3UPId-84" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="四大流派：&lt;div&gt;行为、认知、建构、人本&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="150" x="-213" y="1615" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-103" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-102" value="">
+        <mxCell id="Sspnw460WEY0gJR3UPId-129" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-128" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-105" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-104" value="">
+        <mxCell id="Sspnw460WEY0gJR3UPId-131" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-130" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-107" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-106" value="">
+        <mxCell id="Sspnw460WEY0gJR3UPId-133" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-132" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-126" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-125" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-85" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="四大动机理论" vertex="1">
+        <mxCell id="Sspnw460WEY0gJR3UPId-85" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="三大动机理论" vertex="1">
           <mxGeometry height="60" width="120" x="-790" y="1615" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-101" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-86" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-100" value="">
@@ -264,13 +261,13 @@
           <mxGeometry height="60" width="120" x="-482.5" y="1260" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-102" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="马斯洛需求理论&lt;div&gt;缺失与自我实现&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-1020" y="1430" as="geometry" />
+          <mxGeometry height="60" width="120" x="-1230" y="1890" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-104" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="韦纳归因理论&lt;div&gt;可控内因，动机最强&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-1020" y="1814" as="geometry" />
+          <mxGeometry height="60" width="120" x="-1350" y="1570" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-106" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="耶克斯-多德森定律&lt;div&gt;倒U&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-1130" y="1510" as="geometry" />
+          <mxGeometry height="60" width="120" x="-1230" y="1310" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-108" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教学效能" vertex="1">
           <mxGeometry height="60" width="120" x="-520" y="2060" as="geometry" />
@@ -297,10 +294,28 @@
           <mxGeometry height="60" width="120" x="-790" y="2150" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-124" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="大学生心理特征：&lt;div&gt;18-25岁：心理半成熟&lt;/div&gt;&lt;div&gt;认知发展核心标志：形式逻辑向辩证逻辑占主导发展&lt;/div&gt;&lt;div&gt;自我意识：独立、尊重、自我同一性探索强烈&lt;/div&gt;&lt;div&gt;情绪情感：丰富但不稳定；人际交往需求强；恋爱与性心理凸显&lt;/div&gt;&lt;div&gt;00后：数字原住民、价值多元、个性鲜明、网络依赖强、现实感与抗挫力需关注&lt;/div&gt;" vertex="1">
-          <mxGeometry height="110" width="440" x="-1600" y="1440" as="geometry" />
+          <mxGeometry height="110" width="440" x="-1500" y="1120" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-125" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="班杜拉效能：&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-1130" y="1694" as="geometry" />
+          <mxGeometry height="60" width="120" x="-1350" y="1644" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-128" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="行为主义" vertex="1">
+          <mxGeometry height="60" width="120" x="-1010" y="1430" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-134" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-130" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-102">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-130" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="人本主义" vertex="1">
+          <mxGeometry height="60" width="120" x="-1010" y="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-135" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-132" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-104">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-136" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-132" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-125">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-132" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="传统认知派" vertex="1">
+          <mxGeometry height="60" width="120" x="-1140" y="1615" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
