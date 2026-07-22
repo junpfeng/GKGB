@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="B6tJuSRjG2tVTe5BHy2S">
-    <mxGraphModel dx="4814" dy="1697" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="7451" dy="3787" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -152,12 +152,6 @@
         <mxCell id="Sspnw460WEY0gJR3UPId-87" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-84">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-88" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-85">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-89" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-86">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-77" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="心理学" vertex="1">
           <mxGeometry height="60" width="165" x="-505" y="1615" as="geometry" />
         </mxCell>
@@ -176,65 +170,44 @@
         <mxCell id="Sspnw460WEY0gJR3UPId-80" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="法规" vertex="1">
           <mxGeometry height="59" width="110" x="2810" y="1540" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-117" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-116" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-119" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-118" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-121" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-120" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-123" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-122" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-82" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="学生心理健康教育" vertex="1">
           <mxGeometry height="60" width="120" x="-1190" y="1940" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-109" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-83" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-108" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-111" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-83" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-110" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-113" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-83" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-112" value="">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-83" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教师心理" vertex="1">
           <mxGeometry height="60" width="120" y="2170" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-93" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-84" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-92" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-95" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-84" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-94" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-97" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-84" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-96" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-99" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-84" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-98" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-84" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="四大流派：&lt;div&gt;行为、认知、建构、人本&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="150" x="-213" y="1615" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-129" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-128" value="">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-129" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-231" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-128" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-860" y="1485.04347826087" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-131" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-130" value="">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-131" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-231" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-130" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-860" y="1485.04347826087" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-133" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-132" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-85" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="三大动机理论" vertex="1">
-          <mxGeometry height="60" width="120" x="-790" y="1615" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-133" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-231" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-132" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-860" y="1485" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-101" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-86" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-100" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-86" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="心理发展" vertex="1">
-          <mxGeometry height="60" width="120" x="-482.5" y="1400" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-86" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="心理发展成熟标志" vertex="1">
+          <mxGeometry height="60" width="120" x="-275" y="1409" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-90" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-77" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;exitX=0.768;exitY=0.941;exitDx=0;exitDy=0;exitPerimeter=0;" target="Sspnw460WEY0gJR3UPId-83" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
@@ -248,62 +221,41 @@
             <mxPoint x="-440" y="1790" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-92" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="行为主义" vertex="1">
-          <mxGeometry height="60" width="150" x="-20" y="1410" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-94" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="认知主义" vertex="1">
-          <mxGeometry height="60" width="150" x="27.5" y="1500" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-96" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="建构主义" vertex="1">
-          <mxGeometry height="60" width="120" x="-5" y="1850" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-98" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="人本主义" vertex="1">
-          <mxGeometry height="60" width="150" x="27.5" y="1740" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-94" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;table style=&quot;border-collapse: collapse; width: 784px;&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;流派&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;代表人物&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;核心观点&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;学习实质&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;典型理论 / 实验&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;教育启示&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;行为主义&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;华生、斯金纳、班杜拉、桑代克&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;❌排斥内部心理&lt;div&gt;&lt;/div&gt;✅&lt;strong class=&quot;container-nB6Z1e&quot;&gt;学习 = 刺激与反应 (S-R) 建立联结&lt;/strong&gt;，看重外部环境、可观测行为；强化塑造行为&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;形成刺激 - 反应联结&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;桑代克试误说&lt;div&gt;&lt;/div&gt;斯金纳操作性条件反射&lt;div&gt;&lt;/div&gt;班杜拉观察学习（自我效能感）&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;多用奖励、强化；及时反馈；树立榜样；控制外部环境塑造行为&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;认知主义&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;苛勒、布鲁纳、奥苏贝尔、加涅&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;重视大脑内部认知过程，&lt;strong class=&quot;container-nB6Z1e&quot;&gt;学习不是被动刺激反应，是主动加工信息&lt;/strong&gt;；关注知觉、记忆、思维、理解&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;主动构建认知结构、信息加工&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;苛勒顿悟说&lt;div&gt;&lt;/div&gt;布鲁纳发现学习&lt;div&gt;&lt;/div&gt;奥苏贝尔有意义接受学习&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;重视知识逻辑结构；提倡理解学习，反对机械死记硬背&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;建构主义&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;皮亚杰、维果茨基&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;知识不是客观真理，&lt;strong class=&quot;container-nB6Z1e&quot;&gt;学习者基于原有经验主动建构知识&lt;/strong&gt;；情境性、社会互动重要；没有绝对标准答案&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;在原有经验基础上主动建构意义&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;皮亚杰认知发展理论&lt;div&gt;&lt;/div&gt;维果茨基最近发展区&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;以学生为主体；创设问题情境；小组合作探究；重视学生已有经验&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;人本主义&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;马斯洛、罗杰斯&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;以完整的 “人” 为中心；&lt;strong class=&quot;container-nB6Z1e&quot;&gt;重视情感、需要、自尊、自我实现&lt;/strong&gt;；强调无条件积极关注&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;人的潜能自我实现，追求完整人格&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;马斯洛需求层次&lt;div&gt;&lt;/div&gt;罗杰斯非指导性教学&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;营造安全包容课堂；尊重学生；关注情绪与内在动机；学生自主选择学习内容&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="396" width="820" x="140" y="1447" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-100" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="形式逻辑思维到&lt;div&gt;辩证逻辑思维&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-482.5" y="1260" as="geometry" />
+          <mxGeometry height="60" width="120" x="-275" y="1230" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-102" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="马斯洛需求理论&lt;div&gt;缺失与自我实现&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-1350" y="1724" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-236" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-104" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-235" value="">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-104" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="韦纳归因理论&lt;div&gt;可控内因，动机最强&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-1350" y="1570" as="geometry" />
+          <mxGeometry height="60" width="120" x="-1520" y="1372" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-108" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教学效能" vertex="1">
-          <mxGeometry height="60" width="120" x="-200" y="2390" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-260" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-118" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-259" value="">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-110" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="罗森塔尔效应" vertex="1">
-          <mxGeometry height="60" width="120" y="2390" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-118" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;是什么：&lt;/div&gt;&lt;div&gt;心理健康标准是什么&lt;/div&gt;常见心理问题是什么&lt;div&gt;为什么：&lt;div&gt;大学生心理特点&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="120" x="-1580" y="1940" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-112" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="职业倦态" vertex="1">
-          <mxGeometry height="60" width="120" x="200" y="2390" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-120" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="怎么做：&lt;div&gt;干预原则和体系&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="-1370" y="2050" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-116" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="心理健康标注" vertex="1">
-          <mxGeometry height="60" width="120" x="-1440" y="2150" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-238" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-125" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-237" value="">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-118" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="常见问题" vertex="1">
-          <mxGeometry height="60" width="120" x="-1440" y="2240" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-120" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="危机干预原则" vertex="1">
-          <mxGeometry height="60" width="120" x="-1440" y="2330" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-122" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="新增热点" vertex="1">
-          <mxGeometry height="60" width="120" x="-1290" y="2330" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-124" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="大学生心理特征：&lt;div&gt;18-25岁：心理半成熟&lt;/div&gt;&lt;div&gt;认知发展核心标志：形式逻辑向辩证逻辑占主导发展&lt;/div&gt;&lt;div&gt;自我意识：独立、尊重、自我同一性探索强烈&lt;/div&gt;&lt;div&gt;情绪情感：丰富但不稳定；人际交往需求强；恋爱与性心理凸显&lt;/div&gt;&lt;div&gt;00后：数字原住民、价值多元、个性鲜明、网络依赖强、现实感与抗挫力需关注&lt;/div&gt;" vertex="1">
-          <mxGeometry height="110" width="440" x="-1500" y="1120" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-125" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="班杜拉：&lt;div&gt;自我效能&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-1350" y="1644" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-125" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="班杜拉：&lt;div&gt;自我效能：&lt;/div&gt;&lt;div&gt;个体对于自己能否成功的判断&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="-1560" y="1446" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-147" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-128" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-146" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-128" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="动机效率规律" vertex="1">
-          <mxGeometry height="60" width="120" x="-1010" y="1430" as="geometry" />
+          <mxGeometry height="60" width="120" x="-1080" y="1270" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-130" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="人本主义" vertex="1">
-          <mxGeometry height="60" width="120" x="-1010" y="1800" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-130" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="人本主义&lt;div&gt;马斯洛需求理论&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="-1080" y="1640" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-135" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-132" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-104">
           <mxGeometry relative="1" as="geometry" />
@@ -312,19 +264,21 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-132" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="认知主义" vertex="1">
-          <mxGeometry height="60" width="120" x="-1140" y="1615" as="geometry" />
+          <mxGeometry height="60" width="120" x="-1310" y="1417" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-142" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="人本主义" vertex="1">
-          <mxGeometry height="60" width="120" x="-1570" y="2270" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-143" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="认知主义" vertex="1">
-          <mxGeometry height="60" width="120" x="-1570" y="2348" as="geometry" />
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-145" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-130" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.001;entryY=0.429;entryDx=0;entryDy=0;entryPerimeter=0;" target="Sspnw460WEY0gJR3UPId-102">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-145" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-130" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-233">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-1299.88" y="1669.7400000000002" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-146" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="耶克斯-多德森&lt;div&gt;倒U型曲线&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-1350" y="1430" as="geometry" />
+          <mxGeometry height="60" width="120" x="-1420" y="1270" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-245" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-148" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-150">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-246" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-148" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-152">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-148" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="知识、技能迁移" vertex="1">
           <mxGeometry height="60" width="120" x="-1410" y="2590" as="geometry" />
@@ -335,29 +289,29 @@
             <mxPoint x="-340" y="1850" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-150" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="知识" vertex="1">
-          <mxGeometry height="60" width="120" x="-1630" y="2684" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-150" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="知识：&lt;div&gt;是什么+为什么：&lt;/div&gt;&lt;div&gt;陈述性知识&lt;/div&gt;&lt;div&gt;怎么做：&lt;/div&gt;&lt;div&gt;程序性知识&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="100" x="-1610" y="2580" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-151" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="技能" vertex="1">
-          <mxGeometry height="60" width="120" x="-1420" y="2744" as="geometry" />
+          <mxGeometry height="40" width="50" x="-1375" y="2684" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-152" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="学习迁移" vertex="1">
-          <mxGeometry height="60" width="120" x="-1203" y="2684" as="geometry" />
+          <mxGeometry height="60" width="120" x="-1160" y="2590" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-153" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="迁移学习理论" vertex="1">
-          <mxGeometry height="60" width="120" x="-1190" y="2863" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-153" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="学习迁移分类" vertex="1">
+          <mxGeometry height="60" width="120" x="-1160" y="2770" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-154" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="品德心理发展" vertex="1">
           <mxGeometry height="60" width="120" x="-590" y="2200" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-155" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="皮亚杰道德发展理论" vertex="1">
-          <mxGeometry height="60" width="120" x="-775" y="2338" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-155" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="皮亚杰道德发展理论：&lt;div&gt;前道德（0-5岁）：无规则&lt;/div&gt;&lt;div&gt;他律道德（5-10岁）：服从权威、规则&lt;/div&gt;&lt;div&gt;自律道德：尊重平等，重视行为动机&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="205" x="-860" y="2338" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-156" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="科尔伯格三水平六阶段" vertex="1">
-          <mxGeometry height="60" width="120" x="-590" y="2370" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-156" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="科尔伯格三水平六阶段：&lt;div&gt;前习俗水平：从避免惩罚到寻求功利&lt;/div&gt;&lt;div&gt;习俗水平：寻求认可到遵纪守法&lt;/div&gt;&lt;div&gt;后习俗水平：社会伦理道德规范&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="-860" y="2470" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-157" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="品德发展核心规律" vertex="1">
-          <mxGeometry height="60" width="120" x="-410" y="2338" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-157" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="品德发展核心规律：&lt;div&gt;从他律走向自律&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="-360" y="2338" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-158" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-154" style="endArrow=classic;html=1;rounded=0;exitX=-0.024;exitY=0.886;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-155" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
@@ -377,22 +331,10 @@
             <mxPoint x="-380" y="2270" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-161" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-148" style="endArrow=classic;html=1;rounded=0;exitX=0.006;exitY=0.609;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-150" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="-1420" y="2730" as="sourcePoint" />
-            <mxPoint x="-1370" y="2680" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-162" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-148" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-151" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <mxPoint x="-1300" y="2740" as="sourcePoint" />
             <mxPoint x="-1250" y="2690" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-163" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-148" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.988;exitY=0.653;exitDx=0;exitDy=0;exitPerimeter=0;" target="Sspnw460WEY0gJR3UPId-152" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="-1230" y="2670" as="sourcePoint" />
-            <mxPoint x="-1180" y="2620" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-165" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-152" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-153" value="">
@@ -658,6 +600,113 @@
               <mxPoint x="1198" y="2564" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-230" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-228" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-240">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-638.5" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-228" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="大学生心理特征" vertex="1">
+          <mxGeometry height="80" width="120" x="-530" y="1409" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-229" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-77" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.396;exitY=0.025;exitDx=0;exitDy=0;exitPerimeter=0;" target="Sspnw460WEY0gJR3UPId-228" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-460" y="1560" as="sourcePoint" />
+            <mxPoint x="-410" y="1510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-231" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="三大动机理论" vertex="1">
+          <mxGeometry height="80" width="120" x="-800" y="1484" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-232" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-77" style="endArrow=classic;html=1;rounded=0;entryX=0.937;entryY=0.743;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.009;exitY=0.464;exitDx=0;exitDy=0;exitPerimeter=0;" target="Sspnw460WEY0gJR3UPId-231" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-700" y="1680" as="sourcePoint" />
+            <mxPoint x="-650" y="1630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-233" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;table style=&quot;border-collapse: collapse; width: 784px;&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;层级&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;需求名称&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;类型&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;简要内涵&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;1&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;生理需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;缺失性需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;食物、水、睡眠、呼吸、性欲等生存基本条件&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;2&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;安全需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;缺失性需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;人身安全、稳定环境、健康、财产保障、内心免于恐惧&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;3&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;归属与爱的需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;缺失性需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;亲情、友情、爱情、人际交往、群体归属感&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;4&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;尊重需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;缺失性需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;自尊（自信、独立）；他人尊重（认可、声誉、地位）&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;5&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;认知需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;成长性需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;求知、探索、好奇、理解、寻求事物规律&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;6&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;审美需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;成长性需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;追求对称、秩序、美感、艺术体验&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;7&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;自我实现需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;成长性需要&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;充分发挥潜能、实现理想，达成个人价值&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="274" width="800" x="-2775" y="1580" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-235" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="唯一可控因素：努力" vertex="1">
+          <mxGeometry height="60" width="120" x="-1720" y="1372" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-237" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;table style=&quot;border-collapse: collapse; width: 784px;&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;影响因素&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;核心含义&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;例子&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;成败经验（直接经验）&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;自身过往任务经历（首要因素）&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;多次考试及格，相信下次能考好&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;替代经验&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;观察相似榜样&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;看到同班同学考上，觉得自己也可以&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;言语劝说&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;他人语言鼓励、劝导&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;老师不断鼓励学生&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;情绪唤醒&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;身心情绪状态&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;考试过度紧张，觉得自己发挥不好&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="190" width="790" x="-2770" y="1381" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-239" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-77" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.766;exitY=0.067;exitDx=0;exitDy=0;exitPerimeter=0;" target="Sspnw460WEY0gJR3UPId-86" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-330" y="1510" as="sourcePoint" />
+            <mxPoint x="-280" y="1460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-240" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div style=&quot;direction:ltr&quot;&gt;&lt;br&gt;&lt;table border=&quot;1&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; valign=&quot;top&quot; style=&quot;direction: ltr; border-style: solid; border-color: rgb(163, 163, 163);&quot; title=&quot;&quot; summary=&quot;&quot;&gt; &lt;tbody&gt;&lt;tr&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 0.85in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;维度&lt;/span&gt;&lt;/p&gt;&lt;br&gt;  &lt;/td&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 3.4506in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;核心关键词&lt;/span&gt;&lt;/p&gt;&lt;br&gt;  &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 0.85in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;整体定位&lt;/p&gt;&lt;br&gt;  &lt;/td&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 3.4506in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;心理半成熟，成人过渡关键期&lt;/p&gt;&lt;br&gt;  &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 0.85in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;认知发展&lt;/p&gt;&lt;br&gt;  &lt;/td&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 3.4506in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;辩证逻辑占主导，思维独立有批判，易片面&lt;/p&gt;&lt;br&gt;  &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 0.85in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;自我意识&lt;/p&gt;&lt;br&gt;  &lt;/td&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 3.4506in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;追求独立尊重，自我同一性探索，理想现实冲突&lt;/p&gt;&lt;br&gt;  &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 0.85in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;情绪情感&lt;/p&gt;&lt;br&gt;  &lt;/td&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 3.4506in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;丰富不稳定，社交需求强，婚恋性心理凸显&lt;/p&gt;&lt;br&gt;  &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 0.8694in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-size:11.0pt&quot;&gt;&lt;span style=&quot;font-family:Calibri&quot;&gt;00 &lt;/span&gt;&lt;span style=&quot;font-family:&amp;quot;Microsoft YaHei&amp;quot;&quot;&gt;后群体&lt;/span&gt;&lt;/p&gt;&lt;br&gt;  &lt;/td&gt;  &lt;td style=&quot;border-style: solid; border-color: rgb(163, 163, 163); border-width: 1pt; width: 3.5006in; padding: 4pt;&quot;&gt;&lt;br&gt;  &lt;p style=&quot;margin:0in;font-family:&amp;quot;Microsoft YaHei&amp;quot;;font-size:11.0pt&quot;&gt;数字原住民，价值多元，网络依赖，抗挫力待提升&lt;/p&gt;&lt;br&gt;  &lt;/td&gt; &lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="420" width="530" x="-940" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-241" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="操作技能（电脑打字）：&lt;div&gt;定向：了解怎么做&lt;/div&gt;&lt;div&gt;模仿：跟着示范尝试操作&lt;/div&gt;&lt;div&gt;整合：将分解动作连接整合&lt;/div&gt;&lt;div&gt;熟练：操作熟练，无多余动作&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="170" x="-1680" y="2760" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-242" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="心智技能（逻辑推理）：&lt;div&gt;定向：了解心智活动流程（了解推理逻辑）&lt;/div&gt;&lt;div&gt;操作：借助外物，完整流程演练&lt;/div&gt;&lt;div&gt;（使用草稿纸演算全过程）&lt;br&gt;&lt;div&gt;内化：内化进入大脑，自动化加工&lt;/div&gt;&lt;/div&gt;&lt;div&gt;（脑子里自动演算，直接得出结论）&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="-1480" y="2760" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-243" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-151" style="endArrow=classic;html=1;rounded=0;exitX=0.102;exitY=0.971;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitPerimeter=0;" target="Sspnw460WEY0gJR3UPId-241" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-1300" y="2700" as="sourcePoint" />
+            <mxPoint x="-1245" y="2770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-244" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-151" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-242" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-1215" y="2780" as="sourcePoint" />
+            <mxPoint x="-1320" y="2851" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-247" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;table style=&quot;border-collapse: collapse; width: 784px;&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;划分标准&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;类型&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;核心含义&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;例子&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;1. 迁移效果（性质）&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;正迁移&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;促进、有利影响&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;会 C 语言助力学习 C++&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;负迁移&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;干扰、阻碍作用&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;拼音干扰英语音标学习&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;2. 迁移先后方向&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;顺向迁移&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;先前学习影响后续学习&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;先学平面几何，再学立体几何&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;逆向迁移&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;后续学习影响先前学习&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;高等数学加深对中学函数理解&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;3. 抽象水平&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;水平迁移（横向）&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;同一层次知识技能迁移&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;锐角三角形规律迁移到钝角三角形&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;垂直迁移（纵向）&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;上下从属关系&lt;div&gt;&lt;/div&gt;自上而下 / 自下而上&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;掌握 “函数” 概念，学习一次函数&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;4. 迁移内容&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;一般迁移（普遍迁移）&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;原理、思维方法、态度迁移&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;掌握逻辑推理方法用于多门课程&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;具体迁移（特殊迁移）&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;具体经验、动作直接迁移&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;篮球运球迁移到篮球实战&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="317" width="800" x="-1214" y="2883" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-248" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;table style=&quot;border-collapse: collapse; width: 784px;&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;理论&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;人物&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;核心观点&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;经典实验&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;形式训练说&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;沃尔夫&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;迁移源于心理官能训练，最早迁移理论&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;无实验，偏思辨&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;共同要素说&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;桑代克、伍德沃斯&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;两种学习存在共同成分才会发生迁移&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;形状知觉实验&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;概括说（类化说）&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;贾德&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;迁移关键是学习者概括出共同原理&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;水下击靶实验&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;关系转换说&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;苛勒&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;迁移在于顿悟情境之间的关系&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;小鸡觅食实验&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;认知结构迁移理论&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;奥苏贝尔&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;一切有意义学习都存在迁移；原有认知结构决定迁移效果&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;现代主流理论&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="230" width="800" x="-1214" y="3210" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-249" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="学习迁移的教学策略：&lt;div&gt;精选教材内容：突出基本概念和原理（数据集要选的好）&lt;/div&gt;&lt;div&gt;合理编排教学内容：知识结构化、体系化（模型要选的好）&lt;/div&gt;&lt;div&gt;合理安排教学程序：先易后难、先旧后新（先训练简单的）&lt;/div&gt;&lt;div&gt;重视基础知识和技能：夯实基础&lt;/div&gt;&lt;div&gt;教授学习策略，提升迁移意识：教会学生学会学习&lt;/div&gt;&lt;div&gt;加强变式练习（类似于数据增强）&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="320" x="-630" y="2745" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-250" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="学习迁移理论" vertex="1">
+          <mxGeometry height="60" width="120" x="-980" y="2770" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-255" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-251" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-249">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-251" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="学习迁移的教学策略" vertex="1">
+          <mxGeometry height="60" width="120" x="-800" y="2770" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-252" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-152" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-250" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-990" y="2710" as="sourcePoint" />
+            <mxPoint x="-1110" y="2820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-253" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-152" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-251" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-960" y="2690" as="sourcePoint" />
+            <mxPoint x="-960" y="2810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-256" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="道德心理四要素：&lt;div&gt;道德认识：指导什么是有道德的&lt;/div&gt;&lt;div&gt;道德情感：喜欢有德的，讨厌无德的&lt;/div&gt;&lt;div&gt;道德意志：面对诱惑，坚守道德（什么不能做）&lt;/div&gt;&lt;div&gt;道德行为：做有道德的言行（什么能做）&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="250" x="-490" y="2455" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-257" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-154" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.652;exitY=0.953;exitDx=0;exitDy=0;exitPerimeter=0;" target="Sspnw460WEY0gJR3UPId-256" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-350" y="2310" as="sourcePoint" />
+            <mxPoint x="-580" y="2520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-258" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;table style=&quot;border-collapse: collapse; width: 784px;&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;制度名称&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;核心内容（标准答案）&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;作用定位&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;五早预警制度&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;早发现、早报告、早研判、早预防、早控制&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;心理危机&lt;strong class=&quot;container-nB6Z1e&quot;&gt;前端预警机制&lt;/strong&gt;，把危机化解在萌芽状态&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;心理守门人制度&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;以辅导员、班主任、班委、宿舍长、任课教师为基层守门人，负责日常观察、识别异常、及时上报、初步关怀、协助转介&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;心理危机&lt;strong class=&quot;container-nB6Z1e&quot;&gt;基层排查网络&lt;/strong&gt;，打通预警最后一公里&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;三级预警体系&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;校 — 院 — 班（宿舍）分层分级预警管理&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;系统化层级防控&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;一生一档制度&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;学生心理动态建档、动态跟踪、持续记录&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;精细化长效管理&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;常态化筛查干预&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;定期心理测评、分级疏导、动态干预&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;常态化闭环防控&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;&lt;strong class=&quot;container-nB6Z1e&quot;&gt;家校医社四方协同&lt;/strong&gt;&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;学校、家庭、医院、社会联动干预处置&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;全方位合力育人&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="280" width="840" x="-2000" y="2150" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-259" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;div style=&quot;direction:ltr&quot;&gt;&lt;table style=&quot;border-collapse: collapse; width: 784px;&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;维度&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;心理健康标准&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;大学生心理特点&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;常见心理问题&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;情绪&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;稳定可控&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;波动明显&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;焦虑、抑郁&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;人际关系&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;和谐包容&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;内心敏感&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;人际冲突、社交孤独&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;环境适应&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;适应良好&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;适应周期长&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;适应障碍&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;学业发展&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;目标明晰&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;学业压力大&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;学业焦虑、专业迷茫&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;亲密情感&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;理性成熟&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;情感需求强&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;恋爱矛盾、失恋困扰&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;生涯发展&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;规划清晰&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;抉择压力大&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;发展焦虑、前途迷茫&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="230" width="880" x="-2500" y="1870" as="geometry" />
+        </mxCell>
+        <mxCell id="Sspnw460WEY0gJR3UPId-261" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;table style=&quot;border-collapse: collapse; width: 784px;&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;核心理论 / 概念&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;核心要点&lt;/th&gt;&lt;th style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;所属板块&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;罗森塔尔效应&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;教师期望潜移默化影响学生发展&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;师生互动、教师育人心理&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;教学效能感&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;教师对自身教学与育人成效的自信心&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;教师职业心理素养&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;职业倦怠&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;情绪耗竭、去人性化、低个人成就感&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;教师心理健康问题&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;波斯纳成长公式&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;经验＋反思＝教师成长&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;教师专业成长途径&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;德韦克成长型思维&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;能力可以通过努力不断发展&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;教师专业成长、学生心理教育通用&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;塞利格曼 PERMA 模型&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;积极情绪、投入、人际关系、意义、成就&lt;/td&gt;&lt;td style=&quot;border: 1px solid rgb(204, 204, 204); padding: 8px; text-align: left;&quot;&gt;教师幸福感、心理健康教育&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="240" width="810" x="-150" y="2240" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
