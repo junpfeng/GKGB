@@ -1,9 +1,12 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="B6tJuSRjG2tVTe5BHy2S">
-    <mxGraphModel dx="3366" dy="2088" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2287" dy="2087" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-2" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="对外：办学模式&lt;div&gt;产教融合，校企合作&lt;/div&gt;" vertex="1">
           <mxGeometry height="35" width="120" x="-220" y="-390" as="geometry" />
         </mxCell>
@@ -32,10 +35,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-20" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="&lt;div&gt;立德树人，就业与升学并重&lt;/div&gt;" vertex="1">
-          <mxGeometry height="25" width="160" x="120" y="-530" as="geometry" />
+          <mxGeometry height="25" width="160" x="120" y="-545" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="职业针对性（就业性）、&lt;div&gt;大众性、&lt;/div&gt;&lt;div&gt;产业性、&lt;/div&gt;&lt;div&gt;社会性（地方性、行业性）、&lt;/div&gt;&lt;div&gt;类型性&lt;/div&gt;" vertex="1">
-          <mxGeometry height="90" width="170" x="-615" y="-345" as="geometry" />
+          <mxGeometry height="90" width="170" x="-552" y="-315" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b&gt;类型&lt;/b&gt;定位" vertex="1">
           <mxGeometry height="30" width="120" x="-43" y="-470" as="geometry" />
@@ -58,7 +61,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="个人（培养）定位（模式）" vertex="1">
-          <mxGeometry height="50" width="120" x="140" y="-470" as="geometry" />
+          <mxGeometry height="50" width="120" x="140" y="-487" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-32" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-28">
           <mxGeometry relative="1" as="geometry" />
@@ -92,11 +95,11 @@
             <mxPoint x="272.5000000000009" y="190" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-39" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教学具体形式（&lt;b&gt;三教改革与五个对接&lt;/b&gt;）：&lt;div&gt;&lt;br&gt;&lt;div&gt;教材：校企联合制定培养方案和课程&lt;/div&gt;&lt;div&gt;教法：岗课赛证育人、理实一体化、多元评价&lt;/div&gt;&lt;div&gt;教师：建设双师型教师团队&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;专业 &amp;lt; - &amp;gt; 产业&lt;/div&gt;&lt;div&gt;课程 &amp;lt; - &amp;gt; 职业标准&lt;/div&gt;&lt;div&gt;教学 &amp;lt; - &amp;gt; 生产&lt;/div&gt;&lt;div&gt;毕业证 &amp;lt; - &amp;gt; 职业等级证&lt;/div&gt;&lt;div&gt;职教 &amp;lt; - &amp;gt; 终身教育&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="155" width="245" x="150" y="-155" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-39" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教学具体形式（&lt;b&gt;三教改革与五个对接&lt;/b&gt;）：&lt;div&gt;&lt;br&gt;&lt;div&gt;教材：校企联合制定工作手册式教材&lt;/div&gt;&lt;div&gt;教法：岗课赛证育人、项目化教学、理实一体化、多元评价&lt;/div&gt;&lt;div&gt;教师：建设双师型教师团队&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;专业 &amp;lt; - &amp;gt; 产业&lt;/div&gt;&lt;div&gt;课程 &amp;lt; - &amp;gt; 职业标准&lt;/div&gt;&lt;div&gt;教学 &amp;lt; - &amp;gt; 生产&lt;/div&gt;&lt;div&gt;毕业证 &amp;lt; - &amp;gt; 职业等级证&lt;/div&gt;&lt;div&gt;职教 &amp;lt; - &amp;gt; 终身教育&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="155" width="341" x="103" y="-155" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-42" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="双师型教师：&lt;div&gt;具有教师资格且具有工程师等职业资格，同时具备教学理论和行业实践能力&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70" width="150" x="197.5" y="20" as="geometry" />
+          <mxGeometry height="70" width="150" x="198.5" y="29" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-44" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-3" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="Sspnw460WEY0gJR3UPId-36" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
@@ -134,22 +137,22 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-69" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;顶层总框架：&lt;/span&gt;&lt;strong style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;纵向贯通、横向融通&lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;（现代职业教育体系）&lt;/span&gt;&lt;/div&gt;&lt;div&gt;├─ 纵向贯通分支：中高职贯通、专本贯通（人才培养具体形式，升学通道）&lt;br&gt;└─ 横向融通分支：职普融通、产教融合、科教融汇（跨界资源互通）&lt;/div&gt;" vertex="1">
-          <mxGeometry height="58" width="450" x="-750" y="-633" as="geometry" />
+          <mxGeometry height="58" width="450" x="-687" y="-603" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-73" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-72" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-70" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="&lt;div&gt;载体：&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;一体两翼&lt;/span&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="35" width="120" x="-585" y="-550" as="geometry" />
+          <mxGeometry height="35" width="120" x="-522" y="-520" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-75" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-74" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-72" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="办学模式：&lt;div&gt;以服务发展为宗旨，&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;以促进就业为导向&lt;/span&gt;&lt;/div&gt;&lt;div&gt;产教融合、校企合作&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="220" x="-635" y="-497" as="geometry" />
+          <mxGeometry height="60" width="220" x="-572" y="-467" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-74" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="人才培养模式：&lt;div&gt;工学结合、岗课赛证、三教改革&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="190" x="-620" y="-415" as="geometry" />
+          <mxGeometry height="60" width="190" x="-557" y="-385" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-603" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-77" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-231">
           <mxGeometry relative="1" as="geometry" />
@@ -1762,6 +1765,9 @@
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-628" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-125" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-294">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="核心抓手：校企联合制定人才培养方案、联合开发教材" vertex="1">
+          <mxGeometry height="42" width="161" x="-241.01" y="-326" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
