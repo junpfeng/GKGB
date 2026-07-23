@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="B6tJuSRjG2tVTe5BHy2S">
-    <mxGraphModel dx="2619" dy="2547" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2186" dy="1929" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -50,7 +50,7 @@
           <mxGeometry height="25" width="160" x="1688" y="-843" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="职业针对性（就业性）、&lt;div&gt;大众性、&lt;/div&gt;&lt;div&gt;产业性、&lt;/div&gt;&lt;div&gt;社会性（地方性、行业性）、&lt;/div&gt;&lt;div&gt;类型性&lt;/div&gt;" vertex="1">
-          <mxGeometry height="90" width="205" x="674.5" y="-713" as="geometry" />
+          <mxGeometry height="90" width="148" x="224.5" y="-724" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b&gt;类型&lt;/b&gt;定位" vertex="1">
           <mxGeometry height="30" width="120" x="1525" y="-768" as="geometry" />
@@ -2052,13 +2052,13 @@
           <mxGeometry height="29" width="231" x="75" y="-840" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-112" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="立德树人，就业与升学并重，&lt;div&gt;培养生产、建设、管理、服务第一线需要的高素质技术技能人次&lt;/div&gt;" vertex="1">
-          <mxGeometry height="29" width="347" x="37" y="-790" as="geometry" />
+          <mxGeometry height="38" width="347" x="37" y="-790" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-116" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-114" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-115" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-114" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="高等职业教育" vertex="1">
-          <mxGeometry height="29" width="231" x="-117" y="-967" as="geometry" />
+          <mxGeometry height="29" width="352" x="-177" y="-967" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-117" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-115" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="q7PB7dUk6ZTtuN2hyssw-108">
           <mxGeometry relative="1" as="geometry" />
