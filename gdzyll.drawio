@@ -334,6 +334,12 @@
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-142" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-168" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-141">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-194" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-168" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-214">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-195" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-168" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-212">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-168" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="高教里程碑人物" vertex="1">
           <mxGeometry height="40.57" width="104.5" x="460.75" y="1959.61" as="geometry" />
         </mxCell>
@@ -555,22 +561,10 @@
             <mxPoint x="1468" y="1367" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-270" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-168" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-212" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="418.5" y="2005.4299999999998" as="sourcePoint" />
-            <mxPoint x="468.5" y="1955.4299999999998" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-271" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-168" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-213" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <mxPoint x="585.5" y="1989.4299999999998" as="sourcePoint" />
             <mxPoint x="635.5" y="1939.4299999999998" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-272" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-168" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-214" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="572.5" y="2058.43" as="sourcePoint" />
-            <mxPoint x="622.5" y="2008.4299999999998" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-291" parent="1" style="shape=table;startSize=0;container=1;collapsible=0;childLayout=tableLayout;fixedHeader=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" value="" vertex="1">
@@ -2045,8 +2039,8 @@
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-135" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="下层落实实施" vertex="1">
           <mxGeometry height="58" width="120" x="192" y="-150" as="geometry" />
         </mxCell>
-        <mxCell id="q7PB7dUk6ZTtuN2hyssw-137" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="2015年，双一流建设&lt;div&gt;2020年 破五唯&lt;/div&gt;&lt;div&gt;2035年 教育强国&lt;/div&gt;&lt;div&gt;数字化教育：AI赋能教学、智慧教育平台，师生数字素养培育&lt;/div&gt;" vertex="1">
-          <mxGeometry height="84.57" width="180" x="443" y="2115" as="geometry" />
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-137" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="2015年，双一流建设&lt;div&gt;2020年 破五唯:&lt;/div&gt;&lt;div&gt;分数、升学、文凭、论文、帽子&lt;/div&gt;&lt;div&gt;2035年 教育强国&lt;/div&gt;&lt;div&gt;数字化教育：AI赋能教学、智慧教育平台，师生数字素养培育&lt;/div&gt;" vertex="1">
+          <mxGeometry height="102" width="180" x="443" y="2115" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-141" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="蔡元培：五育并举" vertex="1">
           <mxGeometry height="15.57" width="117" x="635" y="1978.72" as="geometry" />
