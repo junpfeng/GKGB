@@ -367,7 +367,7 @@
         <mxCell id="Sspnw460WEY0gJR3UPId-171" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="高等教育结构" vertex="1">
           <mxGeometry height="40" width="130" x="547.5" y="2064" as="geometry" />
         </mxCell>
-        <mxCell id="q7PB7dUk6ZTtuN2hyssw-196" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-172" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-180">
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-196" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-172" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-180">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-172" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="6条中小学教师&lt;div&gt;职业道德&lt;/div&gt;" vertex="1">
@@ -415,8 +415,8 @@
             <mxPoint x="626" y="1469" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-180" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="国家：爱岗守法&lt;div&gt;社会：爱岗敬业&lt;/div&gt;&lt;div&gt;个人：关爱学生&lt;/div&gt;&lt;div&gt;教书育人&lt;/div&gt;&lt;div&gt;为人师表&lt;/div&gt;&lt;div&gt;终身学习&lt;/div&gt;" vertex="1">
-          <mxGeometry height="101" width="99" x="227.5" y="1289" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-180" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="国家：爱国守法（基本要求）&lt;div&gt;社会：爱岗敬业（本质要求）&lt;/div&gt;&lt;div&gt;个人：关爱学生（师德灵魂）&lt;/div&gt;&lt;div&gt;教书育人（天职）&lt;/div&gt;&lt;div&gt;为人师表（内在要求）&lt;/div&gt;&lt;div&gt;终身学习（发展动力）&lt;/div&gt;" vertex="1">
+          <mxGeometry height="101" width="154.5" x="229.5" y="1229" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-182" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="党：坚定政治方向&lt;div&gt;国：自觉爱国守法&lt;/div&gt;&lt;div&gt;社会：传播优秀文化&lt;/div&gt;&lt;div&gt;个人：潜心教书育人&lt;/div&gt;&lt;div&gt;关心爱护学生&lt;/div&gt;&lt;div&gt;坚持言行雅正&lt;/div&gt;&lt;div&gt;遵守学术规范&lt;/div&gt;&lt;div&gt;秉持公平诚信&lt;/div&gt;&lt;div&gt;坚守廉洁自律&lt;/div&gt;&lt;div&gt;积极奉献社会&lt;/div&gt;" vertex="1">
           <mxGeometry height="170" width="116" x="227.5" y="1407" as="geometry" />
@@ -1878,7 +1878,7 @@
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-54" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="全国产业链" vertex="1">
           <mxGeometry height="33" width="160" x="284" y="-516" as="geometry" />
         </mxCell>
-        <mxCell id="q7PB7dUk6ZTtuN2hyssw-56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="建设省域职教体系：&lt;div&gt;纵向贯通：中高本研贯通（人才培养通道）&lt;/div&gt;&lt;div&gt;横向融通：职普融通，产教融合（产业链和教育链融合，解决学完就能工作干活的问题）、科教融汇（教育链和科创练融合，解决学校带动产业搞技术创新的问题）&lt;/div&gt;" vertex="1">
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="建设省域职教体系：&lt;div&gt;纵向贯通：中高本研贯通（人才培养通道）&lt;/div&gt;&lt;div&gt;横向融通：职普融通，产教融合（产业链和教育链融合，校企合作办学育人）、&lt;/div&gt;&lt;div&gt;科教融汇（教育链和科创练融合，学校带动产业搞技术创新的问题）&lt;/div&gt;" vertex="1">
           <mxGeometry height="59" width="437" x="-237" y="-667" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-58" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="内部治理能力" vertex="1">
