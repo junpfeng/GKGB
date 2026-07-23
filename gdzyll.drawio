@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="B6tJuSRjG2tVTe5BHy2S">
-    <mxGraphModel dx="2186" dy="1929" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2690" dy="2116" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -50,7 +50,7 @@
           <mxGeometry height="25" width="160" x="1688" y="-843" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="职业针对性（就业性）、&lt;div&gt;大众性、&lt;/div&gt;&lt;div&gt;产业性、&lt;/div&gt;&lt;div&gt;社会性（地方性、行业性）、&lt;/div&gt;&lt;div&gt;类型性&lt;/div&gt;" vertex="1">
-          <mxGeometry height="90" width="148" x="224.5" y="-724" as="geometry" />
+          <mxGeometry height="90" width="147.5" x="242" y="-746" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b&gt;类型&lt;/b&gt;定位" vertex="1">
           <mxGeometry height="30" width="120" x="1525" y="-768" as="geometry" />
@@ -1855,7 +1855,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-33" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="五重点" vertex="1">
-          <mxGeometry height="33" width="160" x="-102" y="-435" as="geometry" />
+          <mxGeometry height="33" width="160" x="-111" y="-459" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-59" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-34" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-58" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -1873,31 +1873,31 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-34" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="提升关键办学能力" vertex="1">
-          <mxGeometry height="33" width="104.5" x="-167" y="-349.5" as="geometry" />
+          <mxGeometry height="33" width="104.5" x="-163.5" y="-403" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-78" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-36" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-77" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-36" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="双师型队伍建设" vertex="1">
-          <mxGeometry height="33" width="107.5" x="-50" y="-346" as="geometry" />
+          <mxGeometry height="33" width="107.5" x="-52.75" y="-403" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-75" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-38" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-74" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-38" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="建设区域产教融合实践中心" vertex="1">
-          <mxGeometry height="33" width="160" x="67" y="-349" as="geometry" />
+          <mxGeometry height="33" width="160" x="67.5" y="-377" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-71" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-40" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-70" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-40" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="拓宽学生成长成才通道" vertex="1">
-          <mxGeometry height="33" width="160" x="99" y="-397" as="geometry" />
+          <mxGeometry height="33" width="160" x="90" y="-421" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-73" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-42" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-72" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-42" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="创新职业教育国际交流合作" vertex="1">
-          <mxGeometry height="33" width="160" x="95" y="-438" as="geometry" />
+          <mxGeometry height="33" width="160" x="86" y="-462" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-46" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-44" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-45" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -1906,7 +1906,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="一体" vertex="1">
-          <mxGeometry height="33" width="160" x="-104" y="-554" as="geometry" />
+          <mxGeometry height="33" width="160" x="-113" y="-578" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-47" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-45" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-33" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -1918,55 +1918,55 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-45" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="两翼" vertex="1">
-          <mxGeometry height="33" width="160" x="-102" y="-494" as="geometry" />
+          <mxGeometry height="33" width="160" x="-111" y="-518" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-53" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-48" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-52" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-48" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="市域产教联合体" vertex="1">
-          <mxGeometry height="33" width="160" x="-300" y="-494" as="geometry" />
+          <mxGeometry height="33" width="160" x="-309" y="-518" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-55" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-50" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-54" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-50" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="行业产教融合共同体" vertex="1">
-          <mxGeometry height="33" width="160" x="95" y="-492" as="geometry" />
+          <mxGeometry height="33" width="160" x="86" y="-516" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-52" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="城市产业园" vertex="1">
-          <mxGeometry height="33" width="160" x="-343" y="-421" as="geometry" />
+          <mxGeometry height="33" width="160" x="-343" y="-444" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-54" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="全国产业链" vertex="1">
-          <mxGeometry height="33" width="160" x="293" y="-492" as="geometry" />
+          <mxGeometry height="33" width="160" x="284" y="-516" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="建设省域职教体系：&lt;div&gt;纵向贯通：中高本研贯通（人才培养通道）&lt;/div&gt;&lt;div&gt;横向融通：职普融通，产教融合（产业链和教育链融合，解决学完就能工作干活的问题）、科教融汇（教育链和科创练融合，解决学校带动产业搞技术创新的问题）&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="437" x="-242.5" y="-657" as="geometry" />
+          <mxGeometry height="59" width="437" x="-237" y="-667" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-58" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="内部治理能力" vertex="1">
-          <mxGeometry height="33" width="160" x="-391" y="-298" as="geometry" />
+          <mxGeometry height="33" width="160" x="-340" y="-366" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-60" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="社会服务能力" vertex="1">
-          <mxGeometry height="33" width="160" x="-361" y="-229" as="geometry" />
+          <mxGeometry height="33" width="160" x="-337" y="-322.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-62" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="高水平专业群" vertex="1">
-          <mxGeometry height="33" width="160" x="-322" y="-159" as="geometry" />
+          <mxGeometry height="33" width="160" x="-315" y="-257" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-64" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="实训平台建设：&lt;div&gt;单一院校为主体的，&lt;/div&gt;&lt;div&gt;校内实训基地，&lt;/div&gt;&lt;div&gt;校外实习基地&lt;/div&gt;&lt;div&gt;产业学院&lt;/div&gt;" vertex="1">
-          <mxGeometry height="89" width="129" x="-140" y="-206" as="geometry" />
+          <mxGeometry height="89" width="129" x="-152.5" y="-273.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-67" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="三教改革" vertex="1">
-          <mxGeometry height="33" width="87" x="5" y="-167" as="geometry" />
+          <mxGeometry height="33" width="87" x="-29" y="-329" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-70" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="中-高-本-研 纵向贯通&lt;div&gt;职普横向融通&lt;/div&gt;" vertex="1">
-          <mxGeometry height="33" width="160" x="286" y="-392.5" as="geometry" />
+          <mxGeometry height="33" width="160" x="277" y="-416.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-72" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="职教标准出海" vertex="1">
-          <mxGeometry height="33" width="160" x="286" y="-438" as="geometry" />
+          <mxGeometry height="33" width="160" x="277" y="-462" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-74" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="跨院校，跨企业共建的&lt;div&gt;区域共享平台&lt;/div&gt;" vertex="1">
-          <mxGeometry height="33" width="160" x="270" y="-342" as="geometry" />
+          <mxGeometry height="33" width="160" x="261" y="-366" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-77" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;（师德）&lt;/div&gt;&lt;div&gt;1. 坚持师德为先，完善双师认定标准&lt;/div&gt;（推动校企双向流动）&lt;div&gt;2. 推动专任教师到企业定期实践和培训&lt;/div&gt;&lt;div&gt;3. 引进企业一线骨干到学校任教&lt;/div&gt;&lt;div&gt;4. 健全双师导向的考核激励机制&lt;/div&gt;" vertex="1">
-          <mxGeometry height="106" width="211" x="79" y="-295" as="geometry" />
+          <mxGeometry height="106" width="211" x="70" y="-319" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-83" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-81" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-82" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -1975,10 +1975,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-81" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="办学模式" vertex="1">
-          <mxGeometry height="33" width="160" x="-14" y="-67" as="geometry" />
+          <mxGeometry height="33" width="160" x="-3.25" y="-153" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-82" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="核心：产教融合、校企合作" vertex="1">
-          <mxGeometry height="33" width="160" x="-225" y="-64" as="geometry" />
+          <mxGeometry height="33" width="160" x="-216" y="-151.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-87" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-84" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-86" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -1987,7 +1987,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-84" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="人才培养模式" vertex="1">
-          <mxGeometry height="33" width="160" x="-14" y="-6" as="geometry" />
+          <mxGeometry height="33" width="160" x="-2" y="-87.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-89" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-86" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-88" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -1999,42 +1999,42 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-86" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="方法论/总基调：工学结合" vertex="1">
-          <mxGeometry height="33" width="160" x="-238" y="10" as="geometry" />
+          <mxGeometry height="33" width="160" x="-213.5" y="-87.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-88" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="如何学（如何培养）" vertex="1">
-          <mxGeometry height="33" width="160" x="-376.5" y="64" as="geometry" />
+          <mxGeometry height="33" width="160" x="-367.5" y="-23.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-97" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-90" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-96" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-90" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="学校实训平台基建支持" vertex="1">
-          <mxGeometry height="33" width="138" x="-256" y="118" as="geometry" />
+          <mxGeometry height="33" width="138" x="-247" y="30.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-99" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-92" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="q7PB7dUk6ZTtuN2hyssw-100" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="248" y="308" as="targetPoint" />
+            <mxPoint x="257" y="220.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-92" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="如何教（教学形式改革，教学建设，三教改革，五个对接）" vertex="1">
-          <mxGeometry height="33" width="321" x="-136" y="69" as="geometry" />
+          <mxGeometry height="33" width="321" x="-127" y="-18.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-94" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;div&gt;订单培养&lt;/div&gt;&lt;div&gt;顶岗实习&lt;/div&gt;&lt;div&gt;半工半读&lt;/div&gt;&lt;div&gt;工学交替&lt;/div&gt;&lt;div&gt;现代学徒制&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;中高职贯通，职普融通&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="94" width="130" x="-382" y="166" as="geometry" />
+          <mxGeometry height="94" width="130" x="-373" y="78.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-95" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-88" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.441;entryY=0.022;entryDx=0;entryDy=0;entryPerimeter=0;" target="q7PB7dUk6ZTtuN2hyssw-94">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-96" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="&lt;div&gt;&lt;div&gt;校内实训基地&lt;/div&gt;&lt;div&gt;校外实习基地&lt;/div&gt;&lt;div&gt;产业学院&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-234" y="186" as="geometry" />
+          <mxGeometry height="60" width="120" x="-225" y="98.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-102" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-100" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-101" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-100" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;div&gt;教材：校企联合制定工作手册式教材&lt;/div&gt;&lt;div&gt;教法：岗课赛证育人、项目化教学、理实一体化、多元评价&lt;/div&gt;&lt;div&gt;教师：建设双师型教师团队&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;专业 &amp;lt; - &amp;gt; 产业&lt;/div&gt;&lt;div&gt;课程 &amp;lt; - &amp;gt; 职业标准&lt;/div&gt;&lt;div&gt;教学 &amp;lt; - &amp;gt; 生产&lt;/div&gt;&lt;div&gt;毕业证 &amp;lt; - &amp;gt; 职业等级证&lt;/div&gt;&lt;div&gt;职教 &amp;lt; - &amp;gt; 终身教育&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="118" width="341" x="-104.5" y="125" as="geometry" />
+          <mxGeometry height="118" width="341" x="-95.5" y="37.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-101" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="双师型教师：&lt;div&gt;具备专业教育教学能力与行业一线实践经验，理论与实践双肩挑的教师&lt;/div&gt;" vertex="1">
-          <mxGeometry height="40" width="382.5" x="-123.5" y="275" as="geometry" />
+          <mxGeometry height="40" width="382.5" x="-114.5" y="187.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-110" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-108" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-109" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -2082,25 +2082,25 @@
           <mxGeometry height="41" width="120" x="-59" y="-746" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-124" parent="1" style="whiteSpace=wrap;html=1;rounded=1;fillColor=none;" value="" vertex="1">
-          <mxGeometry height="162" width="186" x="-119" y="-560" as="geometry" />
+          <mxGeometry height="162" width="186" x="-128" y="-584" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-132" edge="1" parent="1" source="q7PB7dUk6ZTtuN2hyssw-126" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-131" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="q7PB7dUk6ZTtuN2hyssw-126" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="世界观：&lt;div&gt;五育并举、三全育人、课程思政&lt;/div&gt;" vertex="1">
-          <mxGeometry height="33" width="175" x="209" y="72.5" as="geometry" />
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-126" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="世界观：&lt;div&gt;五育并举、三全育人、&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;三大精神、&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;课程思政&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="33" width="231" x="197" y="-85" as="geometry" />
         </mxCell>
-        <mxCell id="q7PB7dUk6ZTtuN2hyssw-131" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="德智体美劳全面发展；&lt;div&gt;全员育人，全程育人，全方位育人&lt;/div&gt;&lt;div&gt;所有课程都要融入思政教育&lt;/div&gt;" vertex="1">
-          <mxGeometry height="59" width="191" x="247.5" y="171" as="geometry" />
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-131" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="德智体美劳全面发展；&lt;div&gt;全员育人，全程育人，全方位育人&lt;/div&gt;&lt;div&gt;劳动、劳模、工匠精神&lt;/div&gt;&lt;div&gt;所有课程都要融入思政教育&lt;/div&gt;" vertex="1">
+          <mxGeometry height="66.5" width="191" x="240" y="-21.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-133" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="上层意识形态" vertex="1">
-          <mxGeometry height="80" width="120" x="199.5" y="-949" as="geometry" />
+          <mxGeometry height="80" width="120" x="192" y="-946.5" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-134" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="中层体系架构" vertex="1">
           <mxGeometry height="80" width="120" x="245" y="-606" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-135" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="下层落实实施" vertex="1">
-          <mxGeometry height="80" width="120" x="224.5" y="-60" as="geometry" />
+          <mxGeometry height="58" width="120" x="192" y="-150" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
