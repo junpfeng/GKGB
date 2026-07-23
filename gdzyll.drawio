@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="B6tJuSRjG2tVTe5BHy2S">
-    <mxGraphModel dx="2511" dy="1952" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2690" dy="2116" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -478,11 +478,11 @@
         <mxCell id="Sspnw460WEY0gJR3UPId-208" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教育必须为社会主义现代化建设服务，为人民服务，必须与生产劳动和社会实践相结合，培养德智体美劳全面发展的社会主义建设者和接班人" vertex="1">
           <mxGeometry height="90" width="200" x="1235" y="1185" as="geometry" />
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-211" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="人才培养&lt;div&gt;科研&lt;/div&gt;&lt;div&gt;社会服务&lt;/div&gt;&lt;div&gt;文化传承与创新&lt;/div&gt;&lt;div&gt;国际交流合作&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="120" x="284" y="1862.9999999999998" as="geometry" />
+        <mxCell id="Sspnw460WEY0gJR3UPId-211" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="人才培养（根本职能）&lt;div&gt;科研（重要职能）&lt;/div&gt;&lt;div&gt;社会服务（第三职能）&lt;/div&gt;&lt;div&gt;文化传承与创新（第四职能）&lt;/div&gt;&lt;div&gt;国际交流合作（新时代职能）&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="166" x="248" y="1863" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-212" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="洪堡：&lt;div&gt;柏林大学，提出教学与科研统一，学士自由自治；&lt;/div&gt;&lt;div&gt;近代大学起源标志&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="275" x="421" y="1859.9999999999998" as="geometry" />
+          <mxGeometry height="60" width="275" x="431" y="1859.9999999999998" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-213" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="威斯康星思想：&lt;div&gt;确立高校社会服务职能&lt;/div&gt;" vertex="1">
           <mxGeometry height="44" width="140" x="656" y="1924.9999999999998" as="geometry" />
@@ -1115,7 +1115,7 @@
             <mxRectangle height="20" width="60" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-423" parent="Sspnw460WEY0gJR3UPId-421" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=1;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;" value="辩证逻辑占主导、易片面" vertex="1">
+        <mxCell id="Sspnw460WEY0gJR3UPId-423" parent="Sspnw460WEY0gJR3UPId-421" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=1;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;" value="辩证逻辑逐渐占主导" vertex="1">
           <mxGeometry height="20" width="182" x="60" as="geometry">
             <mxRectangle height="20" width="182" as="alternateBounds" />
           </mxGeometry>
@@ -1226,7 +1226,7 @@
             <mxRectangle height="32" width="80" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-450" parent="Sspnw460WEY0gJR3UPId-448" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=1;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;" value="布鲁纳，奥苏贝尔，维纳" vertex="1">
+        <mxCell id="Sspnw460WEY0gJR3UPId-450" parent="Sspnw460WEY0gJR3UPId-448" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=1;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;" value="苛勒，布鲁纳，奥苏贝尔，维纳" vertex="1">
           <mxGeometry height="32" width="88" x="80" as="geometry">
             <mxRectangle height="32" width="88" as="alternateBounds" />
           </mxGeometry>
@@ -2067,7 +2067,7 @@
             <mxRectangle height="20" width="60" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="q7PB7dUk6ZTtuN2hyssw-155" parent="q7PB7dUk6ZTtuN2hyssw-152" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" value="最新实施" vertex="1">
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-155" parent="q7PB7dUk6ZTtuN2hyssw-152" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" value="实施" vertex="1">
           <mxGeometry height="20" width="60" x="120" as="geometry">
             <mxRectangle height="20" width="60" as="alternateBounds" />
           </mxGeometry>
@@ -2085,7 +2085,7 @@
             <mxRectangle height="20" width="60" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="q7PB7dUk6ZTtuN2hyssw-159" parent="q7PB7dUk6ZTtuN2hyssw-156" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" value="/" vertex="1">
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-159" parent="q7PB7dUk6ZTtuN2hyssw-156" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" value="1995" vertex="1">
           <mxGeometry height="20" width="60" x="120" as="geometry">
             <mxRectangle height="20" width="60" as="alternateBounds" />
           </mxGeometry>
@@ -2103,7 +2103,7 @@
             <mxRectangle height="20" width="60" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="q7PB7dUk6ZTtuN2hyssw-163" parent="q7PB7dUk6ZTtuN2hyssw-160" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" value="/" vertex="1">
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-163" parent="q7PB7dUk6ZTtuN2hyssw-160" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" value="1999" vertex="1">
           <mxGeometry height="20" width="60" x="120" as="geometry">
             <mxRectangle height="20" width="60" as="alternateBounds" />
           </mxGeometry>
@@ -2157,7 +2157,7 @@
             <mxRectangle height="20" width="60" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="q7PB7dUk6ZTtuN2hyssw-175" parent="q7PB7dUk6ZTtuN2hyssw-172" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" value="/" vertex="1">
+        <mxCell id="q7PB7dUk6ZTtuN2hyssw-175" parent="q7PB7dUk6ZTtuN2hyssw-172" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;" value="1994" vertex="1">
           <mxGeometry height="20" width="60" x="120" as="geometry">
             <mxRectangle height="20" width="60" as="alternateBounds" />
           </mxGeometry>
