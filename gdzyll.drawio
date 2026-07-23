@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="第 1 页" id="B6tJuSRjG2tVTe5BHy2S">
-    <mxGraphModel dx="2511" dy="1952" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2690" dy="2116" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1251,7 +1251,7 @@
             <mxRectangle height="40" width="80" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Sspnw460WEY0gJR3UPId-457" parent="Sspnw460WEY0gJR3UPId-455" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=1;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;" value="皮亚杰" vertex="1">
+        <mxCell id="Sspnw460WEY0gJR3UPId-457" parent="Sspnw460WEY0gJR3UPId-455" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=1;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;" value="皮亚杰，&lt;div&gt;维果茨基&lt;/div&gt;" vertex="1">
           <mxGeometry height="40" width="88" x="80" as="geometry">
             <mxRectangle height="40" width="88" as="alternateBounds" />
           </mxGeometry>
