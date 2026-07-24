@@ -201,7 +201,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-79" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="高等教育学" vertex="1">
-          <mxGeometry height="66" width="140" x="1059.75" y="1531.9299999999998" as="geometry" />
+          <mxGeometry height="66" width="140" x="1841.75" y="2071" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-185" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-80" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-193">
           <mxGeometry relative="1" as="geometry" />
@@ -219,7 +219,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-80" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="法规" vertex="1">
-          <mxGeometry height="32" width="94" x="354" y="1736.5" as="geometry" />
+          <mxGeometry height="32" width="94" x="344" y="1780.85" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-119" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-82" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" target="Sspnw460WEY0gJR3UPId-118" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -350,7 +350,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-167" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="高校职能" vertex="1">
-          <mxGeometry height="35" width="78" x="1059.75" y="1466.9299999999998" as="geometry" />
+          <mxGeometry height="35" width="78" x="1841.75" y="2006" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-142" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-168" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="q7PB7dUk6ZTtuN2hyssw-141">
           <mxGeometry relative="1" as="geometry" />
@@ -362,22 +362,22 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-168" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="高教里程碑人物" vertex="1">
-          <mxGeometry height="40.57" width="104.5" x="1137.75" y="1474.54" as="geometry" />
+          <mxGeometry height="40.57" width="104.5" x="1919.75" y="2013.61" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-169" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;马丁 特罗提出&lt;/div&gt;大众划分标准：&lt;div&gt;&amp;lt;15%&lt;/div&gt;&lt;div&gt;15%~50%&lt;/div&gt;&lt;div&gt;&amp;gt;50%&lt;/div&gt;" vertex="1">
-          <mxGeometry height="89.57" width="122.5" x="277" y="2142" as="geometry" />
+          <mxGeometry height="89.57" width="122.5" x="1736" y="2196" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-223" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-170" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-215">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-170" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="教学原则" vertex="1">
-          <mxGeometry height="22" width="86.75" x="965" y="1487.2199999999998" as="geometry" />
+          <mxGeometry height="22" width="86.75" x="1747" y="2026.29" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-224" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-171" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-216">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-171" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="高等教育结构" vertex="1">
-          <mxGeometry height="40" width="130" x="1224.5" y="1578.9299999999998" as="geometry" />
+          <mxGeometry height="40" width="130" x="2006.5" y="2118" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-172" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="&lt;div&gt;2008&lt;/div&gt;6条中小学教师&lt;div&gt;职业道德&lt;/div&gt;" vertex="1">
           <mxGeometry height="56" width="120" x="175" y="1437" as="geometry" />
@@ -411,52 +411,52 @@
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-243" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-193" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.497;entryY=1.029;entryDx=0;entryDy=0;entryPerimeter=0;" target="q7PB7dUk6ZTtuN2hyssw-168">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="275.04771205357156" y="1639.1429617745534" as="targetPoint" />
+            <mxPoint x="265.04771205357156" y="1683.4929617745534" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-193" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="五大教育主干法" vertex="1">
-          <mxGeometry height="39" width="102" x="1075" y="1398" as="geometry" />
+          <mxGeometry height="39" width="102" x="208" y="1755.35" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-186" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-194" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Sspnw460WEY0gJR3UPId-208">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-194" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="国家教育方针" vertex="1">
-          <mxGeometry height="42.5" width="96" x="1211" y="1365.5" as="geometry" />
+          <mxGeometry height="42.5" width="96" x="344" y="1722.85" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-195" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="教师和学生的权责" vertex="1">
-          <mxGeometry height="30" width="110" x="1085" y="1477" as="geometry" />
+          <mxGeometry height="30" width="110" x="218" y="1834.35" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-208" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教育必须为社会主义现代化建设服务，为人民服务，必须与生产劳动和社会实践相结合，培养德智体美劳全面发展的社会主义建设者和接班人" vertex="1">
-          <mxGeometry height="90" width="200" x="1241" y="1209" as="geometry" />
+          <mxGeometry height="90" width="200" x="374" y="1566.35" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-211" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="人才培养（根本职能）&lt;div&gt;科研（重要职能）&lt;/div&gt;&lt;div&gt;社会服务（第三职能）&lt;/div&gt;&lt;div&gt;文化传承与创新（第四职能）&lt;/div&gt;&lt;div&gt;国际交流合作（新时代职能）&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="166" x="925" y="1377.9299999999998" as="geometry" />
+          <mxGeometry height="80" width="166" x="1707" y="1917" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-212" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="洪堡：&lt;div&gt;柏林大学，提出教学与科研统一，学士自由自治；&lt;/div&gt;&lt;div&gt;近代大学起源标志&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="275" x="1108" y="1374.9299999999998" as="geometry" />
+          <mxGeometry height="60" width="275" x="1890" y="1913.9999999999998" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-213" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="威斯康星思想：&lt;div&gt;确立高校社会服务职能&lt;/div&gt;" vertex="1">
-          <mxGeometry height="44" width="140" x="623.5" y="1925.9999999999998" as="geometry" />
+          <mxGeometry height="44" width="140" x="2082.5" y="1979.9999999999998" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-214" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="国内高教理论/学科开创者：&lt;div&gt;潘懋元&lt;/div&gt;" vertex="1">
-          <mxGeometry height="40" width="150" x="1293" y="1521.9299999999998" as="geometry" />
+          <mxGeometry height="40" width="150" x="2075" y="2061" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-215" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="科学性与思想性统一&lt;div&gt;理论联系实际&lt;/div&gt;&lt;div&gt;直观性&lt;/div&gt;&lt;div&gt;启发性&lt;/div&gt;&lt;div&gt;循序渐进&lt;/div&gt;&lt;div&gt;因材施教&lt;/div&gt;&lt;div&gt;巩固性&lt;/div&gt;&lt;div&gt;量力性（可接受性）&lt;/div&gt;" vertex="1">
-          <mxGeometry height="130" width="120" x="919" y="1521.9299999999998" as="geometry" />
+          <mxGeometry height="130" width="120" x="1701" y="2061" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-216" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="专科、本科、研究生；&lt;div&gt;全日制、非全&lt;/div&gt;&lt;div&gt;研究型大学、应用型本科、高职高专&lt;/div&gt;&lt;div&gt;宏观：中央、省级两级统筹管理&lt;/div&gt;&lt;div&gt;校内：党委 领导下的校长负责制&lt;/div&gt;" vertex="1">
-          <mxGeometry height="79.57" width="210" x="593" y="2118.43" as="geometry" />
+          <mxGeometry height="79.57" width="210" x="2052" y="2172.43" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-217" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-79" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-167" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="978.4952722290177" y="1578.07614818913" as="sourcePoint" />
-            <mxPoint x="988.0999999999999" y="1518.3599999999997" as="targetPoint" />
+            <mxPoint x="1760.4952722290177" y="2117.14614818913" as="sourcePoint" />
+            <mxPoint x="1770.1" y="2057.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-219" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-79" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Sspnw460WEY0gJR3UPId-169" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="1091.5" y="1738.3599999999997" as="sourcePoint" />
-            <mxPoint x="1141.5" y="1688.3599999999997" as="targetPoint" />
+            <mxPoint x="1873.5" y="2277.43" as="sourcePoint" />
+            <mxPoint x="1923.5" y="2227.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-230" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-228" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.492;entryY=1.035;entryDx=0;entryDy=0;entryPerimeter=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" target="Sspnw460WEY0gJR3UPId-430">
@@ -504,21 +504,21 @@
           <mxGeometry height="90" width="250" x="-746" y="1354.5" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-262" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="教师资格管理" vertex="1">
-          <mxGeometry height="48.5" width="120" x="1322" y="1368.5" as="geometry" />
+          <mxGeometry height="48.5" width="120" x="455" y="1725.85" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-263" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="教资考试违纪：3年内不得报考&lt;div&gt;弄虚作假，品行不良：撤销教资，且5年内不得认定&lt;/div&gt;&lt;div&gt;收到有期及刑罚：终身丧失教资。&lt;/div&gt;" vertex="1">
-          <mxGeometry height="52" width="280" x="1332" y="1305" as="geometry" />
+          <mxGeometry height="52" width="280" x="465" y="1662.35" as="geometry" />
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-269" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-262" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.864;exitY=0.193;exitDx=0;exitDy=0;exitPerimeter=0;" target="Sspnw460WEY0gJR3UPId-263" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="561" y="1730" as="sourcePoint" />
-            <mxPoint x="611" y="1680" as="targetPoint" />
+            <mxPoint x="551" y="1774.35" as="sourcePoint" />
+            <mxPoint x="601" y="1724.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-271" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-168" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" target="Sspnw460WEY0gJR3UPId-213" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="1262.5" y="1504.3599999999997" as="sourcePoint" />
-            <mxPoint x="1312.5" y="1454.3599999999997" as="targetPoint" />
+            <mxPoint x="2044.5" y="2043.4299999999998" as="sourcePoint" />
+            <mxPoint x="2094.5" y="1993.4299999999998" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Sspnw460WEY0gJR3UPId-291" parent="1" style="shape=table;startSize=0;container=1;collapsible=0;childLayout=tableLayout;fixedHeader=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" value="" vertex="1">
@@ -1994,16 +1994,16 @@
           <mxGeometry height="58" width="120" x="192" y="-160" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-137" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="2015年，双一流建设&lt;div&gt;2020年 破五唯:&lt;/div&gt;&lt;div&gt;分数、升学、文凭、论文、帽子&lt;/div&gt;&lt;div&gt;2035年 教育强国&lt;/div&gt;&lt;div&gt;数字化教育：AI赋能教学、智慧教育平台，师生数字素养培育&lt;/div&gt;" vertex="1">
-          <mxGeometry height="102" width="180" x="406" y="2117" as="geometry" />
+          <mxGeometry height="102" width="180" x="1865" y="2171" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-141" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="蔡元培：五育并举" vertex="1">
-          <mxGeometry height="15.57" width="117" x="1312" y="1493.65" as="geometry" />
+          <mxGeometry height="15.57" width="117" x="2094" y="2032.72" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-146" edge="1" parent="1" source="Sspnw460WEY0gJR3UPId-79" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.238;entryY=0.086;entryDx=0;entryDy=0;entryPerimeter=0;" target="Sspnw460WEY0gJR3UPId-171">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-151" parent="1" style="shape=table;startSize=0;container=1;collapsible=0;childLayout=tableLayout;fixedHeader=1;" value="" vertex="1">
-          <mxGeometry height="120" width="180" x="1055" y="1237" as="geometry" />
+          <mxGeometry height="120" width="180" x="188" y="1594.35" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-152" parent="q7PB7dUk6ZTtuN2hyssw-151" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fixedHeader=1;" value="" vertex="1">
           <mxGeometry height="20" width="180" as="geometry" />
@@ -2241,13 +2241,13 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-231" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="双高计划：&lt;div&gt;中国特色高水平高职学校和专业建设&lt;span style=&quot;font-style: normal; font-variant: normal; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-family: ui-sans-serif, system-ui, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;, &amp;quot;Noto Color Emoji&amp;quot;; font-size: 16px; line-height: 24px; text-align: left; display: inline-block; flex: 0 1 auto; flex-direction: row; justify-content: normal; align-items: normal; padding: 0px; margin: 0px; background: none 0% 0% / auto repeat scroll padding-box border-box rgba(0, 0, 0, 0);&quot;&gt;&lt;/span&gt;&lt;div style=&quot;font-style: normal; font-variant: normal; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-family: ui-sans-serif, system-ui, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;, &amp;quot;Noto Color Emoji&amp;quot;; font-size: 16px; line-height: 24px; text-align: left; flex: 0 1 auto; flex-direction: row; justify-content: normal; align-items: normal; padding: 0px; margin: 0px; background: none 0% 0% / auto repeat scroll padding-box border-box rgba(0, 0, 0, 0);&quot;&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="43" width="247" x="1404" y="1412" as="geometry" />
+          <mxGeometry height="43" width="247" x="537" y="1769.35" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-233" parent="1" style="whiteSpace=wrap;html=1;" value="2019-2024：56+141&lt;div&gt;2025-2029：60+160&lt;/div&gt;" vertex="1">
-          <mxGeometry height="33.5" width="120" x="1497" y="1366.5" as="geometry" />
+          <mxGeometry height="33.5" width="120" x="630" y="1723.85" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-236" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="2019年，职教20条：&lt;div&gt;就是职教理论的各种名词&lt;/div&gt;" vertex="1">
-          <mxGeometry height="48.5" width="168" x="1388" y="1465.75" as="geometry" />
+          <mxGeometry height="48.5" width="168" x="521" y="1823.1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-244" parent="1" style="shape=table;startSize=0;container=1;collapsible=0;childLayout=tableLayout;fixedHeader=1;" value="" vertex="1">
           <mxGeometry height="200.7664815848218" width="444.38145228794656" x="229" y="1150" as="geometry" />
@@ -2400,7 +2400,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-308" parent="1" style="shape=table;startSize=0;container=1;collapsible=0;childLayout=tableLayout;fixedHeader=1;" value="" vertex="1">
-          <mxGeometry height="184.65271722702732" width="400.09500558035506" x="246" y="1835" as="geometry" />
+          <mxGeometry height="184.65271722702732" width="400.09500558035506" x="236" y="1879.35" as="geometry" />
         </mxCell>
         <mxCell id="q7PB7dUk6ZTtuN2hyssw-309" parent="q7PB7dUk6ZTtuN2hyssw-308" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fixedHeader=1;" value="" vertex="1">
           <mxGeometry height="20" width="400.09500558035506" as="geometry" />
